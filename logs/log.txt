@@ -1,0 +1,226 @@
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Maria Blas, Codigo Area: 10, Área: Gerencia de Recursos Humanos, Código de Usuario: 4, Usuario: DARA98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: , Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Gustavo Mantilla, Codigo Area: , Área: Gerencia Municipal, Código de Usuario: 2, Usuario: GUSH98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Gustavo Mantilla, Codigo Area: 2, Área: Gerencia Municipal, Código de Usuario: 2, Usuario: GUSH98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Maria Blas, Codigo Area: 10, Área: Gerencia de Recursos Humanos, Código de Usuario: 4, Usuario: DARA98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Maria Blas, Codigo Area: 10, Área: Gerencia de Recursos Humanos, Código de Usuario: 4, Usuario: DARA98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Gustavo Mantilla, Codigo Area: 2, Área: Gerencia Municipal, Código de Usuario: 2, Usuario: GUSH98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Maria Blas, Codigo Area: 10, Área: Gerencia de Recursos Humanos, Código de Usuario: 4, Usuario: DARA98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Gustavo Mantilla, Codigo Area: 2, Área: Gerencia Municipal, Código de Usuario: 2, Usuario: GUSH98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Maria Blas, Codigo Area: 10, Área: Gerencia de Recursos Humanos, Código de Usuario: 4, Usuario: DARA98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Gustavo Mantilla, Codigo Area: 2, Área: Gerencia Municipal, Código de Usuario: 2, Usuario: GUSH98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Codigo Area: 5, Área: Subgerencia de Tesoreria, Código de Usuario: 3, Usuario: LPMM96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95

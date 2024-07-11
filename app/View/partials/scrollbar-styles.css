@@ -1,0 +1,35 @@
+/* Personalización general de la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Aplicación específica para el aside */
+aside::-webkit-scrollbar {
+  width: 8px;
+}
+
+aside::-webkit-scrollbar-track {
+  background: #e1e1e1;
+}
+
+aside::-webkit-scrollbar-thumb {
+  background: #888888;
+  border-radius: 10px;
+}
+
+aside::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
