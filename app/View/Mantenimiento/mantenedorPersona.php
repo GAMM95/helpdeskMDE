@@ -1,25 +1,5 @@
-<!doctype html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="public/assets/logo.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
-  <title class="text-center text-3xl font-poppins">Sistema de Incidencias</title>
-</head>
-
-<body class="bg-green-50 flex items-center justify-center min-h-screen overflow-x-hidden">
-
-  <!-- Contenido principal -->
-  <main class="bg-[#eeeff1] flex-1 p-4">
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
     <!-- Header -->
     <h1 class="text-2xl font-bold mb-4">Registro de personas</h1>
 
@@ -29,45 +9,45 @@
       <div class="flex flex-col w-1/3">
         <form id="formPersona" action="modulo-persona.php?action=registrar" method="POST" class="border bg-white shadow-md p-6 text-sm rounded-md flex flex-col mb-2">
           <input type="hidden" id="form-action" name="action" value="registrar">
-          <h3 class="text-2xl font-plain mb-4 text-xs text-gray-400">Datos personales</h3>
+          <h3 class="text-2xl font-plain mb-4 text-sm text-gray-400">Datos personales</h3>
 
           <!-- DNI DE LA PERSONA -->
           <div class="mb-2 sm:w-1/3">
-            <label for="dni" class="block mb-1 font-bold text-sm">DNI:</label>
-            <input type="text" id="txt_dni" name="dni" class="border p-2 w-full text-sm" maxlength="8" pattern="\d{1,8}" inputmode="numeric" title="Ingrese solo dígitos" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese DNI">
+            <label for="dni" class="block mb-1 font-bold text-xs">DNI:</label>
+            <input type="text" id="txt_dni" name="dni" class="border p-2 w-full text-xs" maxlength="8" pattern="\d{1,8}" inputmode="numeric" title="Ingrese solo dígitos" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese DNI">
           </div>
 
           <!-- NOMBRES DE LA PERSONA -->
           <div class="mb-2 sm:w-1/2">
-            <label for="nombre" class="block mb-1 font-bold text-sm">Nombres:</label>
-            <input type="text" id="txt_nombre" name="nombre" class="border p-2 w-full text-sm" pattern="[A-Za-z]+" title="Ingrese solo letras" placeholder="Ingrese nombres" required>
+            <label for="nombre" class="block mb-1 font-bold text-xs">Nombres:</label>
+            <input type="text" id="txt_nombre" name="nombre" class="border p-2 w-full text-xs" pattern="[A-Za-z]+" title="Ingrese solo letras" placeholder="Ingrese nombres" required>
           </div>
 
           <div class="flex flex-wrap -mx-2">
             <!-- APELLIDO PATERNO -->
             <div class="w-full sm:w-1/2 px-2 mb-2">
-              <label for="apellidoPaterno" class="block mb-1 font-bold text-sm">Apellido Paterno:</label>
-              <input type="text" id="txt_apellidoPaterno" name="apellidoPaterno" class="border p-2 w-full text-sm" placeholder="Ingrese apellido paterno" required>
+              <label for="apellidoPaterno" class="block mb-1 font-bold text-xs">Apellido Paterno:</label>
+              <input type="text" id="txt_apellidoPaterno" name="apellidoPaterno" class="border p-2 w-full text-xs" placeholder="Ingrese apellido paterno" required>
             </div>
 
             <!-- APELLIDO MATERNO -->
             <div class="w-full sm:w-1/2 px-2 mb-2">
-              <label for="apellidoMaterno" class="block mb-1 font-bold text-sm">Apellido Materno:</label>
-              <input type="text" id="txt_apellidoMaterno" name="apellidoMaterno" class="border p-2 w-full text-sm" placeholder="Ingrese apellido materno" required>
+              <label for="apellidoMaterno" class="block mb-1 font-bold text-xs">Apellido Materno:</label>
+              <input type="text" id="txt_apellidoMaterno" name="apellidoMaterno" class="border p-2 w-full text-xs" placeholder="Ingrese apellido materno" required>
             </div>
           </div>
 
           <div class="flex flex-wrap -mx-2">
             <!-- CELULAR -->
             <div class="w-full sm:w-1/3 px-2 mb-2">
-              <label for="celular" class="block mb-1 font-bold text-sm">Celular:</label>
-              <input type="tel" id="txt_celular" name="celular" class="border p-2 w-full text-sm" maxlength="9" pattern="\d{1,9}" inputmode="numeric" title="Ingrese el número de celular" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese celular">
+              <label for="celular" class="block mb-1 font-bold text-xs">Celular:</label>
+              <input type="tel" id="txt_celular" name="celular" class="border p-2 w-full text-xs" maxlength="9" pattern="\d{1,9}" inputmode="numeric" title="Ingrese el número de celular" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese celular">
             </div>
 
             <!-- EMAIL -->
             <div class="w-full sm:w-2/3 px-2 mb-2">
-              <label for="email" class="block mb-1 font-bold text-sm">Email:</label>
-              <input type="email" id="txt_email" name="email" class="border p-2 w-full text-sm" placeholder="Ingrese email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Ingrese un correo electrónico válido.">
+              <label for="email" class="block mb-1 font-bold text-xs">Email:</label>
+              <input type="email" id="txt_email" name="email" class="border p-2 w-full text-xs" placeholder="Ingrese email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Ingrese un correo electrónico válido.">
             </div>
           </div>
 
@@ -89,7 +69,7 @@
 
         <!-- Tabla de personas -->
         <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
-          <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+          <table class="w-full text-xs text-left rtl:text-right text-gray-500">
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
                 <th scope="col" class="px-6 py-1">N°</th>
@@ -126,9 +106,7 @@
           </table>
         </div>
       </div>
+      
     </div>
-  </main>
-  <script src="./app/View/func/func_persona.js"></script>
-</body>
-
-</html>
+  </div>
+</div>

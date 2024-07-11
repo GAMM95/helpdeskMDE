@@ -1,4 +1,10 @@
-
+$(document).ready(function () {
+  toastr.options = {
+    "positionClass": "toast-bottom-right",
+    "progressBar": true,
+    "timeOut": "2000"
+  };
+});
 
 // TODO: SETEO DE COMBO AREA
 $(document).ready(function () {

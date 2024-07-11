@@ -1,23 +1,5 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="public/assets/logo.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
-  <title class="text-center text-3xl font-poppins">Sistema de Incidencias</title>
-</head>
-
-<body class="bg-green-50 flex items-center justify-center min-h-screen overflow-x-hidden">
-  <main class="bg-[#eeeff1] flex-1 p-4 overflow-y-auto">
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
     <!-- Header -->
     <h1 class="text-2xl font-bold mb-4">Consultar Incidencia</h1>
 
@@ -25,27 +7,27 @@
       <div class="flex flex-wrap -mx-2 justify-center">
         <!-- BUSCAR POR AREA -->
         <div class="w-full md:w-1/3 px-2 mb-2">
-          <label for="area" class="block mb-1 font-bold text-sm">&Aacute;rea:</label>
-          <select id="cbo_area" name="area" class="border p-2 w-full text-sm cursor-pointer">
+          <label for="area" class="block mb-1 font-bold text-xs">&Aacute;rea:</label>
+          <select id="cbo_area" name="area" class="border p-2 w-full text-xs cursor-pointer">
             <!-- Aquí puedes cargar opciones de área dinámicamente si es necesario -->
           </select>
         </div>
 
         <!-- BUSCAR POR CODIGO PATRIMONIAL -->
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
-          <label for="codigo_patrimonial" class="block mb-1 font-bold text-sm">C&oacute;digo Patrimonial:</label>
-          <input type="text" id="codigoPatrimonial" name="codigoPatrimonial" class="border p-2 w-full text-sm" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" placeholder="Ingrese c&oacute;digo patrimonial">
+          <label for="codigo_patrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
+          <input type="text" id="codigoPatrimonial" name="codigoPatrimonial" class="border p-2 w-full text-xs" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" placeholder="Ingrese c&oacute;digo patrimonial">
         </div>
 
         <!-- BUSCAR POR FECHA DE INICIO-->
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
-          <label for="fechaInicio" class="block mb-1 font-bold text-sm">Fecha Inicio:</label>
-          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-sm cursor-pointer">
+          <label for="fechaInicio" class="block mb-1 font-bold text-xs">Fecha Inicio:</label>
+          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs cursor-pointer">
         </div>
 
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
-          <label for="fechaFin" class="block mb-1 font-bold text-sm">Fecha Fin:</label>
-          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-sm cursor-pointer">
+          <label for="fechaFin" class="block mb-1 font-bold text-xs">Fecha Fin:</label>
+          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer">
         </div>
       </div>
 
@@ -104,42 +86,40 @@
         </table>
       </div>
     </div>
-  </main>
-  <script src="./app/View/func/func_consulta_incidencia_admin.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('#buscar-incidencias').submit(function(event) {
-        event.preventDefault(); // Evitar el envío normal del formulario
+  </div>
+</div>
+</main>
+<script>
+  $(document).ready(function() {
+    $('#buscar-incidencias').submit(function(event) {
+      event.preventDefault(); // Evitar el envío normal del formulario
 
-        // Obtener los valores de los campos del formulario
-        var area = $('#cbo_area').val();
-        var codigoPatrimonial = $('#codigoPatrimonial').val();
-        var fechaInicio = $('#fechaInicio').val();
-        var fechaFin = $('#fechaFin').val();
+      // Obtener los valores de los campos del formulario
+      var area = $('#cbo_area').val();
+      var codigoPatrimonial = $('#codigoPatrimonial').val();
+      var fechaInicio = $('#fechaInicio').val();
+      var fechaFin = $('#fechaFin').val();
 
-        // Enviar la solicitud AJAX
-        $.ajax({
-          url: 'consultar-incidencia-admin.php?action=consultar', // URL a la que se envía la solicitud
-          method: 'GET', // Método HTTP (GET es el predeterminado para formularios GET)
-          data: {
-            area: area,
-            codigoPatrimonial: codigoPatrimonial,
-            fechaInicio: fechaInicio,
-            fechaFin: fechaFin
-          },
-          success: function(response) {
-            // Actualizar la tabla de incidencias con los resultados recibidos
-            $('#tablaConsultarIncidencias tbody').html(response);
-          },
-          error: function(xhr, status, error) {
-            // Manejar errores si los hubiera
-            console.error(error);
-            toastr.error('Ocurrió un error al buscar incidencias.');
-          }
-        });
+      // Enviar la solicitud AJAX
+      $.ajax({
+        url: 'consultar-incidencia-admin.php?action=consultar', // URL a la que se envía la solicitud
+        method: 'GET', // Método HTTP (GET es el predeterminado para formularios GET)
+        data: {
+          area: area,
+          codigoPatrimonial: codigoPatrimonial,
+          fechaInicio: fechaInicio,
+          fechaFin: fechaFin
+        },
+        success: function(response) {
+          // Actualizar la tabla de incidencias con los resultados recibidos
+          $('#tablaConsultarIncidencias tbody').html(response);
+        },
+        error: function(xhr, status, error) {
+          // Manejar errores si los hubiera
+          console.error(error);
+          toastr.error('Ocurrió un error al buscar incidencias.');
+        }
       });
     });
-  </script>
-</body>
-
-</html>
+  });
+</script>

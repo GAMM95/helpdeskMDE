@@ -52,7 +52,7 @@ if (session_status() == PHP_SESSION_NONE) {
           </a>
           <ul class="pcoded-submenu">
             <li><a href="registro-incidencia-admin.php">Incidencia</a></li>
-            <li><a href="registro-recepcion-admin.php">Recepci&oacute;n</a></li>
+            <li><a href="registro-recepcion-admin.php">Recepcion</a></li>
             <li><a href="registro-cierre-admin.php">Cierre</a></li>
           </ul>
         </li>
@@ -64,9 +64,9 @@ if (session_status() == PHP_SESSION_NONE) {
             <span class="pcoded-mtext">Consultar</span>
           </a>
           <ul class="pcoded-submenu">
-            <li><a href="consultar-incidencia-admin.php">Incidencia</a></li>
-            <li><a href="consultar-recepcion-admin.php">Recepci&oacute;n</a></li>
-            <li><a href="consultar-cierre-admin.php">Cierre</a></li>
+            <li><a href="layout-vertical.html">Incidencia</a></li>
+            <li><a href="layout-horizontal.html">Recepcion</a></li>
+            <li><a href="layout-horizontal.html">Cierre</a></li>
           </ul>
         </li>
         <li class="nav-item pcoded-hasmenu">
@@ -78,9 +78,9 @@ if (session_status() == PHP_SESSION_NONE) {
           </a>
           <ul class="pcoded-submenu">
             <li><a href="modulo-persona.php">Personas</a></li>
-            <li><a href="modulo-usuario.php">Usuarios</a></li>
-            <li><a href="modulo-area.php">&Aacute;reas</a></li>
-            <li><a href="modulo-categoria.php">Categor&iacute;as</a></li>
+            <li><a href="bc_button.html">Usuarios</a></li>
+            <li><a href="bc_badges.html">Áreas</a></li>
+            <li><a href="bc_badges.html">Categorías</a></li>
           </ul>
         </li>
         <li class="nav-item pcoded-menu-caption">

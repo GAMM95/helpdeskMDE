@@ -1,25 +1,5 @@
-<!doctype html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="public/assets/logo.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
-  <title class="text-center text-3xl font-poppins">Sistema de Incidencias</title>
-</head>
-
-<body class="bg-green-50 flex items-center justify-center min-h-screen overflow-x-hidden">
-
-  <!-- Contenido principal -->
-  <main class="bg-[#eeeff1] flex-1 p-4">
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
     <!-- Header -->
     <h1 class="text-2xl font-bold mb-4">Registro de usuarios</h1>
 
@@ -43,32 +23,32 @@
         <!-- SELECCION DE PERSONA -->
         <div class="mb-2">
           <label for="persona" class="block mb-1 font-bold text-sm">Persona:</label>
-          <select id="cbo_persona" name="persona" class="border p-2 w-full text-sm cursor-pointer"></select>
+          <select id="cbo_persona" name="persona" class="border p-2 w-full text-xs cursor-pointer"></select>
         </div>
 
         <!-- SELECCION DE AREA -->
         <div class="mb-2">
           <label for="area" class="block mb-1 font-bold text-sm">&Aacute;rea:</label>
-          <select id="cbo_area" name="area" class="border p-2 w-full text-sm cursor-pointer"></select>
+          <select id="cbo_area" name="area" class="border p-2 w-full text-xs cursor-pointer"></select>
         </div>
 
         <!-- SELECCION DE ROL -->
         <div class="w-full sm:w-1/2  mb-2">
           <label for="rol" class="block mb-1 font-bold text-sm">Rol:</label>
-          <select id="cbo_rol" name="rol" class="border p-2 w-full text-sm cursor-pointer"></select>
+          <select id="cbo_rol" name="rol" class="border p-2 w-full text-xs cursor-pointer"></select>
         </div>
 
         <div class="flex flex-wrap -mx-2">
           <!-- NOMBRE DE USUARIO -->
           <div class="w-full sm:w-1/2 px-2 mb-2">
             <label for="nombre" class="block mb-1 font-bold text-sm">Usuario:</label>
-            <input type="text" id="txt_nombreUsuario" name="nombre" class="border p-2 w-full text-sm" placeholder="Ingrese username">
+            <input type="text" id="txt_nombreUsuario" name="nombre" class="border p-2 w-full text-xs" placeholder="Ingrese username">
           </div>
 
           <!-- CONTRASEÑA -->
           <div class="w-full sm:w-1/2 px-2 mb-2">
             <label for="password" class="block mb-1 font-bold text-sm">Contrase&ntilde;a:</label>
-            <input type="text" id="txt_password" name="password" class="border p-2 w-full text-sm" placeholder="Ingrese contraseña">
+            <input type="text" id="txt_password" name="password" class="border p-2 w-full text-xs" placeholder="Ingrese contraseña">
           </div>
         </div>
 
@@ -125,7 +105,7 @@
 
         <!-- TABLA DE USUARIOS -->
         <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
-          <table id="tablaListarUsuarios" class="w-full text-sm text-left rtl:text-right text-gray-500">
+          <table id="tablaListarUsuarios" class="w-full text-xs text-left rtl:text-right text-gray-500">
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
                 <th scope="col" class="px-6 py-1">N°</th>
@@ -178,8 +158,5 @@
         </div>
       </div>
     </div>
-  </main>
-  <script src="./app/View/func/func_usuario.js"></script>
-</body>
-
-</html>
+  </div>
+</div>

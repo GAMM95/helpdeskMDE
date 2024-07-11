@@ -20605,6 +20605,7 @@ pre[class*=language-]:before {
     height: 56px;
     position: absolute;
     right: 0;
+    left: 220;
     top: 0;
     padding: 0 10px;
 }

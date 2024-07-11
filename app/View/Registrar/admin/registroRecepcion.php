@@ -1,25 +1,5 @@
-<!doctype html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="public/assets/logo.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
-  <title class="text-center text-3xl font-poppins">Sistema de Incidencias</title>
-</head>
-
-<body>
-
-  <!-- Contenido principal -->
-  <main class="bg-[#eeeff1] flex-1 p-4 overflow-y-auto">
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
     <?php
     global $recepcionRegistrada;
     ?>
@@ -47,7 +27,7 @@
 
     <div>
       <div class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
-        <table id="tablaIncidenciasSinRecepcionar" class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <table id="tablaIncidenciasSinRecepcionar" class="w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-6 py-3">N°</th>
@@ -149,13 +129,13 @@
           <!-- SELECT PRIORIDAD -->
           <div class="w-full md:w-1/5 px-2 mb-2">
             <label for="prioridad" class="block font-bold mb-1">Prioridad:</label>
-            <select id="prioridad" name="prioridad" class="border p-2 w-full text-sm cursor-pointer">
+            <select id="prioridad" name="prioridad" class="border p-2 w-full text-xs cursor-pointer">
             </select>
           </div>
           <!-- SELECT IMPACTO -->
           <div class="w-full md:w-1/5 px-2 mb-2">
             <label for="impacto" class="block font-bold mb-1">Impacto:</label>
-            <select id="impacto" name="impacto" class="border p-2 w-full text-sm cursor-pointer">
+            <select id="impacto" name="impacto" class="border p-2 w-full text-xs cursor-pointer">
             </select>
           </div>
         </div>
@@ -182,7 +162,7 @@
     <!-- TODO: TABLA DE INCIDENCIAS  RECEPCIONADAS -->
     <div>
       <div class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
-        <table id="tablaIncidenciasRecepcionadas" class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <table id="tablaIncidenciasRecepcionadas" class="w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
               <th scope="col" class="px-6 py-3">N°</th>
@@ -235,9 +215,7 @@
         </table>
       </div>
     </div>
-  </main>
+  </div>
+</div>
 
-  <script src="./app/View/func/func_recepcion_admin.js"></script>
-</body>
 
-</html>

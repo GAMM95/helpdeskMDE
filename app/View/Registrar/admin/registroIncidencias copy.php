@@ -1,5 +1,25 @@
-<div class="pcoded-main-container overflow-y-auto">
-  <div class="pcoded-content overflow-y-auto">
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="public/assets/logo.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+  <title class="text-center text-3xl font-poppins">Sistema de Incidencias</title>
+</head>
+
+<body class="bg-green-50 flex items-center justify-center min-h-screen">
+
+  <!-- Contenido principal -->
+  <main class="bg-[#eeeff1] flex-1 p-4 overflow-y-auto rounded-lg shadow-md">
     <?php
     global $incidenciaRegistrada;
     ?>
@@ -19,21 +39,21 @@
         <!-- CATEGORIA SELECCIONADA -->
         <div class="w-full sm:w-1/3 px-2 mb-2">
           <label for="categoria" class="block font-bold mb-1">Categor&iacute;a:</label>
-          <select id="cbo_categoria" name="categoria" class="border p-2 w-full text-xs cursor-pointer">
+          <select id="cbo_categoria" name="categoria" class="border p-2 w-full text-sm cursor-pointer">
           </select>
         </div>
 
         <!-- AREA DE LA INCIDENCIA -->
         <div class="w-full sm:w-1/3 px-2 mb-2">
           <label for="area" class="block font-bold mb-1">&Aacute;rea:</label>
-          <select id="cbo_area" name="area" class="border p-2 w-full text-xs cursor-pointer">
+          <select id="cbo_area" name="area" class="border p-2 w-full text-sm cursor-pointer">
           </select>
         </div>
 
         <!-- FECHA DE LA INCIDENCIA -->
         <div class="w-full sm:w-1/6 px-2 mb-2 hidden">
           <label for="fecha_incidencia" class="block mb-1 font-bold text-sm">Fecha:</label>
-          <input type="date" id="fecha_incidencia" name="fecha_incidencia" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo date('Y-m-d'); ?>" readonly>
+          <input type="date" id="fecha_incidencia" name="fecha_incidencia" class="border border-gray-200 bg-gray-100 p-2 w-full text-sm" value="<?php echo date('Y-m-d'); ?>" readonly>
         </div>
 
         <!-- HORA DE LA INCIDENCIA -->
@@ -45,7 +65,7 @@
           $fecha_actual = date('Y-m-d');
           $hora_actual = date('H:i:s');
           ?>
-          <input type="text" id="hora" name="hora" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $hora_actual; ?>" readonly>
+          <input type="text" id="hora" name="hora" class="border border-gray-200 bg-gray-100 p-2 w-full text-sm" value="<?php echo $hora_actual; ?>" readonly>
         </div>
 
         <!-- USUARIO QUE ABRE LA INCIDENCIA -->
@@ -61,7 +81,7 @@
         <!-- CODIGO PATROMONIAL -->
         <div class="w-full sm:w-1/3 px-2 mb-2">
           <label for="codigo_patrimonial" class="block mb-1 font-bold text-sm">C&oacute;digo Patrimonial:</label>
-          <input type="text" id="codigo_patrimonial" name="codigo_patrimonial" class="border p-2 w-full text-xs" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); " placeholder="Ingrese c&oacute;digo patrimonial">
+          <input type="text" id="codigo_patrimonial" name="codigo_patrimonial" class="border p-2 w-full text-sm" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); " placeholder="Ingrese c&oacute;digo patrimonial">
         </div>
       </div>
 
@@ -71,18 +91,18 @@
         <!-- ASUNTO DE LA INCIDENCIA -->
         <div class="w-full sm:w-1/4 px-2 mb-2">
           <label for="asunto" class="block mb-1 font-bold text-sm">Asunto:</label>
-          <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs" placeholder="Ingrese asunto">
+          <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-sm" placeholder="Ingrese asunto">
         </div>
 
         <div class="w-full sm:w-1/4 px-2 mb-2">
           <label for="documento" class="block mb-1 font-bold text-sm">Documento:</label>
-          <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs" placeholder="Ingrese documento">
+          <input type="text" id="documento" name="documento" class="border p-2 w-full text-sm" placeholder="Ingrese documento">
         </div>
 
         <!-- DESCRIPCION DE LA INCIDENCIA -->
         <div class="w-full md:w-1/2 px-2 mb-2">
           <label for="descripcion" class="block mb-1 font-bold text-sm">Descripci&oacute;n:</label>
-          <input type="text" id="descripcion" name="descripcion" class="border p-2 w-full text-xs mb-3" placeholder="Inngrese descripcion (opcional)">
+          <input type="text" id="descripcion" name="descripcion" class="border p-2 w-full text-sm mb-3" placeholder="Inngrese descripcion (opcional)">
         </div>
       </div>
 
@@ -140,7 +160,7 @@
       <?php endif; ?>
 
       <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
-        <table id="tablaListarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500">
+        <table id="tablaListarIncidencias" class="w-full text-sm text-left rtl:text-right text-gray-500">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
               <th scope="col" class="px-6 py-3">N° de entrada</th>
@@ -173,6 +193,13 @@
           </tbody>
         </table>
       </div>
+
+
     </div>
-  </div>
-</div>
+  </main>
+
+  <!-- <script src="./app/View/func/func_incidencias_admin.js"></script> -->
+  <script src="./app/View/func/func_incidencia_admin.js"></script>
+</body>
+
+</html>

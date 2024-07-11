@@ -1,28 +1,20 @@
 <?php
-session_start();
 
-if (!isset($_SESSION['username'])) {
-  header("Location: index.php");
-  exit();
+$action = $_GET['action'] ?? '';
+$state = $_GET['state'] ?? '';
+
+require_once 'app/Controller/cierreController.php';
+$cierreController = new cierreController();
+
+
+switch ($action) {
+  case 'registrar':
+    $cierreController->registrarCierre();
+    break;
 }
-
-require_once 'config/conexion.php';
-require_once 'app/Model/IncidenciaModel.php';
-require_once 'app/Model/RecepcionModel.php';
-require_once 'app/Model/CierreModel.php';
-require_once 'app/Controller/InicioController.php';
-
-$conexion = new Conexion();
-$conector = $conexion->getConexion();
-
-$rol = $_SESSION['rol'];
-$area = $_SESSION['codigoArea'];
-// Creacion de instancias de los modelos
-$incidenciasModel =  new IncidenciaModel();
-$recepcionesModel = new RecepcionModel();
-$cierresModel = new CierreModel();
-$controller = new InicioController();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -39,6 +31,7 @@ $controller = new InicioController();
   <meta name="author" content="Phoenixcoded" />
   <!-- Favicon icon -->
   <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+
   <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">
 
@@ -66,23 +59,26 @@ $controller = new InicioController();
 
   <!-- [ Main Content ] start -->
   <?php
-  include('app/View/Inicio/admin/inicio.php');
+  include('app/View/Consultar/admin/consultaCierre.php');
   ?>
   <!-- [ Main Content ] end -->
+
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>
   <script src="dist/assets/js/plugins/bootstrap.min.js"></script>
   <script src="dist/assets/js/pcoded.min.js"></script>
-
-  <!-- Apex Chart -->
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
 
 
   <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css">
 
+  <script src="./app/View/func/func_consulta_incidencia_admin.js"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 
 </html>

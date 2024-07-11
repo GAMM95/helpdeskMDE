@@ -20,7 +20,7 @@
   <script src="app/View/func/password-toggle.js"></script>
   <!-- Implementación de iconos -->
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <title class="text-center text-3xl font-poppins">Sistema de incidencias - Login</title>
+  <title class="text-center text-3xl font-poppins">Sistema HelpDesk MDE</title>
 
   <style>
     .scaled-container {
@@ -35,7 +35,7 @@
   <img src="public/assets/fondo1.jpeg" alt="Fondo" class="absolute inset-0 w-full h-full object-cover opacity-30 z-0">
 
   <!-- Fondo verde transparente -->
-  <div class="absolute inset-0 bg-green-500 opacity-30 z-0"></div>
+  <div class="absolute inset-0 bg-green-500 opacity-20 z-0"></div>
 
   <!-- Contenedor principal centrado vertical y horizontalmente -->
   <div class="flex justify-center items-center min-h-screen relative z-10">
