@@ -5,7 +5,7 @@
     <a href="#!" class="b-brand">
       <!-- ========   change your logo hear   ============ -->
       <!-- <img src="dist/assets/images/logo-blanco.png" alt="" class="logo-thumb"> -->
-      <img src="dist/assets/images/logo-blanco.png" alt="" class="logo">
+      <img src="dist/assets/images/logo-blanco.png" alt="" class="logo-thumb">
       <img src="dist/assets/images/logo-blanco.png" alt="" class="logo-thumb">
     </a>
     <a href="#!" class="mob-toggler">

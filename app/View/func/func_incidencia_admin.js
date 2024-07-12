@@ -60,9 +60,23 @@ $(document).ready(function () {
   });
 });
 
+// TODO: BUSCADOR PARA EL COMBO PERSONA Y AREA
+$(document).ready(function () {
+  $('#cbo_area').select2({
+    placeholder: "Seleccione un área",
+    allowClear: true
+  });
+  $(document).ready(function () {
+    $('#cbo_categoria').select2({
+      placeholder: "Seleccione una categoria",
+      allowClear: true
+    });
+  });
+});
+
+
 
 // TODO: CAMBIAR PAGINAS DE LA TABLA DE INCIDENCIAS
-// TODO: FUNCION PARA CAMBIAR PAGINAS DE LA TABLA DE INCIDENCIAS SIN RECEPCIONAR
 function changePageTablaListarIncidencias(page) {
   fetch(`?page=${page}`)
     .then(response => response.text())

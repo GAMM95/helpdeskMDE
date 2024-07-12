@@ -30,25 +30,25 @@
         <table id="tablaIncidenciasSinRecepcionar" class="w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-6 py-3">N°</th>
-              <th scope="col" class="px-6 py-3">Fecha incidencia</th>
-              <th scope="col" class="px-6 py-3">&Aacute;rea</th>
-              <th scope="col" class="px-6 py-3">C&oacute;digo Patrimonial</th>
-              <th scope="col" class="px-6 py-3">Categor&iacute;a</th>
-              <th scope="col" class="px-6 py-3">Asunto</th>
-              <th scope="col" class="px-6 py-3">Usuario</th>
+              <th scope="col" class="px-6 py-2">N°</th>
+              <th scope="col" class="px-6 py-2">Fecha incidencia</th>
+              <th scope="col" class="px-6 py-2">&Aacute;rea</th>
+              <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
+              <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
+              <th scope="col" class="px-6 py-2">Asunto</th>
+              <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($incidencias as $incidencia) : ?>
               <tr class='bg-white hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>
-                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'><?= $incidencia['INC_numero']; ?></th>
-                <td class='px-6 py-4'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['ARE_nombre']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['CAT_nombre']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['INC_asunto']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['USU_nombre']; ?></td>
+                <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap'><?= $incidencia['INC_numero']; ?></th>
+                <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_asunto']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['USU_nombre']; ?></td>
               </tr>
             <?php endforeach; ?>
 
@@ -217,5 +217,3 @@
     </div>
   </div>
 </div>
-
-

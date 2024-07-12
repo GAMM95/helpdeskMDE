@@ -46,7 +46,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <li class="nav-item pcoded-hasmenu">
           <a href="#!" class="nav-link ">
             <span class="pcoded-micon">
-              <i class="feather icon-layout"></i>
+              <i class="feather icon-edit"></i>
             </span>
             <span class="pcoded-mtext">Registrar</span>
           </a>
@@ -59,7 +59,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <li class="nav-item pcoded-hasmenu">
           <a href="#!" class="nav-link ">
             <span class="pcoded-micon">
-              <i class="feather icon-layout"></i>
+              <i class="feather icon-clipboard"></i>
             </span>
             <span class="pcoded-mtext">Consultar</span>
           </a>
@@ -72,7 +72,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <li class="nav-item pcoded-hasmenu">
           <a href="#!" class="nav-link ">
             <span class="pcoded-micon">
-              <i class="feather icon-layout"></i>
+              <i class="feather icon-server"></i>
             </span>
             <span class="pcoded-mtext">Mantenedor</span>
           </a>
@@ -87,7 +87,12 @@ if (session_status() == PHP_SESSION_NONE) {
           <label>Reportes</label>
         </li>
         <li class="nav-item pcoded-hasmenu">
-          <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Basic</span></a>
+          <a href="#!" class="nav-link ">
+            <span class="pcoded-micon">
+              <i class="feather icon-file"></i>
+            </span>
+            <span class="pcoded-mtext">Basic</span>
+          </a>
           <ul class="pcoded-submenu">
             <li><a href="bc_alert.html">Personas</a></li>
             <li><a href="bc_button.html">Usuarios</a></li>

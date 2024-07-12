@@ -1,3 +1,11 @@
+$(document).ready(function () {
+  toastr.options = {
+    "positionClass": "toast-bottom-right",
+    "progressBar": true,
+    "timeOut": "2000"
+  };
+});
+
 // TODO: SETEO DE COMBO PERSONAS
 $(document).ready(function () {
   console.log("FETCHING PERSONAS");
@@ -22,7 +30,6 @@ $(document).ready(function () {
 
 // TODO: SETEO DE COMBO AREA
 $(document).ready(function () {
-  console.log("FETCHING PERSONAS");
   console.log("FETCHING AREAS");
   $.ajax({
     url: 'ajax/getAreaData.php',
@@ -42,6 +49,21 @@ $(document).ready(function () {
     }
   });
 });
+
+// TODO: BUSCADOR PARA EL COMBO PERSONA Y AREA
+$(document).ready(function () {
+  $('#cbo_area').select2({
+    placeholder: "Seleccione un área",
+    allowClear: true
+  });
+  $(document).ready(function () {
+    $('#cbo_persona').select2({
+      placeholder: "Seleccione una persona",
+      allowClear: true
+    });
+  });
+});
+
 
 // TODO: SETEO DE COMBO ROL
 $(document).ready(function () {

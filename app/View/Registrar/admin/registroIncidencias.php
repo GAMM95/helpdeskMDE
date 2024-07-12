@@ -6,7 +6,7 @@
     <!-- Header -->
     <h1 class="text-xl font-bold mb-4">Registro de Incidencia</h1>
     <!-- TODO: FORMULARIO -->
-    <form id="formIncidencia" action="registro-incidencia-admin.php?action=registrar" method="POST" class="border bg-white shadow-md p-6 w-full text-sm rounded-md mb-2">
+    <form id="formIncidencia" action="registro-incidencia-admin.php?action=registrar" method="POST" class="border bg-white shadow-md p-6 w-full text-xs rounded-md mb-2">
 
       <!-- TODO: FILA OCULTA DEL FORMULARIO - NUMERO DE INCIDENCIA -->
       <div class="flex items-center mb-4 hidden">
@@ -51,16 +51,16 @@
         <!-- USUARIO QUE ABRE LA INCIDENCIA -->
         <div class="w-full md:w-1/6 px-2 mb-2 hidden">
           <label for="usuarioDisplay" class="block font-bold mb-1">Usuario:</label>
-          <input type="text" id="usuarioDisplay" name="usuarioDisplay" class="border border-gray-200 bg-gray-100 p-2 w-full text-sm" value="<?php echo $_SESSION['usuario']; ?>" readonly>
+          <input type="text" id="usuarioDisplay" name="usuarioDisplay" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['usuario']; ?>" readonly>
         </div>
         <div class="w-full md:w-1/6 px-2 mb-2 hidden">
           <label for="usuario" class="block font-bold mb-1">Usuario:</label>
-          <input type="text" id="usuario" name="usuario" class="border border-gray-200 bg-gray-100 p-2 w-full text-sm" value="<?php echo $_SESSION['codigoUsuario']; ?>" readonly>
+          <input type="text" id="usuario" name="usuario" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['codigoUsuario']; ?>" readonly>
         </div>
 
         <!-- CODIGO PATROMONIAL -->
         <div class="w-full sm:w-1/3 px-2 mb-2">
-          <label for="codigo_patrimonial" class="block mb-1 font-bold text-sm">C&oacute;digo Patrimonial:</label>
+          <label for="codigo_patrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
           <input type="text" id="codigo_patrimonial" name="codigo_patrimonial" class="border p-2 w-full text-xs" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); " placeholder="Ingrese c&oacute;digo patrimonial">
         </div>
       </div>
@@ -70,19 +70,19 @@
 
         <!-- ASUNTO DE LA INCIDENCIA -->
         <div class="w-full sm:w-1/4 px-2 mb-2">
-          <label for="asunto" class="block mb-1 font-bold text-sm">Asunto:</label>
+          <label for="asunto" class="block mb-1 font-bold text-xs">Asunto:</label>
           <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs" placeholder="Ingrese asunto">
         </div>
 
         <div class="w-full sm:w-1/4 px-2 mb-2">
-          <label for="documento" class="block mb-1 font-bold text-sm">Documento:</label>
+          <label for="documento" class="block mb-1 font-bold text-xs">Documento:</label>
           <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs" placeholder="Ingrese documento">
         </div>
 
         <!-- DESCRIPCION DE LA INCIDENCIA -->
         <div class="w-full md:w-1/2 px-2 mb-2">
-          <label for="descripcion" class="block mb-1 font-bold text-sm">Descripci&oacute;n:</label>
-          <input type="text" id="descripcion" name="descripcion" class="border p-2 w-full text-xs mb-3" placeholder="Inngrese descripcion (opcional)">
+          <label for="descripcion" class="block mb-1 font-bold text-xs">Descripci&oacute;n:</label>
+          <input type="text" id="descripcion" name="descripcion" class="border p-2 w-full text-xs mb-3" placeholder="Ingrese descripci&oacute;n (opcional)">
         </div>
       </div>
 
@@ -102,10 +102,15 @@
 
       <!-- TODO: BOTONES -->
       <div class="flex justify-center space-x-4">
-        <button type="submit" id="guardar-incidencia" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded">Guardar</button>
-        <button type="button" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded">Editar</button>
-        <!-- <button type="button" id="imprimirDatos" class="bg-yellow-500 text-white font-bold hover:bg-yellow-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Imprimir</button> -->
-        <button type="button" id="nuevoRegistro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Nuevo</button>
+        <button type="submit" id="guardar-incidencia" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded">
+          Guardar
+        </button>
+        <button type="button" id="editar-incidencia" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded">
+          Editar
+        </button>
+        <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded">
+          Nuevo
+        </button>
       </div>
     </form>
 
@@ -143,31 +148,31 @@
         <table id="tablaListarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
-              <th scope="col" class="px-6 py-3">N° de entrada</th>
-              <th scope="col" class="px-6 py-3">Fecha de entrada</th>
-              <th scope="col" class="px-6 py-3">Area</th>
-              <th scope="col" class="px-6 py-3">Código Patrimonial</th>
-              <th scope="col" class="px-6 py-3">Categoría</th>
-              <th scope="col" class="px-6 py-3">Asunto</th>
-              <th scope="col" class="px-6 py-3">Usuario</th>
+              <th scope="col" class="px-6 py-2">N° de entrada</th>
+              <th scope="col" class="px-6 py-2">Fecha de entrada</th>
+              <th scope="col" class="px-6 py-2">Area</th>
+              <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
+              <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
+              <th scope="col" class="px-6 py-2">Asunto</th>
+              <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($incidencias as $incidencia) : ?>
               <tr class='second-table bg-white hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
-                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero']; ?></th>
-                <td class='px-6 py-4'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['ARE_nombre']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['CAT_nombre']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['INC_asunto']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['USU_nombre']; ?></td>
+                <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero']; ?></th>
+                <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_asunto']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['USU_nombre']; ?></td>
               </tr>
             <?php endforeach; ?>
 
             <?php if (empty($incidencias)) : ?>
               <tr>
-                <td colspan="7" class="text-center py-4">No hay incidencias sin recepcionar.</td>
+                <td colspan="7" class="text-center py-3">No hay incidencias sin recepcionar.</td>
               </tr>
             <?php endif; ?>
           </tbody>

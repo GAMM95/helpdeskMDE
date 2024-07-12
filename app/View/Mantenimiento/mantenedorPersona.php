@@ -5,9 +5,10 @@
 
     <!-- Contenedor principal para el formulario y la tabla -->
     <div class="flex space-x-4">
+      
       <!-- FORMULARIO -->
       <div class="flex flex-col w-1/3">
-        <form id="formPersona" action="modulo-persona.php?action=registrar" method="POST" class="border bg-white shadow-md p-6 text-sm rounded-md flex flex-col mb-2">
+        <form id="formPersona" action="modulo-persona.php?action=registrar" method="POST" class="border bg-white shadow-md p-6 text-xs rounded-md flex flex-col mb-2">
           <input type="hidden" id="form-action" name="action" value="registrar">
           <h3 class="text-2xl font-plain mb-4 text-sm text-gray-400">Datos personales</h3>
 
@@ -52,10 +53,16 @@
           </div>
 
           <!-- BOTONES DEL FORMULARIO -->
-          <div class="flex justify-center space-x-4 mt-8 mb-2">
-            <button type="submit" id="guardar-persona" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded">Guardar</button>
-            <button type="button" id="editar-persona" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded">Editar</button>
-            <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Nuevo</button>
+          <div class="flex justify-center space-x-4 mt-3">
+            <button type="submit" id="guardar-persona" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded">
+              Guardar
+            </button>
+            <button type="button" id="editar-persona" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded">
+              Editar
+            </button>
+            <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded">
+              Nuevo
+            </button>
           </div>
         </form>
       </div>
@@ -63,8 +70,10 @@
 
       <!-- TABLA DE PERSONAS -->
       <div class="w-2/3">
+
+        <!-- Buscador de personas -->
         <div class="flex justify-between items-center mt-2">
-          <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar persona..." oninput="filtrarTablaPersonas()" />
+          <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300 text-xs" placeholder="Buscar persona..." oninput="filtrarTablaPersonas()" />
         </div>
 
         <!-- Tabla de personas -->
@@ -74,9 +83,9 @@
               <tr>
                 <th scope="col" class="px-6 py-1">N°</th>
                 <th scope="col" class="px-6 py-1">DNI</th>
-                <th scope="col" class="px-6 py-3">Nombre completo</th>
-                <th scope="col" class="px-6 py-3">Celular</th>
-                <th scope="col" class="px-6 py-3">Email</th>
+                <th scope="col" class="px-6 py-2">Nombre completo</th>
+                <th scope="col" class="px-6 py-2">Celular</th>
+                <th scope="col" class="px-6 py-2">Email</th>
               </tr>
             </thead>
             <tbody>
@@ -84,19 +93,19 @@
               $personas = $personaModel->listarPersona();
               foreach ($personas as $persona) {
                 echo "<tr class='bg-white hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>";
-                echo "<th scope='col' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap' data-cod='" . htmlspecialchars($persona['PER_codigo']) . "'>";
+                echo "<th scope='col' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap' data-cod='" . htmlspecialchars($persona['PER_codigo']) . "'>";
                 echo $persona['PER_codigo'];
                 echo "</th>";
-                echo "<td class='px-6 py-4' data-dni='" . htmlspecialchars($persona['PER_dni']) . "'>";
+                echo "<td class='px-6 py-3' data-dni='" . htmlspecialchars($persona['PER_dni']) . "'>";
                 echo $persona['PER_dni'];
                 echo "</td>";
-                echo "<td class='px-6 py-4' data-nombre='" . htmlspecialchars($persona['PER_nombres']) . "'>";
+                echo "<td class='px-6 py-3' data-nombre='" . htmlspecialchars($persona['PER_nombres']) . "'>";
                 echo $persona['PER_nombres'] . ' ' . $persona['PER_apellidoPaterno'] . ' ' . $persona['PER_apellidoMaterno'];
                 echo "</td>";
-                echo "<td class='px-6 py-4' data-celular='" . htmlspecialchars($persona['PER_celular']) . "'>";
+                echo "<td class='px-6 py-3' data-celular='" . htmlspecialchars($persona['PER_celular']) . "'>";
                 echo $persona['PER_celular'];
                 echo "</td>";
-                echo "<td class='px-6 py-4' data-email='" . htmlspecialchars($persona['PER_email']) . "'>";
+                echo "<td class='px-6 py-3' data-email='" . htmlspecialchars($persona['PER_email']) . "'>";
                 echo $persona['PER_email'];
                 echo "</td>";
                 echo "</tr>";
@@ -106,7 +115,7 @@
           </table>
         </div>
       </div>
-      
+
     </div>
   </div>
 </div>

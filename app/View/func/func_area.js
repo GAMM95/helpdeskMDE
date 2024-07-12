@@ -1,4 +1,12 @@
 $(document).ready(function () {
+  toastr.options = {
+    "positionClass": "toast-bottom-right",
+    "progressBar": true,
+    "timeOut": "2000"
+  };
+});
+
+$(document).ready(function () {
   $('tr').click(function () {
     var cod = $(this).find('th[data-codarea]').data('codarea');
     var nom = $(this).find('th[data-area]').data('area');
