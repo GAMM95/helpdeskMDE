@@ -1,4 +1,4 @@
-<div class="pcoded-main-container">
+<div class="pcoded-main-container mt-5">
   <div class="pcoded-content">
     <?php
     global $recepcionRegistrada;

@@ -6,10 +6,9 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 ?>
 <!-- [ navigation menu ] start -->
-<nav class="pcoded-navbar  ">
-  <div class="navbar-wrapper  ">
-    <div class="navbar-content scroll-div ">
-
+<nav class="pcoded-navbar fixed top-0 left-0 right-0 z-50">
+  <div class="navbar-wrapper">
+    <div class="navbar-content scroll-div">
       <div class="">
         <div class="main-menu-header">
           <!-- <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image"> -->
@@ -33,7 +32,7 @@ if (session_status() == PHP_SESSION_NONE) {
         </div>
       </div>
 
-      <ul class="nav pcoded-inner-navbar ">
+      <ul class="nav pcoded-inner-navbar">
         <li class="nav-item pcoded-menu-caption">
         </li>
         <!-- Navegacion -->
