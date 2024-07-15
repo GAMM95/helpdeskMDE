@@ -35,49 +35,46 @@ if (session_status() == PHP_SESSION_NONE) {
 
       <ul class="nav pcoded-inner-navbar ">
         <li class="nav-item pcoded-menu-caption">
-          <!-- <label>Navegaci&oacute;n</label> -->
+          <label>Navegaci&oacute;n</label>
         </li>
-        <!-- Navegacion -->
         <li class="nav-item">
           <a href="inicio.php" class="nav-link ">
-            <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-            <span class="pcoded-mtext">Inicio </span>
+            <span class="pcoded-micon"> <i class="feather icon-home"></i></span>
+            <span class="pcoded-mtext">Dashboard </span>
           </a>
-        </li>
-
-        <li class="nav-item pcoded-menu-caption">
-          <label>Registros</label>
-        </li>
-
-        <!-- Registros -->
-        <li class="nav-item ">
-          <a href="registro-incidencia-user.php" class="nav-link ">
-            <span class="pcoded-micon"> <i class="feather icon-edit"></i> </span>
-            <span class="pcoded-mtext">Registrar incidencia</span>
-          </a>
-        </li>
-
-        <!-- Consultas -->
-        <li class="nav-item pcoded-menu-caption">
-          <label>Consultas</label>
-        </li>
-        <li class="nav-item">
-          <a href="consultar-incidencia-user.php" class="nav-link ">
-            <span class="pcoded-micon"> <i class="feather icon-clipboard"></i> </span>
-            <span class="pcoded-mtext">Consultar incidencias</span>
-          </a>
-        </li>
-
-        <li class="nav-item pcoded-menu-caption">
-          <label>Reportes</label>
         </li>
         <li class="nav-item pcoded-hasmenu">
           <a href="#!" class="nav-link ">
             <span class="pcoded-micon">
-              <i class="feather icon-file"></i>
+              <i class="feather icon-layout"></i>
             </span>
-            <span class="pcoded-mtext">Basic</span>
+            <span class="pcoded-mtext">Registrar</span>
           </a>
+          <ul class="pcoded-submenu">
+            <li><a href="registro-incidencia-admin.php">Incidencia</a></li>
+            <li><a href="registro-recepcion-admin.php">Recepcion</a></li>
+            <li><a href="registro-cierre-admin.php">Cierre</a></li>
+          </ul>
+        </li>
+        <li class="nav-item pcoded-hasmenu">
+          <a href="#!" class="nav-link ">
+            <span class="pcoded-micon">
+              <i class="feather icon-layout"></i>
+            </span>
+            <span class="pcoded-mtext">Consultar</span>
+          </a>
+          <ul class="pcoded-submenu">
+            <li><a href="layout-vertical.html">Incidencia</a></li>
+            <li><a href="layout-horizontal.html">Recepcion</a></li>
+            <li><a href="layout-horizontal.html">Cierre</a></li>
+          </ul>
+        </li>
+        
+        <li class="nav-item pcoded-menu-caption">
+          <label>Reportes</label>
+        </li>
+        <li class="nav-item pcoded-hasmenu">
+          <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Basic</span></a>
           <ul class="pcoded-submenu">
             <li><a href="bc_alert.html">Personas</a></li>
             <li><a href="bc_button.html">Usuarios</a></li>

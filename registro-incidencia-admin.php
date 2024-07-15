@@ -84,7 +84,7 @@ switch ($action) {
 
   <script src="./app/View/func/func_incidencia_admin.js"></script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script> -->

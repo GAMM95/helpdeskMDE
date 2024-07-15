@@ -1,68 +1,84 @@
 <div class="pcoded-main-container">
   <div class="pcoded-content">
-    <!-- Header -->
-    <h1 class="text-2xl font-bold mb-4">Registro de personas</h1>
+    <!-- Miga de pan -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h1 class="text-2xl font-bold mb-2">Registro de personas</h1>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href=""><i class="feather icon-server"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">Mantenedor</a></li>
+              <li class="breadcrumb-item"><a href="">Personas</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin de miga de pan -->
 
     <!-- Contenedor principal para el formulario y la tabla -->
     <div class="flex space-x-4">
-      
       <!-- FORMULARIO -->
       <div class="flex flex-col w-1/3">
-        <form id="formPersona" action="modulo-persona.php?action=registrar" method="POST" class="border bg-white shadow-md p-6 text-xs rounded-md flex flex-col mb-2">
-          <input type="hidden" id="form-action" name="action" value="registrar">
+        <form id="formPersona" action="modulo-persona.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 text-xs  flex flex-col mb-2">
           <h3 class="text-2xl font-plain mb-4 text-sm text-gray-400">Datos personales</h3>
 
-          <!-- DNI DE LA PERSONA -->
-          <div class="mb-2 sm:w-1/3">
-            <label for="dni" class="block mb-1 font-bold text-xs">DNI:</label>
-            <input type="text" id="txt_dni" name="dni" class="border p-2 w-full text-xs" maxlength="8" pattern="\d{1,8}" inputmode="numeric" title="Ingrese solo dígitos" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese DNI">
-          </div>
-
-          <!-- NOMBRES DE LA PERSONA -->
-          <div class="mb-2 sm:w-1/2">
-            <label for="nombre" class="block mb-1 font-bold text-xs">Nombres:</label>
-            <input type="text" id="txt_nombre" name="nombre" class="border p-2 w-full text-xs" pattern="[A-Za-z]+" title="Ingrese solo letras" placeholder="Ingrese nombres" required>
-          </div>
-
-          <div class="flex flex-wrap -mx-2">
-            <!-- APELLIDO PATERNO -->
-            <div class="w-full sm:w-1/2 px-2 mb-2">
-              <label for="apellidoPaterno" class="block mb-1 font-bold text-xs">Apellido Paterno:</label>
-              <input type="text" id="txt_apellidoPaterno" name="apellidoPaterno" class="border p-2 w-full text-xs" placeholder="Ingrese apellido paterno" required>
+          <div class="card-body">
+            <!-- DNI DE LA PERSONA -->
+            <div class="mb-2 sm:w-1/3">
+              <label for="dni" class="block mb-1 font-bold text-xs">DNI:</label>
+              <input type="text" id="txt_dni" name="dni" class="border p-2 w-full text-xs rounded-md" maxlength="8" pattern="\d{1,8}" inputmode="numeric" title="Ingrese solo dígitos" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese DNI">
             </div>
 
-            <!-- APELLIDO MATERNO -->
-            <div class="w-full sm:w-1/2 px-2 mb-2">
-              <label for="apellidoMaterno" class="block mb-1 font-bold text-xs">Apellido Materno:</label>
-              <input type="text" id="txt_apellidoMaterno" name="apellidoMaterno" class="border p-2 w-full text-xs" placeholder="Ingrese apellido materno" required>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap -mx-2">
-            <!-- CELULAR -->
-            <div class="w-full sm:w-1/3 px-2 mb-2">
-              <label for="celular" class="block mb-1 font-bold text-xs">Celular:</label>
-              <input type="tel" id="txt_celular" name="celular" class="border p-2 w-full text-xs" maxlength="9" pattern="\d{1,9}" inputmode="numeric" title="Ingrese el número de celular" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese celular">
+            <!-- NOMBRES DE LA PERSONA -->
+            <div class="mb-2 sm:w-1/2">
+              <label for="nombre" class="block mb-1 font-bold text-xs">Nombres:</label>
+              <input type="text" id="txt_nombre" name="nombre" class="border p-2 w-full text-xs rounded-md" pattern="[A-Za-z]+" title="Ingrese solo letras" placeholder="Ingrese nombres" required>
             </div>
 
-            <!-- EMAIL -->
-            <div class="w-full sm:w-2/3 px-2 mb-2">
-              <label for="email" class="block mb-1 font-bold text-xs">Email:</label>
-              <input type="email" id="txt_email" name="email" class="border p-2 w-full text-xs" placeholder="Ingrese email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Ingrese un correo electrónico válido.">
-            </div>
-          </div>
+            <div class="flex flex-wrap -mx-2">
+              <!-- APELLIDO PATERNO -->
+              <div class="w-full sm:w-1/2 px-2 mb-2">
+                <label for="apellidoPaterno" class="block mb-1 font-bold text-xs">Apellido Paterno:</label>
+                <input type="text" id="txt_apellidoPaterno" name="apellidoPaterno" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese apellido paterno" required>
+              </div>
 
-          <!-- BOTONES DEL FORMULARIO -->
-          <div class="flex justify-center space-x-4 mt-3">
-            <button type="submit" id="guardar-persona" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded">
-              Guardar
-            </button>
-            <button type="button" id="editar-persona" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded">
-              Editar
-            </button>
-            <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded">
-              Nuevo
-            </button>
+              <!-- APELLIDO MATERNO -->
+              <div class="w-full sm:w-1/2 px-2 mb-2">
+                <label for="apellidoMaterno" class="block mb-1 font-bold text-xs">Apellido Materno:</label>
+                <input type="text" id="txt_apellidoMaterno" name="apellidoMaterno" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese apellido materno" required>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap -mx-2">
+              <!-- CELULAR -->
+              <div class="w-full sm:w-1/3 px-2 mb-2">
+                <label for="celular" class="block mb-1 font-bold text-xs">Celular:</label>
+                <input type="tel" id="txt_celular" name="celular" class="border p-2 w-full text-xs rounded-md" maxlength="9" pattern="\d{1,9}" inputmode="numeric" title="Ingrese el número de celular" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese celular">
+              </div>
+
+              <!-- EMAIL -->
+              <div class="w-full sm:w-2/3 px-2 mb-2">
+                <label for="email" class="block mb-1 font-bold text-xs">Email:</label>
+                <input type="email" id="txt_email" name="email" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Ingrese un correo electrónico válido.">
+              </div>
+            </div>
+
+            <!-- BOTONES DEL FORMULARIO -->
+            <div class="flex justify-center space-x-4 mt-3">
+              <button type="submit" id="guardar-persona" class="btn-primary text-white font-bold py-2 px-4 rounded-md">
+                Guardar
+              </button>
+              <button type="button" id="editar-persona" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md">
+                Editar
+              </button>
+              <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md">
+                Nuevo
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -115,7 +131,7 @@
           </table>
         </div>
       </div>
-
     </div>
   </div>
 </div>
+<script src="https://cdn.tailwindcss.com"></script>

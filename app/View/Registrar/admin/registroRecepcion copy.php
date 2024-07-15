@@ -2,48 +2,31 @@
   <div class="pcoded-content">
     <?php
     global $recepcionRegistrada;
-    require_once './app/Model/IncidenciaModel.php';
-    $incidenciaModel = new IncidenciaModel();
-    $limit = 2; // Número de filas por página
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
-    $start = ($page - 1) * $limit; // Calcula el índice de inicio
-    $totalIncidenciasSinRecepcionar = $incidenciaModel->contarIncidenciasSinRecepcionar();
-    $totalPages = ceil($totalIncidenciasSinRecepcionar / $limit);
-    $incidencias = $incidenciaModel->obtenerIncidenciasSinRecepcionar($start, $limit);
     ?>
-
-
-    <!-- Segundo Apartado - Formulario de registro de Recepcion de incidencia -->
-    <!-- Miga de pan -->
-    <div class="page-header">
-      <div class="page-block">
-        <div class="row align-items-center">
-          <div class="col-md-12">
-            <div class="page-header-title">
-              <h1 class="text-2xl font-bold mb-2">Recepci&oacute;n de incidencias</h1>
-            </div>
-            <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a href=""><i class="feather icon-edit"></i></a></li>
-              <li class="breadcrumb-item"><a href="#">Registros</a></li>
-              <li class="breadcrumb-item"><a href="">Recepci&oacute;n</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Fin de miga de pan -->
-
     <!-- TODO: TITULO TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
-    <div id="noIncidencias" class="flex justify-between items-center mb-2">
+    <div class="flex justify-between items-center mb-2">
       <h1 class="text-xl text-gray-400">Incidencias no recepcionadas</h1>
       <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar..." oninput="filtrarTablaIncidenciasSinRecepcionar()" />
     </div>
 
     <!-- TODO: TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
-    <input type="hidden" id="incidenciaCount" value="<?php echo count($incidencias); ?>">
+    <?php
+    require_once './app/Model/IncidenciaModel.php';
+
+    $incidenciaModel = new IncidenciaModel();
+    $limit = 2; // Número de filas por página
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
+    $start = ($page - 1) * $limit; // Calcula el índice de inicio
+
+    $totalIncidenciasSinRecepcionar = $incidenciaModel->contarIncidenciasSinRecepcionar();
+    $totalPages = ceil($totalIncidenciasSinRecepcionar / $limit);
+
+    // Obtiene las incidencias sin recepcionar para la página actual
+    $incidencias = $incidenciaModel->obtenerIncidenciasSinRecepcionar($start, $limit);
+    ?>
 
     <div>
-      <div id="tablaContainer" class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
+      <div class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
         <table id="tablaIncidenciasSinRecepcionar" class="w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
@@ -92,9 +75,27 @@
       <?php endif; ?>
     </div>
 
+    <!-- Segundo Apartado - Formulario de registro de Recepcion de incidencia -->
+    <!-- Miga de pan -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h1 class="text-2xl font-bold mb-2">Recepci&oacute;n de incidencias</h1>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href=""><i class="feather icon-edit"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">Registros</a></li>
+              <li class="breadcrumb-item"><a href="">Recepci&oacute;n</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin de miga de pan -->
 
-
-    <div class="flex space-x-4 mt-3">
+    <div class="flex space-x-4">
 
       <!-- TODO: Formulario -->
       <div class="flex flex-col w-1/5">
@@ -114,7 +115,7 @@
               </div>
             </div>
 
-            <!-- PRIMERA FILA DEL FORMULARIO -->
+            <!-- TODO: PRIMERA FILA DEL FORMULARIO -->
             <div class="flex flex-wrap -mx-2 mb-2">
               <!-- FECHA DE RECEPCION -->
               <div class="w-full md:w-1/5 px-2 mb-2 hidden">
@@ -164,7 +165,7 @@
               </div>
             </div>
 
-            <!-- RECOPILACION DE VALORES DE CADA INPUT Y COMBOBOX -->
+            <!-- TODO: RECOPILACION DE VALORES DE CADA INPUT Y COMBOBOX     -->
             <script>
               document.getElementById('incidencia').value = '<?php echo $recepcionRegistrada ? $recepcionRegistrada['INC_numero'] : ''; ?>';
               document.getElementById('hora').value = '<?php echo $recepcionRegistrada ? $recepcionRegistrada['REC_hora'] : $hora_actual; ?>';
@@ -173,10 +174,11 @@
               document.getElementById('impacto').value = '<?php echo $recepcionRegistrada ? $recepcionRegistrada['IMP_codigo'] : ''; ?>';
             </script>
 
-            <!-- BOTONES DE FORMULARIO -->
+            <!-- TODO: BOTONES DE FORMULARIO -->
             <div class="flex flex-wrap -mx-2">
-              <div class="w-full px-2">
+              <div class="w-full px-2 mb-3">
                 <div class="flex justify-center space-x-4">
+
                   <button type="submit" id="guardar-recepcion" class="btn-primary text-white font-bold py-2 px-4 rounded-md w-full md:w-auto">
                     Guardar
                   </button>
@@ -193,17 +195,15 @@
             </div>
           </div>
         </form>
-
       </div>
 
       <!-- TODO: TABLA DE INCIDENCIAS  RECEPCIONADAS -->
       <div class="w-4/5">
-        <div class="relative max-h-[500px] overflow-x-hidden shadow-md sm:rounded-lg">
+        <div class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
           <table id="tablaIncidenciasRecepcionadas" class="w-full text-xs text-left rtl:text-right text-gray-500">
             <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
               <tr>
-                <th scope="col" class="px-6 py-2 hidden">N° Recepcion</th>
-                <th scope="col" class="px-6 py-2">N° incidencia</th>
+                <th scope="col" class="px-6 py-2">N°</th>
                 <th scope="col" class="px-6 py-2">Fecha de recepci&oacute;n</th>
                 <th scope="col" class="px-6 py-2">&Aacute;rea</th>
                 <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
@@ -222,12 +222,9 @@
 
                 // echo "<tr class='second-table bg-white hover:bg-green-100 hover:scale-[101%] transition-all  border-b '>";
                 echo "<tr class='second-table bg-white hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id='{$recepcion['REC_numero']}'>";
-                echo "<th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'>";
+                echo "<th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap '>";
                 echo $recepcion['REC_numero'];
                 echo "</th>";
-                echo "<td class='px-6 py-3'>";
-                echo $recepcion['INC_numero'];
-                echo "</td>";
                 echo "<td class='px-6 py-3'>";
                 echo $recepcion['fechaRecepcionFormateada'];
                 echo "</td>";
@@ -259,6 +256,4 @@
     </div>
   </div>
 </div>
-
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="./app/View/func/func_recepcion_admin.js"></script>

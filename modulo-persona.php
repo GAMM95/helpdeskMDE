@@ -1,9 +1,9 @@
 <?php
 $action = $_GET['action'] ?? '';
+$state = $_GET['state'] ?? '';
 $CodPersona = $_GET['PER_codigo'] ?? '';
 
 require_once 'app/Controller/PersonaController.php';
-require_once 'app/Model/PersonaModel.php';
 
 // Crear una instancia del controlador PersonaController
 $personaController = new PersonaController();
@@ -27,6 +27,9 @@ switch ($action) {
     break;
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="es">
 
 <head>
   <title>Sistema HelpDesk MDE</title>
@@ -60,11 +63,11 @@ switch ($action) {
   ?>
   <!-- [ navigation menu ] end -->
 
-<!-- [ Header ] start -->
-<?php
-include('app/View/partials/admin/header.php');
-?>
-<!-- [ Header ] end -->
+  <!-- [ Header ] start -->
+  <?php
+  include('app/View/partials/admin/header.php');
+  ?>
+  <!-- [ Header ] end -->
 
   <!-- [ Main Content ] start -->
   <?php

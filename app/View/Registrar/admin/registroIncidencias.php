@@ -3,15 +3,33 @@
     <?php
     global $incidenciaRegistrada;
     ?>
-    <!-- Header -->
-    <h1 class="text-xl font-bold mb-4">Registro de Incidencia</h1>
+    
+    <!-- Miga de pan -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h1 class="text-2xl font-bold mb-2">Registro de incidencias</h1>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href=""><i class="feather icon-edit"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">Registros</a></li>
+              <li class="breadcrumb-item"><a href="">Incidencias</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin de miga de pan -->
+
     <!-- TODO: FORMULARIO -->
-    <form id="formIncidencia" action="registro-incidencia-admin.php?action=registrar" method="POST" class="border bg-white shadow-md p-6 w-full text-xs rounded-md mb-2">
+    <form id="formIncidencia" action="registro-incidencia-admin.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
 
       <!-- TODO: FILA OCULTA DEL FORMULARIO - NUMERO DE INCIDENCIA -->
       <div class="flex items-center mb-4 hidden">
         <label for="numero_incidencia" class="block font-bold mb-1 mr-1 text-lime-500">Nro Incidencia:</label>
-        <input type="text" id="numero_incidencia" name="numero_incidencia" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-sm" readonly>
+        <input type="text" id="numero_incidencia" name="numero_incidencia" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs" readonly>
       </div>
 
       <!-- TODO: PRIMERA FILA DEL FORMULARIO  -->
@@ -61,7 +79,7 @@
         <!-- CODIGO PATROMONIAL -->
         <div class="w-full sm:w-1/3 px-2 mb-2">
           <label for="codigo_patrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
-          <input type="text" id="codigo_patrimonial" name="codigo_patrimonial" class="border p-2 w-full text-xs" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); " placeholder="Ingrese c&oacute;digo patrimonial">
+          <input type="text" id="codigo_patrimonial" name="codigo_patrimonial" class="border p-2 w-full text-xs rounded-md" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); " placeholder="Ingrese c&oacute;digo patrimonial">
         </div>
       </div>
 
@@ -71,18 +89,18 @@
         <!-- ASUNTO DE LA INCIDENCIA -->
         <div class="w-full sm:w-1/4 px-2 mb-2">
           <label for="asunto" class="block mb-1 font-bold text-xs">Asunto:</label>
-          <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs" placeholder="Ingrese asunto">
+          <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese asunto">
         </div>
 
         <div class="w-full sm:w-1/4 px-2 mb-2">
           <label for="documento" class="block mb-1 font-bold text-xs">Documento:</label>
-          <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs" placeholder="Ingrese documento">
+          <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese documento">
         </div>
 
         <!-- DESCRIPCION DE LA INCIDENCIA -->
         <div class="w-full md:w-1/2 px-2 mb-2">
           <label for="descripcion" class="block mb-1 font-bold text-xs">Descripci&oacute;n:</label>
-          <input type="text" id="descripcion" name="descripcion" class="border p-2 w-full text-xs mb-3" placeholder="Ingrese descripci&oacute;n (opcional)">
+          <input type="text" id="descripcion" name="descripcion" class="border p-2 w-full text-xs mb-3 rounded-md" placeholder="Ingrese descripci&oacute;n (opcional)">
         </div>
       </div>
 
@@ -102,13 +120,13 @@
 
       <!-- TODO: BOTONES -->
       <div class="flex justify-center space-x-4">
-        <button type="submit" id="guardar-incidencia" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded">
+        <button type="submit" id="guardar-incidencia" class="btn-primary  text-white font-bold  py-2 px-4 rounded-md">
           Guardar
         </button>
-        <button type="button" id="editar-incidencia" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded">
+        <button type="button" id="editar-incidencia" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md">
           Editar
         </button>
-        <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded">
+        <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md">
           Nuevo
         </button>
       </div>
@@ -181,3 +199,4 @@
     </div>
   </div>
 </div>
+<script src="https://cdn.tailwindcss.com"></script>

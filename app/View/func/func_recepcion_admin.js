@@ -214,3 +214,19 @@ $(document).ready(function () {
 
 });
 
+// //TODO: Verificar la cantidad de registros y ocultar/ mostrar elementos
+document.addEventListener("DOMContentLoaded", function () {
+  const tablaContainer = document.getElementById("tablaContainer");
+  const noIncidencias = document.getElementById("noIncidencias");
+
+  // Ocultar tabla y buscador superior si no hay registros
+  if (parseInt(document.getElementById("incidenciaCount").value) === 0) {
+    // if (<? php echo count($incidencias); ?> === 0) {
+
+    tablaContainer.classList.add("hidden");
+    noIncidencias.classList.add("hidden");
+  } else {
+    tablaContainer.classList.remove("hidden");
+    noIncidencias.classList.remove("hidden");
+  }
+});

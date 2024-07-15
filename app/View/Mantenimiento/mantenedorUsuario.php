@@ -1,13 +1,30 @@
 <div class="pcoded-main-container">
   <div class="pcoded-content">
-    <!-- Header -->
-    <h1 class="text-2xl font-bold mb-4">Registro de usuarios</h1>
+    
+    <!-- Miga de pan -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h1 class="text-2xl font-bold mb-2">Registro de usuarios</h1>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href=""><i class="feather icon-server"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">Mantenedor</a></li>
+              <li class="breadcrumb-item"><a href="">Usuarios</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin de miga de pan -->
 
     <div class="flex space-x-4">
 
       <!-- TODO: FORMULARIO -->
       <div class="flex flex-col w-1/3">
-        <form id="formUsuario" action="modulo-usuario.php?action=registrar" method="POST" class="border bg-white shadow-md p-6  w-full text-xs rounded-md">
+        <form id="formUsuario" action="modulo-usuario.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6  w-full text-xs ">
           <input type="hidden" id="form-action" name="action" value="registrar">
 
           <!-- CAMPO ESCONDIDO -->
@@ -38,20 +55,20 @@
           <!-- SELECCION DE ROL -->
           <div class="w-full sm:w-1/2  mb-2">
             <label for="rol" class="block mb-1 font-bold text-xs">Rol:</label>
-            <select id="cbo_rol" name="rol" class="border p-2 w-full text-xs cursor-pointer"></select>
+            <select id="cbo_rol" name="rol" class="border p-2 w-full text-xs cursor-pointer rounded-md"></select>
           </div>
 
           <div class="flex flex-wrap -mx-2">
             <!-- NOMBRE DE USUARIO -->
             <div class="w-full sm:w-1/2 px-2 mb-2">
               <label for="nombre" class="block mb-1 font-bold text-xs">Usuario:</label>
-              <input type="text" id="txt_nombreUsuario" name="nombre" class="border p-2 w-full text-xs" placeholder="Ingrese username">
+              <input type="text" id="txt_nombreUsuario" name="nombre" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese username">
             </div>
 
             <!-- CONTRASEÑA -->
             <div class="w-full sm:w-1/2 px-2 mb-2">
               <label for="password" class="block mb-1 font-bold text-xs">Contrase&ntilde;a:</label>
-              <input type="text" id="txt_password" name="password" class="border p-2 w-full text-xs" placeholder="Ingrese contraseña">
+              <input type="text" id="txt_password" name="password" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese contraseña">
             </div>
           </div>
 
@@ -66,9 +83,9 @@
 
           <!-- BOTONES -->
           <div class="flex justify-center space-x-4 mt-8 mb-2">
-            <button type="submit" id="guardar-usuario" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded"> Guardar </button>
-            <button type="button" id="editar-usuario" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded"> Editar </button>
-            <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded"> Nuevo </button>
+            <button type="submit" id="guardar-usuario" class="btn-primary text-white font-bold py-2 px-4 rounded-md"> Guardar </button>
+            <button type="button" id="editar-usuario" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md"> Editar </button>
+            <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md"> Nuevo </button>
           </div>
         </form>
       </div>
@@ -138,6 +155,10 @@
                     <td class="px-6 py-4"><?= htmlspecialchars($usuario['EST_descripcion']); ?></td>
                     <td class="px-6 py-4">
                       <div class="flex flex-col space-y-2">
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input cursor-pointer" id="customswitch1">
+                          <label class="custom-control-label cursor-pointer" for="customswitch1">Habilitar</label>
+                        </div>
                         <button class="flex items-center justify-center text-white font-bold py-2 px-4 rounded 
             <?= $isActive ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700' ?>" <?= $isActive ? 'disabled' : '' ?>>
                           <i class="bx bxs-bulb <?= $isActive ? 'text-white' : 'text-white' ?>"></i>

@@ -79,123 +79,133 @@
     <!-- Segundo Apartado - Formulario de registro de Cierre de incidencia -->
     <h1 class="text-xl font-bold text-gray-800 mt-4 mb-2">Cierre de incidencia</h1>
     <!-- TODO: Formulario -->
-    <div class="bg-white shadow-md p-4 mb-2 rounded-lg">
-      <form id="formCierre" action="registro-cierre-admin.php?action=registrar" method="POST">
+    <form id="formCierre" action="registro-cierre-admin.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
 
-        <!-- NUMERO DE RECEPCION -->
-        <div class="flex justify-center mx-2 mb-4">
-          <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center ">
-            <label for="recepcion" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero de Recepci&oacute;n:</label>
-            <input type="text" id="recepcion" name="recepcion" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
-          </div>
-
-          <!-- INPUT ESCONDIDO PARA EL NUMERO DE CIERRE -->
-          <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
-            <label for="num_cierre" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero Cierre:</label>
-            <input type="text" id="num_cierre" name="num_cierre" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" disabled>
-          </div>
+      <!-- NUMERO DE RECEPCION -->
+      <div class="flex justify-center mx-2 mb-4">
+        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center ">
+          <label for="recepcion" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero de Recepci&oacute;n:</label>
+          <input type="text" id="recepcion" name="recepcion" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
         </div>
 
-        <!-- TODO: PRIMERA FILA DEL FORMULARIO -->
-        <div class="flex flex-wrap -mx-2">
-          <!-- FECHA DE CIERRE -->
-          <div class="w-full md:w-1/4 px-2 mb-2">
-            <label for="fecha_cierre" class="block font-bold mb-1">Fecha de Cierre:</label>
-            <input type="date" id="fecha_cierre" name="fecha_cierre" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo date('Y-m-d'); ?>" readonly>
-          </div>
+        <!-- INPUT ESCONDIDO PARA EL NUMERO DE CIERRE -->
+        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
+          <label for="num_cierre" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero Cierre:</label>
+          <input type="text" id="num_cierre" name="num_cierre" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" disabled>
+        </div>
+      </div>
 
-          <!-- HORA DE CIERRE -->
-          <div class="w-full md:w-1/4 px-2 mb-2">
-            <label for="hora" class="block font-bold mb-1">Hora:</label>
-            <?php
-            // Establecer la zona horaria deseada
-            date_default_timezone_set('America/Lima');
-            $fecha_actual = date('Y-m-d');
-            // Obtener la hora actual en formato de 24 horas (HH:MM)
-            $hora_actual = date('H:i:s');
-            ?>
-            <input type="text" id="hora" name="hora" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $hora_actual; ?>" readonly>
-          </div>
-
-          <!-- USUARIO QUE HARA EL CIERRE -->
-          <div class="w-full md:w-1/4 px-2 mb-2">
-            <label for="usuarioDisplay" class="block font-bold mb-1">Usuario:</label>
-            <input type="text" id="usuarioDisplay" name="usuarioDisplay" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['usuario']; ?>" readonly>
-          </div>
-          <div class="w-full md:w-1/4 px-2 mb-2 hidden">
-            <label for="usuario" class="block font-bold mb-1">Usuario:</label>
-            <input type="text" id="usuario" name="usuario" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['codigoUsuario']; ?>" readonly>
-          </div>
-
-          <!-- OPERATIVIDAD -->
-          <div class="w-full md:w-1/4 px-2 mb-2">
-            <label for="operatividad" class="block font-bold mb-1">Operatividad:</label>
-            <select id="cbo_operatividad" name="operatividad" class="border p-2 w-full text-xs cursor-pointer">
-            </select>
-          </div>
+      <!-- TODO: PRIMERA FILA DEL FORMULARIO -->
+      <div class="flex flex-wrap -mx-2">
+        <!-- FECHA DE CIERRE -->
+        <div class="w-full md:w-1/4 px-2 mb-2 hidden">
+          <label for="fecha_cierre" class="block font-bold mb-1">Fecha de Cierre:</label>
+          <input type="date" id="fecha_cierre" name="fecha_cierre" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo date('Y-m-d'); ?>" readonly>
         </div>
 
-        <!-- TODO: SEGUNDA FILA DEL FORMULARIO -->
-        <div class="flex flex-wrap -mx-2 ">
-          <!-- ASUNTO DEL CIERRE -->
-          <div class="w-full md:w-1/3 px-2 mb-2">
-            <label for="asunto" class="block mb-1 font-bold text-xs">Asunto:</label>
-            <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs" placeholder="Ingrese asunto">
-          </div>
-
-          <!-- DOCUMENTO DE CIERRE -->
-          <div class="w-full md:w-1/3 px-2 mb-2">
-            <label for="documento" class="block mb-1 font-bold text-xs">Documento:</label>
-            <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs" placeholder="Ingrese documento de cierre">
-          </div>
-
-          <!-- DIAGNOSTICO DEL CIERRE -->
-          <div class="w-full md:w-1/3 px-2 mb-2">
-            <label for="diagnostico" class="block mb-1 font-bold text-xs">Diagn&oacute;stico:</label>
-            <input type="text" id="diagnostico" name="diagnostico" class="border p-2 w-full text-xs" placeholder="Ingrese diagnóstico">
-          </div>
+        <!-- HORA DE CIERRE -->
+        <div class="w-full md:w-1/4 px-2 mb-2 hidden">
+          <label for="hora" class="block font-bold mb-1">Hora:</label>
+          <?php
+          // Establecer la zona horaria deseada
+          date_default_timezone_set('America/Lima');
+          $fecha_actual = date('Y-m-d');
+          // Obtener la hora actual en formato de 24 horas (HH:MM)
+          $hora_actual = date('H:i:s');
+          ?>
+          <input type="text" id="hora" name="hora" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $hora_actual; ?>" readonly>
         </div>
 
-        <!-- TODO: TERCELA FILA DEL FORMULARIO -->
-        <div class="flex flex-wrap -mx-2">
-          <!-- SOLUCION DE LA INCIDENCIA -->
-          <div class="w-full md:w-1/2 px-2 mb-2">
-            <label for="solucion" class="block mb-1 font-bold text-xs">Soluci&oacute;n:</label>
-            <input type="text" id="solucion" name="solucion" class="border p-2 w-full text-xs" placeholder="Ingrese solución (opcional)">
-          </div>
-
-          <!-- RECOMENDACIONES -->
-          <div class="w-full md:w-1/2 px-2 mb-2">
-            <label for="recomendaciones" class="block mb-1 font-bold text-xs">Recomendaciones:</label>
-            <input type="text" id="recomendaciones" name="recomendaciones" class="border p-2 w-full text-xs" placeholder="Ingrese recomendaciones (opcional)">
-          </div>
+        <!-- USUARIO QUE HARA EL CIERRE -->
+        <div class="w-full md:w-1/4 px-2 mb-2 hidden">
+          <label for="usuarioDisplay" class="block font-bold mb-1">Usuario:</label>
+          <input type="text" id="usuarioDisplay" name="usuarioDisplay" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['usuario']; ?>" readonly>
+        </div>
+        <div class="w-full md:w-1/4 px-2 mb-2 hidden">
+          <label for="usuario" class="block font-bold mb-1">Usuario:</label>
+          <input type="text" id="usuario" name="usuario" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['codigoUsuario']; ?>" readonly>
         </div>
 
-        <!-- TODO: RECOPILACION DE VALORES DE CADA INPUT Y COMBOBOX     -->
-        <script>
-          document.getElementById('recepcion').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_codigo'] : ''; ?>';
-          document.getElementById('fecha').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['CIE_fecha'] : $fecha_actual; ?>';
-          document.getElementById('hora').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_hora'] : $hora_actual; ?>';
-          document.getElementById('operatividad').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['OPE_codigo'] : ''; ?>';
-          document.getElementById('usuarioDisplay').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['codigoUsuario'] : $_SESSION['usuario']; ?>';
-          document.getElementById('usuario').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['codigoUsuario'] : $_SESSION['codigoUsuario']; ?>';
-          document.getElementById('asunto').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_asunto'] : ''; ?>';
-          document.getElementById('documento').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_documento'] : ''; ?>';
-          document.getElementById('diagnostico').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_diagnostico'] : ''; ?>';
-          document.getElementById('solucion').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_solucion'] : ''; ?>';
-          document.getElementById('recomendaciones').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_recomendaciones'] : ''; ?>';
-        </script>
-
-        <!-- TODO: BOTONES DEL FORMULARIO -->
-        <div class="flex justify-center space-x-4 mt-2">
-          <button type="submit" id="guardar-cierre" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded">Guardar</button>
-          <button type="button" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded">Editar</button>
-          <!-- <button type="button" id="imprimirDatos" class="bg-yellow-500 text-white font-bold hover:bg-yellow-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Imprimir</button> -->
-          <!-- <button type="button" id="limpiarCampos" class="bg-red-500 text-white font-bold hover:bg-red-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Limpiar</button> -->
-          <button type="button" id="nuevoRegistro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Nuevo</button>
+        <!-- OPERATIVIDAD -->
+        <div class="w-full md:w-1/5 px-2 mb-2">
+          <label for="operatividad" class="block font-bold mb-1 text-xs">Operatividad:</label>
+          <select id="cbo_operatividad" name="operatividad" class="border p-2 w-full text-xs cursor-pointer">
+          </select>
         </div>
-      </form>
-    </div>
+
+        <!-- ASUNTO DEL CIERRE -->
+        <div class="w-full md:w-2/5 px-2 mb-2">
+          <label for="asunto" class="block mb-1 font-bold text-xs">Asunto:</label>
+          <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese asunto de cierre">
+        </div>
+
+        <!-- DOCUMENTO DE CIERRE -->
+        <div class="w-full md:w-2/5 px-2 mb-2">
+          <label for="documento" class="block mb-1 font-bold text-xs">Documento:</label>
+          <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese documento de cierre">
+        </div>
+      </div>
+
+      <!-- TODO: SEGUNDA FILA DEL FORMULARIO -->
+      <div class="flex flex-wrap -mx-2 ">
+        <!-- ASUNTO DEL CIERRE -->
+        <div class="w-full md:w-1/3 px-2 mb-2">
+          <label for="asunto" class="block mb-1 font-bold text-xs">Asunto:</label>
+          <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs" placeholder="Ingrese asunto">
+        </div>
+
+        <!-- DOCUMENTO DE CIERRE -->
+        <div class="w-full md:w-1/3 px-2 mb-2">
+          <label for="documento" class="block mb-1 font-bold text-xs">Documento:</label>
+          <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs" placeholder="Ingrese documento de cierre">
+        </div>
+
+        <!-- DIAGNOSTICO DEL CIERRE -->
+        <div class="w-full md:w-1/3 px-2 mb-2">
+          <label for="diagnostico" class="block mb-1 font-bold text-xs">Diagn&oacute;stico:</label>
+          <input type="text" id="diagnostico" name="diagnostico" class="border p-2 w-full text-xs" placeholder="Ingrese diagnóstico">
+        </div>
+      </div>
+
+      <!-- TODO: TERCELA FILA DEL FORMULARIO -->
+      <div class="flex flex-wrap -mx-2">
+        <!-- SOLUCION DE LA INCIDENCIA -->
+        <div class="w-full md:w-1/2 px-2 mb-2">
+          <label for="solucion" class="block mb-1 font-bold text-xs">Soluci&oacute;n:</label>
+          <input type="text" id="solucion" name="solucion" class="border p-2 w-full text-xs" placeholder="Ingrese solución (opcional)">
+        </div>
+
+        <!-- RECOMENDACIONES -->
+        <div class="w-full md:w-1/2 px-2 mb-2">
+          <label for="recomendaciones" class="block mb-1 font-bold text-xs">Recomendaciones:</label>
+          <input type="text" id="recomendaciones" name="recomendaciones" class="border p-2 w-full text-xs" placeholder="Ingrese recomendaciones (opcional)">
+        </div>
+      </div>
+
+      <!-- TODO: RECOPILACION DE VALORES DE CADA INPUT Y COMBOBOX     -->
+      <script>
+        document.getElementById('recepcion').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_codigo'] : ''; ?>';
+        document.getElementById('fecha').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['CIE_fecha'] : $fecha_actual; ?>';
+        document.getElementById('hora').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_hora'] : $hora_actual; ?>';
+        document.getElementById('operatividad').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['OPE_codigo'] : ''; ?>';
+        document.getElementById('usuarioDisplay').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['codigoUsuario'] : $_SESSION['usuario']; ?>';
+        document.getElementById('usuario').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['codigoUsuario'] : $_SESSION['codigoUsuario']; ?>';
+        document.getElementById('asunto').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_asunto'] : ''; ?>';
+        document.getElementById('documento').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_documento'] : ''; ?>';
+        document.getElementById('diagnostico').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_diagnostico'] : ''; ?>';
+        document.getElementById('solucion').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_solucion'] : ''; ?>';
+        document.getElementById('recomendaciones').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_recomendaciones'] : ''; ?>';
+      </script>
+
+      <!-- TODO: BOTONES DEL FORMULARIO -->
+      <div class="flex justify-center space-x-4 mt-2">
+        <button type="submit" id="guardar-cierre" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded">Guardar</button>
+        <button type="button" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded">Editar</button>
+        <!-- <button type="button" id="imprimirDatos" class="bg-yellow-500 text-white font-bold hover:bg-yellow-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Imprimir</button> -->
+        <!-- <button type="button" id="limpiarCampos" class="bg-red-500 text-white font-bold hover:bg-red-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Limpiar</button> -->
+        <button type="button" id="nuevoRegistro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Nuevo</button>
+      </div>
+    </form>
 
     <!-- TODO: TABLA DE INCIDENCIAS REGISTRADAS -->
     <?php
@@ -264,3 +274,4 @@
 </div>
 <!-- <script src="./app/View/func/func_cierre.js"></script> -->
 <script src="./app/View/func/func_cierre_admin.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>

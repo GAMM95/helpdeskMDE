@@ -35,14 +35,19 @@ if (session_status() == PHP_SESSION_NONE) {
 
       <ul class="nav pcoded-inner-navbar ">
         <li class="nav-item pcoded-menu-caption">
-          <label>Navegaci&oacute;n</label>
         </li>
+        <!-- Navegacion -->
         <li class="nav-item">
           <a href="inicio.php" class="nav-link ">
             <span class="pcoded-micon"> <i class="feather icon-home"></i></span>
-            <span class="pcoded-mtext">Dashboard </span>
+            <span class="pcoded-mtext">Inicio </span>
           </a>
         </li>
+
+        <li class="nav-item pcoded-menu-caption">
+          <label>Registros</label>
+        </li>
+        <!-- Registros -->
         <li class="nav-item pcoded-hasmenu">
           <a href="#!" class="nav-link ">
             <span class="pcoded-micon">
@@ -56,6 +61,11 @@ if (session_status() == PHP_SESSION_NONE) {
             <li><a href="registro-cierre-admin.php">Cierre</a></li>
           </ul>
         </li>
+
+        <!-- Consultas -->
+        <li class="nav-item pcoded-menu-caption">
+          <label>Consultas</label>
+        </li>
         <li class="nav-item pcoded-hasmenu">
           <a href="#!" class="nav-link ">
             <span class="pcoded-micon">
@@ -65,9 +75,13 @@ if (session_status() == PHP_SESSION_NONE) {
           </a>
           <ul class="pcoded-submenu">
             <li><a href="consultar-incidencia-admin.php">Incidencia</a></li>
-            <li><a href="consultar-recepcion-admin.php">Recepci&oacute;n</a></li>
             <li><a href="consultar-cierre-admin.php">Cierre</a></li>
           </ul>
+        </li>
+
+        <!-- Mantenedor -->
+        <li class="nav-item pcoded-menu-caption">
+          <label>Mantenedores</label>
         </li>
         <li class="nav-item pcoded-hasmenu">
           <a href="#!" class="nav-link ">
@@ -83,6 +97,8 @@ if (session_status() == PHP_SESSION_NONE) {
             <li><a href="modulo-categoria.php">Categor&iacute;as</a></li>
           </ul>
         </li>
+
+
         <li class="nav-item pcoded-menu-caption">
           <label>Reportes</label>
         </li>

@@ -64,16 +64,28 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('#cbo_area').select2({
     placeholder: "Seleccione un área",
-    allowClear: true
+    allowClear: true,
+    width: '100%',
+    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
+    language: {
+      noResults: function () {
+        return "No se encontraron resultados";
+      }
+    }
   });
-  $(document).ready(function () {
-    $('#cbo_categoria').select2({
-      placeholder: "Seleccione una categoria",
-      allowClear: true
-    });
+
+  $('#cbo_categoria').select2({
+    placeholder: "Seleccione una categoria",
+    allowClear: true,
+    width: '100%',
+    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
+    language: {
+      noResults: function () {
+        return "No se encontraron resultados";
+      }
+    }
   });
 });
-
 
 
 // TODO: CAMBIAR PAGINAS DE LA TABLA DE INCIDENCIAS

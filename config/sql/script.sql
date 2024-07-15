@@ -154,7 +154,7 @@ CREATE PROCEDURE SP_Usuario_login(
 ) AS BEGIN
 SET
 	NOCOUNT ON;
-	SELECT u.USU_nombre, u.USU_password, p.PER_nombres, p.PER_apellidoPaterno, r.ROL_nombre, a.ARE_codigo, a.ARE_nombre
+	SELECT u.USU_nombre, u.USU_password, p.PER_nombres, p.PER_apellidoPaterno, r.ROL_codigo, r.ROL_nombre, a.ARE_codigo, a.ARE_nombre
 	FROM USUARIO u
 	INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
 	INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo
@@ -458,3 +458,12 @@ FROM INCIDENCIA
 WHERE INC_FECHA >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0)
   AND INC_FECHA < DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()) + 1, 0)
 
+  SELECT i.INC_numero, (CONVERT(VARCHAR(10), REC_fecha,103) + ' - ' + CONVERT(VARCHAR(5), REC_hora, 108)) AS fechaRecepcionFormateada, a.ARE_nombre, i.INC_codigoPatrimonial, INC_asunto, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre
+        FROM RECEPCION r 
+        INNER JOIN INCIDENCIA i ON i.INC_numero = r.INC_numero
+        INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
+        INNER JOIN PRIORIDAD p ON p.PRI_codigo = r.PRI_codigo
+        INNER JOIN IMPACTO imp ON imp.IMP_codigo = r.IMP_codigo
+        INNER JOIN USUARIO u ON u.USU_codigo = r.USU_codigo
+        WHERE r.EST_codigo = 4
+        ORDER BY i.INC_numero DESC

@@ -54,21 +54,16 @@ $controller = new InicioController();
   <!-- [ Pre-loader ] End -->
   <!-- [ navigation menu ] start -->
   <?php
-  include('app/View/partials/admin/navbar.php');
+  if ($rol === 'Administrador' || $rol === 'Soporte') {
+    include('app/View/partials/admin/navbar.php');
+    include('app/View/partials/admin/header.php');
+    include('app/View/Inicio/admin/inicio.php');
+  } else {
+    include('app/View/partials/user/navbar.php');
+    include('app/View/partials/user/header.php');
+    include('app/View/Inicio/user/inicio.php');
+  }
   ?>
-  <!-- [ navigation menu ] end -->
-
-  <!-- [ Header ] start -->
-  <?php
-  include('app/View/partials/admin/header.php');
-  ?>
-  <!-- [ Header ] end -->
-
-  <!-- [ Main Content ] start -->
-  <?php
-  include('app/View/Inicio/admin/inicio.php');
-  ?>
-  <!-- [ Main Content ] end -->
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>

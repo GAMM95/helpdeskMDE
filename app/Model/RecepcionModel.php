@@ -118,7 +118,7 @@ class RecepcionModel extends Conexion
     $conector = parent::getConexion();
     if ($conector != null) {
       try {
-        $sql = "SELECT REC_numero, CONCAT(CONVERT(VARCHAR(10),REC_fecha,103),' ', CONVERT(VARCHAR(5), REC_hora, 108)) AS fechaRecepcionFormateada,
+        $sql = "SELECT REC_numero, i.INC_numero, CONCAT(CONVERT(VARCHAR(10),REC_fecha,103),' ', CONVERT(VARCHAR(5), REC_hora, 108)) AS fechaRecepcionFormateada,
         a.ARE_nombre, INC_codigoPatrimonial, c.CAT_nombre, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre
         FROM RECEPCION r
         INNER JOIN INCIDENCIA i ON i.INC_numero = r.INC_numero
@@ -127,7 +127,7 @@ class RecepcionModel extends Conexion
         INNER JOIN PRIORIDAD p ON p.PRI_codigo = r.PRI_codigo
         INNER JOIN IMPACTO imp ON imp.IMP_codigo = r.IMP_codigo
         INNER JOIN USUARIO u ON u.USU_codigo = r.USU_codigo
-        ORDER BY REC_numero DESC
+        ORDER BY  i.INC_numero DESC
 ";
         $stmt = $conector->prepare($sql);
         $stmt->execute();

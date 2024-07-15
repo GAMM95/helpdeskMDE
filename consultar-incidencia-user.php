@@ -1,36 +1,26 @@
 <?php
+
 $action = $_GET['action'] ?? '';
-$CodArea = $_GET['ARE_codigo'] ?? '';
+$state = $_GET['state'] ?? '';
+$INC_numero = $_GET['INC_numero'] ?? '';
 
-require_once 'app/Controller/AreaController.php';
-require_once 'app/Model/AreaModel.php';
+require_once 'app/Controller/incidenciaController.php';
+$incidenciaController = new IncidenciaController();
+$incidenciaModel = new IncidenciaModel();
 
-// Crear una instancia del controlador CategoriaController
-$areaController = new AreaController();
-$areaModel = new AreaModel();
-
-if ($CodArea != '') {
-  $AreaRegistrada = $areaModel->obtenerAreaPorId($CodArea);
+if ($INC_numero != '') {
+  global $incidenciaRegistrada;
+  $incidenciaRegistrada = $incidenciaModel->obtenerIncidenciaPorId($INC_numero);
 } else {
-  $AreaRegistrada = null;
+  $incidenciaRegistrada = null;
 }
 
 switch ($action) {
   case 'registrar':
-    $areaController->registrarArea();
-    break;
-  case 'editar':
-    $areaController->editarArea();
-    break;
-  default:
-    // Código por defecto o mostrar alguna vista por defecto
+    $incidenciaController->registrarIncidencia();
     break;
 }
 ?>
-
-
-<!DOCTYPE html>
-<html lang="es">
 
 <head>
   <title>Sistema HelpDesk MDE</title>
@@ -60,19 +50,19 @@ switch ($action) {
   <!-- [ Pre-loader ] End -->
   <!-- [ navigation menu ] start -->
   <?php
-  include('app/View/partials/admin/navbar.php');
+  include('app/View/partials/user/navbar.php');
   ?>
   <!-- [ navigation menu ] end -->
 
   <!-- [ Header ] start -->
   <?php
-  include('app/View/partials/admin/header.php');
+  include('app/View/partials/user/header.php');
   ?>
   <!-- [ Header ] end -->
 
   <!-- [ Main Content ] start -->
   <?php
-  include('app/View/Mantenimiento/mantenedorArea.php');
+  include('app/View/Consultar/user/consultaIncidencia.php');
   ?>
   <!-- [ Main Content ] end -->
 
@@ -82,8 +72,14 @@ switch ($action) {
   <script src="dist/assets/js/plugins/bootstrap.min.js"></script>
   <script src="dist/assets/js/pcoded.min.js"></script>
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
+
+
+  <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
-  <script src="./app/View/func/func_area.js"></script>
+
+  <script src="./app/View/func/func_consulta_incidencia_user.js"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
