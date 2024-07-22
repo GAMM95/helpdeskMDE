@@ -36,14 +36,14 @@
       <div class="flex flex-wrap -mx-2">
         <!-- CATEGORIA SELECCIONADA -->
         <div class="w-full sm:w-1/3 px-2 mb-2">
-          <label for="categoria" class="block font-bold mb-1">Categor&iacute;a:</label>
+          <label for="categoria" class="block font-bold mb-1">Categor&iacute;a: *</label>
           <select id="cbo_categoria" name="categoria" class="border p-2 w-full text-xs cursor-pointer">
           </select>
         </div>
 
         <!-- AREA DE LA INCIDENCIA -->
         <div class="w-full sm:w-1/3 px-2 mb-2">
-          <label for="area" class="block font-bold mb-1">&Aacute;rea:</label>
+          <label for="area" class="block font-bold mb-1">&Aacute;rea: *</label>
           <select id="cbo_area" name="area" class="border p-2 w-full text-xs cursor-pointer">
           </select>
         </div>
@@ -88,12 +88,12 @@
 
         <!-- ASUNTO DE LA INCIDENCIA -->
         <div class="w-full sm:w-1/4 px-2 mb-2">
-          <label for="asunto" class="block mb-1 font-bold text-xs">Asunto:</label>
+          <label for="asunto" class="block mb-1 font-bold text-xs">Asunto: *</label>
           <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese asunto">
         </div>
 
         <div class="w-full sm:w-1/4 px-2 mb-2">
-          <label for="documento" class="block mb-1 font-bold text-xs">Documento:</label>
+          <label for="documento" class="block mb-1 font-bold text-xs">Documento: *</label>
           <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese documento">
         </div>
 

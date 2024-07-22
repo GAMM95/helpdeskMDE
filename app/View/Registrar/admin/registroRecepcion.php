@@ -93,8 +93,7 @@
     </div>
 
 
-
-    <div class="flex space-x-4 mt-3">
+    <div class="flex space-x-4 ">
 
       <!-- TODO: Formulario -->
       <div class="flex flex-col w-1/5">
@@ -176,25 +175,21 @@
             <!-- BOTONES DE FORMULARIO -->
             <div class="flex flex-wrap -mx-2">
               <div class="w-full px-2">
-                <div class="flex justify-center space-x-4">
-                  <button type="submit" id="guardar-recepcion" class="btn-primary text-white font-bold py-2 px-4 rounded-md w-full md:w-auto">
-                    Guardar
-                  </button>
+                <div class="flex flex-col items-center space-y-4">
+                  <button type="submit" id="guardar-recepcion" class="btn-primary text-white font-bold py-2 px-4 rounded-md w-full md:w-auto btn-wide"> Guardar </button>
 
-                  <button type="button" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md w-full md:w-auto">
-                    Editar
-                  </button>
+                  <button type="button" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md w-full md:w-auto btn-wide"> Editar </button>
 
-                  <button type="button" id="nuevoRegistro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md w-full md:w-auto">
-                    Nuevo
-                  </button>
+                  <button type="button" id="nuevoRegistro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md w-full md:w-auto btn-wide"> Nuevo </button>
                 </div>
               </div>
             </div>
+
+
           </div>
         </form>
-
       </div>
+
 
       <!-- TODO: TABLA DE INCIDENCIAS  RECEPCIONADAS -->
       <div class="w-4/5">

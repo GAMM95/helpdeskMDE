@@ -1,4 +1,4 @@
-<div class="pcoded-main-container">
+<div class="pcoded-main-container mt-5">
   <div class="pcoded-content">
 
     <!-- Miga de pan -->
@@ -64,7 +64,7 @@
       <div class="w-2/3">
         <!-- Buscador -->
         <div class="flex justify-between items-center mt-2">
-          <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar categor&iacute;a..." oninput="filtrarTablaPersonas()" />
+          <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar &aacute;rea..." oninput="filtrarTablaPersonas()" />
         </div>
 
         <!-- Tabla de personas -->

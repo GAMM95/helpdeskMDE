@@ -1,6 +1,5 @@
 <?php
 require_once 'app/Model/PersonaModel.php';
-
 class PersonaController
 {
   private $personaModel;
@@ -62,20 +61,45 @@ class PersonaController
     }
   }
 
-  // Método para obtener los datos ingresados en el formulario
+  public function editarPersona()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $datosPersona = $this->obtenerDatosFormulario();
+      try {
+        $this->validarDatos($datosPersona, true);
+
+        $personaModel = new PersonaModel(
+          $datosPersona['codPersona'],
+          $datosPersona['dni'],
+          $datosPersona['nombre'],
+          $datosPersona['apellidoPaterno'],
+          $datosPersona['apellidoMaterno'],
+          $datosPersona['email'],
+          $datosPersona['celular']
+        );
+        $personaModel->actualizarPersona();
+        echo "Datos actualizados correctamente";
+      } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+      }
+    } else {
+      echo "Error: Método no permitido";
+    }
+  }
+
   private function obtenerDatosFormulario()
   {
     return [
-      'dni' => $_POST['dni'] ?? null,
-      'nombre' => $_POST['nombre'] ?? null,
-      'apellidoPaterno' => $_POST['apellidoPaterno'] ?? null,
-      'apellidoMaterno' => $_POST['apellidoMaterno'] ?? null,
-      'email' => $_POST['email'] ?? null,
-      'celular' => $_POST['celular'] ?? null,
+      'codPersona' => $_POST['txt_codPersona'] ?? null,
+      'dni' => $_POST['txt_dni'] ?? null,
+      'nombre' => $_POST['txt_nombre'] ?? null,
+      'apellidoPaterno' => $_POST['txt_apellidoPaterno'] ?? null,
+      'apellidoMaterno' => $_POST['txt_apellidoMaterno'] ?? null,
+      'email' => $_POST['txt_email'] ?? null,
+      'celular' => $_POST['txt_celular'] ?? null,
     ];
   }
 
-  // Método para validar los campos de formulario
   private function validarDatos($datos, $esActualizacion = false)
   {
     if ($esActualizacion && ($datos['codPersona'] === null || trim($datos['codPersona']) === '')) {

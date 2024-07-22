@@ -18,7 +18,7 @@
       </div>
     </div>
     <!-- [ breadcrumb ] end -->
-     
+
     <!-- [ Main Content ] start -->
     <div class="row">
       <!-- table card-1 start -->
@@ -234,7 +234,8 @@
                         </label>
                       </div>
                       <div class="d-inline-block align-middle">
-                        <img src="assets/images/user/avatar-4.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
+                        <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
+
                         <div class="d-inline-block">
                           <h6>John Deo</h6>
                           <p class="text-muted m-b-0">Graphics Designer</p>
@@ -255,7 +256,7 @@
                         </label>
                       </div>
                       <div class="d-inline-block align-middle">
-                        <img src="assets/images/user/avatar-2.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
+                        <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
                         <div class="d-inline-block">
                           <h6>Jenifer Vintage</h6>
                           <p class="text-muted m-b-0">Web Designer</p>
@@ -276,7 +277,7 @@
                         </label>
                       </div>
                       <div class="d-inline-block align-middle">
-                        <img src="assets/images/user/avatar-3.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
+                        <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
                         <div class="d-inline-block">
                           <h6>William Jem</h6>
                           <p class="text-muted m-b-0">Developer</p>
@@ -296,7 +297,7 @@
                         </label>
                       </div>
                       <div class="d-inline-block align-middle">
-                        <img src="assets/images/user/avatar-2.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
+                        <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
                         <div class="d-inline-block">
                           <h6>David Jones</h6>
                           <p class="text-muted m-b-0">Developer</p>
@@ -376,7 +377,8 @@
                       <tr>
                         <td class="b-none">
                           <a href="#!" class="align-middle">
-                            <img src="assets/images/user/avatar-2.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
+                            <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
+
                             <div class="d-inline-block">
                               <h6>Jeny William</h6>
                               <p class="text-muted m-b-0">Graphic Designer</p>
@@ -469,7 +471,7 @@
             <div class="review-block">
               <div class="row">
                 <div class="col-sm-auto p-r-0">
-                  <img src="assets/images/user/avatar-2.jpg" alt="user image" class="img-radius profile-img cust-img m-b-15">
+                <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
                 </div>
                 <div class="col">
                   <h6 class="m-b-15">John Deo <span class="float-right f-13 text-muted"> a week
@@ -489,7 +491,7 @@
               </div>
               <div class="row">
                 <div class="col-sm-auto p-r-0">
-                  <img src="assets/images/user/avatar-4.jpg" alt="user image" class="img-radius profile-img cust-img m-b-15">
+                <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
                 </div>
                 <div class="col">
                   <h6 class="m-b-15">Allina D’croze <span class="float-right f-13 text-muted"> a

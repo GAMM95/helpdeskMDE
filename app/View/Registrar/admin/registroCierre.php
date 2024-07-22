@@ -2,7 +2,36 @@
   <div class="pcoded-content">
     <?php
     global $cierreRegistrado;
+    require_once './app/Model/RecepcionModel.php';
+    $recepcionModel = new RecepcionModel();
+    $limit = 2; //Numero de filas por pagina
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
+    $start = ($page - 1) * $limit; // Calcula el índice de inicio
+    $totalRecepcionesSinCerrar = $recepcionModel->contarRecepcionesSinCerrar();
+    $totalPages = ceil($totalRecepcionesSinCerrar / $limit);
+    $recepciones = $recepcionModel->obtenerRecepcionesSinCerrar($start, $limit);
     ?>
+
+    <!-- Segundo Apartado - Formulario de registro de Recepcion de incidencia -->
+    <!-- Miga de pan -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h1 class="text-2xl font-bold mb-2">Cierre de incidencias</h1>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href=""><i class="feather icon-edit"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">Registros</a></li>
+              <li class="breadcrumb-item"><a href="">Cierres</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin de miga de pan -->
+
     <!-- TODO: TITULO TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
     <div class="flex justify-between items-center mb-2">
       <h1 class="text-xl text-gray-400">Incidencias en atenci&oacute;n</h1>
@@ -10,20 +39,6 @@
     </div>
 
     <!-- TODO: TABLA DE RECEPCIONES SIN CERRAR -->
-    <?php
-    require_once './app/Model/RecepcionModel.php';
-    $recepcionModel = new RecepcionModel();
-    $limit = 2; //Numero de filas por pagina
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
-    $start = ($page - 1) * $limit; // Calcula el índice de inicio
-
-
-    $totalRecepcionesSinCerrar = $recepcionModel->contarRecepcionesSinCerrar();
-    $totalPages = ceil($totalRecepcionesSinCerrar / $limit);
-
-    // Obtener las recepciones sin cerrar para la pagina actual
-    $recepciones = $recepcionModel->obtenerRecepcionesSinCerrar($start, $limit);
-    ?>
     <div>
       <div class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
         <table id="tablaRecepcionesSinCerrar" class="w-full text-xs text-left rtl:text-right text-gray-500">
@@ -148,35 +163,20 @@
 
       <!-- TODO: SEGUNDA FILA DEL FORMULARIO -->
       <div class="flex flex-wrap -mx-2 ">
-        <!-- ASUNTO DEL CIERRE -->
-        <div class="w-full md:w-1/3 px-2 mb-2">
-          <label for="asunto" class="block mb-1 font-bold text-xs">Asunto:</label>
-          <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs" placeholder="Ingrese asunto">
-        </div>
-
-        <!-- DOCUMENTO DE CIERRE -->
-        <div class="w-full md:w-1/3 px-2 mb-2">
-          <label for="documento" class="block mb-1 font-bold text-xs">Documento:</label>
-          <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs" placeholder="Ingrese documento de cierre">
-        </div>
-
         <!-- DIAGNOSTICO DEL CIERRE -->
         <div class="w-full md:w-1/3 px-2 mb-2">
           <label for="diagnostico" class="block mb-1 font-bold text-xs">Diagn&oacute;stico:</label>
           <input type="text" id="diagnostico" name="diagnostico" class="border p-2 w-full text-xs" placeholder="Ingrese diagnóstico">
         </div>
-      </div>
 
-      <!-- TODO: TERCELA FILA DEL FORMULARIO -->
-      <div class="flex flex-wrap -mx-2">
         <!-- SOLUCION DE LA INCIDENCIA -->
-        <div class="w-full md:w-1/2 px-2 mb-2">
+        <div class="w-full md:w-1/3 px-2 mb-2">
           <label for="solucion" class="block mb-1 font-bold text-xs">Soluci&oacute;n:</label>
           <input type="text" id="solucion" name="solucion" class="border p-2 w-full text-xs" placeholder="Ingrese solución (opcional)">
         </div>
 
         <!-- RECOMENDACIONES -->
-        <div class="w-full md:w-1/2 px-2 mb-2">
+        <div class="w-full md:w-1/3 px-2 mb-2">
           <label for="recomendaciones" class="block mb-1 font-bold text-xs">Recomendaciones:</label>
           <input type="text" id="recomendaciones" name="recomendaciones" class="border p-2 w-full text-xs" placeholder="Ingrese recomendaciones (opcional)">
         </div>
