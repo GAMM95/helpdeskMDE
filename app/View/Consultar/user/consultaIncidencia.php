@@ -3,24 +3,24 @@
     <!-- Header -->
     <h1 class="text-2xl font-bold mb-4">Consultar Incidencia</h1>
 
-    <form id="formConsultarIncidencia" action="modulo-rol.php" method="POST" class="border bg-white shadow-md p-6 w-full text-sm rounded-md mb-4">
+    <form id="formConsultarIncidencia" action="modulo-rol.php" method="POST" class="border bg-white shadow-md p-6 w-full text-xs rounded-md mb-4">
       <div class="flex flex-wrap -mx-2 justify-center">
         <div class="w-full sm:w-1/4 px-2 mb-4 hidden">
-          <label for="areaDisplay" class="block font-bold mb-1 text-sm">&Aacute;rea:</label>
-          <input type="text" id="areaDisplay" name="areaDisplay" class="border border-gray-200 bg-gray-100 p-2 w-full text-sm" value="<?php echo $_SESSION['area']; ?>" readonly>
+          <label for="areaDisplay" class="block font-bold mb-1 text-xs">&Aacute;rea:</label>
+          <input type="text" id="areaDisplay" name="areaDisplay" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['area']; ?>" readonly>
         </div>
         <div class="w-full md:w-1/5 px-2 mb-2 hidden">
           <label for="area" class="block font-bold mb-1">Area:</label>
-          <input type="text" id="area" name="area" class="border border-gray-200 bg-gray-100 p-2 w-full text-sm" value="<?php echo $_SESSION['codigoArea']; ?>">
+          <input type="text" id="area" name="area" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['codigoArea']; ?>">
         </div>
 
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
-          <label for="codigoPatrimonial" class="block mb-1 font-bold text-sm">Código Patrimonial:</label>
-          <input type="text" id="txt_codigoPatrimonial" name="codigoPatrimonial" class="w-full border p-2 text-sm">
+          <label for="codigoPatrimonial" class="block mb-1 font-bold text-xs">Código Patrimonial:</label>
+          <input type="text" id="txt_codigoPatrimonial" name="codigoPatrimonial" class="w-full border p-2 text-xs">
         </div>
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
-          <label for="fecha" class="block mb-1 font-bold text-sm">Fecha:</label>
-          <input type="date" id="fecha" name="fecha" class="w-full border p-2 text-sm">
+          <label for="fecha" class="block mb-1 font-bold text-xs">Fecha:</label>
+          <input type="date" id="fecha" name="fecha" class="w-full border p-2 text-xs">
         </div>
       </div>
 
@@ -39,7 +39,7 @@
     <!-- TODO: TABLA DE RESULTADOS DE LAS INCIDENCIAS -->
     <div class="relative shadow-md sm:rounded-lg">
       <div class="max-w-full overflow-hidden">
-        <table id="tablaConsultarIncidencias" class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <table id="tablaConsultarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <!-- <th scope="col" class="px-3 py-3">N°</th> -->

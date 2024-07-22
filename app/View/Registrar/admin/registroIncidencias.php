@@ -50,7 +50,7 @@
 
         <!-- FECHA DE LA INCIDENCIA -->
         <div class="w-full sm:w-1/6 px-2 mb-2 hidden">
-          <label for="fecha_incidencia" class="block mb-1 font-bold text-sm">Fecha:</label>
+          <label for="fecha_incidencia" class="block mb-1 font-bold text-xs">Fecha:</label>
           <input type="date" id="fecha_incidencia" name="fecha_incidencia" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo date('Y-m-d'); ?>" readonly>
         </div>
 

@@ -14,17 +14,12 @@ $(document).ready(function () {
     var celular = $(this).find('td[data-celular]').text();
     var email = $(this).find('td[data-email]').text();
 
-    // Separar el nombre completo en partes: nombre, apellido paterno y apellido materno
     var partesNombre = nombreCompleto.split(' ');
 
-    // Asumir que el último nombre es el apellido materno y el penúltimo es el apellido paterno
     var apellidoMaterno = partesNombre.pop();
     var apellidoPaterno = partesNombre.pop();
-
-    // Lo que queda es el nombre, que puede tener uno o más palabras
     var nombre = partesNombre.join(' ');
 
-    // Establecer los valores en los campos del formulario
     $('#txt_codPersona').val(cod);
     $('#txt_dni').val(dni);
     $('#txt_nombre').val(nombre);
@@ -33,11 +28,9 @@ $(document).ready(function () {
     $('#txt_celular').val(celular);
     $('#txt_email').val(email);
 
-    // Aplicar estilos de selección a la fila seleccionada y quitarlos de las demás filas
     $('tr').removeClass('bg-blue-200 font-semibold');
     $(this).addClass('bg-blue-200 font-semibold');
 
-    // Cambiar la acción del formulario a editar
     $('#form-action').val('editar');
   });
 
@@ -46,8 +39,6 @@ $(document).ready(function () {
     form.reset();
     $('#txt_codPersona').val('');
     $('tr').removeClass('bg-blue-200 font-semibold');
-
-    // Cambiar la acción del formulario a registrar
     $('#form-action').val('registrar');
   }
 
@@ -59,12 +50,13 @@ $(document).ready(function () {
       method: 'POST',
       data: { dni: dni },
       success: function (response) {
-        callback(response.exists); // Envía el resultado de existencia al callback
+        console.log('DNI validation response:', response); // Log response
+        callback(response.exists);
       },
       error: function (xhr, status, error) {
-        console.log(xhr.responseText);
+        console.log('DNI validation error:', xhr.responseText); // Log error
         toastr.error('Error al validar el DNI');
-        callback(false); // Indica que no se encontró el DNI (o hubo error)
+        callback(false);
       }
     });
   }
@@ -77,55 +69,32 @@ $(document).ready(function () {
     var celular = $('#txt_celular').val();
     var email = $('#txt_email').val();
 
-    if (!dni) {
-      toastr.error('El campo "DNI" no puede estar vacío');
+    if (!dni || !nombre || !apellidoPaterno || !apellidoMaterno || !celular || !email) {
+      toastr.error('Todos los campos son obligatorios');
       return;
     }
 
-    if (!nombre) {
-      toastr.error('El campo "Nombres" no puede estar vacío');
-      return;
-    }
-
-    if (!apellidoPaterno) {
-      toastr.error('El campo "Apellido Paterno" no puede estar vacío');
-      return;
-    }
-
-    if (!apellidoMaterno) {
-      toastr.error('El campo "Apellido Materno" no puede estar vacío');
-      return;
-    }
-
-    if (!celular) {
-      toastr.error('El campo "Celular" no puede estar vacío');
-      return;
-    }
-
-    if (!email) {
-      toastr.error('El campo "Email" no puede estar vacío');
-      return;
-    }
-
-    // Validar la existencia del DNI antes de enviar el formulario
     validarDniExistente(dni, function (exists) {
       if (exists && action === 'registrar') {
         toastr.error('El DNI ya está registrado');
         return;
       }
 
-      // Habilitar el campo antes de enviar
       $('#txt_codPersona').prop('disabled', false);
-
       var formData = $('#formPersona').serialize();
+      var actionUrl = $('#formPersona').attr('action');
+
+      console.log('Formulario:', formData);
+      console.log('URL de acción:', actionUrl);
 
       $.ajax({
-        url: 'modulo-persona.php?action=' + action,
+        url: actionUrl,
         method: 'POST',
         data: formData,
         success: function (response) {
+          console.log('Respuesta del servidor:', response);
           if (action === 'registrar') {
-            if (!exists) { // Mostrar mensaje solo si no existe el DNI
+            if (!exists) {
               toastr.success('Persona registrada');
             }
           } else if (action === 'editar') {
@@ -136,7 +105,7 @@ $(document).ready(function () {
           }, 1500);
         },
         error: function (xhr, status, error) {
-          console.log(xhr.responseText);
+          console.log('Error en la solicitud:', xhr.responseText);
           toastr.error('Error al guardar persona');
         },
         complete: function () {
@@ -145,6 +114,7 @@ $(document).ready(function () {
       });
     });
   }
+
 
   $('#guardar-persona').on('click', function (e) {
     e.preventDefault();

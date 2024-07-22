@@ -21,9 +21,8 @@ class CategoriaModel extends Conexion
     if ($this->nombreCategoria === null || trim($this->nombreCategoria) === '') {
       throw new Exception("El nombre de la categoría no puede estar vacío.");
     }
-
+    $conector = parent::getConexion();
     try {
-      $conector = $this->getConexion();
       $sql = "INSERT INTO CATEGORIA (CAT_nombre) VALUES (?)";
       $stmt = $conector->prepare($sql);
       $stmt->execute([$this->nombreCategoria]);
@@ -36,8 +35,8 @@ class CategoriaModel extends Conexion
   // Method to list all categories
   public function listarCategorias()
   {
+    $conector = parent::getConexion();
     try {
-      $conector = $this->getConexion();
       $sql = "SELECT CAT_codigo, CAT_nombre FROM CATEGORIA ORDER BY CAT_codigo ASC";
       $stmt = $conector->prepare($sql);
       $stmt->execute();
@@ -54,8 +53,8 @@ class CategoriaModel extends Conexion
       throw new Exception("El código de la categoría no puede ser nulo.");
     }
 
+    $conector = parent::getConexion();
     try {
-      $conector = $this->getConexion();
       $sql = "SELECT * FROM CATEGORIA WHERE CAT_codigo = ?";
       $stmt = $conector->prepare($sql);
       $stmt->execute([$codigoCategoria]);
@@ -76,8 +75,8 @@ class CategoriaModel extends Conexion
       throw new Exception("El nombre de la categoría no puede estar vacío.");
     }
 
+    $conector = parent::getConexion();
     try {
-      $conector = $this->getConexion();
       $sql = "UPDATE CATEGORIA SET CAT_nombre = ? WHERE CAT_codigo = ?";
       $stmt = $conector->prepare($sql);
       $stmt->execute([$this->nombreCategoria, $this->codigoCategoria]);
@@ -94,6 +93,7 @@ class CategoriaModel extends Conexion
       throw new Exception("El código de la categoría no puede ser nulo.");
     }
 
+    $conector = parent::getConexion();
     try {
       $conector = $this->getConexion();
       $sql = "DELETE FROM CATEGORIA WHERE CAT_codigo = ?";
@@ -112,8 +112,8 @@ class CategoriaModel extends Conexion
       throw new Exception("El término de búsqueda no puede estar vacío.");
     }
 
+    $conector = parent::getConexion();
     try {
-      $conector = $this->getConexion();
       $sql = "SELECT * FROM CATEGORIA WHERE CAT_nombre LIKE ?";
       $stmt = $conector->prepare($sql);
       $stmt->execute(['%' . $termino . '%']);

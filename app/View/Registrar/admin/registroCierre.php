@@ -33,20 +33,22 @@
     <!-- Fin de miga de pan -->
 
     <!-- TODO: TITULO TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
-    <div class="flex justify-between items-center mb-2">
-      <h1 class="text-xl text-gray-400">Incidencias en atenci&oacute;n</h1>
+    <div id="noRecepcion" class="flex justify-between items-center mb-2">
+      <h1 class="text-xl text-gray-400">Incidencias recepcionadas</h1>
       <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar..." oninput="filtrarTablaRecepcionesSinCerrar()" />
     </div>
 
     <!-- TODO: TABLA DE RECEPCIONES SIN CERRAR -->
+    <input type="hidden" id="recepcionCount" value="<?php echo count($recepciones); ?>">
+
     <div>
-      <div class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
+      <div id="tablaContainer" class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
         <table id="tablaRecepcionesSinCerrar" class="w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-6 py-3">N°</th>
               <th scope="col" class="px-6 py-3">Fecha recepci&oacute;n</th>
-              <th scope="col" class="px-6 py-3">Area</th>
+              <th scope="col" class="px-6 py-3">&Aacute;rea</th>
               <th scope="col" class="px-6 py-3">C&oacute;digo Patrimonial</th>
               <th scope="col" class="px-6 py-3">Asunto</th>
               <th scope="col" class="px-6 py-3">Prioridad</th>
@@ -201,8 +203,6 @@
       <div class="flex justify-center space-x-4 mt-2">
         <button type="submit" id="guardar-cierre" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded">Guardar</button>
         <button type="button" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded">Editar</button>
-        <!-- <button type="button" id="imprimirDatos" class="bg-yellow-500 text-white font-bold hover:bg-yellow-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Imprimir</button> -->
-        <!-- <button type="button" id="limpiarCampos" class="bg-red-500 text-white font-bold hover:bg-red-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Limpiar</button> -->
         <button type="button" id="nuevoRegistro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Nuevo</button>
       </div>
     </form>

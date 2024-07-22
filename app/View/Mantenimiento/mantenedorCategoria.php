@@ -24,7 +24,8 @@
 
       <!-- TODO: FORMULARIO -->
       <div class="flex flex-col w-1/3">
-        <form id="formcategoria" action="modulo-categoria.php" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs">
+        <form id="formcategoria" action="modulo-categoria.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
+          <input type="hidden" id="form-action" name="action" value="registrar">
           <!-- PRIMERA FILA -->
           <div class="flex justify-center -mx-2 mb-5 hidden">
             <div class="flex items-center mb-4">
@@ -61,7 +62,7 @@
       <!-- TODO: TABLA DE CATEGORIAS -->
       <div class="w-2/3">
         <div class="relative max-h-[800px] overflow-x-hidden shadow-md sm:rounded-lg">
-          <table class="w-full text-xs text-left rtl:text-right text-gray-500">
+          <table id="tablaCategorias" class="w-full text-xs text-left rtl:text-right text-gray-500">
             <!-- ENCABEZADO DE LA TABLA -->
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>

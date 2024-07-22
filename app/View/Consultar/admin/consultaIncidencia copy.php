@@ -21,30 +21,30 @@
     <!-- Header -->
     <h1 class="text-2xl font-bold mb-4">Consultar Incidencia</h1>
 
-    <form id="formConsultarIncidencia" action="consultar-incidencia-admin.php?action=consultar" method="GET" class="border bg-white shadow-md p-6 w-full text-sm rounded-md mb-4">
+    <form id="formConsultarIncidencia" action="consultar-incidencia-admin.php?action=consultar" method="GET" class="border bg-white shadow-md p-6 w-full text-xs rounded-md mb-4">
       <div class="flex flex-wrap -mx-2 justify-center">
         <!-- BUSCAR POR AREA -->
         <div class="w-full md:w-1/3 px-2 mb-2">
-          <label for="area" class="block mb-1 font-bold text-sm">&Aacute;rea:</label>
-          <select id="cbo_area" name="area" class="border p-2 w-full text-sm cursor-pointer">
+          <label for="area" class="block mb-1 font-bold text-xs">&Aacute;rea:</label>
+          <select id="cbo_area" name="area" class="border p-2 w-full text-xs cursor-pointer">
           </select>
         </div>
 
         <!-- BUSCAR POR CODIGO PATRIMONIAL -->
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
-          <label for="codigo_patrimonial" class="block mb-1 font-bold text-sm">C&oacute;digo Patrimonial:</label>
-          <input type="text" id="codigoPatrimonial" name="codigoPatrimonial" class="border p-2 w-full text-sm" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" placeholder="Ingrese c&oacute;digo patrimonial">
+          <label for="codigo_patrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
+          <input type="text" id="codigoPatrimonial" name="codigoPatrimonial" class="border p-2 w-full text-xs" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" placeholder="Ingrese c&oacute;digo patrimonial">
         </div>
 
         <!-- BUSCAR POR FECHA DE INICIO-->
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
-          <label for="fechaInicio" class="block mb-1 font-bold text-sm">Fecha Inicio:</label>
-          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-sm cursor-pointer">
+          <label for="fechaInicio" class="block mb-1 font-bold text-xs">Fecha Inicio:</label>
+          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs cursor-pointer">
         </div>
 
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
-          <label for="fechaFin" class="block mb-1 font-bold text-sm">Fecha Fin:</label>
-          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-sm cursor-pointer">
+          <label for="fechaFin" class="block mb-1 font-bold text-xs">Fecha Fin:</label>
+          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer">
         </div>
       </div>
 
@@ -96,7 +96,7 @@
     <!-- TODO: TABLA DE RESULTADOS DE LAS INCIDENCIAS -->
     <div class="relative shadow-md sm:rounded-lg">
       <div class="max-w-full overflow-hidden">
-        <table id="tablaConsultarIncidencias" class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <table id="tablaConsultarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-3 py-3">N°</th>

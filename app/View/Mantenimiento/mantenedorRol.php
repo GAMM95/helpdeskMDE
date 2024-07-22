@@ -23,7 +23,7 @@
     <!-- Header -->
     <h1 class="text-2xl font-bold mb-4 ">M&oacute;dulo / Rol</h1>
 
-    <form id="formrol" action="modulo-rol.php" method="POST" class="border bg-white shadow-md p-6 w-full text-sm rounded-md">
+    <form id="formrol" action="modulo-rol.php" method="POST" class="border bg-white shadow-md p-6 w-full text-xs rounded-md">
       <input type="hidden" id="form-action" name="action" value="registrar">
 
       <!-- PRIMERA FILA Campo para mostrar el número de incidencia -->
@@ -31,7 +31,7 @@
         <div class="flex items-center mb-4">
           <div class="flex items-center">
             <label for="CodRol" class="block font-bold mb-1 mr-3 text-lime-500">C&oacute;digo de Rol:</label>
-            <input type="text" id="txt_codigoRol" name="CodRol" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-sm text-center" readonly disabled>
+            <input type="text" id="txt_codigoRol" name="CodRol" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly disabled>
           </div>
         </div>
       </div>
@@ -39,8 +39,8 @@
       <!-- SEGUNDA FILA: campo para ingresar e nuevo nombre del rol -->
       <div class="flex flex-wrap -mx-2">
         <div class="w-full sm:w-1/4 px-2 mb-2">
-          <label for="NombreRol" class="block mb-1 font-bold text-sm">Nombre rol:</label>
-          <input type="text" id="txt_nombreRol" name="NombreRol" class="border p-2 w-full text-sm">
+          <label for="NombreRol" class="block mb-1 font-bold text-xs">Nombre rol:</label>
+          <input type="text" id="txt_nombreRol" name="NombreRol" class="border p-2 w-full text-xs">
         </div>
       </div>
 
@@ -61,7 +61,7 @@
 
     <!-- TABLA -->
     <div class="relative max-h-[450px] overflow-x-hidden shadow-md sm:rounded-lg mt-5">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+      <table class="w-full text-xs text-left rtl:text-right text-gray-500">
         <!-- ENCABEZADO DE LA TABLA -->
         <thead class="sticky top-2 text-xs text-gray-70 uppercase bg-lime-300">
           <tr>

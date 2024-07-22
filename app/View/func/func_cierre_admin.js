@@ -1,3 +1,11 @@
+$(document).ready(function () {
+  toastr.options = {
+    "positionClass": "toast-bottom-right",
+    "progressBar": true,
+    "timeOut": "2000"
+  };
+});
+
 // TODO: SETEAR LOS VALORES DEL COMBO OPERATIVIDAD
 $(document).ready(function () {
   console.log("FETCHING");
@@ -86,7 +94,20 @@ $(document).ready(function () {
     $('#recepcion').val(id);
   });
 })
+// TODO: VERIFICAR LA CANTIDAD DE REGISTROS Y OCULTAR/MOSTRAR ELEMENTOS
+document.addEventListener("DOMContentLoaded", function () {
+  const tablaContainer = document.getElementById("tablaContainer");
+  const noRecepcion = document.getElementById("noRecepcion");
 
+  // OCULTAR TABLA Y BUSCADOR SUPEIOR SI NO HAY REGISTROS
+  if (parseInt(document.getElementById("recepcionCount").value) === 0) {
+    tablaContainer.classList.add("hidden");
+    noRecepcion.classList.add("hidden");
+  } else {
+    tablaContainer.classList.remove("hidden");
+    noRecepcion.classList.remove("hidden");
+  }
+})
 
 // TODO: GUARDAR EL CIERRE
 $(document).ready(function () {

@@ -24,7 +24,9 @@
       <!-- FORMULARIO -->
       <div class="flex flex-col w-1/3">
         <form id="formPersona" action="modulo-persona.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 text-xs  flex flex-col mb-2">
-          <h3 class="text-2xl font-plain mb-4 text-sm text-gray-400">Datos personales</h3>
+          <input type="hidden" id="form-action" name="action" value="registrar">
+
+          <h3 class="text-2xl font-plain mb-4 text-xs text-gray-400">Datos personales</h3>
 
           <div class="card-body">
             <!-- DNI DE LA PERSONA -->

@@ -3,20 +3,20 @@
     <!-- Header -->
     <h1 class="text-2xl font-bold mb-4">Consultar recepci&oacute;n de incidencias</h1>
 
-    <form id="formConsultarRecepcion" action="modulo-rol.php" method="POST" class="border bg-white shadow-md p-6 w-full text-sm rounded-md mb-4">
+    <form id="formConsultarRecepcion" action="modulo-rol.php" method="POST" class="border bg-white shadow-md p-6 w-full text-xs rounded-md mb-4">
       <div class="flex flex-wrap -mx-2">
         <div class="w-full md:w-1/3 px-2 mb-2">
-          <label for="area" class="block mb-1 font-bold text-sm">&Aacute;rea:</label>
-          <select id="cbo_area" name="area" class="border p-2 w-full text-sm">
+          <label for="area" class="block mb-1 font-bold text-xs">&Aacute;rea:</label>
+          <select id="cbo_area" name="area" class="border p-2 w-full text-xs">
           </select>
         </div>
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
-          <label for="codigoPatrimonial" class="block mb-1 font-bold text-sm">C&oacute;digo Patrimonial:</label>
-          <input type="text" id="txt_codigoPatrimonial" name="codigoPatrimonial" class="w-full border p-2 text-sm">
+          <label for="codigoPatrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
+          <input type="text" id="txt_codigoPatrimonial" name="codigoPatrimonial" class="w-full border p-2 text-xs">
         </div>
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
-          <label for="fecha" class="block mb-1 font-bold text-sm">Fecha:</label>
-          <input type="date" id="fecha" name="fecha" class="w-full border p-2 text-sm">
+          <label for="fecha" class="block mb-1 font-bold text-xs">Fecha:</label>
+          <input type="date" id="fecha" name="fecha" class="w-full border p-2 text-xs">
         </div>
       </div>
 
@@ -36,7 +36,7 @@
     <!-- TODO: TABLA DE RESULTADOS DE LAS INCIDENCIAS -->
     <div class="relative shadow-md sm:rounded-lg">
       <div class="max-w-full overflow-hidden">
-        <table id="tablaConsultarRecepciones" class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <table id="tablaConsultarRecepciones" class="w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-3 py-3">N°</th>

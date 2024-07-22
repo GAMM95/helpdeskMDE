@@ -25,7 +25,8 @@
 
       <!-- FORMULARIO -->
       <div class="flex flex-col w-1/3">
-        <form id="formarea" action="modulo-area.php" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
+        <form id="formarea" action="modulo-area.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
+          <input type="hidden" id="form-action" name="action" value="registrar">
 
           <!-- PRIMERA FILA  -->
           <div class="flex justify-center -mx-2 mb-5 hidden">

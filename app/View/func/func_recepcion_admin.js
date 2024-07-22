@@ -1,3 +1,13 @@
+// TODO: MOSTRAR MENSAJE Y UBICACION
+$(document).ready(function () {
+  toastr.options = {
+    "positionClass": "toast-bottom-right",
+    "progressBar": true,
+    "timeOut": "2000"
+  };
+});
+
+// TODO: METODO EVENTO PARA CLICKEO DE TABLAS
 $(document).ready(function () {
   // Evento de clic en las filas de la tabla de incidencias sin recepcionar
   $(document).on('click', '#tablaIncidenciasSinRecepcionar tbody tr', function () {
@@ -33,7 +43,6 @@ $('#searchInput').on('input', function () {
   filtrarTablaIncidenciasSinRecepcionar();
 });
 
-// TODO: FILTRADO DE TABLA DE INCIDENCIAS SIN RECEPCIONAR
 function filtrarTablaIncidenciasSinRecepcionar() {
   var input, filter, table, rows, cells, i, j, match;
   input = document.getElementById('searchInput');
@@ -52,16 +61,6 @@ function filtrarTablaIncidenciasSinRecepcionar() {
     }
     rows[i].style.display = match ? '' : 'none';
   }
-}
-
-// Función para limpiar los campos del formulario de recepción
-function limpiarCampos() {
-  document.getElementById('formRecepcion').reset();
-}
-
-// Función para establecer los campos en blanco al hacer clic en Nuevo Registro
-function nuevoRegistro() {
-  limpiarCampos();
 }
 
 // TODO: FUNCION PARA CAMBIAR PAGINAS DE LA TABLA DE INCIDENCIAS SIN RECEPCIONAR
@@ -211,10 +210,14 @@ $(document).ready(function () {
     }
     return valido;
   }
-
 });
 
-// //TODO: Verificar la cantidad de registros y ocultar/ mostrar elementos
+// TODO: METODO PARA LIMPIAR CAJAS
+function nuevoRegistro() {
+  document.getElementById('formRecepcion').reset();
+}
+
+// TODO: Verificar la cantidad de registros y ocultar/ mostrar elementos
 document.addEventListener("DOMContentLoaded", function () {
   const tablaContainer = document.getElementById("tablaContainer");
   const noIncidencias = document.getElementById("noIncidencias");

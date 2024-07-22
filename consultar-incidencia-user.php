@@ -22,6 +22,9 @@ switch ($action) {
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="es">
+
 <head>
   <title>Sistema HelpDesk MDE</title>
   <link rel="icon" href="public/assets/logo.ico">
@@ -47,25 +50,10 @@ switch ($action) {
       <div class="loader-fill"></div>
     </div>
   </div>
-  <!-- [ Pre-loader ] End -->
-  <!-- [ navigation menu ] start -->
-  <?php
-  include('app/View/partials/user/navbar.php');
-  ?>
-  <!-- [ navigation menu ] end -->
 
-  <!-- [ Header ] start -->
-  <?php
-  include('app/View/partials/user/header.php');
-  ?>
-  <!-- [ Header ] end -->
-
-  <!-- [ Main Content ] start -->
-  <?php
-  include('app/View/Consultar/user/consultaIncidencia.php');
-  ?>
-  <!-- [ Main Content ] end -->
-
+  <?php include('app/View/partials/user/navbar.php'); ?>
+  <?php include('app/View/partials/user/header.php'); ?>
+  <?php include('app/View/Consultar/user/consultaIncidencia.php'); ?>
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>

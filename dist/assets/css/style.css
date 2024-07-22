@@ -10641,15 +10641,15 @@ button.bg-dark:focus {
 }
 
 @media (min-width: 576px) {
-    .text-sm-left {
+    .text-xs-left {
         text-align: left !important;
     }
 
-    .text-sm-right {
+    .text-xs-right {
         text-align: right !important;
     }
 
-    .text-sm-center {
+    .text-xs-center {
         text-align: center !important;
     }
 }
