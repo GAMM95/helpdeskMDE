@@ -467,3 +467,7 @@ WHERE INC_FECHA >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0)
         INNER JOIN USUARIO u ON u.USU_codigo = r.USU_codigo
         WHERE r.EST_codigo = 4
         ORDER BY i.INC_numero DESC
+
+
+	Select * from PERSONA
+

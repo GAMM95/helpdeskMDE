@@ -52,25 +52,10 @@ switch ($action) {
       <div class="loader-fill"></div>
     </div>
   </div>
-  <!-- [ Pre-loader ] End -->
-  <!-- [ navigation menu ] start -->
-  <?php
-  include('app/View/partials/admin/navbar.php');
-  ?>
-  <!-- [ navigation menu ] end -->
 
-  <!-- [ Header ] start -->
-  <?php
-  include('app/View/partials/admin/header.php');
-  ?>
-  <!-- [ Header ] end -->
-
-  <!-- [ Main Content ] start -->
-  <?php
-  include('app/View/Registrar/admin/registroIncidencias.php');
-  ?>
-  <!-- [ Main Content ] end -->
-
+  <?php  include('app/View/partials/admin/navbar.php'); ?>
+  <?php include('app/View/partials/admin/header.php'); ?>
+  <?php include('app/View/Registrar/admin/registroIncidencias.php'); ?>
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>
@@ -78,8 +63,6 @@ switch ($action) {
   <script src="dist/assets/js/pcoded.min.js"></script>
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
 
-
-  <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
 
   <script src="./app/View/func/func_incidencia_admin.js"></script>

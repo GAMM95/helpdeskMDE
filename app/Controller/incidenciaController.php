@@ -62,4 +62,57 @@ class IncidenciaController
       return $consultaIncidenciaAreaFecha;
     }
   }
+
+  // TODO: Metodo de controlador para registrar incidencias - USUARIO
+  public function registrarIncidenciaUsuario()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      // Obtener los datos del formulario
+      $fecha = $_POST['fecha_incidencia'] ?? null;
+      $hora = $_POST['hora'] ?? null;
+      $asunto =  $_POST['asunto'] ?? null;
+      $descripcion = $_POST['descripcion'] ?? null;
+      $documento = $_POST['documento'] ?? null;
+      $codigoPatrimonial = $_POST['codigo_patrimonial'] ?? null;
+      $categoria = $_POST['categoria'] ?? null;
+      $area = $_POST['codigoArea'] ?? null;
+      $usuario = $_POST['codigoUsuario'] ?? null;
+
+      // Llamar al método del modelo para insertar la incidencia en la base de datos
+      $insertSuccessId = $this->incidenciaModel->insertarIncidenciaUsuario(
+        $fecha,
+        $hora,
+        $asunto,
+        $descripcion,
+        $documento,
+        $codigoPatrimonial,
+        3,
+        $categoria,
+        $area,
+        $usuario
+      );
+
+      if ($insertSuccessId) {
+        header('Location: registro-incidencia-user.php?INC_numero=' . $insertSuccessId);
+      } else {
+        echo "Error al registrar la incidencia.";
+      }
+    }
+  }
+
+  public function consultarIncidenciaUsuario()
+  {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+      $area = $_GET['area'] ?? null;
+      $codigoPatrimonial = $_GET['codigoPatrimonial'] ?? null;
+      $fechaInicio = $_GET['fechaInicio'] ?? null;
+      $fechaFin = $_GET['fechaFin'] ?? null;
+
+      // Llamar al método para consultar incidencias por área y fecha
+      $consultaIncidenciaAreaFecha = $this->incidenciaModel->buscarIncidenciaAdministrador($area, $codigoPatrimonial, $fechaInicio, $fechaFin);
+
+      // Retornar el resultado de la consulta
+      return $consultaIncidenciaAreaFecha;
+    }
+  }
 }

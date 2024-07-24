@@ -43,7 +43,7 @@
 
     <div>
       <div id="tablaContainer" class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
-        <table id="tablaRecepcionesSinCerrar" class="w-full text-xs text-left rtl:text-right text-gray-500">
+        <table id="tablaRecepcionesSinCerrar" class="w-full text-xs text-left rtl:text-right text-gray-500 bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-6 py-3">N°</th>
@@ -58,7 +58,7 @@
           </thead>
           <tbody>
             <?php foreach ($recepciones as $recepcion) : ?>
-              <tr class='bg-white hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b '>
+              <tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b '>
                 <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'><?= $recepcion['REC_numero']; ?></th>
                 <td class='px-6 py-4'><?= $recepcion['fechaRecepcionFormateada']; ?></th>
                 <td class='px-6 py-4'><?= $recepcion['ARE_nombre']; ?></th>
@@ -96,7 +96,7 @@
     <!-- Segundo Apartado - Formulario de registro de Cierre de incidencia -->
     <h1 class="text-xl font-bold text-gray-800 mt-4 mb-2">Cierre de incidencia</h1>
     <!-- TODO: Formulario -->
-    <form id="formCierre" action="registro-cierre-admin.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
+    <form id="formCierre" action="registro-cierre-admin.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
 
       <!-- NUMERO DE RECEPCION -->
       <div class="flex justify-center mx-2 mb-4">
@@ -164,7 +164,7 @@
       </div>
 
       <!-- TODO: SEGUNDA FILA DEL FORMULARIO -->
-      <div class="flex flex-wrap -mx-2 ">
+      <div class="flex flex-wrap -mx-2 mb-3">
         <!-- DIAGNOSTICO DEL CIERRE -->
         <div class="w-full md:w-1/3 px-2 mb-2">
           <label for="diagnostico" class="block mb-1 font-bold text-xs">Diagn&oacute;stico:</label>
@@ -200,10 +200,10 @@
       </script>
 
       <!-- TODO: BOTONES DEL FORMULARIO -->
-      <div class="flex justify-center space-x-4 mt-2">
-        <button type="submit" id="guardar-cierre" class="bg-[#87cd51] text-white font-bold hover:bg-[#8ce83c] py-2 px-4 rounded">Guardar</button>
-        <button type="button" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded">Editar</button>
-        <button type="button" id="nuevoRegistro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded w-full md:w-auto mt-2 md:mt-0">Nuevo</button>
+      <div class="flex justify-center space-x-4">
+        <button type="submit" id="guardar-cierre" class="btn-primary text-white font-bold py-2 px-4 rounded-md">Guardar</button>
+        <button type="button" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md">Editar</button>
+        <button type="reset" id="nuevoRegistro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md">Nuevo</button>
       </div>
     </form>
 
@@ -226,7 +226,7 @@
 
     <div>
       <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
-        <table class="w-full text-xs text-left rtl:text-right text-gray-500">
+        <table class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
               <th scope="col" class="px-6 py-3">Incidencia</th>
@@ -242,7 +242,7 @@
           </thead>
           <tbody>
             <?php foreach ($cierres as $incidencia) : ?>
-              <tr class='second-table bg-white hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+              <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
                 <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero']; ?></th>
                 <td class='px-6 py-4'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
                 <td class='px-6 py-4'><?= $incidencia['ARE_nombre']; ?></td>

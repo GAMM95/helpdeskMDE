@@ -64,51 +64,39 @@ class IncidenciaModel extends Conexion
     }
   }
 
-
-  // public function insertarIncidenciaAdministrador(
-  //   $fecha,
-  //   $hora,
-  //   $asunto,
-  //   $descripcion,
-  //   $documento,
-  //   $codigoPatrimonial,
-  //   $categoria,
-  //   $area,
-  //   $usuario
-  // ) {
-  //   try {
-  //     $conector = parent::getConexion();
-  //     if ($conector) {
-  //       $sql = "EXEC SP_Registrar_Incidencia_Admin @INC_fecha = :fecha, @INC_hora = :hora, @INC_asunto = :asunto, @INC_descripcion = :descripcion, @INC_documento = :documento, @INC_codigoPatrimonial = :codigoPatrimonial, @CAT_codigo = :categoria, @ARE_codigo = :area, @USU_codigo = :usuario";
-  //       $stmt = $conector->prepare($sql);
-  //       $stmt->bindParam(':fecha', $fecha);
-  //       $stmt->bindParam(':hora', $hora);
-  //       $stmt->bindParam(':asunto', $asunto);
-  //       $stmt->bindParam(':descripcion', $descripcion);
-  //       $stmt->bindParam(':documento', $documento);
-  //       $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial);
-  //       $stmt->bindParam(':categoria', $categoria);
-  //       $stmt->bindParam(':area', $area);
-  //       $stmt->bindParam(':usuario', $usuario);
-  //       $success = $stmt->execute();
-  //       if ($success) {
-  //         $lastId = $conector->lastInsertId();
-  //         return $lastId;
-  //       } else {
-  //         return false;
-  //       }
-  //     } else {
-  //       throw new Exception("Error de conexión a la base de datos.");
-  //     }
-  //   } catch (PDOException $e) {
-  //     throw new Exception("Error al insertar la incidencia para el administrador: " . $e->getMessage());
-  //   } catch (Exception $e) {
-  //     throw new Exception("Error general al insertar la incidencia: " . $e->getMessage());
-  //   }
-  // }
-
-
-
+  // TODO: Metodo para insertar incidencias - Usuario
+  public function insertarIncidenciaUsuario($INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial,  $EST_codigo, $CAT_codigo, $ARE_codigo, $USU_codigo)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conector->prepare($sql);
+        $success = $stmt->execute([
+          $INC_fecha,
+          $INC_hora,
+          $INC_asunto,
+          $INC_descripcion,
+          $INC_documento,
+          $INC_codigoPatrimonial,
+          3,
+          $CAT_codigo,
+          $ARE_codigo,
+          $USU_codigo
+        ]);
+        if ($success) {
+          $lastId = $conector->lastInsertId();
+          return $lastId;
+        } else {
+          return false;
+        }
+      }
+    } catch (PDOException $e) {
+      echo "Error al insertar la incidencia para el usuario: " . $e->getMessage();
+      return false;
+    }
+  }
+  
   // TODO: Metodo listar incidencias Administrador - FORM CONSULTAR INCIDENCIA
   public function listarIncidenciasAdministrador()
   {
@@ -500,57 +488,57 @@ class IncidenciaModel extends Conexion
 
 
 
-    // // public function buscarIncidenciaAdministrador($codigoArea, $codigoPatrimonial, $fechaInicio, $fechaFin)
-    // // {
-    // //   $conector = parent::getConexion(); // Asumiendo que getConexion() devuelve la conexión PDO
+  // // public function buscarIncidenciaAdministrador($codigoArea, $codigoPatrimonial, $fechaInicio, $fechaFin)
+  // // {
+  // //   $conector = parent::getConexion(); // Asumiendo que getConexion() devuelve la conexión PDO
 
-    // //   try {
-    // //     if ($conector != null) {
-    // //       Construir la consulta SQL con parámetros
-    // //       $sql = "SELECT 
-    // //               INC_numero, 
-    // //               CONVERT(VARCHAR(10), INC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), INC_hora, 0), 7), 6, 0, ' ') AS fechaIncidenciaFormateada, 
-    // //               INC_asunto, 
-    // //               INC_descripcion, 
-    // //               INC_documento, 
-    // //               INC_codigoPatrimonial, 
-    // //               c.CAT_nombre, 
-    // //               a.ARE_nombre, 
-    // //               u.USU_nombre, 
-    // //               e.EST_descripcion
-    // //           FROM INCIDENCIA i
-    // //           INNER JOIN CATEGORIA c ON c.CAT_codigo = i.CAT_codigo
-    // //           INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
-    // //           INNER JOIN USUARIO u ON u.USU_codigo = i.USU_codigo
-    // //           INNER JOIN ESTADO e ON e.EST_codigo = i.EST_codigo
-    // //           WHERE 
-    // //               (:codigoPatrimonial IS NULL OR INC_codigoPatrimonial = :codigoPatrimonial) AND
-    // //               (:fechaInicio IS NULL OR INC_fecha >= :fechaInicio) AND
-    // //               (:fechaFin IS NULL OR INC_fecha <= :fechaFin) AND
-    // //               (:areaCodigo IS NULL OR a.ARE_codigo = :areaCodigo)";
+  // //   try {
+  // //     if ($conector != null) {
+  // //       Construir la consulta SQL con parámetros
+  // //       $sql = "SELECT 
+  // //               INC_numero, 
+  // //               CONVERT(VARCHAR(10), INC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), INC_hora, 0), 7), 6, 0, ' ') AS fechaIncidenciaFormateada, 
+  // //               INC_asunto, 
+  // //               INC_descripcion, 
+  // //               INC_documento, 
+  // //               INC_codigoPatrimonial, 
+  // //               c.CAT_nombre, 
+  // //               a.ARE_nombre, 
+  // //               u.USU_nombre, 
+  // //               e.EST_descripcion
+  // //           FROM INCIDENCIA i
+  // //           INNER JOIN CATEGORIA c ON c.CAT_codigo = i.CAT_codigo
+  // //           INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
+  // //           INNER JOIN USUARIO u ON u.USU_codigo = i.USU_codigo
+  // //           INNER JOIN ESTADO e ON e.EST_codigo = i.EST_codigo
+  // //           WHERE 
+  // //               (:codigoPatrimonial IS NULL OR INC_codigoPatrimonial = :codigoPatrimonial) AND
+  // //               (:fechaInicio IS NULL OR INC_fecha >= :fechaInicio) AND
+  // //               (:fechaFin IS NULL OR INC_fecha <= :fechaFin) AND
+  // //               (:areaCodigo IS NULL OR a.ARE_codigo = :areaCodigo)";
 
-    // //       Preparar la consulta
-    // //       $stmt = $conector->prepare($sql);
+  // //       Preparar la consulta
+  // //       $stmt = $conector->prepare($sql);
 
-    // //       Asignar valores a los parámetros
-    // //       $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial);
-    // //       $stmt->bindParam(':fechaInicio', $fechaInicio);
-    // //       $stmt->bindParam(':fechaFin', $fechaFin);
-    // //       $stmt->bindParam(':areaCodigo', $codigoArea);
+  // //       Asignar valores a los parámetros
+  // //       $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial);
+  // //       $stmt->bindParam(':fechaInicio', $fechaInicio);
+  // //       $stmt->bindParam(':fechaFin', $fechaFin);
+  // //       $stmt->bindParam(':areaCodigo', $codigoArea);
 
-    // //       Ejecutar la consulta
-    // //       $stmt->execute();
+  // //       Ejecutar la consulta
+  // //       $stmt->execute();
 
-    // //       Obtener el resultado como un arreglo asociativo
-    // //       $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  // //       Obtener el resultado como un arreglo asociativo
+  // //       $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // //       Retornar el resultado
-    // //       return $result;
-    // //     } else {
-    // //       throw new Exception("Error de conexión con la base de datos.");
-    // //     }
-    // //   } catch (PDOException $e) {
-    // //     throw new Exception("Error al obtener las incidencias: " . $e->getMessage());
-    // //   }
-    // // }
+  // //       Retornar el resultado
+  // //       return $result;
+  // //     } else {
+  // //       throw new Exception("Error de conexión con la base de datos.");
+  // //     }
+  // //   } catch (PDOException $e) {
+  // //     throw new Exception("Error al obtener las incidencias: " . $e->getMessage());
+  // //   }
+  // // }
 }

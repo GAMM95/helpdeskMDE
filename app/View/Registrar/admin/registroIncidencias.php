@@ -3,7 +3,7 @@
     <?php
     global $incidenciaRegistrada;
     ?>
-    
+
     <!-- Miga de pan -->
     <div class="page-header">
       <div class="page-block">
@@ -120,15 +120,9 @@
 
       <!-- TODO: BOTONES -->
       <div class="flex justify-center space-x-4">
-        <button type="submit" id="guardar-incidencia" class="btn-primary  text-white font-bold  py-2 px-4 rounded-md">
-          Guardar
-        </button>
-        <button type="button" id="editar-incidencia" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md">
-          Editar
-        </button>
-        <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md">
-          Nuevo
-        </button>
+        <button type="submit" id="guardar-incidencia" class="btn-primary text-white font-bold py-2 px-4 rounded-md"> Guardar </button>
+        <button type="button" id="editar-incidencia" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md"> Editar </button>
+        <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md"> Nuevo </button>
       </div>
     </form>
 
@@ -163,12 +157,12 @@
       <?php endif; ?>
 
       <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
-        <table id="tablaListarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500">
+        <table id="tablaListarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
               <th scope="col" class="px-6 py-2">N° de entrada</th>
               <th scope="col" class="px-6 py-2">Fecha de entrada</th>
-              <th scope="col" class="px-6 py-2">Area</th>
+              <th scope="col" class="px-6 py-2">&Aacute;rea</th>
               <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
               <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-6 py-2">Asunto</th>
@@ -177,7 +171,7 @@
           </thead>
           <tbody>
             <?php foreach ($incidencias as $incidencia) : ?>
-              <tr class='second-table bg-white hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+              <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
                 <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero']; ?></th>
                 <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>

@@ -60,7 +60,7 @@ $(document).ready(function () {
   });
 });
 
-// TODO: BUSCADOR PARA EL COMBO PERSONA Y AREA
+// TODO: BUSCADOR PARA EL COMBO CATEGORIA Y AREA
 $(document).ready(function () {
   $('#cbo_area').select2({
     placeholder: "Seleccione un área",

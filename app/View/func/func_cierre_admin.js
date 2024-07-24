@@ -131,7 +131,7 @@ $(document).ready(function () {
       success: function (response) {
         // Manejo de éxito de la solicitud AJAX
         if (action === 'registro-cierre-admin.php?action=registrar') {
-          toastr.success('Cierre de incidencia registrado');
+          toastr.success('Incidencia cerrada');
         } else if (action === 'registro-cierre-admin.php?action=editar') {
           toastr.success('Cierre de incidencia actualizado');
         }

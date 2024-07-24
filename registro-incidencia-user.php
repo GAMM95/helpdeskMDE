@@ -20,7 +20,7 @@ if ($INC_numero != '') {
 
 switch ($action) {
   case 'registrar':
-    $incidenciaController->registrarIncidencia();
+    $incidenciaController->registrarIncidenciaUsuario();
     break;
 }
 
@@ -53,25 +53,10 @@ switch ($action) {
       <div class="loader-fill"></div>
     </div>
   </div>
-  <!-- [ Pre-loader ] End -->
-  <!-- [ navigation menu ] start -->
-  <?php
-  include('app/View/partials/user/navbar.php');
-  ?>
-  <!-- [ navigation menu ] end -->
 
-  <!-- [ Header ] start -->
-  <?php
-  include('app/View/partials/user/header.php');
-  ?>
-  <!-- [ Header ] end -->
-
-  <!-- [ Main Content ] start -->
-  <?php
-  include('app/View/Registrar/user/registroIncidencias.php');
-  ?>
-  <!-- [ Main Content ] end -->
-
+  <?php include('app/View/partials/user/navbar.php'); ?>
+  <?php include('app/View/partials/user/header.php'); ?>
+  <?php include('app/View/Registrar/user/registroIncidencias.php'); ?>
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>
@@ -79,11 +64,8 @@ switch ($action) {
   <script src="dist/assets/js/pcoded.min.js"></script>
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
 
-
-  <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
-
-  <script src="./app/View/func/func_incidencia_admin.js"></script>
+  <script src="./app/View/func/func_incidencia_user.js"></script>
 
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">

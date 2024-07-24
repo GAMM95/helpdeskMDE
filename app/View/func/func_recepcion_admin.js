@@ -163,7 +163,7 @@ $(document).ready(function () {
       success: function (response) {
         // Manejo de éxito de la solicitud AJAX
         if (action === 'registro-recepcion-admin.php?action=registrar') {
-          toastr.success('Recepción de incidencia registrada');
+          toastr.success('Incidencia recepcionada');
         } else if (action === 'registro-recepcion-admin.php?action=editar') {
           toastr.success('Recepción de incidencia actualizada');
         }

@@ -35,16 +35,16 @@
 
     <!-- TODO: TITULO TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
     <div id="noIncidencias" class="flex justify-between items-center mb-2">
-      <h1 class="text-xl text-gray-400">Incidencias no recepcionadas</h1>
+      <h1 class="text-xl text-gray-400">Nuevas incidencias</h1>
       <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar..." oninput="filtrarTablaIncidenciasSinRecepcionar()" />
     </div>
 
     <!-- TODO: TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
     <input type="hidden" id="incidenciaCount" value="<?php echo count($incidencias); ?>">
 
-    <div>
+    <div class="mb-2">
       <div id="tablaContainer" class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
-        <table id="tablaIncidenciasSinRecepcionar" class="w-full text-xs text-left rtl:text-right text-gray-500">
+        <table id="tablaIncidenciasSinRecepcionar" class="w-full text-xs text-left rtl:text-right text-gray-500 bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-6 py-2">N°</th>
@@ -53,18 +53,20 @@
               <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
               <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-6 py-2">Asunto</th>
+              <th scope="col" class="px-6 py-2">Documento</th>
               <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($incidencias as $incidencia) : ?>
-              <tr class='bg-white hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>
+              <tr class=' hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>
                 <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap'><?= $incidencia['INC_numero']; ?></th>
                 <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_asunto']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_documento']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['USU_nombre']; ?></td>
               </tr>
             <?php endforeach; ?>
@@ -105,9 +107,11 @@
                 <label for="incidencia" class="block font-bold mb-1 mr-3 text-[#32cfad]">Incidencia seleccionada:</label>
                 <input type="text" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" id="incidencia" name="incidencia" readonly required>
               </div>
+            </div>
 
-              <!-- INPUT ESCONDIDO PARA EL NUMERO DE RECEPCION -->
-              <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden">
+            <!-- INPUT ESCONDIDO PARA EL NUMERO DE RECEPCION -->
+            <div class="flex justify-center mx-2 mb-2 hidden">
+              <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
                 <label for="num_recepcion" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero de Recepci&oacute;n:</label>
                 <input type="text" id="num_recepcion" name="num_recepcion" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
               </div>
@@ -194,7 +198,7 @@
       <!-- TODO: TABLA DE INCIDENCIAS  RECEPCIONADAS -->
       <div class="w-4/5">
         <div class="relative max-h-[500px] overflow-x-hidden shadow-md sm:rounded-lg">
-          <table id="tablaIncidenciasRecepcionadas" class="w-full text-xs text-left rtl:text-right text-gray-500">
+          <table id="tablaIncidenciasRecepcionadas" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
             <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
               <tr>
                 <th scope="col" class="px-6 py-2 hidden">N° Recepcion</th>
@@ -216,7 +220,7 @@
               foreach ($recepciones as $recepcion) {
 
                 // echo "<tr class='second-table bg-white hover:bg-green-100 hover:scale-[101%] transition-all  border-b '>";
-                echo "<tr class='second-table bg-white hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id='{$recepcion['REC_numero']}'>";
+                echo "<tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id='{$recepcion['REC_numero']}'>";
                 echo "<th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'>";
                 echo $recepcion['REC_numero'];
                 echo "</th>";

@@ -29,6 +29,16 @@
           <h3 class="text-2xl font-plain mb-4 text-xs text-gray-400">Datos personales</h3>
 
           <div class="card-body">
+            <!-- PRIMERA FILA -->
+            <div class="flex justify-center -mx-2 mb-5 ">
+              <div class="flex items-center mb-4">
+                <div class="flex items-center">
+                  <label for="CodPersona" class="block font-bold mb-1 mr-3 text-lime-500">C&oacute;digo de persona:</label>
+                  <input type="text" id="txt_codigoPersona" name="CodPersona" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
+                </div>
+              </div>
+            </div>
+            
             <!-- DNI DE LA PERSONA -->
             <div class="mb-2 sm:w-1/3">
               <label for="dni" class="block mb-1 font-bold text-xs">DNI:</label>

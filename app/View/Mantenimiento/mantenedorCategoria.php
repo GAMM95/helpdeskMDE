@@ -46,15 +46,9 @@
 
           <!-- BOTONES -->
           <div class="flex justify-center space-x-4">
-            <button type="submit" id="guardar-categoria" class="btn-primary text-white font-bold py-2 px-4 rounded-md">
-              Guardar
-            </button>
-            <button type="button" id="editar-categoria" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md">
-              Editar
-            </button>
-            <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md">
-              Nuevo
-            </button>
+            <button type="submit" id="guardar-categoria" class="btn-primary text-white font-bold py-2 px-4 rounded-md"> Guardar </button>
+            <button type="button" id="editar-categoria" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md"> Editar </button>
+            <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md"> Nuevo </button>
           </div>
         </form>
       </div>
@@ -62,7 +56,7 @@
       <!-- TODO: TABLA DE CATEGORIAS -->
       <div class="w-2/3">
         <div class="relative max-h-[800px] overflow-x-hidden shadow-md sm:rounded-lg">
-          <table id="tablaCategorias" class="w-full text-xs text-left rtl:text-right text-gray-500">
+          <table id="tablaCategorias" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
             <!-- ENCABEZADO DE LA TABLA -->
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
@@ -75,7 +69,7 @@
               <?php
               $categorias = $categoriaModel->listarCategorias();
               foreach ($categorias as $categoria) {
-                echo "<tr class='bg-white hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>";
+                echo "<tr class=' hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>";
                 echo "<th scope='col' class='px-10 py-2 font-medium text-gray-900 whitespace-nowrap hidden' data-codcategoria='" . htmlspecialchars($categoria['CAT_codigo']) . "'>";
                 echo htmlspecialchars($categoria['CAT_codigo']);
                 echo "</th>";
