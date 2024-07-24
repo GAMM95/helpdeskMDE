@@ -10,6 +10,7 @@ require_once 'config/conexion.php';
 require_once 'app/Model/IncidenciaModel.php';
 require_once 'app/Model/RecepcionModel.php';
 require_once 'app/Model/CierreModel.php';
+require_once 'app/Model/UsuarioModel.php';
 require_once 'app/Controller/InicioController.php';
 
 $conexion = new Conexion();
@@ -21,7 +22,16 @@ $area = $_SESSION['codigoArea'];
 $incidenciasModel =  new IncidenciaModel();
 $recepcionesModel = new RecepcionModel();
 $cierresModel = new CierreModel();
+$usuarioModel = new UsuarioModel();
 $controller = new InicioController();
+
+
+if ($rol === 'Administrador' || $rol === 'Soporte') {
+  $cantidades = $controller->mostrarCantidadesAdministrador();
+} else {
+  $cantidades = $controller->mostrarCantidadesUsuario($area);
+}
+
 ?>
 
 <!DOCTYPE html>

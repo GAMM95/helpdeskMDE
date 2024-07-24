@@ -227,4 +227,25 @@ class UsuarioModel extends Conexion
       throw new Exception("Error al habilitar usuario: " . $e->getMessage());
     }
   }
+
+  // TODO: Contar usuarios para el administrador
+  public function contarUsuariosAdministrador()
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT COUNT(*) as usuarios_total FROM USUARIO";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['usuarios_total'];
+      } else {
+        echo "Error de conexión con la base de datos.";
+        return null;
+      }
+    } catch (PDOException $e) {
+      echo "Error al contar usuarios para el administrador: " . $e->getMessage();
+      return null;
+    }
+  }
 }

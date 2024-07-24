@@ -203,7 +203,8 @@ class RecepcionModel extends Conexion
     try {
       if ($conector != null) {
         $sql = "SELECT COUNT(*) as recepciones_mes_actual FROM RECEPCION 
-                WHERE REC_FECHA >= DATEADD(MONTH, -1, GETDATE())";
+                WHERE REC_FECHA >= DATEADD(MONTH, -1, GETDATE())
+                AND EST_codigo = 4";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);

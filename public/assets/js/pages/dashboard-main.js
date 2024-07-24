@@ -1,53 +1,53 @@
 'use strict';
-$(document).ready(function() {
-    setTimeout(function() {
+$(document).ready(function () {
+    setTimeout(function () {
         floatchart()
     }, 100);
 });
 
 function floatchart() {
     // [ support-chart ] start
-    $(function() {
-        var options1 = {
-            chart: {
-                type: 'area',
-                height: 65,
-                sparkline: {
-                    enabled: true
-                }
-            },
-            colors: ["#1abc9c"],
-            stroke: {
-                curve: 'smooth',
-                width: 2,
-            },
-            series: [{
-                data: [0, 20, 10, 45, 30, 55, 20, 30, 0]
-            }],
-            tooltip: {
-                fixed: {
-                    enabled: false
-                },
-                x: {
-                    show: false
-                },
-                y: {
-                    title: {
-                        formatter: function(seriesName) {
-                            return 'Ticket '
-                        }
-                    }
-                },
-                marker: {
-                    show: false
-                }
-            }
-        }
-        new ApexCharts(document.querySelector("#support-chart"), options1).render();
-    });
+    // $(function() {
+    //     var options1 = {
+    //         chart: {
+    //             type: 'area',
+    //             height: 65,
+    //             sparkline: {
+    //                 enabled: true
+    //             }
+    //         },
+    //         colors: ["#1abc9c"],
+    //         stroke: {
+    //             curve: 'smooth',
+    //             width: 2,
+    //         },
+    //         series: [{
+    //             data: [0, 20, 10, 45, 30, 55, 20, 30, 0]
+    //         }],
+    //         tooltip: {
+    //             fixed: {
+    //                 enabled: false
+    //             },
+    //             x: {
+    //                 show: false
+    //             },
+    //             y: {
+    //                 title: {
+    //                     formatter: function(seriesName) {
+    //                         return 'Ticket '
+    //                     }
+    //                 }
+    //             },
+    //             marker: {
+    //                 show: false
+    //             }
+    //         }
+    //     }
+    //     new ApexCharts(document.querySelector("#support-chart"), options1).render();
+    // });
     // [ support-chart ] end
     // [ power-card-chart1 ] start
-    $(function() {
+    $(function () {
         var options = {
             chart: {
                 type: 'line',
@@ -82,7 +82,7 @@ function floatchart() {
                 },
                 y: {
                     title: {
-                        formatter: function(seriesName) {
+                        formatter: function (seriesName) {
                             return 'Power'
                         }
                     }
@@ -97,7 +97,7 @@ function floatchart() {
     });
     // [ power-card-chart1 ] end
     // [ power-card-chart3 ] start
-    $(function() {
+    $(function () {
         var options = {
             chart: {
                 type: 'line',
@@ -132,7 +132,7 @@ function floatchart() {
                 },
                 y: {
                     title: {
-                        formatter: function(seriesName) {
+                        formatter: function (seriesName) {
                             return 'Temperature'
                         }
                     }
@@ -147,7 +147,7 @@ function floatchart() {
     });
     // [ power-card-chart3 ] end
     // [ seo-chart1 ] start
-    $(function() {
+    $(function () {
         var options = {
             chart: {
                 type: 'area',
@@ -191,7 +191,7 @@ function floatchart() {
                 },
                 y: {
                     title: {
-                        formatter: function(seriesName) {
+                        formatter: function (seriesName) {
                             return 'Visits :'
                         }
                     }
@@ -206,7 +206,7 @@ function floatchart() {
     });
     // [ seo-chart1 ] end
     // [ seo-chart2 ] start
-    $(function() {
+    $(function () {
         var options = {
             chart: {
                 type: 'bar',
@@ -241,7 +241,7 @@ function floatchart() {
                 },
                 y: {
                     title: {
-                        formatter: function(seriesName) {
+                        formatter: function (seriesName) {
                             return 'Bounce Rate :'
                         }
                     }
@@ -256,7 +256,7 @@ function floatchart() {
     });
     // [ seo-chart2 ] end
     // [ seo-chart3 ] start
-    $(function() {
+    $(function () {
         var options = {
             chart: {
                 type: 'area',
@@ -300,7 +300,7 @@ function floatchart() {
                 },
                 y: {
                     title: {
-                        formatter: function(seriesName) {
+                        formatter: function (seriesName) {
                             return 'Products :'
                         }
                     }
@@ -315,52 +315,52 @@ function floatchart() {
     });
     // [ seo-chart3 ] end
     // [ tot-lead ] start
-$(function() {
-    var options = {
-        chart: {
-            type: 'area',
-            height: 150,
-            sparkline: {
-                enabled: true
-            }
-        },
-        dataLabels: {
-            enabled: false
-        },
-        colors: ["#1abc9c"],
-        fill: {
-            type: 'solid',
-            opacity: 0.3,
-        },
-        stroke: {
-            curve: 'straight',
-            width: 3,
-        },
-        series: [{
-            name: 'series1',
-            data: [25, 66, 41, 89, 25, 44, 12, 36, 9, 54, 25, 66, 41, 89]
-        }],
-        tooltip: {
-            fixed: {
-                enabled: false
-            },
-            x: {
-                show: false
-            },
-            y: {
-                title: {
-                    formatter: function(seriesName) {
-                        return 'Total Leads :'
-                    }
+    $(function () {
+        var options = {
+            chart: {
+                type: 'area',
+                height: 150,
+                sparkline: {
+                    enabled: true
                 }
             },
-            marker: {
-                show: false
+            dataLabels: {
+                enabled: false
+            },
+            colors: ["#1abc9c"],
+            fill: {
+                type: 'solid',
+                opacity: 0.3,
+            },
+            stroke: {
+                curve: 'straight',
+                width: 3,
+            },
+            series: [{
+                name: 'series1',
+                data: [25, 66, 41, 89, 25, 44, 12, 36, 9, 54, 25, 66, 41, 89]
+            }],
+            tooltip: {
+                fixed: {
+                    enabled: false
+                },
+                x: {
+                    show: false
+                },
+                y: {
+                    title: {
+                        formatter: function (seriesName) {
+                            return 'Total Leads :'
+                        }
+                    }
+                },
+                marker: {
+                    show: false
+                }
             }
-        }
-    };
-    var chart = new ApexCharts(document.querySelector("#tot-lead"), options);
-    chart.render();
-});
-// [ tot-lead ] end
+        };
+        var chart = new ApexCharts(document.querySelector("#tot-lead"), options);
+        chart.render();
+    });
+    // [ tot-lead ] end
 }
