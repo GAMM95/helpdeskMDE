@@ -96,7 +96,7 @@ class IncidenciaModel extends Conexion
       return false;
     }
   }
-  
+
   // TODO: Metodo listar incidencias Administrador - FORM CONSULTAR INCIDENCIA
   public function listarIncidenciasAdministrador()
   {
@@ -541,4 +541,52 @@ class IncidenciaModel extends Conexion
   // //     throw new Exception("Error al obtener las incidencias: " . $e->getMessage());
   // //   }
   // // }
+
+  // METODO PARA CONTAR LA CANTIDAD DE AREAS
+  public function contarIncidencias()
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT COUNT(*) AS cantidadIncidencias FROM INCIDENCIA";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['cantidadIncidencias'];
+      } else {
+        echo "Error de conexión con la base de datos.";
+        return null;
+      }
+    } catch (PDOException $e) {
+      echo "Error al contar inciencias: " . $e->getMessage();
+      return null;
+    }
+  }
+
+
+  // METODO PARA CONTAR LA CANTIDAD DE AREAS
+  public function areasConMasIncidencias()
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT TOP 1 a.ARE_nombre AS areaMasIncidencia, COUNT(*) AS Incidencias
+        FROM INCIDENCIA i
+        INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
+        WHERE i.INC_fecha >= DATEADD(MONTH, -1, GETDATE()) 
+        GROUP BY a.ARE_nombre
+        ORDER BY Incidencias DESC";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['areaMasIncidencia'];
+      } else {
+        echo "Error de conexión con la base de datos.";
+        return null;
+      }
+    } catch (PDOException $e) {
+      echo "Error al contar inciencias: " . $e->getMessage();
+      return null;
+    }
+  }
 }

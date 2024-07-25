@@ -11,6 +11,7 @@ require_once 'app/Model/IncidenciaModel.php';
 require_once 'app/Model/RecepcionModel.php';
 require_once 'app/Model/CierreModel.php';
 require_once 'app/Model/UsuarioModel.php';
+require_once 'app/Model/AreaModel.php';
 require_once 'app/Controller/InicioController.php';
 
 $conexion = new Conexion();
@@ -23,6 +24,7 @@ $incidenciasModel =  new IncidenciaModel();
 $recepcionesModel = new RecepcionModel();
 $cierresModel = new CierreModel();
 $usuarioModel = new UsuarioModel();
+$areaModel = new AreaModel();
 $controller = new InicioController();
 
 

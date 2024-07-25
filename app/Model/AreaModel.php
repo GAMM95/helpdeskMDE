@@ -82,4 +82,25 @@ class AreaModel extends Conexion
       throw new Exception("Error al actualizar el área: " . $e->getMessage());
     }
   }
+
+  // METODO PARA CONTAR LA CANTIDAD DE AREAS
+  public function contarAreas()
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "  SELECT COUNT(*) AS cantidadAreas FROM AREA";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['cantidadAreas'];
+      } else {
+        echo "Error de conexión con la base de datos.";
+        return null;
+      }
+    } catch (PDOException $e) {
+      echo "Error al contar areas: " . $e->getMessage();
+      return null;
+    }
+  }
 }

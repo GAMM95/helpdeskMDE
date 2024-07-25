@@ -5,6 +5,7 @@ class InicioController extends Conexion
   private $recepcionModel;
   private $cierreModel;
   private $usuarioModel;
+  private $areaModel;
 
   public function __construct()
   {
@@ -12,6 +13,7 @@ class InicioController extends Conexion
     $this->recepcionModel = new RecepcionModel();
     $this->cierreModel = new CierreModel();
     $this->usuarioModel = new UsuarioModel();
+    $this->areaModel = new AreaModel();
   }
 
   public function mostrarCantidadesAdministrador()
@@ -21,7 +23,10 @@ class InicioController extends Conexion
       $cantidadPendientessMesActualAdmin = $this->incidenciasModel->contarPendientesUltimoMesAdministrador();
       $cantidadRecepcionesMesActualAdmin = $this->recepcionModel->contarRecepcionesUltimoMesAdministrador();
       $cantidadCierresMesActualAdmin = $this->cierreModel->contarCierresUltimoMesAdministrador();
+      $cantidadAreas = $this->areaModel->contarAreas();
       $cantidadUsuarios = $this->usuarioModel->contarUsuarios();
+      $cantidadIncidencias = $this->incidenciasModel->contarIncidencias();
+      $areaConMasIncidencias = $this->incidenciasModel->areasConMasIncidencias();
 
       return [
         'incidencias_mes_actual' => $cantidadIncidenciasMesActualAdmin,
@@ -29,6 +34,9 @@ class InicioController extends Conexion
         'recepciones_mes_actual' => $cantidadRecepcionesMesActualAdmin,
         'cierres_mes_actual' => $cantidadCierresMesActualAdmin,
         'usuarios_total' => $cantidadUsuarios,
+        'cantidadAreas' => $cantidadAreas,
+        'cantidadIncidencias' => $cantidadIncidencias,
+        'areaMasIncidencia' => $areaConMasIncidencias,
       ];
     } catch (Exception $e) {
       throw new Exception('Error al obtener las cantidades: ' . $e->getMessage());
