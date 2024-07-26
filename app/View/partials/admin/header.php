@@ -114,15 +114,16 @@
             </div>
             <ul class="pro-body">
               <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li>
-              <!-- Cambia el enlace de cerrar sesión para abrir el modal -->
               <li><a href="logout.php" class="dropdown-item"><i class="feather icon-log-out"></i> Cerrar sesión</a></li>
-              <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Launch demo modal</button>
+
+              <!-- Cambia el enlace de cerrar sesión para abrir el modal -->
+              <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-log-out"></i> Cerrar sesión modal</a></li>
             </ul>
           </div>
         </div>
 
         <!-- [ vertically-modal ] start -->
-        <div id="exampleModalCenter" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div id="exampleModalCenter" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 1050;">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -138,15 +139,10 @@
               </div>
             </div>
           </div>
-
         </div>
         <!-- [ vertically-modal ] end -->
       </li>
 
-
     </ul>
   </div>
-  <!-- <div class="modal-backdrop fade show"></div> -->
 </header>
-<script src="./dist/uikit.js"></script>
-<script src="./dist/uikit.min.js"></script>

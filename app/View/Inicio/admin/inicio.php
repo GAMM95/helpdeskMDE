@@ -177,7 +177,7 @@
                     <th class="text-center">Categor&iacute;a</th>
                     <th class="text-center">Incidencia</th>
                     <th class="text-center">Documento</th>
-                    <!-- <th class="text-right">Estado</th> -->
+                    <th class="text-center">Estado</th>
                   </tr>
                 </thead>
 
@@ -204,8 +204,34 @@
                       <!-- Documento de la incidencia -->
                       <td class="text-center"><?= htmlspecialchars($incidencia['INC_documento']); ?></td>
                       <!-- Estado -->
+                      <!-- <td class="text-center"><?= htmlspecialchars($incidencia['ESTADO']); ?></td> -->
+                      <td class="text-center">
+                        <?php
+                        $estado = htmlspecialchars($incidencia['ESTADO']);
+                        $badgeClass = '';
 
+                        switch ($estado) {
+                          case 'Abierta':
+                            $badgeClass = 'badge-light-danger';
+                            break;
+                          case 'Recepcionado':
+                            $badgeClass = 'badge-light-success'; // Asegúrate de que esta clase existe o ajusta según el diseño deseado
+                            break;
+                          case 'Cerrado': // Reemplaza 'OtroEstado' con los nombres de estados adicionales
+                            $badgeClass = 'badge-light-primary';
+                            break;
+                          default:
+                            $badgeClass = 'badge-light-secondary'; // Clase por defecto para estados no especificados
+                            break;
+                        }
+                        ?>
+                        <label class="badge <?= $badgeClass; ?>"><?= $estado; ?></label>
+                      </td>
                     </tr>
+
+                    <!-- <td class="text-right"><label class="badge badge-light-danger">Low</label></td>
+<td class="text-right"><label class="badge badge-light-success">medium</label></td>
+<td class="text-right"><label class="badge badge-light-primary">high</label></td> -->
                   <?php endforeach; ?>
 
                   <?php if (empty($incidencias)) : ?>
@@ -220,6 +246,7 @@
           <!-- Fin tabla de nuevas incidencias -->
 
         </div>
+
       </div>
     </div>
     <!-- [ Main Content ] end -->
@@ -229,4 +256,3 @@
 <!-- <td class="text-right"><label class="badge badge-light-danger">Low</label></td>
 <td class="text-right"><label class="badge badge-light-success">medium</label></td>
 <td class="text-right"><label class="badge badge-light-primary">high</label></td> -->
-<!-- 

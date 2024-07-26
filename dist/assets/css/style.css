@@ -18355,18 +18355,18 @@ a.badge-light-secondary:hover {
 }
 
 .badge-light-success {
-    background: rgba(46, 204, 113, 0.2);
-    border-color: #c4f1d7;
-    color: #2ecc71;
+    background: #f6ff95;
+    border-color: #f0ff76;
+    color: #a9a11e;
 }
 
 a.badge-light-success.active,
 a.badge-light-success:active,
 a.badge-light-success:focus,
 a.badge-light-success:hover {
-    background: #2ecc71;
-    border-color: #2ecc71;
-    color: #d5f5e3;
+    background: #f6ff95;
+    border-color: #f0ff76;
+    color: #a9a11e;
 }
 
 .badge-light-info {
