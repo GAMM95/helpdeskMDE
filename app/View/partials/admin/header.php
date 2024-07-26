@@ -90,6 +90,8 @@
           </div>
         </div>
       </li>
+
+      <!-- Perfil de usuario -->
       <li>
         <div class="dropdown drp-user">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -111,14 +113,40 @@
               </span>
             </div>
             <ul class="pro-body">
-              <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i>
-                  Perfil</a></li>
-              <li><a href="logout.php" class="dropdown-item"><i class="feather icon-log-out"></i>
-                  Cerrar sesi&oacute;n</a></li>
+              <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li>
+              <!-- Cambia el enlace de cerrar sesión para abrir el modal -->
+              <li><a href="logout.php" class="dropdown-item"><i class="feather icon-log-out"></i> Cerrar sesión</a></li>
+              <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Launch demo modal</button>
             </ul>
           </div>
         </div>
+
+        <!-- [ vertically-modal ] start -->
+        <div id="exampleModalCenter" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body">
+                <p class="mb-0">¿Desea cerrar sesión?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a href="logout.php" class="btn btn-primary">Cerrar sesión</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- [ vertically-modal ] end -->
       </li>
+
+
     </ul>
   </div>
+  <!-- <div class="modal-backdrop fade show"></div> -->
 </header>
+<script src="./dist/uikit.js"></script>
+<script src="./dist/uikit.min.js"></script>

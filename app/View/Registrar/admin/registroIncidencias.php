@@ -166,6 +166,7 @@
               <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
               <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-6 py-2">Asunto</th>
+              <th scope="col" class="px-6 py-2">Documento</th>
               <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
@@ -178,6 +179,7 @@
                 <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_asunto']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_documento']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['USU_nombre']; ?></td>
               </tr>
             <?php endforeach; ?>
@@ -191,6 +193,8 @@
         </table>
       </div>
     </div>
+    <!-- Fin de tabla de incidencias registradas -->
+     
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>

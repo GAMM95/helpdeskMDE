@@ -41,32 +41,36 @@
     <!-- TODO: TABLA DE RECEPCIONES SIN CERRAR -->
     <input type="hidden" id="recepcionCount" value="<?php echo count($recepciones); ?>">
 
-    <div>
+    <div class="mb-2">
       <div id="tablaContainer" class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
         <table id="tablaRecepcionesSinCerrar" class="w-full text-xs text-left rtl:text-right text-gray-500 bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-6 py-3">N°</th>
-              <th scope="col" class="px-6 py-3">Fecha recepci&oacute;n</th>
-              <th scope="col" class="px-6 py-3">&Aacute;rea</th>
-              <th scope="col" class="px-6 py-3">C&oacute;digo Patrimonial</th>
-              <th scope="col" class="px-6 py-3">Asunto</th>
-              <th scope="col" class="px-6 py-3">Prioridad</th>
-              <th scope="col" class="px-6 py-3">Impacto</th>
-              <th scope="col" class="px-6 py-3">Usuario</th>
+              <th scope="col" class="px-6 py-2 hidden">N° recepcion</th>
+              <th scope="col" class="px-6 py-2">N° incidencia</th>
+              <th scope="col" class="px-6 py-2">Fecha recepci&oacute;n</th>
+              <th scope="col" class="px-6 py-2">&Aacute;rea</th>
+              <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
+              <th scope="col" class="px-6 py-2">Asunto</th>
+              <th scope="col" class="px-6 py-2">Documento</th>
+              <th scope="col" class="px-6 py-2">Prioridad</th>
+              <th scope="col" class="px-6 py-2">Impacto</th>
+              <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($recepciones as $recepcion) : ?>
               <tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b '>
-                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'><?= $recepcion['REC_numero']; ?></th>
-                <td class='px-6 py-4'><?= $recepcion['fechaRecepcionFormateada']; ?></th>
-                <td class='px-6 py-4'><?= $recepcion['ARE_nombre']; ?></th>
-                <td class='px-6 py-4'><?= $recepcion['INC_codigoPatrimonial']; ?></th>
-                <td class='px-6 py-4'><?= $recepcion['INC_asunto']; ?></th>
-                <td class='px-6 py-4'><?= $recepcion['PRI_nombre']; ?></th>
-                <td class='px-6 py-4'><?= $recepcion['IMP_descripcion']; ?></th>
-                <td class='px-6 py-4'><?= $recepcion['USU_nombre']; ?></th>
+                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'><?= $recepcion['REC_numero']; ?></th>
+                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'><?= $recepcion['INC_numero']; ?></th>
+                <td class='px-6 py-3'><?= $recepcion['fechaRecepcionFormateada']; ?></th>
+                <td class='px-6 py-3'><?= $recepcion['ARE_nombre']; ?></th>
+                <td class='px-6 py-3'><?= $recepcion['INC_codigoPatrimonial']; ?></th>
+                <td class='px-6 py-3'><?= $recepcion['INC_asunto']; ?></th>
+                <td class='px-6 py-3'><?= $recepcion['INC_documento']; ?></th>
+                <td class='px-6 py-3'><?= $recepcion['PRI_nombre']; ?></th>
+                <td class='px-6 py-3'><?= $recepcion['IMP_descripcion']; ?></th>
+                <td class='px-6 py-3'><?= $recepcion['USU_nombre']; ?></th>
               </tr>
             <?php endforeach; ?>
 
@@ -93,14 +97,17 @@
       <?php endif; ?>
     </div>
 
-    <!-- Segundo Apartado - Formulario de registro de Cierre de incidencia -->
-    <h1 class="text-xl font-bold text-gray-800 mt-4 mb-2">Cierre de incidencia</h1>
     <!-- TODO: Formulario -->
     <form id="formCierre" action="registro-cierre-admin.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
 
       <!-- NUMERO DE RECEPCION -->
       <div class="flex justify-center mx-2 mb-4">
         <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center ">
+          <label for="num_incidencia" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero de Incidencia:</label>
+          <input type="text" id="num_incidencia" name="num_incidencia" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
+        </div>
+
+        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden">
           <label for="recepcion" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero de Recepci&oacute;n:</label>
           <input type="text" id="recepcion" name="recepcion" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
         </div>
@@ -145,20 +152,20 @@
 
         <!-- OPERATIVIDAD -->
         <div class="w-full md:w-1/5 px-2 mb-2">
-          <label for="operatividad" class="block font-bold mb-1 text-xs">Operatividad:</label>
-          <select id="cbo_operatividad" name="operatividad" class="border p-2 w-full text-xs cursor-pointer">
+          <label for="operatividad" class="block font-bold mb-1 text-xs">Operatividad: *</label>
+          <select id="cbo_operatividad" name="operatividad" class="border p-2 w-full text-xs cursor-pointer rounded-md">
           </select>
         </div>
 
         <!-- ASUNTO DEL CIERRE -->
         <div class="w-full md:w-2/5 px-2 mb-2">
-          <label for="asunto" class="block mb-1 font-bold text-xs">Asunto:</label>
+          <label for="asunto" class="block mb-1 font-bold text-xs">Asunto: *</label>
           <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese asunto de cierre">
         </div>
 
         <!-- DOCUMENTO DE CIERRE -->
         <div class="w-full md:w-2/5 px-2 mb-2">
-          <label for="documento" class="block mb-1 font-bold text-xs">Documento:</label>
+          <label for="documento" class="block mb-1 font-bold text-xs">Documento de Cierre: *</label>
           <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese documento de cierre">
         </div>
       </div>
@@ -168,19 +175,19 @@
         <!-- DIAGNOSTICO DEL CIERRE -->
         <div class="w-full md:w-1/3 px-2 mb-2">
           <label for="diagnostico" class="block mb-1 font-bold text-xs">Diagn&oacute;stico:</label>
-          <input type="text" id="diagnostico" name="diagnostico" class="border p-2 w-full text-xs" placeholder="Ingrese diagnóstico">
+          <input type="text" id="diagnostico" name="diagnostico" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese diagnóstico (opcional)">
         </div>
 
         <!-- SOLUCION DE LA INCIDENCIA -->
         <div class="w-full md:w-1/3 px-2 mb-2">
           <label for="solucion" class="block mb-1 font-bold text-xs">Soluci&oacute;n:</label>
-          <input type="text" id="solucion" name="solucion" class="border p-2 w-full text-xs" placeholder="Ingrese solución (opcional)">
+          <input type="text" id="solucion" name="solucion" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese solución (opcional)">
         </div>
 
         <!-- RECOMENDACIONES -->
         <div class="w-full md:w-1/3 px-2 mb-2">
           <label for="recomendaciones" class="block mb-1 font-bold text-xs">Recomendaciones:</label>
-          <input type="text" id="recomendaciones" name="recomendaciones" class="border p-2 w-full text-xs" placeholder="Ingrese recomendaciones (opcional)">
+          <input type="text" id="recomendaciones" name="recomendaciones" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese recomendaciones (opcional)">
         </div>
       </div>
 

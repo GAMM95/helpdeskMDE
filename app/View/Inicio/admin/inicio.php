@@ -28,7 +28,12 @@
             <!-- Contar el total de incidencias en el mes -->
             <h2 class="m-0"><?php echo $cantidades['incidencias_mes_actual']; ?></h2>
             <span class="text-c-blue">INCIDENCIAS</span>
-            <p class="mb-3 mt-3">Total de incidencias en el presente mes.</p>
+            <?php
+            setlocale(LC_TIME, 'es_ES.UTF-8',  'Spanish_Spain', 'Spanish');
+            $nombreMes = strftime('%B');
+            ?>
+            <p class="mb-3 mt-3">Total de incidencias en el mes de <?php echo $nombreMes; ?> de <?php echo date('Y'); ?>.</p>
+
           </div>
           <div id="support-chart"></div> <!-- Asegúrate de tener este div -->
           <div class="card-footer bg-primary text-white">
@@ -53,7 +58,6 @@
       <!-- Incluye las librerías necesarias -->
       <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
       <script>
         // Pasar datos de PHP a JavaScript
         var incidenciasData = <?php echo json_encode([
@@ -61,53 +65,9 @@
                                 (int)$cantidades['recepciones_mes_actual'],
                                 (int)$cantidades['cierres_mes_actual']
                               ]); ?>;
-
-        $(function() {
-          var options1 = {
-            chart: {
-              type: 'bar',
-              height: 200
-            },
-            plotOptions: {
-              bar: {
-                horizontal: false,
-                columnWidth: '50%'
-              },
-            },
-            dataLabels: {
-              enabled: true
-            },
-            colors: ["#1abc9c", "#3498db", "#e74c3c"], // Colores para cada barra
-            series: [{
-              name: 'Incidencias',
-              data: incidenciasData
-            }],
-            xaxis: {
-              categories: ['Abiertas', 'Recepcionadas', 'Cerradas'], // Etiquetas de categorías
-            },
-            tooltip: {
-              fixed: {
-                enabled: false
-              },
-              x: {
-                show: true
-              },
-              y: {
-                title: {
-                  formatter: function(seriesName) {
-                    return 'Cantidad: ';
-                  }
-                }
-              },
-              marker: {
-                show: true
-              }
-            }
-          };
-
-          new ApexCharts(document.querySelector("#support-chart"), options1).render();
-        });
       </script>
+
+
 
       <!-- table card-1 start -->
       <div id="contador" class="col-md-12 col-xl-4">
@@ -143,7 +103,7 @@
                   <i class="icon feather icon-file-text text-c-blue mb-1 d-block"></i>
                 </div>
                 <div class="col-sm-8 text-md-center">
-                  <h5><?php echo $cantidades['cantidadIncidencias']; ?> +</h5>
+                  <h5><?php echo $cantidades['cantidadIncidencias']; ?></h5>
                   <span>Incidencias</span>
                 </div>
               </div>
@@ -151,10 +111,10 @@
             <div class="col-sm-6 card-body">
               <div class="row">
                 <div class="col-sm-4">
-                  <i class="icon feather icon-mail text-c-yellow mb-1 d-block"></i>
+                  <i class="icon feather icon-target text-c-yellow mb-1 d-block"></i>
                 </div>
                 <div class="col-sm-8 text-md-center">
-                  <h5>120</h5>
+                  <h5><?php echo $cantidades['cantidadCategorias']; ?></h5>
                   <span>categor&iacute;as</span>
                 </div>
               </div>
@@ -165,11 +125,11 @@
         <div class="card flat-card widget-primary-card">
           <div class="row-table">
             <div class="col-sm-3 card-body">
-              <i class="feather icon-star-on"></i>
+              <i class="feather icon-alert-triangle"></i>
             </div>
             <div class="col-sm-9">
               <h6 class="text-sm">&Aacute;rea con m&aacute;s incidencias</h6>
-              <h5><?php echo $cantidades['areaMasIncidencia']; ?></h5>
+              <h5 class="text-white"><?php echo $cantidades['areaMasIncidencia']; ?></h5>
             </div>
           </div>
         </div>
@@ -189,90 +149,84 @@
                   <i class="feather icon-more-horizontal"></i>
                 </button>
                 <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                  <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
-                  <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
-                  <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-                  <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                  <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> Maximizar</span><span style="display:none"><i class="feather icon-minimize"></i> Restaurar</span></a></li>
+                  <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> Minimizar</span><span style="display:none"><i class="feather icon-plus"></i> Expandir</span></a></li>
+                  <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> Recargar</a></li>
+                  <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> Eliminar</a></li>
                 </ul>
               </div>
             </div>
           </div>
+
+          <!-- TABLA DE NUEVAS INCIDENCIAS -->
+          <?php
+          require_once './app/Model/IncidenciaModel.php';
+
+          $incidenciaModel = new IncidenciaModel();
+          $incidencias = $incidenciaModel->listarNuevasIncidenciasInicioAdmin();
+          ?>
+
           <div class="card-body p-0">
             <div class="table-responsive">
               <table class="table table-hover mb-0">
+                <!-- Encabezado -->
                 <thead>
                   <tr>
-                    <th>Usuario</th>
-                    <th>Incidencia</th>
-                    <th>Fecha</th>
-                    <th class="text-right">Estado</th>
+                    <th class="text-center">Usuario</th>
+                    <th class="text-center">Fecha</th>
+                    <th class="text-center">Categor&iacute;a</th>
+                    <th class="text-center">Incidencia</th>
+                    <th class="text-center">Documento</th>
+                    <!-- <th class="text-right">Estado</th> -->
                   </tr>
                 </thead>
+
+                <!-- Cuerpo -->
                 <tbody>
-                  <tr>
-                    <td>
-                      <div class="d-inline-block align-middle">
-                        <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                        <div class="d-inline-block">
-                          <h6>John Deo</h6>
-                          <p class="text-muted m-b-0">Graphics Designer</p>
+                  <?php foreach ($incidencias as $incidencia) : ?>
+                    <tr>
+                      <!-- Usuario y area -->
+                      <td>
+                        <div class="d-inline-block align-middle">
+                          <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
+                          <div class="d-inline-block">
+                            <h6><?= htmlspecialchars($incidencia['Usuario']); ?></h6>
+                            <p class="text-muted m-b-0"><?= htmlspecialchars($incidencia['ARE_nombre']); ?></p>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td>Descripcion de la incidencia</td>
-                    <td>Fecha incidencia</td>
-                    <td class="text-right"><label class="badge badge-light-danger">Low</label></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-inline-block align-middle">
-                        <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                        <div class="d-inline-block">
-                          <h6>Jenifer Vintage</h6>
-                          <p class="text-muted m-b-0">Web Designer</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Mashable</td>
-                    <td>March, 31</td>
-                    <td class="text-right"><label class="badge badge-light-primary">high</label></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-inline-block align-middle">
-                        <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                        <div class="d-inline-block">
-                          <h6>William Jem</h6>
-                          <p class="text-muted m-b-0">Developer</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Flatable</td>
-                    <td>Aug, 02</td>
-                    <td class="text-right"><label class="badge badge-light-success">medium</label></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-inline-block align-middle">
-                        <img class="img-radius wid-40 align-top m-r-15" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                        <div class="d-inline-block">
-                          <h6>David Jones</h6>
-                          <p class="text-muted m-b-0">Developer</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Guruable</td>
-                    <td>Sep, 22</td>
-                    <td class="text-right"><label class="badge badge-light-primary">high</label></td>
-                  </tr>
+                      </td>
+                      <!-- Fecha de la incidencia -->
+                      <td class="text-center"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']); ?></td>
+                      <!-- Categoria de la incidencia -->
+                      <td class="text-center"><?= htmlspecialchars($incidencia['CAT_nombre']); ?></td>
+                      <!-- Descripcion de la incidencia -->
+                      <td class="text-center"><?= htmlspecialchars($incidencia['INC_asunto']); ?></td>
+                      <!-- Documento de la incidencia -->
+                      <td class="text-center"><?= htmlspecialchars($incidencia['INC_documento']); ?></td>
+                      <!-- Estado -->
+
+                    </tr>
+                  <?php endforeach; ?>
+
+                  <?php if (empty($incidencias)) : ?>
+                    <tr>
+                      <td colspan="5" class="text-center py-3">No hay incidencias para hoy.</td>
+                    </tr>
+                  <?php endif; ?>
                 </tbody>
               </table>
             </div>
           </div>
+          <!-- Fin tabla de nuevas incidencias -->
+
         </div>
       </div>
-
     </div>
     <!-- [ Main Content ] end -->
   </div>
 </div>
+
+<!-- <td class="text-right"><label class="badge badge-light-danger">Low</label></td>
+<td class="text-right"><label class="badge badge-light-success">medium</label></td>
+<td class="text-right"><label class="badge badge-light-primary">high</label></td> -->
+<!-- 

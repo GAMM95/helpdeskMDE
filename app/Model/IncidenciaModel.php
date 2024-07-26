@@ -201,6 +201,39 @@ class IncidenciaModel extends Conexion
     }
   }
 
+  public function listarNuevasIncidenciasInicioAdmin()
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT INC_numero, 
+                (CONVERT(VARCHAR(10), INC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada, 
+                INC_asunto, 
+                INC_descripcion, 
+                INC_documento, 
+                c.CAT_nombre, 
+                a.ARE_nombre, 
+                u.USU_nombre,
+                (PER_nombres + ' ' + PER_apellidoPaterno) AS Usuario
+                FROM INCIDENCIA i
+                INNER JOIN CATEGORIA c ON c.CAT_codigo = i.CAT_codigo
+                INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
+                INNER JOIN USUARIO u ON u.USU_codigo = i.USU_codigo
+                INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
+                ORDER BY i.INC_numero DESC";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+      } else {
+        throw new Exception("Error de conexión a la base de datos.");
+      }
+    } catch (PDOException $e) {
+      throw new Exception("Error al listar incidencias registradas por el administrador: " . $e->getMessage());
+    }
+  }
+
+
   //  TODO: Contar el total de incidencias para empaginar tabla - ADMINISTRADOR
   public function contarIncidenciasAdministrador()
   {
@@ -571,21 +604,26 @@ class IncidenciaModel extends Conexion
     try {
       if ($conector != null) {
         $sql = "SELECT TOP 1 a.ARE_nombre AS areaMasIncidencia, COUNT(*) AS Incidencias
-        FROM INCIDENCIA i
-        INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
-        WHERE i.INC_fecha >= DATEADD(MONTH, -1, GETDATE()) 
-        GROUP BY a.ARE_nombre
-        ORDER BY Incidencias DESC";
+                    FROM INCIDENCIA i
+                    INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
+                    WHERE i.INC_fecha >= DATEADD(MONTH, -1, GETDATE()) 
+                    GROUP BY a.ARE_nombre
+                    ORDER BY Incidencias DESC";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result['areaMasIncidencia'];
+
+        if ($result) {
+          return $result['areaMasIncidencia'];
+        } else {
+          return "No hay &aacute;reas con incidencias en el último mes.";
+        }
       } else {
         echo "Error de conexión con la base de datos.";
         return null;
       }
     } catch (PDOException $e) {
-      echo "Error al contar inciencias: " . $e->getMessage();
+      echo "Error al contar incidencias: " . $e->getMessage();
       return null;
     }
   }

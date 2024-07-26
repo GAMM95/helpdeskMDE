@@ -119,7 +119,7 @@ $(document).ready(function() {
         setTimeout(function() {
             $this.parents('.card').children(".card-loader").remove();
             $this.parents('.card').removeClass("card-load");
-        }, 3000);
+        }, 2000);
     });
     // collpased and expaded card
     $(".card-option .minimize-card").on('click', function() {

@@ -190,20 +190,24 @@ $(document).ready(function () {
       valido = false;
     }
 
-    // Validar campo de prioridad e impacto
-    var faltaPrioridad = ($('#prioridad').val() === null || $('#prioridad').val() === '');
-    var faltaImpacto = ($('#impacto').val() === null || $('#impacto').val() === '');
+    // Solo validamos los otros campos si la incidencia es valida
+    if (valido) {
+      // Validar campo de prioridad e impacto
+      var faltaPrioridad = ($('#prioridad').val() === null || $('#prioridad').val() === '');
+      var faltaImpacto = ($('#impacto').val() === null || $('#impacto').val() === '');
 
-    if (faltaPrioridad && faltaImpacto) {
-      mensajeError += 'Debe seleccionar una prioridad y un impacto.';
-      valido = false;
-    } else if (faltaPrioridad) {
-      mensajeError += 'Debe seleccionar una prioridad.';
-      valido = false;
-    } else if (faltaImpacto) {
-      mensajeError += 'Debe seleccionar un impacto.';
-      valido = false;
+      if (faltaPrioridad && faltaImpacto) {
+        mensajeError += 'Debe seleccionar una prioridad y un impacto.';
+        valido = false;
+      } else if (faltaPrioridad) {
+        mensajeError += 'Debe seleccionar una prioridad.';
+        valido = false;
+      } else if (faltaImpacto) {
+        mensajeError += 'Debe seleccionar un impacto.';
+        valido = false;
+      }
     }
+
     // Mostrar el mensaje de error si hay
     if (!valido) {
       toastr.error(mensajeError.trim());

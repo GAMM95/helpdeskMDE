@@ -6,6 +6,7 @@ class InicioController extends Conexion
   private $cierreModel;
   private $usuarioModel;
   private $areaModel;
+  private $categoriaModel;
 
   public function __construct()
   {
@@ -14,6 +15,7 @@ class InicioController extends Conexion
     $this->cierreModel = new CierreModel();
     $this->usuarioModel = new UsuarioModel();
     $this->areaModel = new AreaModel();
+    $this->categoriaModel = new CategoriaModel();
   }
 
   public function mostrarCantidadesAdministrador()
@@ -26,6 +28,7 @@ class InicioController extends Conexion
       $cantidadAreas = $this->areaModel->contarAreas();
       $cantidadUsuarios = $this->usuarioModel->contarUsuarios();
       $cantidadIncidencias = $this->incidenciasModel->contarIncidencias();
+      $cantidadCategorias = $this->categoriaModel->contarCategorias();
       $areaConMasIncidencias = $this->incidenciasModel->areasConMasIncidencias();
 
       return [
@@ -36,6 +39,7 @@ class InicioController extends Conexion
         'usuarios_total' => $cantidadUsuarios,
         'cantidadAreas' => $cantidadAreas,
         'cantidadIncidencias' => $cantidadIncidencias,
+        'cantidadCategorias' => $cantidadCategorias,
         'areaMasIncidencia' => $areaConMasIncidencias,
       ];
     } catch (Exception $e) {

@@ -153,7 +153,7 @@
             <div class="flex flex-wrap -mx-2">
               <div class="w-full px-2 mb-3">
                 <label for="prioridad" class="block font-bold mb-1">Prioridad:</label>
-                <select id="prioridad" name="prioridad" class="border p-2 w-full text-xs cursor-pointer">
+                <select id="prioridad" name="prioridad" class="border p-2 w-full text-xs cursor-pointer rounded-md">
                 </select>
               </div>
             </div>
@@ -162,7 +162,7 @@
             <div class="flex flex-wrap -mx-2">
               <div class="w-full px-2 mb-3">
                 <label for="impacto" class="block font-bold mb-1">Impacto:</label>
-                <select id="impacto" name="impacto" class="border p-2 w-full text-xs cursor-pointer">
+                <select id="impacto" name="impacto" class="border p-2 w-full text-xs cursor-pointer rounded-md">
                 </select>
               </div>
             </div>

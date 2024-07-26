@@ -83,7 +83,7 @@ class AreaModel extends Conexion
     }
   }
 
-  // METODO PARA CONTAR LA CANTIDAD DE AREAS
+  // TODO: METODO PARA CONTAR LA CANTIDAD DE AREAS
   public function contarAreas()
   {
     $conector = parent::getConexion();

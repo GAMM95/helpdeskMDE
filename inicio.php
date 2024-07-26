@@ -12,6 +12,7 @@ require_once 'app/Model/RecepcionModel.php';
 require_once 'app/Model/CierreModel.php';
 require_once 'app/Model/UsuarioModel.php';
 require_once 'app/Model/AreaModel.php';
+require_once 'app/Model/CategoriaModel.php';
 require_once 'app/Controller/InicioController.php';
 
 $conexion = new Conexion();
@@ -25,6 +26,7 @@ $recepcionesModel = new RecepcionModel();
 $cierresModel = new CierreModel();
 $usuarioModel = new UsuarioModel();
 $areaModel = new AreaModel();
+$categoriaModel = new CategoriaModel();
 $controller = new InicioController();
 
 
@@ -85,6 +87,7 @@ if ($rol === 'Administrador' || $rol === 'Soporte') {
   <!-- Apex Chart -->
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
 
+  <script src="./app/View/func/func_inicio_admin.js"></script>
 
   <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>

@@ -93,7 +93,15 @@ $(document).ready(function () {
     $(this).addClass('bg-blue-200 font-semibold');
     $('#recepcion').val(id);
   });
+
+  $(document).on('click', '#tablaRecepcionesSinCerrar tbody tr', function () {
+    var numIncidencia = $(this).find('th').eq(1).html();
+    $('#tablaRecepcionesSinCerrar tbody tr').removeClass('bg-blue-200 font-semibold');
+    $(this).addClass('bg-blue-200 font-semibold');
+    $('#num_incidencia').val(numIncidencia);
+  });
 })
+
 // TODO: VERIFICAR LA CANTIDAD DE REGISTROS Y OCULTAR/MOSTRAR ELEMENTOS
 document.addEventListener("DOMContentLoaded", function () {
   const tablaContainer = document.getElementById("tablaContainer");
@@ -154,34 +162,39 @@ $(document).ready(function () {
 
     // Validar campo de número de incidencia
     if ($('#recepcion').val() === '') {
-      mensajeError += 'Debe seleccionar una recepcion. ';
+      mensajeError = 'Debe seleccionar una incidencia. ';
       valido = false;
     }
 
-    // Validar campo de prioridad e impacto
-    var faltaOperatividad = ($('#cbo_operatividad').val() === null || $('#cbo_operatividad').val() === '');
-    var faltaAsunto = ($('#asunto').val() === null || $('#asunto').val() === '');
-    var faltaDocumento = ($('#documento').val() === null || $('#documento').val() === '');
+    // Solo validamos los otros campos si la incidencia es válida
+    if (valido) {
+      // Validar campo de prioridad e impacto
+      var faltaOperatividad = ($('#cbo_operatividad').val() === null || $('#cbo_operatividad').val() === '');
+      var faltaAsunto = ($('#asunto').val() === null || $('#asunto').val() === '');
+      var faltaDocumento = ($('#documento').val() === null || $('#documento').val() === '');
 
-    if (faltaOperatividad && faltaAsunto && faltaDocumento) {
-      mensajeError += 'Ingrese campos requeridos.';
-      valido = false;
-    } else if (faltaOperatividad) {
-      mensajeError += 'Debe seleccionar operatividad.';
-      valido = false;
-    } else if (faltaAsunto) {
-      mensajeError += 'Debe ingresar asunto de cierre.';
-      valido = false;
-
-    } else if (faltaDocumento) {
-      mensajeError += 'Debe ingresar documento de cierre.';
-      valido = false;
+      if (faltaOperatividad && faltaAsunto && faltaDocumento) {
+        mensajeError += 'Ingrese campos requeridos.';
+        valido = false;
+      } else if (faltaOperatividad) {
+        mensajeError += 'Debe seleccionar operatividad. ';
+        valido = false;
+      } else if (faltaAsunto) {
+        mensajeError += 'Debe ingresar asunto de cierre. ';
+        valido = false;
+      } else if (faltaDocumento) {
+        mensajeError += 'Debe ingresar documento de cierre. ';
+        valido = false;
+      }
     }
+
     // Mostrar el mensaje de error si hay
     if (!valido) {
       toastr.error(mensajeError.trim());
     }
+
     return valido;
   }
+
 
 });
