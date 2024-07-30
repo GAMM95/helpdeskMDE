@@ -152,7 +152,7 @@
 
         <!-- OPERATIVIDAD -->
         <div class="w-full md:w-1/5 px-2 mb-2">
-          <label for="operatividad" class="block font-bold mb-1 text-xs">Operatividad: *</label>
+          <label for="operatividad" class="block font-bold mb-1 text-xs">Condici&oacute;n: *</label>
           <select id="cbo_operatividad" name="operatividad" class="border p-2 w-full text-xs cursor-pointer rounded-md">
           </select>
         </div>
@@ -243,7 +243,7 @@
               <th scope="col" class="px-6 py-3">Fecha Cierre</th>
               <th scope="col" class="px-6 py-3">Asunto Cierre</th>
               <th scope="col" class="px-6 py-3">Documento Cierre</th>
-              <th scope="col" class="px-6 py-3">Operatividad</th>
+              <th scope="col" class="px-6 py-3">Condici&oacute;n</th>
               <th scope="col" class="px-6 py-3">Usuario</th>
             </tr>
           </thead>

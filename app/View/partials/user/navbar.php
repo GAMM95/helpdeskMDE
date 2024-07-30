@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 ?>
 <!-- [ navigation menu ] start -->
-<nav class="pcoded-navbar  ">
+<nav class="pcoded-navbar fixed top-0 left-0 right-0 z-50">
   <div class="navbar-wrapper  ">
     <div class="navbar-content scroll-div ">
 

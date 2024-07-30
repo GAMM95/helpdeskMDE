@@ -72,6 +72,7 @@ if ($rol === 'Administrador' || $rol === 'Soporte') {
     include('app/View/partials/admin/navbar.php');
     include('app/View/partials/admin/header.php');
     include('app/View/Inicio/admin/inicio.php');
+    
   } else {
     include('app/View/partials/user/navbar.php');
     include('app/View/partials/user/header.php');
@@ -87,7 +88,7 @@ if ($rol === 'Administrador' || $rol === 'Soporte') {
   <!-- Apex Chart -->
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
 
-  <script src="./app/View/func/func_inicio_admin.js"></script>
+
 
   <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>

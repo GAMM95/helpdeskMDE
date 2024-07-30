@@ -208,39 +208,39 @@ class IncidenciaModel extends Conexion
       if ($conector != null) {
         // Prepara la consulta SQL con un marcador de posición para la fecha
         $sql = "SELECT 
-                I.INC_numero,
-                (CONVERT(VARCHAR(10), INC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada,
-                A.ARE_nombre,
-                CAT.CAT_nombre,
-                I.INC_asunto,
-                I.INC_documento,
-                I.INC_codigoPatrimonial,
-                (CONVERT(VARCHAR(10), REC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), REC_hora, 0), 7), 6, 0, ' ')) AS fechaRecepcionFormateada,
-                PRI.PRI_nombre,
-                IMP.IMP_descripcion,
-                (CONVERT(VARCHAR(10), CIE_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), CIE_hora, 0), 7), 6, 0, ' ')) AS fechaCierreFormateada,
-                O.OPE_descripcion,
-                U.USU_nombre,
-                p.PER_nombres + ' ' + PER_apellidoPaterno AS Usuario,
-                CASE
-                    WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
-                    ELSE E.EST_descripcion
-                END AS ESTADO
-            FROM INCIDENCIA I
-            INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
-            INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
-            INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
-            LEFT JOIN RECEPCION R ON R.INC_numero = I.INC_numero
-            LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
-            LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
-            LEFT JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
-            LEFT JOIN IMPACTO IMP ON IMP.IMP_codigo = R.IMP_codigo
-            LEFT JOIN OPERATIVIDAD O ON O.OPE_codigo = C.OPE_codigo
-            LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
-            INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
-            WHERE (I.EST_codigo IN (3, 4, 5) OR C.EST_codigo IN (3, 4, 5))
-            AND CAST(I.INC_fecha AS DATE) = CAST(:fechaConsulta AS DATE)
-            ORDER BY I.INC_numero DESC";
+          I.INC_numero,
+          (CONVERT(VARCHAR(10), INC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada,
+          A.ARE_nombre,
+          CAT.CAT_nombre,
+          I.INC_asunto,
+          I.INC_documento,
+          I.INC_codigoPatrimonial,
+          (CONVERT(VARCHAR(10), REC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), REC_hora, 0), 7), 6, 0, ' ')) AS fechaRecepcionFormateada,
+          PRI.PRI_nombre,
+          IMP.IMP_descripcion,
+          (CONVERT(VARCHAR(10), CIE_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), CIE_hora, 0), 7), 6, 0, ' ')) AS fechaCierreFormateada,
+          O.OPE_descripcion,
+          U.USU_nombre,
+          p.PER_nombres + ' ' + PER_apellidoPaterno AS Usuario,
+          CASE
+              WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
+              ELSE E.EST_descripcion
+          END AS ESTADO
+      FROM INCIDENCIA I
+      INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
+      INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+      INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+      LEFT JOIN RECEPCION R ON R.INC_numero = I.INC_numero
+      LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
+      LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
+      LEFT JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
+      LEFT JOIN IMPACTO IMP ON IMP.IMP_codigo = R.IMP_codigo
+      LEFT JOIN OPERATIVIDAD O ON O.OPE_codigo = C.OPE_codigo
+      LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
+      INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
+      WHERE (I.EST_codigo IN (3, 4, 5) OR C.EST_codigo IN (3, 4, 5))
+      AND CAST(I.INC_fecha AS DATE) = CAST(:fechaConsulta AS DATE)
+      ORDER BY I.INC_numero DESC";
 
         // Prepara y ejecuta la consulta
         $stmt = $conector->prepare($sql);

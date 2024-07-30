@@ -147,9 +147,10 @@
             <!-- Título alineado a la izquierda -->
             <h5 class="flex-shrink-0">Incidencias del d&iacute;a</h5>
 
-            <!-- Selector de fecha centrado -->
             <div class="flex-grow flex justify-center">
-              <input type="date" class="form-input mr-4  cursor-pointer" aria-label="Seleccionar fecha">
+              <form action="" method="get" id="fechaForm">
+                <input type="date" name="fecha" class="form-input mr-4 cursor-pointer" aria-label="Seleccionar fecha" value="<?= isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d'); ?>" onchange="document.getElementById('fechaForm').submit();">
+              </form>
             </div>
 
             <!-- Botones alineados a la derecha -->
@@ -178,12 +179,13 @@
           $incidencias = $incidenciaModel->listarIncidenciasAdminFecha($fecha);
           ?>
 
-          <div class="card-body p-0">
+          <div id="tabla-incidencias" class="card-body p-0">
             <div class="table-responsive overflow-y-auto max-h-96">
               <table class="table table-hover mb-0 text-xs">
                 <!-- Encabezado -->
                 <thead>
                   <tr>
+                    <th class="text-center">N°</th>
                     <th class="text-center">Usuario</th>
                     <th class="text-center">Fecha</th>
                     <th class="text-center">Incidencia</th>
@@ -195,7 +197,9 @@
                 <!-- Cuerpo -->
                 <tbody>
                   <?php foreach ($incidencias as $incidencia) : ?>
-                    <tr>
+                    <tr class="align-middle"> <!-- Añadido 'align-middle' para centrar verticalmente -->
+                      <!-- código de la incidencia -->
+                      <td class="text-center text-xs align-middle"><?= htmlspecialchars($incidencia['INC_numero']); ?></td>
                       <!-- Usuario y área -->
                       <td>
                         <div class="flex items-center">
@@ -207,13 +211,13 @@
                         </div>
                       </td>
                       <!-- Fecha de la incidencia -->
-                      <td class="text-center text-xs"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']); ?></td>
+                      <td class="text-center text-xs align-middle"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']); ?></td>
                       <!-- Descripción de la incidencia -->
-                      <td class="text-center text-xs"><?= htmlspecialchars($incidencia['INC_asunto']); ?></td>
+                      <td class="text-center text-xs align-middle"><?= htmlspecialchars($incidencia['INC_asunto']); ?></td>
                       <!-- Documento de la incidencia -->
-                      <td class="text-center text-xs"><?= htmlspecialchars($incidencia['INC_documento']); ?></td>
+                      <td class="text-center text-xs align-middle"><?= htmlspecialchars($incidencia['INC_documento']); ?></td>
                       <!-- Estado -->
-                      <td class="text-center text-xs">
+                      <td class="text-center text-xs align-middle">
                         <?php
                         $estado = htmlspecialchars($incidencia['ESTADO']);
                         $badgeClass = '';
@@ -240,10 +244,11 @@
 
                   <?php if (empty($incidencias)) : ?>
                     <tr>
-                      <td colspan="5" class="text-center py-3">No hay incidencias para la fecha seleccionada.</td>
+                      <td colspan="6" class="text-center py-3">No hay incidencias para la fecha seleccionada.</td>
                     </tr>
                   <?php endif; ?>
                 </tbody>
+
               </table>
             </div>
           </div>
@@ -258,3 +263,4 @@
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="./app/View/func/func_inicio_admin.js"></script>
