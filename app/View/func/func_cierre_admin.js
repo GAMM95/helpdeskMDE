@@ -16,9 +16,9 @@ $(document).ready(function () {
     success: function (data) {
       var select = $('#cbo_operatividad');
       select.empty();
-      select.append('<option value="" selected disabled>Seleccione operatividad</option>');
+      select.append('<option value="" selected disabled>Seleccione condicion</option>');
       $.each(data, function (index, value) {
-        select.append('<option value="' + value.OPE_codigo + '">' + value.OPE_descripcion + '</option>');
+        select.append('<option value="' + value.CON_codigo + '">' + value.CON_descripcion + '</option>');
       });
 
       if (operatividadRegistrada !== '') {
@@ -177,7 +177,7 @@ $(document).ready(function () {
         mensajeError += 'Ingrese campos requeridos.';
         valido = false;
       } else if (faltaOperatividad) {
-        mensajeError += 'Debe seleccionar operatividad. ';
+        mensajeError += 'Debe seleccionar condicion. ';
         valido = false;
       } else if (faltaAsunto) {
         mensajeError += 'Debe ingresar asunto de cierre. ';

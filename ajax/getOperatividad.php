@@ -12,8 +12,8 @@ class OperatividadModel extends Conexion
   public function getOperatividadData()
   {
     $conector = parent::getConexion();
-    $query = "SELECT * FROM OPERATIVIDAD 
-      ORDER BY OPE_codigo";
+    $query = "SELECT * FROM CONDICION 
+      ORDER BY CON_codigo";
     $stmt = $conector->prepare($query);
     $stmt->execute();
     $resultado = $stmt->fetchAll(); 

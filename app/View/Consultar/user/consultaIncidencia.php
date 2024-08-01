@@ -51,7 +51,7 @@
               <th scope="col" class="px-3 py-3">Prioridad</th>
               <th scope="col" class="px-3 py-3">Impacto</th>
               <th scope="col" class="px-3 py-3">Fecha Cierre</th>
-              <th scope="col" class="px-3 py-3">Operatividad</th>
+              <th scope="col" class="px-3 py-3">Condic&oacute;n</th>
               <th scope="col" class="px-3 py-3">Usuario</th>
               <th scope="col" class="px-3 py-3">Estado</th>
             </tr>
@@ -73,7 +73,7 @@
               echo "<td class='px-3 py-2'>" . $incidencia['PRI_nombre'] . "</td>";
               echo "<td class='px-3 py-2'>" . $incidencia['IMP_descripcion'] . "</td>";
               echo "<td class='px-3 py-2'>" . $incidencia['fechaCierreFormateada'] . "</td>";
-              echo "<td class='px-3 py-2'>" . $incidencia['OPE_descripcion'] . "</td>";
+              echo "<td class='px-3 py-2'>" . $incidencia['CON_descripcion'] . "</td>";
               echo "<td class='px-3 py-2'>" . $incidencia['USU_nombre'] . "</td>";
               echo "<td class='px-3 py-2'>" . $incidencia['ESTADO'] . "</td>";
               echo "</tr>";

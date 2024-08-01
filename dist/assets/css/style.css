@@ -21985,7 +21985,7 @@ pre[class*=language-]:before {
     right: 0;
     top: 0;
     margin-left: 235px;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     transition: all 0.3s ease-in-out;
 }
 

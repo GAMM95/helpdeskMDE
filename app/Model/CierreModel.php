@@ -32,7 +32,7 @@ class CierreModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "EXEC sp_InsertarCierreActualizarRecepcion @CIE_fecha = :fecha, @CIE_hora = :hora, @CIE_diagnostico = :diagnostico, @CIE_documento = :documento, @CIE_asunto = :asunto, @CIE_solucion = :solucion, @CIE_recomendaciones = :recomendaciones, @OPE_codigo = :operatividad, @REC_numero = :recepcion, @USU_codigo = :usuario";
+        $sql = "EXEC sp_InsertarCierreActualizarRecepcion @CIE_fecha = :fecha, @CIE_hora = :hora, @CIE_diagnostico = :diagnostico, @CIE_documento = :documento, @CIE_asunto = :asunto, @CIE_solucion = :solucion, @CIE_recomendaciones = :recomendaciones, @CON_codigo = :operatividad, @REC_numero = :recepcion, @USU_codigo = :usuario";
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':fecha', $fecha);
         $stmt->bindParam(':hora', $hora);
@@ -71,7 +71,7 @@ class CierreModel extends Conexion
           I.INC_documento,
           I.INC_codigoPatrimonial,
 	        (CONVERT(VARCHAR(10),CIE_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), CIE_hora, 0), 7), 6, 0, ' ')) AS fechaCierreFormateada,
-	        O.OPE_descripcion,
+	        O.CON_descripcion,
 	        u.USU_nombre
         FROM RECEPCION R
         RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
@@ -80,7 +80,7 @@ class CierreModel extends Conexion
         INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
         LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
         LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
-        INNER JOIN OPERATIVIDAD O ON O.OPE_codigo = C.OPE_codigo
+        INNER JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
         INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
         WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5
         ORDER BY C.CIE_numero DESC";
@@ -111,7 +111,7 @@ class CierreModel extends Conexion
         INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
         LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
         LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
-        INNER JOIN OPERATIVIDAD O ON O.OPE_codigo = C.OPE_codigo
+        INNER JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
         INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
         WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5";
         $stmt = $conector->prepare($sql);
@@ -143,8 +143,9 @@ class CierreModel extends Conexion
           (CONVERT(VARCHAR(10),CIE_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), CIE_hora, 0), 7), 6, 0, ' ')) AS fechaCierreFormateada,
           CIE_asunto,
           C.CIE_documento,
-	        O.OPE_descripcion,
-	        u.USU_nombre
+	        O.CON_descripcion,
+	        u.USU_nombre,
+          PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
         FROM RECEPCION R
         RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
         INNER JOIN  AREA A ON I.ARE_codigo = A.ARE_codigo
@@ -152,8 +153,9 @@ class CierreModel extends Conexion
         INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
         LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
         LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
-        INNER JOIN OPERATIVIDAD O ON O.OPE_codigo = C.OPE_codigo
+        INNER JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
         INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
+        INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
         WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5
         ORDER BY C.CIE_numero DESC
         OFFSET :start ROWS

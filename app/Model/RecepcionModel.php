@@ -87,13 +87,15 @@ class RecepcionModel extends Conexion
 
         $sql = "SELECT i.INC_numero, REC_numero, 
         (CONVERT(VARCHAR(10),REC_fecha,103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VarChar(7), REC_hora, 0), 7), 6, 0, ' ')) AS fechaRecepcionFormateada,
-        a.ARE_nombre, i.INC_codigoPatrimonial, INC_asunto, INC_documento, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre
+        a.ARE_nombre, i.INC_codigoPatrimonial, INC_asunto, INC_documento, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre,
+        PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
         FROM RECEPCION r 
         INNER JOIN INCIDENCIA i ON i.INC_numero = r.INC_numero
         INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
         INNER JOIN PRIORIDAD p ON p.PRI_codigo = r.PRI_codigo
         INNER JOIN IMPACTO imp ON imp.IMP_codigo = r.IMP_codigo
         INNER JOIN USUARIO u ON u.USU_codigo = r.USU_codigo
+        INNER JOIN PERSONA per ON per.PER_codigo = u.PER_codigo
         WHERE r.EST_codigo = 4
         ORDER BY REC_numero DESC
         OFFSET :start ROWS
@@ -122,7 +124,8 @@ class RecepcionModel extends Conexion
       try {
         $sql = "SELECT REC_numero, i.INC_numero, 
         (CONVERT(VARCHAR(10),REC_fecha,103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VarChar(7), REC_hora, 0), 7), 6, 0, ' ')) AS fechaRecepcionFormateada,
-        a.ARE_nombre, INC_codigoPatrimonial, c.CAT_nombre, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre
+        a.ARE_nombre, INC_codigoPatrimonial, c.CAT_nombre, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre,
+        PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
         FROM RECEPCION r
         INNER JOIN INCIDENCIA i ON i.INC_numero = r.INC_numero
         INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
@@ -130,6 +133,7 @@ class RecepcionModel extends Conexion
         INNER JOIN PRIORIDAD p ON p.PRI_codigo = r.PRI_codigo
         INNER JOIN IMPACTO imp ON imp.IMP_codigo = r.IMP_codigo
         INNER JOIN USUARIO u ON u.USU_codigo = r.USU_codigo
+        INNER JOIN PERSONA per ON per.PER_codigo = u.PER_codigo
         ORDER BY  i.INC_numero DESC
 ";
         $stmt = $conector->prepare($sql);

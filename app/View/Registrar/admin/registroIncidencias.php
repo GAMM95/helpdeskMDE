@@ -160,13 +160,13 @@
         <table id="tablaListarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
-              <th scope="col" class="px-6 py-2">N° de entrada</th>
+              <th scope="col" class="px-6 py-2">N°</th>
               <th scope="col" class="px-6 py-2">Fecha de entrada</th>
-              <th scope="col" class="px-6 py-2">&Aacute;rea</th>
               <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
-              <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-6 py-2">Asunto</th>
               <th scope="col" class="px-6 py-2">Documento</th>
+              <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
+              <th scope="col" class="px-6 py-2">&Aacute;rea</th>
               <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
@@ -175,12 +175,12 @@
               <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
                 <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero']; ?></th>
                 <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_asunto']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_documento']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['USU_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
               </tr>
             <?php endforeach; ?>
 
@@ -194,7 +194,7 @@
       </div>
     </div>
     <!-- Fin de tabla de incidencias registradas -->
-     
+
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>

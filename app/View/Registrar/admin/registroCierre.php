@@ -70,7 +70,7 @@
                 <td class='px-6 py-3'><?= $recepcion['INC_documento']; ?></th>
                 <td class='px-6 py-3'><?= $recepcion['PRI_nombre']; ?></th>
                 <td class='px-6 py-3'><?= $recepcion['IMP_descripcion']; ?></th>
-                <td class='px-6 py-3'><?= $recepcion['USU_nombre']; ?></th>
+                <td class='px-6 py-3'><?= $recepcion['Usuario']; ?></th>
               </tr>
             <?php endforeach; ?>
 
@@ -196,7 +196,7 @@
         document.getElementById('recepcion').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_codigo'] : ''; ?>';
         document.getElementById('fecha').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['CIE_fecha'] : $fecha_actual; ?>';
         document.getElementById('hora').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_hora'] : $hora_actual; ?>';
-        document.getElementById('operatividad').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['OPE_codigo'] : ''; ?>';
+        document.getElementById('operatividad').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['CON_codigo'] : ''; ?>';
         document.getElementById('usuarioDisplay').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['codigoUsuario'] : $_SESSION['usuario']; ?>';
         document.getElementById('usuario').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['codigoUsuario'] : $_SESSION['codigoUsuario']; ?>';
         document.getElementById('asunto').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_asunto'] : ''; ?>';
@@ -236,29 +236,29 @@
         <table class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
-              <th scope="col" class="px-6 py-3">Incidencia</th>
-              <th scope="col" class="px-6 py-3">Fecha Incidencia</th>
-              <th scope="col" class="px-6 py-3">&Aacute;rea</th>
-              <th scope="col" class="px-6 py-3">C&oacute;digo patrimonial</th>
-              <th scope="col" class="px-6 py-3">Fecha Cierre</th>
-              <th scope="col" class="px-6 py-3">Asunto Cierre</th>
-              <th scope="col" class="px-6 py-3">Documento Cierre</th>
-              <th scope="col" class="px-6 py-3">Condici&oacute;n</th>
-              <th scope="col" class="px-6 py-3">Usuario</th>
+              <th scope="col" class="px-6 py-2">Incidencia</th>
+              <th scope="col" class="px-6 py-2">Fecha Incidencia</th>
+              <th scope="col" class="px-6 py-2">&Aacute;rea</th>
+              <th scope="col" class="px-6 py-2">C&oacute;digo patrimonial</th>
+              <th scope="col" class="px-6 py-2">Fecha Cierre</th>
+              <th scope="col" class="px-6 py-2">Asunto Cierre</th>
+              <th scope="col" class="px-6 py-2">Documento Cierre</th>
+              <th scope="col" class="px-6 py-2">Condici&oacute;n</th>
+              <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($cierres as $incidencia) : ?>
               <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
                 <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero']; ?></th>
-                <td class='px-6 py-4'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['ARE_nombre']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['fechaCierreFormateada']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['CIE_asunto']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['CIE_documento']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['OPE_descripcion']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['USU_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['fechaCierreFormateada']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['CIE_asunto']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['CIE_documento']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['CON_descripcion']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
               </tr>
             <?php endforeach; ?>
           </tbody>

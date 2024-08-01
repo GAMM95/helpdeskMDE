@@ -65,17 +65,18 @@ if (session_status() == PHP_SESSION_NONE) {
         <li class="nav-item pcoded-menu-caption">
           <label>Consultas</label>
         </li>
-        <li class="nav-item pcoded-hasmenu">
-          <a href="#!" class="nav-link ">
-            <span class="pcoded-micon">
-              <i class="feather icon-clipboard"></i>
-            </span>
-            <span class="pcoded-mtext">Consultar</span>
+
+        <li class="nav-item ">
+          <a href="consultar-cierre-admin.php" class="nav-link ">
+            <span class="pcoded-micon"> <i class="feather icon-clipboard"></i> </span>
+            <span class="pcoded-mtext">Consultar incidencias</span>
           </a>
-          <ul class="pcoded-submenu">
-            <li><a href="consultar-incidencia-admin.php">Incidencia</a></li>
-            <li><a href="consultar-cierre-admin.php">Cierre</a></li>
-          </ul>
+        </li>
+        <li class="nav-item ">
+          <a href="consultar-incidencia-admin.php" class="nav-link ">
+            <span class="pcoded-micon"> <i class="feather icon-clipboard"></i> </span>
+            <span class="pcoded-mtext">Consultar incidencias</span>
+          </a>
         </li>
 
         <!-- Mantenedor -->
@@ -97,24 +98,38 @@ if (session_status() == PHP_SESSION_NONE) {
           </ul>
         </li>
 
-
+        <!-- Registros -->
         <li class="nav-item pcoded-menu-caption">
           <label>Reportes</label>
         </li>
+
         <li class="nav-item pcoded-hasmenu">
           <a href="#!" class="nav-link ">
             <span class="pcoded-micon">
               <i class="feather icon-file"></i>
             </span>
-            <span class="pcoded-mtext">Basic</span>
+            <span class="pcoded-mtext">Incidencias</span>
           </a>
           <ul class="pcoded-submenu">
-            <li><a href="bc_alert.html">Personas</a></li>
-            <li><a href="bc_button.html">Usuarios</a></li>
-            <li><a href="bc_badges.html">Áreas</a></li>
-            <li><a href="bc_badges.html">Categorías</a></li>
+            <li><a href="bc_alert.html">Totales</a></li>
+            <li><a href="bc_alert.html">Pendientes</a></li>
+            <li><a href="bc_button.html">Por fecha</a></li>
+            <li><a href="bc_button.html">Por &aacute;rea</a></li>
           </ul>
         </li>
+
+        <li class="nav-item pcoded-hasmenu">
+          <a href="#!" class="nav-link ">
+            <span class="pcoded-micon">
+              <i class="feather icon-file"></i>
+            </span>
+            <span class="pcoded-mtext">Cierres</span>
+          </a>
+          <ul class="pcoded-submenu">
+            <li><a href="bc_alert.html">Por fecha</a></li>
+          </ul>
+        </li>
+
       </ul>
     </div>
   </div>

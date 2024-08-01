@@ -140,7 +140,7 @@ GO
 INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
 VALUES ('GAMM95', '123456', 1, 1, 1, 1);
 INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
-VALUES ('GUSH98', '123456', 2, 3, 2, 1);
+VALUES ('GUSH98', '123456', 2, 3, 2, 2);
 INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
 VALUES ('LPMM96', '123456', 3, 2, 5, 1);
 INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
@@ -159,7 +159,8 @@ SET
 	INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
 	INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo
 	INNER JOIN AREA a ON a.ARE_codigo = u.ARE_codigo
-	WHERE u.USU_nombre = @USU_usuario AND u.USU_password = @USU_password;
+	WHERE u.USU_nombre = @USU_usuario AND u.USU_password = @USU_password AND
+	u.EST_codigo= 1;
 END;
 GO
 
@@ -175,6 +176,7 @@ GO
 INSERT INTO PRIORIDAD(PRI_nombre) VALUES ('Baja');
 INSERT INTO PRIORIDAD(PRI_nombre) VALUES ('Media');
 INSERT INTO PRIORIDAD(PRI_nombre) VALUES ('Alta');
+INSERT INTO PRIORIDAD(PRI_nombre) VALUES ('Critico');
 
 -- Creacion de tabla categoria
 CREATE TABLE CATEGORIA (
@@ -218,9 +220,9 @@ CREATE TABLE IMPACTO (
 );
 GO
 
-INSERT INTO IMPACTO (IMP_descripcion) VALUES ('Alto');
-INSERT INTO IMPACTO (IMP_descripcion) VALUES ('Medio');
 INSERT INTO IMPACTO (IMP_descripcion) VALUES ('Bajo');
+INSERT INTO IMPACTO (IMP_descripcion) VALUES ('Medio');
+INSERT INTO IMPACTO (IMP_descripcion) VALUES ('Alto');
 GO
 
 -- CREACION DE TABLA INCIDENCIA
@@ -316,16 +318,18 @@ SET
 END;
 GO
 
--- Creacion de tabla Operatividad
-CREATE TABLE OPERATIVIDAD (
-	OPE_codigo SMALLINT IDENTITY(1,1) NOT NULL,
-	OPE_descripcion VARCHAR(20) NOT NULL,
-	CONSTRAINT pk_operatividad PRIMARY KEY (OPE_codigo)
+-- Creacion de tabla Condicion
+CREATE TABLE CONDICION (
+	CON_codigo SMALLINT IDENTITY(1,1) NOT NULL,
+	CON_descripcion VARCHAR(20) NOT NULL,
+	CONSTRAINT pk_operatividad PRIMARY KEY (CON_codigo)
 );
 GO
 
-INSERT INTO OPERATIVIDAD (OPE_descripcion) VALUES ('Operativo');
-INSERT INTO OPERATIVIDAD (OPE_descripcion) VALUES ('Inoperativo');
+INSERT INTO CONDICION (CON_descripcion) VALUES ('Operativo');
+INSERT INTO CONDICION (CON_descripcion) VALUES ('Inoperativo');
+INSERT INTO CONDICION (CON_descripcion) VALUES ('Solucionado');
+INSERT INTO CONDICION (CON_descripcion) VALUES ('No solucionado');
 GO
 
 -- Creacion de tabla Cierre
@@ -338,13 +342,13 @@ CREATE TABLE CIERRE(
 	CIE_asunto VARCHAR(200) NOT NULL,
 	CIE_solucion VARCHAR(200) NULL,
 	CIE_recomendaciones VARCHAR(200) NULL,
-	OPE_codigo SMALLINT NOT NULL,
+	CON_codigo SMALLINT NOT NULL,
 	EST_codigo SMALLINT NOT NULL,
 	REC_numero SMALLINT NOT NULL,
 	USU_codigo SMALLINT NOT NULL,
 	CONSTRAINT pk_cierre PRIMARY KEY (CIE_numero),
-	CONSTRAINT fk_operatividad_cierre FOREIGN KEY (OPE_codigo) 
-	REFERENCES OPERATIVIDAD (OPE_codigo),
+	CONSTRAINT fk_condicion_cierre FOREIGN KEY (CON_codigo) 
+	REFERENCES CONDICION (CON_codigo),
 	CONSTRAINT fk_recepcion_cierre FOREIGN KEY (REC_numero) 
 	REFERENCES RECEPCION (REC_numero),
 	CONSTRAINT fk_codigo_cierre FOREIGN KEY (USU_codigo) 
@@ -363,7 +367,7 @@ CREATE PROCEDURE sp_InsertarCierreActualizarRecepcion
     @CIE_asunto VARCHAR(200),
     @CIE_solucion VARCHAR(200),
     @CIE_recomendaciones VARCHAR(200),
-    @OPE_codigo SMALLINT,
+    @CON_codigo SMALLINT,
     @REC_numero SMALLINT,
     @USU_codigo SMALLINT
 AS BEGIN
@@ -373,8 +377,8 @@ SET
         BEGIN TRANSACTION;
 
         -- Insertar el nuevo cierre
-        INSERT INTO CIERRE (CIE_fecha, CIE_hora, CIE_diagnostico, CIE_documento, CIE_asunto, CIE_solucion, CIE_recomendaciones, OPE_codigo, REC_numero, USU_codigo, EST_codigo)
-        VALUES (@CIE_fecha, @CIE_hora , @CIE_diagnostico, @CIE_documento, @CIE_asunto, @CIE_solucion, @CIE_recomendaciones, @OPE_codigo, @REC_numero, @USU_codigo, 5);
+        INSERT INTO CIERRE (CIE_fecha, CIE_hora, CIE_diagnostico, CIE_documento, CIE_asunto, CIE_solucion, CIE_recomendaciones, CON_codigo, REC_numero, USU_codigo, EST_codigo)
+        VALUES (@CIE_fecha, @CIE_hora , @CIE_diagnostico, @CIE_documento, @CIE_asunto, @CIE_solucion, @CIE_recomendaciones, @CON_codigo, @REC_numero, @USU_codigo, 5);
         
         -- Actualizar el estado de la recepcion
         UPDATE RECEPCION SET EST_codigo = 5
@@ -387,87 +391,4 @@ SET
         THROW;
     END CATCH
 END;
-
-
-
-SELECT
-    I.INC_numero,
-   (CONVERT(VARCHAR(10),INC_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada,
-    A.ARE_nombre,
-    CAT.CAT_nombre,
-    I.INC_asunto,
-    I.INC_documento,
-    I.INC_codigoPatrimonial,
-	(CONVERT(VARCHAR(10),CIE_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), CIE_hora, 0), 7), 6, 0, ' ')) AS fechaCierreFormateada,
-	O.OPE_descripcion,
-	u.USU_nombre
-FROM RECEPCION R
-RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
-INNER JOIN  AREA A ON I.ARE_codigo = A.ARE_codigo
-INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
-INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
-LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
-LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
-INNER JOIN OPERATIVIDAD O ON O.OPE_codigo = C.OPE_codigo
-INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
-WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5
-ORDER BY C.CIE_numero DESC
-
-
-
-
-SELECT
-    I.INC_numero,
-    (CONVERT(VARCHAR(10), INC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada,
-    A.ARE_nombre,
-    CAT.CAT_nombre,
-    I.INC_asunto,
-    I.INC_codigoPatrimonial,
-    (CONVERT(VARCHAR(10), REC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), REC_hora, 0), 7), 6, 0, ' ')) AS fechaRecepcionFormateada,
-    PRI.PRI_nombre,
-	IMP_descripcion,
-    (CONVERT(VARCHAR(10), CIE_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), CIE_hora, 0), 7), 6, 0, ' ')) AS fechaCierreFormateada,
-	O.OPE_descripcion,
-	u.USU_nombre,
-    CASE
-        WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion  -- Estado del cierre si existe
-        ELSE E.EST_descripcion  -- Estado de la incidencia si no hay cierre asociado
-    END AS ESTADO
-FROM RECEPCION R
-RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
-INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
-INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
-INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
-LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
-LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
-LEFT JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
-LEFT JOIN IMPACTO IMP ON IMP.IMP_codigo = R.IMP_codigo
-LEFT JOIN OPERATIVIDAD O ON O.OPE_codigo = C.OPE_codigo
-LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
-WHERE (I.EST_codigo IN (3, 4, 5) OR C.EST_codigo IN (3, 4, 5))
-AND A.ARE_codigo = 21; -- Aquí sustituye 21 por el código de área deseado
-GO
-
--- METODO PARA CONTAR LAS INCIDENCIAS EN EL ULTIMO MES PARA EL ADMINISTRADOR
-
-SELECT COUNT(*) FROM INCIDENCIA 
-WHERE INC_FECHA >= DATEADD(MONTH, -1, GETDATE())
-
-SELECT COUNT(*) 
-FROM INCIDENCIA 
-WHERE INC_FECHA >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0)
-  AND INC_FECHA < DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()) + 1, 0)
-
-  SELECT i.INC_numero, (CONVERT(VARCHAR(10), REC_fecha,103) + ' - ' + CONVERT(VARCHAR(5), REC_hora, 108)) AS fechaRecepcionFormateada, a.ARE_nombre, i.INC_codigoPatrimonial, INC_asunto, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre
-        FROM RECEPCION r 
-        INNER JOIN INCIDENCIA i ON i.INC_numero = r.INC_numero
-        INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
-        INNER JOIN PRIORIDAD p ON p.PRI_codigo = r.PRI_codigo
-        INNER JOIN IMPACTO imp ON imp.IMP_codigo = r.IMP_codigo
-        INNER JOIN USUARIO u ON u.USU_codigo = r.USU_codigo
-        WHERE r.EST_codigo = 4
-        ORDER BY i.INC_numero DESC
-
-
-	Select * from PERSONA
 

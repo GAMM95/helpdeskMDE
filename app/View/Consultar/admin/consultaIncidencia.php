@@ -1,9 +1,25 @@
-<div class="pcoded-main-container">
+<div class="pcoded-main-container mt-5">
   <div class="pcoded-content">
-    <!-- Header -->
-    <h1 class="text-2xl font-bold mb-4">Consultar Incidencia</h1>
+    <!-- Miga de pan -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h1 class="text-2xl font-bold mb-2">Consulta de incidencias</h1>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href=""><i class="feather icon-clipboard"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">Consultas</a></li>
+              <li class="breadcrumb-item"><a href="">Incidencias</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin de miga de pan -->
 
-    <form id="formConsultarIncidencia" action="consultar-incidencia-admin.php?action=consultar" method="GET" class="border bg-white shadow-md p-6 w-full text-xs rounded-md mb-4">
+    <form id="formConsultarIncidencia" action="consultar-incidencia-admin.php?action=consultar" method="GET" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
       <div class="flex flex-wrap -mx-2 justify-center">
         <!-- BUSCAR POR AREA -->
         <div class="w-full md:w-1/3 px-2 mb-2">
@@ -16,27 +32,27 @@
         <!-- BUSCAR POR CODIGO PATRIMONIAL -->
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
           <label for="codigo_patrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
-          <input type="text" id="codigoPatrimonial" name="codigoPatrimonial" class="border p-2 w-full text-xs" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" placeholder="Ingrese c&oacute;digo patrimonial">
+          <input type="text" id="codigoPatrimonial" name="codigoPatrimonial" class="border p-2 w-full text-xs rounded-md" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" placeholder="Ingrese c&oacute;digo patrimonial">
         </div>
 
         <!-- BUSCAR POR FECHA DE INICIO-->
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
           <label for="fechaInicio" class="block mb-1 font-bold text-xs">Fecha Inicio:</label>
-          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs cursor-pointer">
+          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs cursor-pointer rounded-md">
         </div>
 
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
           <label for="fechaFin" class="block mb-1 font-bold text-xs">Fecha Fin:</label>
-          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer">
+          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer rounded-md">
         </div>
       </div>
 
       <!-- BOTONES DEL FORMULARIO -->
       <div class="flex justify-center space-x-2 mt-2">
-        <button type="submit" id="buscar-incidencias" class="bg-blue-500 text-white font-bold hover:bg-[#4c8cf5] py-2 px-4 rounded">
+        <button type="submit" id="buscar-incidencias" class="bg-blue-500 text-white font-bold hover:bg-[#4c8cf5] py-2 px-4 rounded-md">
           Buscar
         </button>
-        <button type="reset" id="limpiarCampos" class="bg-green-400 text-white font-bold hover:bg-gray-400 py-2 px-4 rounded">
+        <button type="reset" id="limpiarCampos" class="bg-green-400 text-white font-bold hover:bg-gray-400 py-2 px-4 rounded-md">
           Limpiar
         </button>
       </div>
@@ -44,21 +60,20 @@
 
 
     <!-- TABLA DE RESULTADOS DE LAS INCIDENCIAS -->
-
     <div class="relative shadow-md sm:rounded-lg">
       <div class="max-w-full overflow-hidden">
         <table id="tablaConsultarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-3 py-3">N°</th>
-              <th scope="col" class="px-3 py-3">Fecha y Hora</th>
-              <th scope="col" class="px-3 py-3">&Aacute;rea</th>
-              <th scope="col" class="px-3 py-3">C&oacute;digo Patrimonial</th>
-              <th scope="col" class="px-3 py-3">Categor&iacute;a</th>
-              <th scope="col" class="px-3 py-3">Asunto</th>
-              <th scope="col" class="px-3 py-3">Descripci&oacute;n</th>
-              <th scope="col" class="px-3 py-3">Documento</th>
-              <th scope="col" class="px-3 py-3">Estado</th>
+              <th scope="col" class="px-3 py-2">N°</th>
+              <th scope="col" class="px-3 py-2">Fecha y Hora</th>
+              <th scope="col" class="px-3 py-2">&Aacute;rea</th>
+              <th scope="col" class="px-3 py-2">C&oacute;digo Patrimonial</th>
+              <th scope="col" class="px-3 py-2">Categor&iacute;a</th>
+              <th scope="col" class="px-3 py-2">Asunto</th>
+              <th scope="col" class="px-3 py-2">Descripci&oacute;n</th>
+              <th scope="col" class="px-3 py-2">Documento</th>
+              <th scope="col" class="px-3 py-2">Estado</th>
             </tr>
           </thead>
           <tbody>

@@ -67,7 +67,7 @@
                 <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_asunto']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_documento']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['USU_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
               </tr>
             <?php endforeach; ?>
 
@@ -201,8 +201,8 @@
           <table id="tablaIncidenciasRecepcionadas" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
             <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
               <tr>
-                <th scope="col" class="px-6 py-2 hidden">N° Recepcion</th>
-                <th scope="col" class="px-6 py-2">N° incidencia</th>
+                <th scope="col" class="px-6 py-2 hidden">Recepci&oacute;n</th>
+                <th scope="col" class="px-6 py-2">Incidencia</th>
                 <th scope="col" class="px-6 py-2">Fecha de recepci&oacute;n</th>
                 <th scope="col" class="px-6 py-2">&Aacute;rea</th>
                 <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
@@ -246,7 +246,8 @@
                 echo $recepcion['IMP_descripcion'];
                 echo "</td>";
                 echo "<td class='px-6 py-3'>";
-                echo $recepcion['USU_nombre'];
+                // echo $recepcion['USU_nombre'];
+                echo $recepcion['Usuario'];
                 echo "</td>";
                 echo "</tr>";
               }

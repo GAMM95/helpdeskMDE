@@ -1,3 +1,11 @@
+$(document).ready(function () {
+  toastr.options = {
+    "positionClass": "toast-bottom-right",
+    "progressBar": true,
+    "timeOut": "2000"
+  };
+});
+
 // TODO: SETEO DE COMBO AREA
 $(document).ready(function () {
   console.log("FETCHING")
@@ -20,6 +28,21 @@ $(document).ready(function () {
     },
     error: function (error) {
       console.error(error);
+    }
+  });
+});
+
+// TODO: BUSCADOR PARA EL COMBO CATEGORIA Y AREA
+$(document).ready(function () {
+  $('#cbo_area').select2({
+    placeholder: "Seleccione un área",
+    allowClear: true,
+    width: '100%',
+    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
+    language: {
+      noResults: function () {
+        return "No se encontraron resultados";
+      }
     }
   });
 });
