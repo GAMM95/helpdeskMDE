@@ -389,8 +389,9 @@ class IncidenciaModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "SELECT COUNT(*) as incidencias_mes_actual FROM INCIDENCIA 
-              WHERE INC_FECHA >= DATEADD(MONTH, -1, GETDATE())";
+        $sql = "SELECT COUNT(*) as incidencias_mes_actual
+        FROM INCIDENCIA 
+        WHERE INC_FECHA >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -412,7 +413,7 @@ class IncidenciaModel extends Conexion
     try {
       if ($conector != null) {
         $sql = "SELECT COUNT(*) as pendientes_mes_actual FROM INCIDENCIA 
-              WHERE INC_FECHA >= DATEADD(MONTH, -1, GETDATE())
+              WHERE INC_FECHA >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)
               AND EST_codigo = 3";
         $stmt = $conector->prepare($sql);
         $stmt->execute();

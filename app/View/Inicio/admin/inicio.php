@@ -28,11 +28,37 @@
             <!-- Contar el total de incidencias en el mes -->
             <h2 class="m-0 text-lg font-bold"><?php echo $cantidades['incidencias_mes_actual']; ?></h2>
             <span class="text-c-blue font-bold">INCIDENCIAS</span>
+            
             <?php
-            setlocale(LC_TIME, 'es_ES.UTF-8',  'Spanish_Spain', 'Spanish');
-            $nombreMes = strftime('%B');
+            // Establecer la configuración regional para el idioma español
+            setlocale(LC_TIME, 'es_ES.UTF-8', 'Spanish_Spain', 'Spanish');
+
+            // Establecer la zona horaria
+            date_default_timezone_set('America/Lima');
+
+            // Crear un objeto DateTime para la fecha actual
+            $dateTimeObj = new DateTime('now', new DateTimeZone('America/Lima'));
+
+            // Crear un objeto IntlDateFormatter para formatear la fecha
+            $formatter = new IntlDateFormatter(
+              'es_ES', // Configuración regional para el idioma español
+              IntlDateFormatter::NONE, // Sin formato de fecha completa
+              IntlDateFormatter::NONE, // Sin formato de tiempo
+              null, // Usar la zona horaria predeterminada
+              null, // Calendario gregoriano
+              'MMMM' // Formato para mes y año
+            );
+
+            // Obtener el nombre del mes
+            $nombreMes = $formatter->format($dateTimeObj);
+
+            // Imprimir el nombre del mes
+            // echo ucwords($nombreMes);
             ?>
-            <p class="mb-3 mt-3">Total de incidencias en el mes de <?php echo $nombreMes; ?> de <?php echo date('Y'); ?>.</p>
+
+
+
+            <p class="mb-3 mt-3">Total de incidencias en el mes de <?php echo $nombreMes; ?> del <?php echo date('Y'); ?>.</p>
 
           </div>
           <div id="support-chart"></div> <!-- Asegúrate de tener este div -->
