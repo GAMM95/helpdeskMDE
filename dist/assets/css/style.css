@@ -20854,7 +20854,7 @@ pre[class*=language-]:before {
 .pcoded-header .dropdown .notification .noti-body {
     padding: 0;
     position: relative;
-    height: 300px;
+    /* height: 300px; */
 }
 
 .pcoded-header .dropdown .notification .noti-body img {

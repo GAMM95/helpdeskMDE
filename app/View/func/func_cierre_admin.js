@@ -16,7 +16,7 @@ $(document).ready(function () {
     success: function (data) {
       var select = $('#cbo_operatividad');
       select.empty();
-      select.append('<option value="" selected disabled>Seleccione condicion</option>');
+      select.append('<option value="" selected disabled>Seleccione condici&oacute;n</option>');
       $.each(data, function (index, value) {
         select.append('<option value="' + value.CON_codigo + '">' + value.CON_descripcion + '</option>');
       });
@@ -192,9 +192,6 @@ $(document).ready(function () {
     if (!valido) {
       toastr.error(mensajeError.trim());
     }
-
     return valido;
   }
-
-
 });

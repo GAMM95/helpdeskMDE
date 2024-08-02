@@ -37,70 +37,55 @@ if (isset($_SESSION['codigoUsuario'])) {
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
+      
+      <?php
+      require_once './app/Model/IncidenciaModel.php';
+      $incidenciaModel = new IncidenciaModel();
+      $incidencias = $incidenciaModel->notificacionesAdmin();
+      ?>
       <li>
         <div class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown">
             <i class="icon feather icon-bell"></i>
-            <span class="badge badge-pill badge-danger">5</span>
+            <span class="badge badge-pill badge-danger"><?= count($incidencias); ?></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right notification">
             <div class="noti-head">
               <h6 class="d-inline-block m-b-0">Notificaciones</h6>
-              <div class="float-right">
-                <!-- <a href="#!" class="m-r-10">mark as read</a>
-                <a href="#!">clear all</a> -->
-              </div>
             </div>
-            <ul class="noti-body">
-              <li class="n-title">
-                <p class="m-b-0">Nuevos</p>
-              </li>
-              <li class="notification">
-                <div class="media">
-                  <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                  <div class="media-body">
-                    <p><strong>John Doe</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>5 min</span></p>
-                    <p>New ticket Added</p>
+            <ul class="noti-body" style="max-height: 250px; overflow-y: auto;">
+              <?php if (empty($incidencias)) : ?>
+                <li class="notification">
+                  <div class="media">
+                    <div class="media-body">
+                      <p class="text-center">No hay nuevas incidencias.</p>
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li class="n-title">
-                <p class="m-b-0">EARLIER</p>
-              </li>
-              <li class="notification">
-                <div class="media">
-                  <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                  <div class="media-body">
-                    <p><strong>Joseph William</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>10 min</span></p>
-                    <p>Prchace New Theme and make payment</p>
-                  </div>
-                </div>
-              </li>
-              <li class="notification">
-                <div class="media">
-                  <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                  <div class="media-body">
-                    <p><strong>Sara Soudein</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>12 min</span></p>
-                    <p>currently login</p>
-                  </div>
-                </div>
-              </li>
-              <li class="notification">
-                <div class="media">
-                  <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                  <div class="media-body">
-                    <p><strong>Joseph William</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>30 min</span></p>
-                    <p>Prchace New Theme and make payment</p>
-                  </div>
-                </div>
-              </li>
+                </li>
+              <?php else : ?>
+                <?php foreach (array_slice($incidencias, 0, 5) as $incidencia) : ?>
+                  <li class="notification">
+                    <div class="media">
+                      <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
+                      <div class="media-body">
+                        <p>
+                          <strong><?= htmlspecialchars($incidencia['Usuario']); ?></strong>
+                          <span class="n-time text-muted">
+                            <i class="icon feather icon-clock m-r-10"></i>
+                            <?= htmlspecialchars($incidencia['tiempoDesdeIncidencia']); ?>
+                          </span>
+                        </p>
+                        <p><?= htmlspecialchars($incidencia['INC_asunto']); ?></p>
+                      </div>
+                    </div>
+                  </li>
+                <?php endforeach; ?>
+              <?php endif; ?>
             </ul>
-            <!-- <div class="noti-footer">
-            <a href="#!">show all</a>
-          </div> -->
           </div>
         </div>
       </li>
+
 
       <!-- Perfil de usuario -->
       <li>
@@ -124,8 +109,8 @@ if (isset($_SESSION['codigoUsuario'])) {
               </span>
             </div>
             <ul class="pro-body">
-              <!-- <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li> -->
-              <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModal"><i class="feather icon-user"></i> Perfil</a></li>
+              <!-- <li><a href="perfil-admin.php" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li> -->
+              <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModal"><i class="feather icon-user"></i>Mi Perfil</a></li>
               <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-log-out"></i> Cerrar sesi&oacute;n</a></li>
             </ul>
           </div>
@@ -136,7 +121,7 @@ if (isset($_SESSION['codigoUsuario'])) {
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title text-xl" id="exampleModalLabel">Perfil</h5>
+                <h5 class="modal-title text-xl text-bold" id="exampleModalLabel">Mi Perfil</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -188,14 +173,14 @@ if (isset($_SESSION['codigoUsuario'])) {
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+                <h5 class="modal-title text-xl text-bold" id="exampleModalCenterTitle">Mensaje</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               </div>
               <div class="modal-body">
                 <p class="mb-0 text-gray-800">¿Desea cerrar sesión?</p>
               </div>
               <div class="modal-footer">
-                <a href="logout.php" class="btn btn-primary">Cerrar sesión</a>
+                <a href="logout.php" class="btn btn-primary rounded-md">Cerrar sesión</a>
               </div>
             </div>
           </div>

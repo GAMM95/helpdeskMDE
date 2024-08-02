@@ -103,7 +103,6 @@
     </div>
   </div>
 </div>
-</main>
 <script>
   $(document).ready(function() {
     $('#buscar-incidencias').submit(function(event) {

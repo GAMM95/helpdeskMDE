@@ -87,13 +87,13 @@ if ($rol === 'Administrador' || $rol === 'Soporte') {
 
   <!-- Apex Chart -->
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
 
 
   <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css">
-  <script src="https://cdn.tailwindcss.com"></script>
 </body>
 
 </html>
