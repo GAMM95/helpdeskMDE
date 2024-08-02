@@ -66,12 +66,12 @@ if (session_status() == PHP_SESSION_NONE) {
           <label>Consultas</label>
         </li>
 
-        <li class="nav-item ">
+        <!-- <li class="nav-item ">
           <a href="consultar-cierre-admin.php" class="nav-link ">
             <span class="pcoded-micon"> <i class="feather icon-clipboard"></i> </span>
             <span class="pcoded-mtext">Consultar incidencias</span>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item ">
           <a href="consultar-incidencia-admin.php" class="nav-link ">
             <span class="pcoded-micon"> <i class="feather icon-clipboard"></i> </span>

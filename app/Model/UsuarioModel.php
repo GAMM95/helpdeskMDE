@@ -16,6 +16,52 @@ class UsuarioModel extends Conexion
     $this->password = $password;
   }
 
+  // public function iniciarSesion()
+  // {
+  //   try {
+  //     $conector = $this->getConexion();
+
+  //     if ($conector != null) {
+  //       $query = "EXEC SP_Usuario_login :username, :password";
+  //       $stmt = $conector->prepare($query);
+  //       $stmt->bindParam(':username', $this->username);
+  //       $stmt->bindParam(':password', $this->password);
+  //       $stmt->execute();
+
+  //       $resultado = $stmt->fetch();
+
+  //       if ($resultado) {
+  //         session_start();
+  //         $_SESSION['nombreDePersona'] = $resultado['PER_nombres'] . ' ' . $resultado['PER_apellidoPaterno'];
+  //         $_SESSION['area'] = $resultado['ARE_nombre'];
+  //         $_SESSION['codigoArea'] = $resultado['ARE_codigo'];
+  //         $informacionUsuario = $this->obtenerInformacionUsuario($this->username, $this->password);
+  //         $codigo = $informacionUsuario['codigo'];
+  //         $usuario = $informacionUsuario['usuario'];
+  //         $_SESSION['codigoUsuario'] = $codigo;
+  //         $_SESSION['usuario'] = $usuario;
+  //         $_SESSION['rol'] = $this->obtenerRolPorId($this->username); // Guardar rol en la sesión
+
+  //         // Log de inicio de sesión
+  //         $logData = "------- START LOGIN LOGS ---------" . PHP_EOL;
+  //         $logData .=
+  //           "Nombre de Persona: " . $_SESSION['nombreDePersona'] .
+  //           ", Rol: " .  $_SESSION['rol'] .
+  //           ", Codigo Area: " . $_SESSION['codigoArea'] .
+  //           ", Área: " . $_SESSION['area'] .
+  //           ", Código de Usuario: " . $codigo .
+  //           ", Usuario: " . $usuario . PHP_EOL;
+  //         file_put_contents('logs/log.txt', $logData, FILE_APPEND);
+  //         return true;
+  //       }
+  //       return false;
+  //     } else {
+  //       throw new Exception("Error de conexión a la base de datos.");
+  //     }
+  //   } catch (PDOException $e) {
+  //     throw new Exception("Error al iniciar sesión: " . $e->getMessage());
+  //   }
+  // }
   public function iniciarSesion()
   {
     try {
@@ -31,30 +77,37 @@ class UsuarioModel extends Conexion
         $resultado = $stmt->fetch();
 
         if ($resultado) {
-          session_start();
-          $_SESSION['nombreDePersona'] = $resultado['PER_nombres'] . ' ' . $resultado['PER_apellidoPaterno'];
-          $_SESSION['area'] = $resultado['ARE_nombre'];
-          $_SESSION['codigoArea'] = $resultado['ARE_codigo'];
-          $informacionUsuario = $this->obtenerInformacionUsuario($this->username, $this->password);
-          $codigo = $informacionUsuario['codigo'];
-          $usuario = $informacionUsuario['usuario'];
-          $_SESSION['codigoUsuario'] = $codigo;
-          $_SESSION['usuario'] = $usuario;
-          $_SESSION['rol'] = $this->obtenerRolPorId($this->username); // Guardar rol en la sesión
+          if ($resultado['EST_codigo'] == 1) { // Verificar si el usuario está activo
+            session_start();
+            $_SESSION['nombreDePersona'] = $resultado['PER_nombres'] . ' ' . $resultado['PER_apellidoPaterno'];
+            $_SESSION['area'] = $resultado['ARE_nombre'];
+            $_SESSION['codigoArea'] = $resultado['ARE_codigo'];
+            $informacionUsuario = $this->obtenerInformacionUsuario($this->username, $this->password);
+            $codigo = $informacionUsuario['codigo'];
+            $usuario = $informacionUsuario['usuario'];
+            $_SESSION['codigoUsuario'] = $codigo;
+            $_SESSION['usuario'] = $usuario;
+            $_SESSION['rol'] = $this->obtenerRolPorId($this->username); // Guardar rol en la sesión
 
-          // Log de inicio de sesión
-          $logData = "------- START LOGIN LOGS ---------" . PHP_EOL;
-          $logData .=
-            "Nombre de Persona: " . $_SESSION['nombreDePersona'] .
-            ", Rol: " .  $_SESSION['rol'] .
-            ", Codigo Area: " . $_SESSION['codigoArea'] .
-            ", Área: " . $_SESSION['area'] .
-            ", Código de Usuario: " . $codigo .
-            ", Usuario: " . $usuario . PHP_EOL;
-          file_put_contents('logs/log.txt', $logData, FILE_APPEND);
-          return true;
+            // Log de inicio de sesión
+            $logData = "------- START LOGIN LOGS ---------" . PHP_EOL;
+            $logData .=
+              "Nombre de Persona: " . $_SESSION['nombreDePersona'] .
+              ", Rol: " .  $_SESSION['rol'] .
+              ", Codigo Area: " . $_SESSION['codigoArea'] .
+              ", Área: " . $_SESSION['area'] .
+              ", Código de Usuario: " . $codigo .
+              ", Usuario: " . $usuario . PHP_EOL;
+            file_put_contents('logs/log.txt', $logData, FILE_APPEND);
+            return true;
+          } else {
+            // Redirigir con mensaje de error si el usuario está inactivo
+            header("Location: index.php?state=inactive");
+            exit();
+          }
+        } else {
+          return false;
         }
-        return false;
       } else {
         throw new Exception("Error de conexión a la base de datos.");
       }
@@ -62,6 +115,7 @@ class UsuarioModel extends Conexion
       throw new Exception("Error al iniciar sesión: " . $e->getMessage());
     }
   }
+
 
   private function obtenerInformacionUsuario($username, $password)
   {
@@ -245,6 +299,29 @@ class UsuarioModel extends Conexion
       }
     } catch (PDOException $e) {
       echo "Error al contar usuarios para el administrador: " . $e->getMessage();
+      return null;
+    }
+  }
+
+  public function setearDatosUsuario($user_id)
+  {
+    $conector = parent::getConexion();
+    $sql = "SELECT 
+          USU_nombre, (PER_nombres +' '+PER_apellidoPaterno +' '+ PER_apellidoMaterno) AS Persona,
+          ROL_nombre, ARE_nombre, PER_celular, PER_email
+          FROM USUARIO u
+          INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
+          INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo
+          INNER JOIN AREA a ON a.ARE_codigo = u.ARE_codigo
+          WHERE u.USU_codigo = :user_id";
+    $stmt = $conector->prepare($sql);
+    $stmt->bindParam(':user_id', $user_id);
+    try {
+      $stmt->execute();
+      $user = $stmt->fetch(PDO::FETCH_ASSOC);
+      return $user;
+    } catch (PDOException $e) {
+      echo "Error al setear datos del usuario: " . $e->getMessage();
       return null;
     }
   }

@@ -28,8 +28,12 @@
             <!-- Contar el total de incidencias en el mes -->
             <h2 class="m-0 text-lg font-bold"><?php echo $cantidades['incidencias_mes_actual']; ?></h2>
             <span class="text-c-blue font-bold">INCIDENCIAS</span>
-            
+
             <?php
+            // setlocale(LC_TIME, 'es_ES.UTF-8',  'Spanish_Spain', 'Spanish');
+            // $nombreMes = strftime('%B');
+
+
             // Establecer la configuración regional para el idioma español
             setlocale(LC_TIME, 'es_ES.UTF-8', 'Spanish_Spain', 'Spanish');
 
@@ -51,12 +55,7 @@
 
             // Obtener el nombre del mes
             $nombreMes = $formatter->format($dateTimeObj);
-
-            // Imprimir el nombre del mes
-            // echo ucwords($nombreMes);
             ?>
-
-
 
             <p class="mb-3 mt-3">Total de incidencias en el mes de <?php echo $nombreMes; ?> del <?php echo date('Y'); ?>.</p>
 
@@ -278,7 +277,6 @@
               </table>
             </div>
           </div>
-
           <!-- Fin tabla de nuevas incidencias -->
 
         </div>

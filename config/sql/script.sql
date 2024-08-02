@@ -151,18 +151,19 @@ GO
 CREATE PROCEDURE SP_Usuario_login(
 	@USU_usuario VARCHAR(20),
 	@USU_password VARCHAR(10)
-) AS BEGIN
-SET
-	NOCOUNT ON;
-	SELECT u.USU_nombre, u.USU_password, p.PER_nombres, p.PER_apellidoPaterno, r.ROL_codigo, r.ROL_nombre, a.ARE_codigo, a.ARE_nombre
+) 
+AS 
+BEGIN
+	SET NOCOUNT ON;
+	SELECT u.USU_nombre, u.USU_password, p.PER_nombres, p.PER_apellidoPaterno, r.ROL_codigo, r.ROL_nombre, a.ARE_codigo, a.ARE_nombre, u.EST_codigo
 	FROM USUARIO u
 	INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
 	INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo
 	INNER JOIN AREA a ON a.ARE_codigo = u.ARE_codigo
-	WHERE u.USU_nombre = @USU_usuario AND u.USU_password = @USU_password AND
-	u.EST_codigo= 1;
+	WHERE u.USU_nombre = @USU_usuario AND u.USU_password = @USU_password;
 END;
 GO
+
 
  -- Creacion de tabla prioridad
 CREATE TABLE PRIORIDAD(

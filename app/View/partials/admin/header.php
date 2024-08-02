@@ -1,3 +1,14 @@
+<?php
+require_once 'app/Model/UsuarioModel.php';
+// Código PHP para obtener los datos del usuario
+if (isset($_SESSION['codigoUsuario'])) {
+  $user_id = $_SESSION['codigoUsuario'];
+  $usuario = new UsuarioModel();
+  $perfil = $usuario->setearDatosUsuario($user_id);
+} else {
+  $perfil = null; // O maneja el caso en que el usuario no está logueado
+}
+?>
 <header class="navbar pcoded-header navbar-expand-lg navbar-light header-dark fixed top-0 left-0 right-0 z-50">
   <div class="m-header">
     <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
@@ -113,16 +124,66 @@
               </span>
             </div>
             <ul class="pro-body">
-              <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li>
-              <li><a href="logout.php" class="dropdown-item"><i class="feather icon-log-out"></i> Cerrar sesión</a></li>
-
-              <!-- Cambia el enlace de cerrar sesión para abrir el modal -->
-              <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-log-out"></i> Cerrar sesión modal</a></li>
+              <!-- <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li> -->
+              <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModal"><i class="feather icon-user"></i> Perfil</a></li>
+              <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-log-out"></i> Cerrar sesi&oacute;n</a></li>
             </ul>
           </div>
         </div>
 
-        <!-- [ vertically-modal ] start -->
+        <!-- Modal Perfil start -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-xl" id="exampleModalLabel">Perfil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="usuNombre" class="block font-bold text-xs text-gray-800 py-0 mb-0">Usuario</label>
+                      <input type="text" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs text-gray-800 mb-3" id="usuNombre" value="<?php echo htmlspecialchars($perfil['USU_nombre']); ?>" readonly>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="rolNombre" class="block font-bold text-xs text-gray-800 mb-0">Rol</label>
+                      <input type="text" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs text-gray-800 mb-3" id="rolNombre" value="<?php echo htmlspecialchars($perfil['ROL_nombre']); ?>" readonly>
+                    </div>
+                  </div>
+                  <div class="mb-0">
+                    <label for="areNombre" class="block font-bold text-xs text-gray-800 mb-0">&Aacute;rea</label>
+                    <input type="text" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs text-gray-800 mb-3" id="areNombre" value="<?php echo htmlspecialchars($perfil['ARE_nombre']); ?>" readonly>
+                  </div>
+                  <div class="mb-1">
+                    <label for="perNombres" class="block font-bold text-xs text-gray-800 mb-0">Nombres y apellidos</label>
+                    <input type="text" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs text-gray-800 mb-3" id="perNombres" value="<?php echo htmlspecialchars($perfil['Persona']); ?>" readonly>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label for="perApellidoPaterno" class="block font-bold text-xs text-gray-800 mb-0">Celular</label>
+                      <input type="text" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs text-gray-800 mb-3" id="perApellidoPaterno" value="<?php echo htmlspecialchars($perfil['PER_celular']); ?>" readonly>
+                    </div>
+                    <div class="col-md-9">
+                      <label for="perApellidoMaterno" class="block font-bold text-xs text-gray-800 mb-0">Email</label>
+                      <input type="text" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs text-gray-800 mb-3" id="perApellidoMaterno" value="<?php echo htmlspecialchars($perfil['PER_email']); ?>" readonly>
+                    </div>
+                  </div>
+                </form>
+
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary rounded-md" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal perfil end -->
+
+        <!-- Modal Cerrar sesion start -->
         <div id="exampleModalCenter" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 1050;">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -131,16 +192,15 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               </div>
               <div class="modal-body">
-                <p class="mb-0">¿Desea cerrar sesión?</p>
+                <p class="mb-0 text-gray-800">¿Desea cerrar sesión?</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 <a href="logout.php" class="btn btn-primary">Cerrar sesión</a>
               </div>
             </div>
           </div>
         </div>
-        <!-- [ vertically-modal ] end -->
+        <!-- Modal Cerrar sesion end -->
       </li>
 
     </ul>
