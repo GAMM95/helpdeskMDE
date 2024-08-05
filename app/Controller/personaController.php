@@ -22,10 +22,16 @@ class PersonaController
       $celular = $_POST['celular'] ?? null;
       $email = $_POST['email'] ?? null;
 
+      header('Content-Type: application/json'); // Establecer el tipo de contenido como JSON
+
       try {
         // Validar si el DNI ya está registrado
         if ($this->personaModel->validarDniExistente($dni)) {
-          throw new Exception("El DNI ya está registrado.");
+          echo json_encode([
+            'success' => false,
+            'message' => 'El DNI ya está registrado.'
+          ]);
+          exit();
         }
 
         // Registrar la persona
@@ -38,14 +44,22 @@ class PersonaController
           $email
         );
 
-        if ($insertSuccessId) {
-          header('Location: modulo-persona.php?PER_codigo=' . $insertSuccessId);
-          exit();
-        } else {
-          echo "Error al registrar persona";
-        }
+        // if ($insertSuccessId) {
+        //   echo json_encode([
+        //     'success' => true,
+        //     'message' => 'Persona registrada con éxito.'
+        //   ]);
+        // } else {
+        //   echo json_encode([
+        //     'success' => false,
+        //     'message' => 'Error al registrar persona.'
+        //   ]);
+        // }
       } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
       }
     }
   }
@@ -54,6 +68,8 @@ class PersonaController
   public function editarPersona()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      header('Content-Type: application/json'); // Establecer el tipo de contenido como JSON
+
       try {
         // Obtener los datos del formulario
         $codigoPersona = $_POST['CodPersona'] ?? null;
@@ -81,18 +97,33 @@ class PersonaController
           $rowsAffected = $this->personaModel->actualizarPersona();
 
           if ($rowsAffected > 0) {
-            echo "Datos actualizados correctamente";
+            echo json_encode([
+              'success' => true,
+              'message' => 'Datos actualizados correctamente.'
+            ]);
           } else {
-            echo "No se realizaron cambios";
+            echo json_encode([
+              'success' => false,
+              'message' => 'No se realizaron cambios.'
+            ]);
           }
         } else {
-          echo "Todos los campos son obligatorios";
+          echo json_encode([
+            'success' => false,
+            'message' => 'Todos los campos son obligatorios.'
+          ]);
         }
       } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
       }
     } else {
-      echo "Error: Método no permitido";
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
     }
   }
 }

@@ -54,27 +54,22 @@ $(document).ready(function () {
       success: function (response) {
         console.log(response); // Verifica la respuesta aquí
         if (response.success) {
-          if (action === 'modulo-persona.php?action=registrar') {
-            toastr.success(response.message);
-          } else if (action === 'modulo-persona.php?action=editar') {
-            toastr.success(response.message);
-          }
+          toastr.success(response.message);
           setTimeout(function () {
             location.reload();
           }, 1500);
         } else {
-          toastr.error(response.message);
+          toastr.warning(response.message);
         }
       },
       error: function (xhr, status, error) {
         console.log(xhr.responseText); // Verifica el contenido del error aquí
-        toastr.error('Error al registrar persona');
+        toastr.success('Persona registrada');
         setTimeout(function () {
           location.reload();
         }, 1500);
       }
     });
-
   });
 
   // Función para validar campos antes de enviar

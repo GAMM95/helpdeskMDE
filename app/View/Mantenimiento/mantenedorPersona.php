@@ -127,7 +127,7 @@
           <table class="w-full text-xs text-left rtl:text-right text-gray-500 ">
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
-                <th scope="col" class="px-6 py-1 hidden">N°</th>
+                <th scope="col" class="px-6 py-1 ">N°</th>
                 <th scope="col" class="px-6 py-1">DNI</th>
                 <th scope="col" class="px-6 py-2">Nombre completo</th>
                 <th scope="col" class="px-6 py-2">Celular</th>
@@ -139,7 +139,7 @@
               $personas = $personaModel->listarPersona();
               foreach ($personas as $persona) {
                 echo "<tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>";
-                echo "<th scope='col' class='hidden px-6 py-3 font-medium text-gray-900 whitespace-nowrap' data-cod='" . htmlspecialchars($persona['PER_codigo']) . "'>";
+                echo "<th scope='col' class=' px-6 py-3 font-medium text-gray-900 whitespace-nowrap' data-cod='" . htmlspecialchars($persona['PER_codigo']) . "'>";
                 echo $persona['PER_codigo'];
                 echo "</th>";
                 echo "<td class='px-6 py-3' data-dni='" . htmlspecialchars($persona['PER_dni']) . "'>";
@@ -164,3 +164,4 @@
     </div>
   </div>
 </div>
+<script src="https://cdn.tailwindcss.com"></script>

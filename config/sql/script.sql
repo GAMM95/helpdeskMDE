@@ -40,8 +40,6 @@ INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMate
 VALUES ('70555742', 'Gustavo', 'Mantilla', 'Miñano', 'gammgush@gmail.com', '950212913');
 INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
 VALUES ('72252469','Liliana','Marcelo','Miñano','liliannamarcelo@gmail.com','975135635');
-INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
-VALUES ('98765423','Maria','Blas','Vera','mblasv@gmail.com','975168936');
 
 -- CREACION DE LA TABLA AREA
 CREATE TABLE AREA (
