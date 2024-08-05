@@ -30,52 +30,31 @@ $(document).ready(function () {
     $('tr').removeClass('bg-blue-200 font-semibold');
     $(this).addClass('bg-blue-200 font-semibold');
 
-    $('#form-action').val('editar'); // Cambiar la acción a editar
-
-    // Habilitar el botón de editar
-    $('#guardar-persona').prop('disabled', false);
-    $('#editar-persona').prop('disabled', false);
-    $('#nuevo-registro').prop('disabled', false);
+    $('#form-action').val('editar');
   });
 
-  // Función para manejar el nuevo registro
-  function nuevoRegistro() {
-    const form = document.getElementById('formPersona');
-    form.reset();
-    $('#CodPersona').val('');
-    $('tr').removeClass('bg-blue-200 font-semibold');
+  // Guardar persona
+  $('#guardar-persona').click(function (event) {
+    event.preventDefault();
 
-    $('#form-action').val('registrar'); // Cambiar la acción a registrar
-
-    // Deshabilitar el botón de editar
-    $('#editar-persona').prop('disabled', true);
-    $('#nuevo-registro').prop('disabled', true);
-  }
-
-  // Evento para nuevo registro
-  $('#nuevo-registro').on('click', nuevoRegistro);
-
-  function enviarFormulario(action) {
+    // Validar campos antes de enviar
     if (!validarCampos()) {
       return; // si hay campos inválidos, detener el envío
     }
 
-    var url = 'modulo-persona.php?action=' + action;
-    var data = $('#formPersona').serialize();
+    var form = $('#formPersona');
+    var data = form.serialize();
+    var action = form.attr('action');
 
     $.ajax({
-      url: url,
-      method: 'POST',
+      url: action,
+      type: "POST",
       data: data,
+      dataType: "json",
       success: function (response) {
         console.log(response); // Verifica la respuesta aquí
-
         if (response.success) {
-          if (action === 'registrar') {
-            toastr.success('Persona registrada');
-          } else if (action === 'editar') {
-            toastr.success('Datos actualizados');
-          }
+          toastr.success(response.message);
           setTimeout(function () {
             location.reload();
           }, 1500);
@@ -84,31 +63,14 @@ $(document).ready(function () {
         }
       },
       error: function (xhr, status, error) {
-        console.log(xhr.responseText);
-        if (response.error) {
-          if (action === 'registrar') {
-            toastr.success('Persona registrada');
-          } else if (action === 'editar') {
-            toastr.success('Datos actualizados');
-          }
-          setTimeout(function () {
-            location.reload();
-          }, 1500);
-        }
+        console.log(xhr.responseText); // Verifica el contenido del error aquí
+        toastr.success('Persona registrada');
+        setTimeout(function () {
+          location.reload();
+        }, 1500);
       }
     });
-  }
-
-  $('#guardar-persona').on('click', function (e) {
-    e.preventDefault();
-    enviarFormulario($('#form-action').val());
   });
-
-  $('#editar-persona').on('click', function (e) {
-    e.preventDefault();
-    enviarFormulario('editar');
-  });
-
 
   // Función para validar campos antes de enviar
   function validarCampos() {
@@ -121,8 +83,20 @@ $(document).ready(function () {
     var faltaApellidoPaterno = ($('#apellidoPaterno').val() === null || $('#apellidoPaterno').val() === '');
     var faltaApellidoMaterno = ($('#apellidoMaterno').val() === null || $('#apellidoMaterno').val() === '');
 
-    if (faltaDni || faltaNombres || faltaApellidoPaterno || faltaApellidoMaterno) {
-      mensajeError += 'Debe completar todos los campos requeridos.';
+    if (faltaDni && faltaNombres && faltaApellidoPaterno && faltaApellidoMaterno) {
+      mensajeError += 'Debe completar los campos requeridos.';
+      valido = false;
+    } else if (faltaDni) {
+      mensajeError += 'Debe ingresar DNI.';
+      valido = false;
+    } else if (faltaNombres) {
+      mensajeError += 'Ingrese nombres del trabajador.';
+      valido = false;
+    } else if (faltaApellidoPaterno) {
+      mensajeError += 'Ingrese apellido paterno del trabajador.';
+      valido = false;
+    } else if (faltaApellidoMaterno) {
+      mensajeError += 'Ingrese apellido materno del trabajador.';
       valido = false;
     }
 

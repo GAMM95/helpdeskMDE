@@ -94,9 +94,10 @@ class PersonaController
           );
 
           // Actualizar la persona
-          $rowsAffected = $this->personaModel->actualizarPersona();
+          // $personaModel->editarPersona();
+          $personaModel = $this->personaModel->actualizarPersona();
 
-          if ($rowsAffected > 0) {
+          if ($personaModel > 0) {
             echo json_encode([
               'success' => true,
               'message' => 'Datos actualizados correctamente.'

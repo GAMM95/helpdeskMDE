@@ -44,19 +44,11 @@
             </div>
 
             <!-- DNI DE LA PERSONA -->
-            <!-- <div class="mb-2 sm:w-1/3">
-              <label for="dni" class="block mb-1 font-bold text-xs">DNI: *</label>
-              <div class="relative">
-                <input type="text" id="dni" name="dni" class="border p-2 w-full text-xs rounded-md pl-10" maxlength="8" pattern="\d{1,8}" autofocus inputmode="numeric" title="Ingrese solo dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese DNI">
-              </div>
-            </div> -->
             <div class="mb-2 sm:w-1/3">
               <label for="dni" class="block mb-1 font-bold text-xs">DNI: *</label>
               <div class="relative">
                 <input type="text" id="dni" name="dni" class="border p-2 w-full text-xs rounded-md pl-10" maxlength="8" pattern="\d{1,8}" autofocus inputmode="numeric" title="Ingrese solo dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese DNI">
-                <span id="dni-status" class="absolute inset-y-0 right-0 pr-3 flex items-center"></span>
               </div>
-
             </div>
 
             <!-- NOMBRES DE LA PERSONA -->
@@ -105,9 +97,9 @@
 
             <!-- BOTONES DEL FORMULARIO -->
             <div class="flex justify-center space-x-4 mt-3">
-              <button type="submit" id="guardar-persona" class="btn-primary text-white font-bold py-2 px-4 rounded-md"> Guardar </button>
-              <button type="button" id="editar-persona" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md"> Editar </button>
-              <button type="reset" id="nuevo-registro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md"> Nuevo </button>
+              <button type="submit" id="guardar-persona" class="btn btn-primary text-xs text-white font-bold py-2 px-4 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
+              <button type="button" id="editar-persona" class="btn btn-info text-xs text-white font-bold py-2 px-4 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
+              <button type="button" id="nuevo-registro" class="btn btn-secondary text-xs text-white font-bold py-2 px-4 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
             </div>
           </div>
         </form>

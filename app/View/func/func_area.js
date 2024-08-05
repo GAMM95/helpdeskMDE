@@ -18,6 +18,11 @@ $(document).ready(function () {
 
     // Cambiar la acción del formulario a editar
     $('#form-action').val('editar');
+
+    // Habilitar el botón de editar
+    $('#guardar-area').prop('disabled', false);
+    $('#editar-area').prop('disabled', false);
+    $('#nuevo-registro').prop('disabled', false);
   });
 
   function nuevoRegistro() {
@@ -28,6 +33,10 @@ $(document).ready(function () {
 
     // Cambiar la acción del formulario a registrar
     $('#form-action').val('registrar');
+
+    // Deshabilitar el botón de editar
+    $('#editar-area').prop('disabled', true);
+    $('#nuevo-registro').prop('disabled', true);
   }
 
   $('#nuevo-registro').on('click', nuevoRegistro);
