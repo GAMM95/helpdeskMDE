@@ -51,7 +51,7 @@ if (isset($_SESSION['codigoUsuario'])) {
           </a>
           <div class="dropdown-menu dropdown-menu-right notification">
             <div class="noti-head">
-              <h6 class="d-inline-block m-b-0">Notificaciones</h6>
+              <h6 class="d-inline-block m-b-0">Nuevas incidencias</h6>
             </div>
             <ul class="noti-body" style="max-height: 250px; overflow-y: auto;">
               <?php if (empty($incidencias)) : ?>

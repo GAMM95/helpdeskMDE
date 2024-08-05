@@ -666,31 +666,35 @@ class IncidenciaModel extends Conexion
     try {
       if ($conector != null) {
         $sql = "SELECT 
-          I.INC_numero,
-          (CONVERT(VARCHAR(10), I.INC_fecha, 103) + ' - ' + CONVERT(VARCHAR(5), I.INC_hora, 108)) AS fechaIncidenciaFormateada,
-          A.ARE_nombre,
-          I.INC_asunto,
-          U.USU_nombre,
-          p.PER_nombres + ' ' + p.PER_apellidoPaterno AS Usuario,
-          I.EST_codigo,
-          CASE
-              WHEN DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) < 60 THEN 
-                  CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' min'
-              ELSE 
-                  CAST(DATEDIFF(HOUR, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' h ' +
-                  CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) % 60 AS VARCHAR) + ' min'
-          END AS tiempoDesdeIncidencia
-      FROM INCIDENCIA I
-      INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
-      INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
-      INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
-      LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
-      INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
-      WHERE I.EST_codigo NOT IN (4, 5) AND A.ARE_codigo <>1
-      AND CAST(I.INC_fecha AS DATE) = CAST(GETDATE() AS DATE)
-      ORDER BY tiempoDesdeIncidencia ASC";
+    I.INC_numero,
+    (CONVERT(VARCHAR(10), I.INC_fecha, 103) + ' - ' + CONVERT(VARCHAR(5), I.INC_hora, 108)) AS fechaIncidenciaFormateada,
+    A.ARE_nombre,
+    I.INC_asunto,
+    U.USU_nombre,
+    p.PER_nombres + ' ' + p.PER_apellidoPaterno AS Usuario,
+    I.EST_codigo,
+    CASE
+        WHEN DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) < 60 THEN 
+            CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' min'
+        WHEN DATEDIFF(DAY, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) < 1 THEN 
+            CAST(DATEDIFF(HOUR, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' h ' +
+            CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) % 60 AS VARCHAR) + ' min'
+        ELSE 
+            CAST(DATEDIFF(DAY, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' d ' +
+            CAST(DATEDIFF(HOUR, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) % 24 AS VARCHAR) + ' h ' +
+            CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) % 60 AS VARCHAR) + ' min'
+    END AS tiempoDesdeIncidencia
+FROM INCIDENCIA I
+INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
+INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
+INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
+WHERE I.EST_codigo NOT IN (4, 5) 
+  AND A.ARE_codigo <> 1
+ORDER BY tiempoDesdeIncidencia DESC";
 
-      // ORDER BY I.INC_numero DESC";
+        // ORDER BY I.INC_numero DESC";
 
         // Prepara y ejecuta la consulta
         $stmt = $conector->prepare($sql);

@@ -116,7 +116,7 @@ $(document).ready(function () {
       error: function (xhr, status, error) {
         // Manejo de error de la solicitud AJAX
         console.error(xhr.responseText);
-        toastr.error('Error al registrar recepción');
+        toastr.error('Error al registrar recepci&oacute;n');
       }
     });
   });

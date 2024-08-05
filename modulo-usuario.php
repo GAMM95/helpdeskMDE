@@ -4,6 +4,7 @@ $state = $_GET['state'] ?? '';
 $CodUsuario = $_GET['USU_codigo'] ?? '';
 
 require_once 'app/Controller/UsuarioController.php';
+require_once 'app/Model/UsuarioModel.php';
 
 // Crear una instancia del controlador PersonaController
 $usuarioController = new UsuarioController();
@@ -11,7 +12,7 @@ $usuarioModel = new UsuarioModel();
 
 if ($CodUsuario != '') {
   global $UsuarioRegistrado;
-  $UsuarioRegistrado = $usuarioModel->obtenerRolPorId($CodPersona);
+  $UsuarioRegistrado = $usuarioModel->obtenerRolPorId($USU_codigo);
 } else {
   $UsuarioRegistrado = null;
 }
@@ -51,25 +52,10 @@ switch ($action) {
       <div class="loader-fill"></div>
     </div>
   </div>
-  <!-- [ Pre-loader ] End -->
-  <!-- [ navigation menu ] start -->
-  <?php
-  include('app/View/partials/admin/navbar.php');
-  ?>
-  <!-- [ navigation menu ] end -->
 
-  <!-- [ Header ] start -->
-  <?php
-  include('app/View/partials/admin/header.php');
-  ?>
-  <!-- [ Header ] end -->
-
-  <!-- [ Main Content ] start -->
-  <?php
-  include('app/View/Mantenimiento/mantenedorUsuario.php');
-  ?>
-  <!-- [ Main Content ] end -->
-
+  <?php include('app/View/partials/admin/navbar.php'); ?>
+  <?php include('app/View/partials/admin/header.php'); ?>
+  <?php include('app/View/Mantenimiento/mantenedorUsuario.php'); ?>
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>

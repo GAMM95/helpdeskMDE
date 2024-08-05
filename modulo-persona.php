@@ -1,21 +1,17 @@
 <?php
+
 $action = $_GET['action'] ?? '';
 $state = $_GET['state'] ?? '';
-$CodPersona = $_GET['PER_codigo'] ?? '';
+$PER_codigo = $_GET['PER_codigo'] ?? '';
 
 require_once 'app/Controller/PersonaController.php';
+require_once 'app/Model/PersonaModel.php';
 
 // Crear una instancia del controlador PersonaController
 $personaController = new PersonaController();
 $personaModel = new PersonaModel();
 
-if ($CodPersona != '') {
-  global $PersonaRegistrada;
-  $PersonaRegistrada = $personaModel->obtenerPersonaPorId($CodPersona);
-} else {
-  $PersonaRegistrada = null;
-}
-
+// Verificar si se debe manejar una acción
 switch ($action) {
   case 'registrar':
     $personaController->registrarPersona();

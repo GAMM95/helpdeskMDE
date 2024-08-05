@@ -53,24 +53,10 @@ switch ($action) {
         </div>
     </div>
     <!-- [ Pre-loader ] End -->
-    <!-- [ navigation menu ] start -->
-    <?php
-    include('app/View/partials/admin/navbar.php');
-    ?>
-    <!-- [ navigation menu ] end -->
 
-    <!-- [ Header ] start -->
-    <?php
-    include('app/View/partials/admin/header.php');
-    ?>
-    <!-- [ Header ] end -->
-
-    <!-- [ Main Content ] start -->
-    <?php
-    include('app/View/Registrar/admin/registroRecepcion.php');
-    ?>
-    <!-- [ Main Content ] end -->
-
+    <?php include('app/View/partials/admin/navbar.php');  ?>
+    <?php include('app/View/partials/admin/header.php');   ?>
+    <?php include('app/View/Registrar/admin/registroRecepcion.php');    ?>
 
     <!-- Required Js -->
     <script src="dist/assets/js/vendor-all.min.js"></script>

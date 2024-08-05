@@ -45,32 +45,10 @@ class PersonaModel extends Conexion
     }
   }
 
-  // Método para validar la existencia de un DNI
-  public function validarDniExistente($dni)
-  {
-    $conector = parent::getConexion();
-    try {
-      $sql = "SELECT COUNT(*) FROM PERSONA WHERE PER_dni = ?";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute([$dni]);
-      $count = $stmt->fetchColumn();
-      return $count > 0;
-    } catch (PDOException $e) {
-      throw new Exception("Error al verificar el DNI: " . $e->getMessage());
-    }
-  }
-
-  // Método para registrar nueva persona
   public function registrarPersona($dni, $nombres, $apellidoPaterno, $apellidoMaterno, $celular, $email)
   {
     $conector = parent::getConexion();
     try {
-      // Primero validamos la existencia del DNI
-      if ($this->validarDniExistente($dni)) {
-        throw new Exception("El DNI ya está registrado.");
-      }
-
-      // Si el DNI no existe, procedemos a registrar la nueva persona
       $sql = "INSERT INTO PERSONA (PER_DNI, PER_nombres, PER_apellidoPaterno, 
                 PER_apellidoMaterno, PER_celular, PER_email) VALUES (?, ?, ?, ?, ?, ?)";
       $stmt = $conector->prepare($sql);
@@ -83,7 +61,7 @@ class PersonaModel extends Conexion
         $email
       ]);
       return $conector->lastInsertId();
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
       throw new Exception("Error al registrar nueva persona: " . $e->getMessage());
     }
   }

@@ -63,7 +63,7 @@ $(document).ready(function () {
 // TODO: BUSCADOR PARA EL COMBO CATEGORIA Y AREA
 $(document).ready(function () {
   $('#cbo_area').select2({
-    placeholder: "Seleccione un área",
+    placeholder: "Seleccione un area",
     allowClear: true,
     width: '100%',
     dropdownCssClass: 'text-xs', // Use Tailwind CSS class

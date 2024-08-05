@@ -8,7 +8,6 @@ class UsuarioController
 
   public function __construct()
   {
-    // Inicializa el modelo de usuario sin parámetros
     $this->usuarioModel = new UsuarioModel();
   }
 
@@ -18,9 +17,9 @@ class UsuarioController
       // Obtener los datos del formulario
       $username = $_POST['username'];
       $password = $_POST['password'];
-      $per_codigo = $_POST['per_codigo'];
-      $rol_codigo = $_POST['rol_codigo'];
-      $are_codigo = $_POST['are_codigo'];
+      $per_codigo = $_POST['persona'];
+      $rol_codigo = $_POST['rol'];
+      $are_codigo = $_POST['area'];
 
       // Crear una instancia del modelo de usuario con los datos del usuario
       $usuarioModel = new UsuarioModel($username, $password);
@@ -42,6 +41,35 @@ class UsuarioController
     }
   }
 
+  public function habilitarUsuario()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $USU_codigo = isset($_POST['USU_codigo']) ? intval($_POST['USU_codigo']) : 0;
 
-  
+      try {
+        $this->usuarioModel->habilitarUsuario($USU_codigo);
+        echo json_encode(['success' => true]);
+      } catch (Exception $e) {
+        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+      }
+    } else {
+      echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+    }
+  }
+
+  public function deshabilitarUsuario()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $USU_codigo = isset($_POST['USU_codigo']) ? intval($_POST['USU_codigo']) : 0;
+
+      try {
+        $this->usuarioModel->deshabilitarUsuario($USU_codigo);
+        echo json_encode(['success' => true]);
+      } catch (Exception $e) {
+        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+      }
+    } else {
+      echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+    }
+  }
 }

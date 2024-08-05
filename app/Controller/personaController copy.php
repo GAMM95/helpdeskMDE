@@ -22,30 +22,21 @@ class PersonaController
       $celular = $_POST['celular'] ?? null;
       $email = $_POST['email'] ?? null;
 
-      try {
-        // Validar si el DNI ya está registrado
-        if ($this->personaModel->validarDniExistente($dni)) {
-          throw new Exception("El DNI ya está registrado.");
-        }
+      // Registrar la persona
+      $insertSuccessId = $this->personaModel->registrarPersona(
+        $dni,
+        $nombres,
+        $apellidoPaterno,
+        $apellidoMaterno,
+        $celular,
+        $email
+      );
 
-        // Registrar la persona
-        $insertSuccessId = $this->personaModel->registrarPersona(
-          $dni,
-          $nombres,
-          $apellidoPaterno,
-          $apellidoMaterno,
-          $celular,
-          $email
-        );
-
-        if ($insertSuccessId) {
-          header('Location: modulo-persona.php?PER_codigo=' . $insertSuccessId);
-          exit();
-        } else {
-          echo "Error al registrar persona";
-        }
-      } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+      if ($insertSuccessId) {
+        header('Location: modulo-persona.php?PER_codigo=' . $insertSuccessId);
+        exit();
+      } else {
+        echo "Error al registrar persona";
       }
     }
   }
@@ -66,8 +57,8 @@ class PersonaController
 
         // Verificar que todos los campos necesarios estén presentes
         if ($codigoPersona && $dni && $nombres && $apellidoPaterno && $apellidoMaterno && $email && $celular) {
-          // Crear una instancia de PersonaModel con los datos
-          $this->personaModel = new PersonaModel(
+          // Actualizar la persona
+          $rowsAffected = $this->personaModel->actualizarPersona(
             $codigoPersona,
             $dni,
             $nombres,
@@ -76,9 +67,6 @@ class PersonaController
             $email,
             $celular
           );
-
-          // Actualizar la persona
-          $rowsAffected = $this->personaModel->actualizarPersona();
 
           if ($rowsAffected > 0) {
             echo "Datos actualizados correctamente";
@@ -93,6 +81,21 @@ class PersonaController
       }
     } else {
       echo "Error: Método no permitido";
+    }
+  }
+
+  // Método para verificar la existencia de un DNI
+  public function verificarDni()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $dni = $_POST['dni'] ?? null;
+
+      if ($dni) {
+        $existe = $this->personaModel->validarDniExistente($dni);
+        echo json_encode(['existe' => $existe]);
+      } else {
+        echo json_encode(['existe' => false]);
+      }
     }
   }
 }
