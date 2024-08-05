@@ -2,6 +2,14 @@
   <div class="pcoded-content">
     <?php
     global $personaRegistrada;
+    require_once './app/Model/PersonaModel.php';
+    $personaModel = new PersonaModel();
+    $limit = 7; // Número de filas por página
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
+    $start = ($page - 1) * $limit; // Calcula el índice de inicio
+    $totalTrabajadores = $personaModel->contarTrabajadores();
+    $totalPages = ceil($totalTrabajadores / $limit);
+    $personas = $personaModel->listarTrabajadores($start, $limit);
     ?>
 
     <!-- Miga de pan -->
@@ -29,9 +37,10 @@
       <div class="flex flex-col w-1/3">
         <form id="formPersona" action="modulo-persona.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 text-xs  flex flex-col mb-2">
           <input type="hidden" id="form-action" name="action" value="registrar">
-
+          <!-- Subtitulo -->
           <h3 class="text-2xl font-plain mb-4 text-xs text-gray-400">Datos personales</h3>
 
+          <!-- Inicio de Card de formulario -->
           <div class="card-body">
             <!-- PRIMERA FILA -->
             <div class="flex justify-center -mx-2 hidden">
@@ -75,7 +84,7 @@
               <!-- CELULAR -->
               <div class="w-full sm:w-1/3 px-2 mb-2">
                 <label for="celular" class="block mb-1 font-bold text-xs">Celular:</label>
-                <input type="tel" id="celular" name="celular" class="border p-2 w-full text-xs rounded-md" maxlength="9" pattern="\d{1,9}" inputmode="numeric" placeholder="Ingrese celular">
+                <input type="tel" id="celular" name="celular" class="border p-2 w-full text-xs rounded-md" maxlength="9" pattern="\d{1,9}" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese celular">
               </div>
 
               <!-- EMAIL -->
@@ -97,62 +106,82 @@
 
             <!-- BOTONES DEL FORMULARIO -->
             <div class="flex justify-center space-x-4 mt-3">
-              <button type="submit" id="guardar-persona" class="btn btn-primary text-xs text-white font-bold py-2 px-4 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
-              <button type="button" id="editar-persona" class="btn btn-info text-xs text-white font-bold py-2 px-4 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
-              <button type="button" id="nuevo-registro" class="btn btn-secondary text-xs text-white font-bold py-2 px-4 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
+              <button type="submit" id="guardar-persona" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
+              <button type="button" id="editar-persona" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
+              <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
             </div>
           </div>
+          <!-- Fin de Card de formulario -->
+
         </form>
       </div>
       <!-- Fin de formulario -->
 
       <!-- TABLA DE PERSONAS -->
       <div class="w-2/3">
-
         <!-- Buscador de personas -->
         <div class="flex justify-between items-center mt-2">
           <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300 text-xs" placeholder="Buscar trabajador..." oninput="filtrarTablaPersonas()" />
+          <!-- Paginacion  -->
+          <?php if ($totalPages > 0) : ?>
+            <div class="flex justify-end items-center mt-1">
+              <?php if ($page > 1) : ?>
+                <a href="#" class="pagination-link px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" data-page="<?php echo $page - 1; ?>">&lt;</a>
+              <?php endif; ?>
+              <span class="mx-2">P&aacute;gina <?php echo $page; ?> de <?php echo $totalPages; ?></span>
+              <?php if ($page < $totalPages) : ?>
+                <a href="#" class="pagination-link px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" data-page="<?php echo $page + 1; ?>">&gt;</a>
+              <?php endif; ?>
+            </div>
+          <?php endif; ?>
+          <!-- Fin de paginacion -->
         </div>
+        <!-- Fin de buscador de personas -->
+
 
         <!-- Tabla de personas -->
-        <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg bg-white ">
-          <table class="w-full text-xs text-left rtl:text-right text-gray-500 ">
+        <input type="hidden" id="personasCount" value="<?php echo count($personas) ?>">
+        <div id="tablaContainer" class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg bg-white ">
+          <table id="tablaTrabajadores" class="w-full text-xs text-left rtl:text-right text-gray-500 bg-white">
+            <!-- Encabezado -->
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
-                <th scope="col" class="px-6 py-1 ">N°</th>
+                <th scope="col" class="px-6 py-1 hidden">N°</th>
                 <th scope="col" class="px-6 py-1">DNI</th>
                 <th scope="col" class="px-6 py-2">Nombre completo</th>
                 <th scope="col" class="px-6 py-2">Celular</th>
                 <th scope="col" class="px-6 py-2">Email</th>
               </tr>
             </thead>
+            <!-- Fin de encabezado -->
+
+            <!-- Inicio de cuerpo de tabla -->
             <tbody>
-              <?php
-              $personas = $personaModel->listarPersona();
-              foreach ($personas as $persona) {
-                echo "<tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>";
-                echo "<th scope='col' class=' px-6 py-3 font-medium text-gray-900 whitespace-nowrap' data-cod='" . htmlspecialchars($persona['PER_codigo']) . "'>";
-                echo $persona['PER_codigo'];
-                echo "</th>";
-                echo "<td class='px-6 py-3' data-dni='" . htmlspecialchars($persona['PER_dni']) . "'>";
-                echo $persona['PER_dni'];
-                echo "</td>";
-                echo "<td class='px-6 py-3' data-nombre='" . htmlspecialchars($persona['PER_nombres']) . "'>";
-                echo $persona['PER_nombres'] . ' ' . $persona['PER_apellidoPaterno'] . ' ' . $persona['PER_apellidoMaterno'];
-                echo "</td>";
-                echo "<td class='px-6 py-3' data-celular='" . htmlspecialchars($persona['PER_celular']) . "'>";
-                echo $persona['PER_celular'];
-                echo "</td>";
-                echo "<td class='px-6 py-3' data-email='" . htmlspecialchars($persona['PER_email']) . "'>";
-                echo $persona['PER_email'];
-                echo "</td>";
-                echo "</tr>";
-              }
-              ?>
+              <?php foreach ($personas as $persona) : ?>
+                <tr class="hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b" data-cod="<?= $persona['PER_codigo']; ?>" data-dni="<?= $persona['PER_dni']; ?>" data-nombre="<?= $persona['persona']; ?>" data-celular="<?= $persona['PER_celular']; ?>" data-email="<?= $persona['PER_email']; ?>">
+                  <th scope="row" class=" hidden px-6 py-3 font-medium text-gray-900 whitespace-nowrap"> <?= $persona['PER_codigo']; ?></th>
+                  <td class="px-6 py-3"> <?= $persona['PER_dni']; ?></td>
+                  <td class="px-6 py-3"> <?= $persona['persona']; ?></td>
+                  <td class="px-6 py-3"> <?= $persona['PER_celular']; ?></td>
+                  <td class="px-6 py-3"> <?= $persona['PER_email']; ?></td>
+                </tr>
+              <?php endforeach; ?>
+
+              <?php if (empty($personas)) : ?>
+                <tr>
+                  <td colspan="5" class="text-center py-4">No hay trabajdores registrados.</td>
+                </tr>
+              <?php endif; ?>
             </tbody>
+            <!-- Fin de cuerpo de tabla -->
           </table>
         </div>
       </div>
+      <!-- Fin de tabla -->
+
+
+
+
     </div>
   </div>
 </div>

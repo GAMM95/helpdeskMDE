@@ -29,7 +29,7 @@ class PersonaController
         if ($this->personaModel->validarDniExistente($dni)) {
           echo json_encode([
             'success' => false,
-            'message' => 'El DNI ya está registrado.'
+            'message' => 'El DNI ya esta registrado.'
           ]);
           exit();
         }
@@ -44,17 +44,17 @@ class PersonaController
           $email
         );
 
-        // if ($insertSuccessId) {
-        //   echo json_encode([
-        //     'success' => true,
-        //     'message' => 'Persona registrada con éxito.'
-        //   ]);
-        // } else {
-        //   echo json_encode([
-        //     'success' => false,
-        //     'message' => 'Error al registrar persona.'
-        //   ]);
-        // }
+        if ($insertSuccessId) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Persona registrada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'Error al registrar persona.'
+          ]);
+        }
       } catch (Exception $e) {
         echo json_encode([
           'success' => false,
@@ -94,13 +94,12 @@ class PersonaController
           );
 
           // Actualizar la persona
-          // $personaModel->editarPersona();
           $personaModel = $this->personaModel->actualizarPersona();
 
           if ($personaModel > 0) {
             echo json_encode([
               'success' => true,
-              'message' => 'Datos actualizados correctamente.'
+              'message' => 'Datos actualizados.'
             ]);
           } else {
             echo json_encode([
@@ -125,6 +124,24 @@ class PersonaController
         'success' => false,
         'message' => 'Método no permitido.'
       ]);
+    }
+  }
+
+  public function filtrarPersonas()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+      $terminoBusqueda = $_GET['termino'] ?? '';
+
+      header('Content-Type: application/json'); // Establecer el tipo de contenido como JSON
+
+      try {
+        $resultados = $this->personaModel->filtrarPersonas($terminoBusqueda);
+        echo json_encode($resultados);
+      } catch (Exception $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+      }
+    } else {
+      echo json_encode(['error' => 'Método no permitido.']);
     }
   }
 }

@@ -5,8 +5,8 @@ $(document).ready(function () {
     "timeOut": "2000"
   };
 
-  // Evento de clic en una fila de la tabla usando delegación de eventos
-  $(document).on('click', '#tablaTrabajadores tr', function () {
+  // Evento de clic en una fila de la tabla
+  $('tr').click(function () {
     var cod = $(this).data('cod');
     var dni = $(this).data('dni');
     var nombreCompleto = $(this).data('nombre');
@@ -27,7 +27,7 @@ $(document).ready(function () {
     $('#celular').val(celular);
     $('#email').val(email);
 
-    $('#tablaTrabajadores tr').removeClass('bg-blue-200 font-semibold');
+    $('tr').removeClass('bg-blue-200 font-semibold');
     $(this).addClass('bg-blue-200 font-semibold');
 
     $('#form-action').val('editar'); // Cambiar la acción a editar
@@ -37,6 +37,63 @@ $(document).ready(function () {
     $('#editar-persona').prop('disabled', false);
     $('#nuevo-registro').prop('disabled', false);
   });
+
+  // // Manejo de la paginación
+  // $(document).on('click', '.pagination-link', function (e) {
+  //   e.preventDefault();
+  //   var page = $(this).attr('href').split('page=')[1];
+  //   cambiarPaginaTablaTrabajadores(page);
+  // });
+
+  // // Buscar en la tabla de trabajadores
+  // $('#searchInput').on('input', function () {
+  //   filtrarTablaTrabajador();
+  // });
+
+  // // Función para cambiar de página en la tabla de incidencias sin recepcionar
+  // function cambiarPaginaTablaTrabajadores(page) {
+  //   fetch(`?page=${page}`)
+  //     .then(response => response.text())
+  //     .then(data => {
+  //       const parser = new DOMParser();
+  //       const newDocument = parser.parseFromString(data, 'text/html');
+  //       const newTable = newDocument.querySelector('#tablaTrabajadores');
+  //       const newPagination = newDocument.querySelector('.flex.justify-end.items-center.mt-1');
+
+  //       // Reemplazar la tabla actual con la nueva tabla obtenida
+  //       document.querySelector('#tablaTrabajadores').parentNode.replaceChild(newTable, document.querySelector('#tablaTrabajadores'));
+
+  //       // Reemplazar la paginación actual con la nueva paginación obtenida
+  //       const currentPagination = document.querySelector('.flex.justify-end.items-center.mt-1');
+  //       if (currentPagination && newPagination) {
+  //         currentPagination.parentNode.replaceChild(newPagination, currentPagination);
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error('Error al cambiar de página:', error);
+  //     });
+  // }
+
+  // // funcion para filtrar tabla de trabajador
+  // function filtrarTablaTrabajador() {
+  //   var input, filtro, tabla, filas, celdas, i, j, match;
+  //   input = document.getElementById('searchInput');
+  //   filtro = input.value.toUpperCase();
+  //   tabla = document.getElementById('tablaTrabajadores');
+  //   filas = tabla.getElementsByTagName('tr');
+
+  //   for (i = 1; i < filas.length; i++) {
+  //     celdas = filas[i].getElementsByTagName('td');
+  //     match = false;
+  //     for (j = 0; j < celdas.length; j++) {
+  //       if (celdas[j].innerText.toUpperCase().indexOf(filtro) > -1) {
+  //         match = true;
+  //         break;
+  //       }
+  //     }
+  //     filas[i].style.display = match ? '' : 'none';
+  //   }
+  // }
 
   // Manejo de la paginación
   $(document).on('click', '.pagination-link', function (e) {
@@ -68,9 +125,6 @@ $(document).ready(function () {
         if (currentPagination && newPagination) {
           currentPagination.parentNode.replaceChild(newPagination, currentPagination);
         }
-
-        // Aplicar el filtro nuevamente a la nueva tabla
-        filtrarTablaTrabajador();
       })
       .catch(error => {
         console.error('Error al cambiar de página:', error);
@@ -98,6 +152,7 @@ $(document).ready(function () {
     }
   }
 
+
   // Función para manejar el nuevo registro
   function nuevoRegistro() {
     const form = document.getElementById('formPersona');
@@ -110,10 +165,6 @@ $(document).ready(function () {
     // Deshabilitar el botón de editar
     $('#editar-persona').prop('disabled', true);
     $('#nuevo-registro').prop('disabled', true);
-
-    // Limpiar el campo de búsqueda y actualizar la tabla
-    document.getElementById('searchInput').value = '';
-    filtrarTablaTrabajador(); // Actualizar la tabla para reflejar que no hay filtros aplicados
   }
 
   // Evento para nuevo registro

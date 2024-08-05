@@ -34,12 +34,14 @@
     <!-- Fin de miga de pan -->
 
     <!-- TODO: TITULO TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
+    <!-- Buscador de incidencias nuevas -->
     <div id="noIncidencias" class="flex justify-between items-center mb-2">
       <h1 class="text-xl text-gray-400">Nuevas incidencias</h1>
       <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar..." oninput="filtrarTablaIncidenciasSinRecepcionar()" />
     </div>
+    <!-- Fin de buscador -->
 
-    <!-- TODO: TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
+    <!-- Tabla de incidencias sin recepcionar -->
     <input type="hidden" id="incidenciaCount" value="<?php echo count($incidencias); ?>">
 
     <div class="mb-2">
@@ -180,11 +182,9 @@
             <div class="flex flex-wrap -mx-2">
               <div class="w-full px-2">
                 <div class="flex flex-col items-center space-y-4">
-                  <button type="submit" id="guardar-recepcion" class="btn-primary text-white font-bold py-2 px-4 rounded-md w-full md:w-auto btn-wide"> Guardar </button>
-
-                  <button type="button" class="bg-blue-500 text-white font-bold hover:bg-blue-600 py-2 px-4 rounded-md w-full md:w-auto btn-wide"> Editar </button>
-
-                  <button type="button" id="nuevoRegistro" class="bg-gray-500 text-white font-bold hover:bg-gray-600 py-2 px-4 rounded-md w-full md:w-auto btn-wide"> Nuevo </button>
+                  <button type="submit" id="guardar-recepcion" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
+                  <button type="button" id="editar-recepcion" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
+                  <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
                 </div>
               </div>
             </div>

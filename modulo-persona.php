@@ -26,6 +26,9 @@ switch ($action) {
   case 'editar':
     $personaController->editarPersona();
     break;
+  case 'filtrar':
+    $personaController->filtrarPersonas();
+    break;
   default:
     break;
 }
