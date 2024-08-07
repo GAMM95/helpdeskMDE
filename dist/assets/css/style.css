@@ -20772,7 +20772,7 @@ pre[class*=language-]:before {
 
 .pcoded-header .dropdown .dropdown-menu {
     position: absolute;
-    min-width: 220px;
+    min-width: 250px;
     margin: 0;
 }
 

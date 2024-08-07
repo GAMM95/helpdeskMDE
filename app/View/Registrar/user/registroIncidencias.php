@@ -1,5 +1,5 @@
-<div class="pcoded-main-container overflow-y-auto">
-  <div class="pcoded-content overflow-y-auto">
+<div class="pcoded-main-container mt-5">
+  <div class="pcoded-content">
     <?php
     global $incidenciaRegistrada;
     ?>

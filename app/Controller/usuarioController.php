@@ -120,4 +120,38 @@ class UsuarioController
       echo json_encode(['success' => false, 'error' => 'Método no permitido']);
     }
   }
+
+
+  //   public function habilitarUsuario($USU_codigo)
+  //   {
+  //     try {
+  //       $this->usuarioModel->habilitarUsuario($USU_codigo);
+  //       echo json_encode(['status' => 'success', 'message' => 'Usuario habilitado exitosamente']);
+  //     } catch (Exception $e) {
+  //       echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+  //     }
+  //   }
+
+  //   public function deshabilitarUsuario($USU_codigo)
+  //   {
+  //     try {
+  //       $this->usuarioModel->deshabilitarUsuario($USU_codigo);
+  //       echo json_encode(['status' => 'success', 'message' => 'Usuario deshabilitado exitosamente']);
+  //     } catch (Exception $e) {
+  //       echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+  //     }
+  //   }
+  // }
+
+  // // Manejar solicitudes AJAX
+  // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  //   $controller = new UsuarioController();
+  //   $action = $_POST['action'];
+  //   $USU_codigo = $_POST['USU_codigo'];
+
+  //   if ($action === 'habilitar') {
+  //     $controller->habilitarUsuario($USU_codigo);
+  //   } elseif ($action === 'deshabilitar') {
+  //     $controller->deshabilitarUsuario($USU_codigo);
+  //   }
 }

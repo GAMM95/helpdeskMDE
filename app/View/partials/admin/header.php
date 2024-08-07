@@ -180,7 +180,7 @@ if (isset($_SESSION['codigoUsuario'])) {
                 <p class="mb-0 text-gray-800">¿Desea cerrar sesión?</p>
               </div>
               <div class="modal-footer">
-                <a href="logout.php" class="btn btn-primary rounded-md">Cerrar sesión</a>
+                <a href="logout.php" class="btn btn-primary rounded-md text-white">Cerrar sesión</a>
               </div>
             </div>
           </div>

@@ -153,8 +153,13 @@ function changePageTablaUsuarios(page) {
 
 // TODO: Metodo para enviar formulario
 function enviarFormulario(action) {
+  if (!validarCampos()) {
+    return; // si hay campos inválidos, detener el envío
+  }
+
   var url = 'modulo-usuario.php?action=' + action;
   var data = $('#formUsuario').serialize();
+
   $.ajax({
     url: url,
     method: 'POST',
@@ -162,9 +167,9 @@ function enviarFormulario(action) {
     success: function (response) {
       if (response.success) {
         if (action === 'registrar') {
-          toastr.success('Usuario registrada');
+          toastr.success('Usuario registrada 1');
         } else if (action === 'editar') {
-          toastr.success('Usuario actualizado');
+          toastr.success('Usuario actualizado 1');
         }
         setTimeout(function () {
           location.reload();
@@ -172,9 +177,9 @@ function enviarFormulario(action) {
       }
       else {
         if (action === 'registrar') {
-          toastr.success('Usuario registradsssso');
+          toastr.success('Usuario registrado');
         } else if (action === 'editar') {
-          toastr.success('Datos actualizados');
+          toastr.success('Usuario actualizados');
         }
         setTimeout(function () {
           location.reload();
@@ -192,9 +197,117 @@ function enviarFormulario(action) {
       }, 1500);
     }
   });
-
 }
 $('#guardar-usuario').on('click', function (e) {
   e.preventDefault();
   enviarFormulario($('#form-action').val());
 });
+
+// Función para validar campos antes de enviar
+function validarCampos() {
+  var valido = true;
+  var mensajeError = '';
+
+  // Validar campos
+  var faltaPersona = ($('#cbo_persona').val() === null || $('#cbo_persona').val() === '');
+  var faltaArea = ($('#cbo_area').val() === null || $('#cbo_area').val() === '');
+  var faltaRol = ($('#cbo_rol').val() === null || $('#cbo_rol').val() === '');
+  var faltaUsername = ($('#username').val() === null || $('#username').val() === '');
+  var faltaPassword = ($('#password').val() === null || $('#password').val() === '');
+
+  if (faltaPersona || faltaArea || faltaRol || faltaUsername || faltaPassword) {
+    mensajeError += 'Debe completar todos los campos requeridos.';
+    valido = false;
+  } else if (faltaPersona) {
+    mensajeError += 'Debe seleccionar un trabajador.';
+    valido = false;
+  } else if (faltaArea) {
+    mensajeError += 'Debe seleccionar un area.';
+    valido = false;
+  } else if (faltaRol) {
+    mensajeError += 'Debe seleccionar un rol.';
+    valido = false;
+  } else if (faltaUsername) {
+    mensajeError += 'Debe ingresar un nombre de usuario.';
+    valido = false;
+  } else if (faltaPassword) {
+    mensajeError += 'Debe ingresar una contrase&ntilde;a.';
+    valido = false;
+  }
+
+  // Mostrar mensaje de error si hay
+  if (!valido) {
+    toastr.warning(mensajeError.trim());
+  }
+  return valido;
+}
+
+
+// TODO: Seteo de valores en los inputs y combos
+document.addEventListener('DOMContentLoaded', (event) => {
+  // Obtén todas las filas de la tabla
+  const filas = document.querySelectorAll('#tablaListarUsuarios tbody tr');
+
+  filas.forEach(fila => {
+    fila.addEventListener('click', () => {
+      // Obtén los datos de la fila
+      const celdas = fila.querySelectorAll('td');
+
+      // Mapea los valores de las celdas a los inputs del formulario
+      const codUsuario = fila.querySelector('th').innerText.trim();
+      const personaValue = celdas[0].innerText.trim();
+      const areaValue = celdas[1].innerText.trim();
+      const usernameValue = celdas[2].innerText.trim();
+      const passwordValue = celdas[3].innerText.trim();
+      const rolValue = celdas[4].innerText.trim();
+
+      // Setear valores en los inputs
+      document.getElementById('CodUsuario').value = codUsuario;
+      document.getElementById('username').value = usernameValue;
+      document.getElementById('password').value = passwordValue;
+
+      // Debug: Verifica los valores que estás estableciendo
+      console.log("CodUsuario:", codUsuario);
+      console.log("Persona:", personaValue);
+      console.log("Area:", areaValue);
+      console.log("Username:", usernameValue);
+      console.log("Password:", passwordValue);
+      console.log("Rol:", rolValue);
+
+      // Setear valores en los combos
+      setComboValue('cbo_persona', personaValue);
+      setComboValue('cbo_area', areaValue);
+      setComboValue('cbo_rol', rolValue);
+
+      // Cambiar estado de los botones
+      document.getElementById('guardar-usuario').disabled = true;
+      document.getElementById('editar-usuario').disabled = false;
+      document.getElementById('nuevo-registro').disabled = false;
+    });
+  });
+});
+
+function setComboValue(comboId, value) {
+  const select = document.getElementById(comboId);
+  const options = select.options;
+
+  console.log("Setting value for:", comboId, "Value:", value);
+
+  // Verificar si el valor está en el combo
+  let valueFound = false;
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].text.trim() === value) {
+      select.value = options[i].value;
+      valueFound = true;
+      break;
+    }
+  }
+
+  // Si no se encontró el valor, seleccionar el primer elemento
+  if (!valueFound) {
+    select.value = ''; // O establece un valor predeterminado si lo deseas
+  }
+
+  // Forzar actualización del select2 para mostrar el valor seleccionado
+  $(select).trigger('change');
+}
