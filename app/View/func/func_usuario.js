@@ -19,9 +19,10 @@ $(document).ready(function () {
       select.empty();
       select.append('<option value="" selected disabled>Seleccione una persona</option>');
       $.each(data, function (index, value) {
+        console.log("Codigo: " + index + ", Area: ", value); // Mostrar índice y valor en la consola
         select.append('<option value="' + value.PER_codigo + '">' + value.persona + '</option>');
       });
-      if (personaRegistrada !== '') {
+      if (typeof personaRegistrada !== 'undefined' && personaRegistrada !== '') {
         select.val(personaRegistrada);
       } else {
         select.val('');
@@ -45,9 +46,10 @@ $(document).ready(function () {
       select.empty();
       select.append('<option value="" selected disabled>Seleccione un area</option>');
       $.each(data, function (index, value) {
+        console.log("Codigo: " + index + ", Area: ", value); // Mostrar índice y valor en la consola
         select.append('<option value="' + value.ARE_codigo + '">' + value.ARE_nombre + '</option>');
       });
-      if (areaRegistrada !== '') {
+      if (typeof areaRegistrada !== 'undefined' && areaRegistrada !== '') {
         select.val(areaRegistrada);
       } else {
         select.val('');
@@ -149,154 +151,50 @@ function changePageTablaUsuarios(page) {
     });
 }
 
-// TODO: SETEO DEL CODIGO DE USUARIO DESDE LA TABLA
-$(document).ready(function () {
-  $(document).on('click', '#tablaListarUsuarios tbody tr', function () {
-    var id = $(this).find('th').html();
-    $('#tablaListarUsuarios tbody tr').removeClass('bg-blue-200 font-semibold');
-    $(this).addClass('bg-blue-200 font-semibold');
-    $('#txt_codigoUsuario').val(id);
-  });
-});
-
-
-// TODO: SETEO DE VALORES EN LOS INPUTS
-$(document).ready(function () {
-  // Evento de clic en una fila de la tabla
-  $('#tablaListarUsuarios tbody').on('click', 'tr', function () {
-    var usuario = $(this).data('usuario');
-    var cod = $(this).find('td[data-codusuario]').data('codusuario');
-    var codPersona = $(this).find('td[data-codpersona]').data('persona');
-    var codArea = $(this).find('td[data-area]').data('codarea');
-    var codRol = $(this).find('td[data-codrol]').data('codrol');
-    var usuario = $(this).find('td[data-usuario]').text();
-    var password = $(this).find('td[data-password]').text();
-
-    $('#txt_codigoUsuario').val(cod);
-    $('#cbo_persona').val(codPersona);
-    $('#cbo_area').val(codArea);
-    $('#cbo_rol').val(codRol);
-    $('#txt_nombreUsuario').val(usuario);
-    $('#txt_password').val(password);
-
-    $('tr').removeClass('bg-blue-200 font-semibold');
-    $(this).addClass('bg-blue-200 font-semibold');
-  });
-});
-
-
-// Registrar usuario
-// $(document).ready(function () {
-//   $('#guardar-usuario').click(function (event) {
-//     event.preventDefault();
-
-//     // Validar campos antes de enviar
-//     if (!validarCampos()) {
-//       return; // si hay campos invalidos, detener el envio
-//     }
-
-//     var form = $('#formUsuario');
-//     var data = form.serialize();
-//     console.log(data); //verifica las veces de envio
-
-//     var acton = form.attr('action');
-//     $.ajax({
-//       url: action,
-//       type: "POST",
-//       data: data,
-//       success: function (response) {
-//         if (action === 'modulo-usuario.php?action=registrar') {
-//           toastr.success('Usuario registrado');
-//         } else if (action === 'modulo-usuario.php?action=editar') {
-//           toastr.success('Usuario actualizado');
-//         }
-//         setTimeout(function () {
-//           location.reload();
-//         }, 1500);
-//       },
-//       error: function (xhr, status, error) {
-//         console.error(xhr.responseText);
-//         toastr.error('Error al guardar usuario');
-//       }
-//     })
-//   });
-
-//   // Funcion para validar los campos antes de enviar
-//   function validarCampos() {
-//     var valido = true;
-//     var mensajeError = '';
-
-//     // validar inputs
-//     var faltaTrabajador = ($('#cbo_persona').val() === null || $('#cbo_persona').val() === '');
-//     var faltaArea = ($('#cbo_area').val() === null || $('#cbo_area').val() === '');
-//     var faltaRol = ($('#cbo_rol').val() === null || $('#cbo_rol').val() === '');
-//     var faltaUsername = ($('#username').val() === null || $('#username').val() === '');
-//     var faltaPassword = ($('#password').val() === null || $('#password').val() === '');
-
-//     if (faltaTrabajador && faltaArea && faltaRol && faltaUsername && faltaPassword) {
-//       mensajeError += 'Debe completar los campos requeridos';
-//       valido = false;
-//     } else if (faltaTrabajador) {
-//       mensajeError += 'Debe seleccionar un trabajador';
-//       valido = false;
-//     } else if (faltaArea) {
-//       mensajeError += 'Debe seleccionar un area';
-//       valido = false;
-//     } else if (faltaRol) {
-//       mensajeError += 'Debe seleccionar un rol';
-//       valido = false;
-//     } else if (faltaUsername) {
-//       mensajeError += 'Debe ingresar un nombre de usuario';
-//       valido = false;
-//     } else if (faltaPassword) {
-//       mensajeError += 'Debe ingresar una contrase&ntilde;a';
-//       valido = false;
-//     }
-
-//     // Mostrar mensaje de error si hay
-//     if (!valido) {
-//       toastr.error(mensajeError.trim());
-//     }
-//     return valido;
-//   }
-// })
-
-// Manejo del cambio del switch
-$(document).ready(function () {
-  // Manejar el cambio en el switch
-  $(document).on('change', '.custom-control-input', function () {
-    // Obtener el estado del switch y el código de usuario
-    const isChecked = $(this).is(':checked');
-    const usuarioCodigo = $(this).attr('id').replace('customswitch', '');
-
-    // Enviar una solicitud AJAX para habilitar o deshabilitar al usuario
-    $.ajax({
-      url: 'ruta_a_tu_controlador.php', // Cambia esto a la ruta de tu controlador
-      type: 'POST',
-      data: {
-        USU_codigo: usuarioCodigo,
-        action: isChecked ? 'habilitar' : 'deshabilitar'
-      },
-      success: function (response) {
-        const data = JSON.parse(response);
-        if (data.success) {
-          toastr.success('Estado actualizado correctamente.');
-        } else {
-          toastr.error('Error al actualizar el estado: ' + (data.error || 'Desconocido'));
+// TODO: Metodo para enviar formulario
+function enviarFormulario(action) {
+  var url = 'modulo-usuario.php?action=' + action;
+  var data = $('#formUsuario').serialize();
+  $.ajax({
+    url: url,
+    method: 'POST',
+    data: data,
+    success: function (response) {
+      if (response.success) {
+        if (action === 'registrar') {
+          toastr.success('Usuario registrada');
+        } else if (action === 'editar') {
+          toastr.success('Usuario actualizado');
         }
-      },
-      error: function (xhr, status, error) {
-        toastr.error('Error al actualizar el estado: ' + error);
+        setTimeout(function () {
+          location.reload();
+        }, 1500);
       }
-    });
+      else {
+        if (action === 'registrar') {
+          toastr.success('Usuario registradsssso');
+        } else if (action === 'editar') {
+          toastr.success('Datos actualizados');
+        }
+        setTimeout(function () {
+          location.reload();
+        }, 1500);
+      }
+    },
+    error: function (error) {
+      if (action === 'registrar') {
+        toastr.success('xxx registrada');
+      } else if (action === 'editar') {
+        toastr.success('Datos actualizados');
+      }
+      setTimeout(function () {
+        location.reload();
+      }, 1500);
+    }
   });
-});
 
-// actualizar estado del switch
-$(document).ready(function () {
-  // Inicializar el estado de los switches basado en el estado del usuario
-  $('#tablaListarUsuarios .custom-control-input').each(function () {
-    const estado = $(this).data('estado'); // Suponiendo que el atributo data-estado está configurado en el backend
-    $(this).prop('checked', estado === 'Activo');
-  });
+}
+$('#guardar-usuario').on('click', function (e) {
+  e.preventDefault();
+  enviarFormulario($('#form-action').val());
 });

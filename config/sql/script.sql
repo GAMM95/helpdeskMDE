@@ -36,10 +36,6 @@ GO
 
 INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
 VALUES ('70555743', 'Jhonatan', 'Mantilla', 'Miñano', 'jhonatanmm.1995@gmail.com', '950212909');
-INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
-VALUES ('70555742', 'Gustavo', 'Mantilla', 'Miñano', 'gammgush@gmail.com', '950212913');
-INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
-VALUES ('72252469','Liliana','Marcelo','Miñano','liliannamarcelo@gmail.com','975135635');
 
 -- CREACION DE LA TABLA AREA
 CREATE TABLE AREA (
@@ -124,10 +120,10 @@ CREATE TABLE USUARIO (
 	USU_codigo SMALLINT IDENTITY(1, 1) PRIMARY KEY,
 	USU_nombre VARCHAR(20) UNIQUE NOT NULL,
 	USU_password VARCHAR(10) NOT NULL,
-	PER_codigo SMALLINT,
-	ROL_codigo SMALLINT,
-	ARE_codigo SMALLINT,
-	EST_codigo SMALLINT,
+	PER_codigo SMALLINT NOT NULL,
+	ROL_codigo SMALLINT NOT NULL,
+	ARE_codigo SMALLINT NOT NULL,
+	EST_codigo SMALLINT NOT NULL,
 	CONSTRAINT FK_USUARIO_PERSONA FOREIGN KEY (PER_codigo) REFERENCES PERSONA(PER_codigo),
 	CONSTRAINT FK_USUARIO_ROL FOREIGN KEY (ROL_codigo) REFERENCES ROL(ROL_codigo),
 	CONSTRAINT FK_USUARIO_AREA FOREIGN KEY (ARE_codigo) REFERENCES AREA(ARE_codigo),
@@ -137,12 +133,6 @@ GO
 
 INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
 VALUES ('GAMM95', '123456', 1, 1, 1, 1);
-INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
-VALUES ('GUSH98', '123456', 2, 3, 2, 2);
-INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
-VALUES ('LPMM96', '123456', 3, 2, 5, 1);
-INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
-VALUES ('DARA98', '123456', 4, 2, 10, 1);
 GO
 
 -- PROCEDIMIENTO ALMACENADO PARA INICIAR SESION
@@ -204,12 +194,22 @@ CREATE PROCEDURE SP_Registrar_Usuario (
 	@PER_codigo SMALLINT,
 	@ROL_codigo SMALLINT,
 	@ARE_codigo SMALLINT)
-AS BEGIN 
+AS
+BEGIN 
+	-- Verificar si la persona ya tiene un usuario registrado
+	IF EXISTS (SELECT 1 FROM USUARIO WHERE PER_codigo = @PER_codigo)
+	BEGIN
+		-- Si la persona ya tiene un usuario, retornar un mensaje de error o un código de error
+		RAISERROR('La persona ya tiene un usuario registrado.', 16, 1);
+		RETURN;
+	END
+
 	-- Insertar el nuevo usuario con EST_codigo siempre igual a 1
 	INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
 	VALUES (@USU_nombre, @USU_password, @PER_codigo, @ROL_codigo, @ARE_codigo, 1);
 END;
 GO
+
 
 -- CREACION DE TABLA IMPACTO
 CREATE TABLE IMPACTO (

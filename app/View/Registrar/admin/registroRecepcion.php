@@ -252,6 +252,11 @@
                 echo "</tr>";
               }
               ?>
+              <?php if (empty($recepciones)) : ?>
+                <tr>
+                  <td colspan="8" class="text-center py-3">No hay incidencias recepcionadas.</td>
+                </tr>
+              <?php endif; ?>
             </tbody>
           </table>
         </div>

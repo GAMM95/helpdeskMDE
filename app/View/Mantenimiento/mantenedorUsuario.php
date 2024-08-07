@@ -1,5 +1,8 @@
 <div class="pcoded-main-container mt-5">
   <div class="pcoded-content">
+    <?php
+    global $usuarioRegistrado;
+    ?>
 
     <!-- Miga de pan -->
     <div class="page-header">
@@ -40,21 +43,21 @@
 
           <!-- SELECCION DE PERSONA -->
           <div class="mb-4">
-            <label for="persona" class="block text-gray-700 font-bold mb-2">Trabajador</label>
-            <select id="cbo_persona" name="persona" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <label for="persona" class="block text-gray-700 font-bold mb-2">Trabajador:</label>
+            <select id="cbo_persona" name="persona" class="border p-2 w-full text-xs cursor-pointer rounded-md">
               <option value="" selected disabled>Seleccione una persona</option>
             </select>
           </div>
 
           <div class="mb-4">
-            <label for="area" class="block text-gray-700 font-bold mb-2">&Aacute;rea</label>
-            <select id="cbo_area" name="area" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <label for="area" class="block text-gray-700 font-bold mb-2">&Aacute;rea:</label>
+            <select id="cbo_area" name="area" class="border p-2 w-full text-xs cursor-pointer rounded-md">
               <option value="" selected disabled>Seleccione un área</option>
             </select>
           </div>
           <div class="mb-4">
-            <label for="rol" class="block text-gray-700 font-bold mb-2">Rol</label>
-            <select id="cbo_rol" name="rol" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <label for="rol" class="block text-gray-700 font-bold mb-2">Rol:</label>
+            <select id="cbo_rol" name="rol" class="border p-2 w-full text-xs cursor-pointer rounded-md">
               <option value="" selected disabled>Seleccione un rol</option>
             </select>
           </div>
@@ -69,28 +72,29 @@
             <!-- CONTRASEÑA -->
             <div class="w-full sm:w-1/2 px-2 mb-2">
               <label for="password" class="block mb-1 font-bold text-xs">Contrase&ntilde;a:</label>
-              <input type="password" id="password" name="password" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese contraseña">
+              <input type="text" id="password" name="password" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese contraseña">
             </div>
           </div>
 
           <script>
-            document.getElementById('CodUsuario').value = '<?php echo $UsuarioRegistrado ? $UsuarioRegistrado['USU_codigo'] : ''; ?>';
-            document.getElementById('cbo_persona').value = '<?php echo $UsuarioRegistrado ? $UsuarioRegistrado['PER_codigo'] : ''; ?>';
-            document.getElementById('cbo_area').value = '<?php echo $UsuarioRegistrado ? $UsuarioRegistrado['ARE_codigo'] : ''; ?>';
-            document.getElementById('cbo_rol').value = '<?php echo $UsuarioRegistrado ? $UsuarioRegistrado['ROL_codigo'] : ''; ?>';
-            document.getElementById('username').value = '<?php echo $UsuarioRegistrado ? $UsuarioRegistrado['USU_nombre'] : ''; ?>';
+            document.getElementById('CodUsuario').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['USU_codigo'] : ''; ?>';
+            document.getElementById('cbo_persona').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['PER_codigo'] : ''; ?>';
+            document.getElementById('cbo_area').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['ARE_codigo'] : ''; ?>';
+            document.getElementById('cbo_rol').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['ROL_codigo'] : ''; ?>';
+            document.getElementById('username').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['USU_nombre'] : ''; ?>';
+            document.getElementById('password').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['USU_password'] : ''; ?>';
           </script>
 
-          <!-- BOTONES -->
+          <!-- Botones del formulario -->
           <div class="flex justify-center space-x-4 mt-8 mb-2">
             <button type="submit" id="guardar-usuario" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
             <button type="button" id="editar-usuario" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
             <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
           </div>
+          <!-- Fin botones -->
         </form>
       </div>
       <!-- Fin de formulario -->
-
 
       <?php
       require_once './app/Model/UsuarioModel.php';
@@ -175,3 +179,75 @@
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>
+
+
+<script>
+  // TODO: Seteo de valores en los inputs y combos
+  document.addEventListener('DOMContentLoaded', (event) => {
+    // Obtén todas las filas de la tabla
+    const filas = document.querySelectorAll('#tablaListarUsuarios tbody tr');
+
+    filas.forEach(fila => {
+      fila.addEventListener('click', () => {
+        // Obtén los datos de la fila
+        const celdas = fila.querySelectorAll('td');
+
+        // Mapea los valores de las celdas a los inputs del formulario
+        const codUsuario = fila.querySelector('th').innerText.trim();
+        const personaValue = celdas[0].innerText.trim();
+        const areaValue = celdas[1].innerText.trim();
+        const usernameValue = celdas[2].innerText.trim();
+        const passwordValue = celdas[3].innerText.trim();
+        const rolValue = celdas[4].innerText.trim();
+
+        // Setear valores en los inputs
+        document.getElementById('CodUsuario').value = codUsuario;
+        document.getElementById('username').value = usernameValue;
+        document.getElementById('password').value = passwordValue;
+
+        // Debug: Verifica los valores que estás estableciendo
+        console.log("CodUsuario:", codUsuario);
+        console.log("Persona:", personaValue);
+        console.log("Area:", areaValue);
+        console.log("Username:", usernameValue);
+        console.log("Password:", passwordValue);
+        console.log("Rol:", rolValue);
+
+        // Setear valores en los combos
+        setComboValue('cbo_persona', personaValue);
+        setComboValue('cbo_area', areaValue);
+        setComboValue('cbo_rol', rolValue);
+
+        // Cambiar estado de los botones
+        document.getElementById('guardar-usuario').disabled = true;
+        document.getElementById('editar-usuario').disabled = false;
+        document.getElementById('nuevo-registro').disabled = false;
+      });
+    });
+  });
+
+  function setComboValue(comboId, value) {
+    const select = document.getElementById(comboId);
+    const options = select.options;
+
+    console.log("Setting value for:", comboId, "Value:", value);
+
+    // Verificar si el valor está en el combo
+    let valueFound = false;
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].text.trim() === value) {
+        select.value = options[i].value;
+        valueFound = true;
+        break;
+      }
+    }
+
+    // Si no se encontró el valor, seleccionar el primer elemento
+    if (!valueFound) {
+      select.value = ''; // O establece un valor predeterminado si lo deseas
+    }
+
+    // Forzar actualización del select2 para mostrar el valor seleccionado
+    $(select).trigger('change');
+  }
+</script>

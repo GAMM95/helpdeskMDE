@@ -1,7 +1,7 @@
 <?php
 $action = $_GET['action'] ?? '';
 $state = $_GET['state'] ?? '';
-$CodUsuario = $_GET['USU_codigo'] ?? '';
+$USU_codigo = $_GET['USU_codigo'] ?? '';
 
 require_once 'app/Controller/UsuarioController.php';
 require_once 'app/Model/UsuarioModel.php';
@@ -10,18 +10,29 @@ require_once 'app/Model/UsuarioModel.php';
 $usuarioController = new UsuarioController();
 $usuarioModel = new UsuarioModel();
 
-if ($CodUsuario != '') {
-  global $UsuarioRegistrado;
-  $UsuarioRegistrado = $usuarioModel->obtenerRolPorId($USU_codigo);
+if ($USU_codigo != '') {
+  global $usuarioRegistrado;
+  $usuarioRegistrado = $usuarioModel->obtenerUsuarioPorID($USU_codigo);
 } else {
-  $UsuarioRegistrado = null;
+  $usuarioRegistrado = null;
 }
 
 switch ($action) {
   case 'registrar':
     $usuarioController->registrarUsuario();
     break;
+  case 'editar':
+    $personaController->editarPersona();
+    break;
+  case 'filtrar':
+    $personaController->filtrarPersonas();
+    break;
+  default:
+    break;
 }
+
+
+
 ?>
 
 <!DOCTYPE html>

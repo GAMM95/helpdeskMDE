@@ -126,15 +126,56 @@ class UsuarioModel extends Conexion
   }
 
   // TODO: Método para registrar un nuevo usuario
-  public function registrarUsuario($per_codigo, $rol_codigo, $are_codigo)
+  // public function guardarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo)
+  // {
+  //   $conector = parent::getConexion();
+  //   try {
+  //     if ($conector != null) {
+  //       $query = "EXEC SP_Registrar_Usuario :USU_nombre, :USU_password, :PER_codigo, :ROL_codigo, :ARE_codigo";
+  //       $stmt = $conector->prepare($query);
+  //       $stmt->bindParam(':USU_nombre', $username);
+  //       $stmt->bindParam(':USU_password', $password);
+  //       $stmt->bindParam(':PER_codigo', $per_codigo);
+  //       $stmt->bindParam(':ROL_codigo', $rol_codigo);
+  //       $stmt->bindParam(':ARE_codigo', $are_codigo);
+  //       $stmt->execute();
+  //       return true; // Registro exitoso
+  //     } else {
+  //       throw new Exception("Error de conexión a la base de datos.");
+  //     }
+  //   } catch (PDOException $e) {
+  //     throw new Exception("Error al guardar usuario: " . $e->getMessage());
+  //   }
+  // }
+  // Método para registrar un nuevo usuario
+  public function guardarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
+        // Verificar si la persona ya tiene un usuario registrado
+        $verificarPersona = "SELECT 1 FROM USUARIO WHERE PER_codigo = :PER_codigo";
+        $stmtPersona = $conector->prepare($verificarPersona);
+        $stmtPersona->bindParam(':PER_codigo', $per_codigo);
+        $stmtPersona->execute();
+        if ($stmtPersona->fetch()) {
+          throw new Exception("La persona ya tiene un usuario registrado.");
+        }
+
+        // Verificar si el nombre de usuario ya existe
+        $verificarUsuario = "SELECT 1 FROM USUARIO WHERE USU_nombre = :USU_nombre";
+        $stmtUsuario = $conector->prepare($verificarUsuario);
+        $stmtUsuario->bindParam(':USU_nombre', $username);
+        $stmtUsuario->execute();
+        if ($stmtUsuario->fetch()) {
+          throw new Exception("El nombre de usuario ya existe.");
+        }
+
+        // Insertar el nuevo usuario
         $query = "EXEC SP_Registrar_Usuario :USU_nombre, :USU_password, :PER_codigo, :ROL_codigo, :ARE_codigo";
         $stmt = $conector->prepare($query);
-        $stmt->bindParam(':USU_nombre', $this->username);
-        $stmt->bindParam(':USU_password', $this->password);
+        $stmt->bindParam(':USU_nombre', $username);
+        $stmt->bindParam(':USU_password', $password);
         $stmt->bindParam(':PER_codigo', $per_codigo);
         $stmt->bindParam(':ROL_codigo', $rol_codigo);
         $stmt->bindParam(':ARE_codigo', $are_codigo);
@@ -144,10 +185,10 @@ class UsuarioModel extends Conexion
         throw new Exception("Error de conexión a la base de datos.");
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al registrar usuario: " . $e->getMessage());
+      throw new Exception("Error al guardar usuario: " . $e->getMessage());
     }
   }
-
+  
   // TODO: Metodo para listar todos los usuarios registrados
   public function listarUsuarios($start, $limit)
   {
@@ -219,6 +260,21 @@ class UsuarioModel extends Conexion
     } catch (PDOException $e) {
       echo "Error al setear datos personales del usuario: " . $e->getMessage();
       return null;
+    }
+  }
+
+  // TODO: Metodo para obtener usuario por ID
+  public function obtenerUsuarioPorID($codigoUsuario)
+  {
+    $conector = parent::getConexion();
+    try {
+      $sql = "SELECT * FROM USUARIO WHERE USU_codigo = ?";
+      $stmt = $conector->prepare($sql);
+      $stmt->execute([$codigoUsuario]);
+      $registros = $stmt->fetch(PDO::FETCH_ASSOC);
+      return $registros;
+    } catch (PDOException $e) {
+      throw new Exception("Error al obtener usuario: " . $e->getMessage());
     }
   }
 
