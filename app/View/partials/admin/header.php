@@ -37,7 +37,7 @@ if (isset($_SESSION['codigoUsuario'])) {
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      
+
       <?php
       require_once './app/Model/IncidenciaModel.php';
       $incidenciaModel = new IncidenciaModel();
@@ -111,7 +111,7 @@ if (isset($_SESSION['codigoUsuario'])) {
             <ul class="pro-body">
               <!-- <li><a href="perfil-admin.php" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li> -->
               <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModal"><i class="feather icon-user"></i>Mi Perfil</a></li>
-              <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-log-out"></i> Cerrar sesi&oacute;n</a></li>
+              <li><a href="#" class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-sm"><i class="feather icon-log-out"></i> Cerrar sesi&oacute;n</a></li>
             </ul>
           </div>
         </div>
@@ -161,6 +161,7 @@ if (isset($_SESSION['codigoUsuario'])) {
 
               </div>
               <div class="modal-footer">
+                <a href="logout.php" class="btn btn-info rounded-md text-white">Editar perfil</a>
                 <button type="button" class="btn btn-secondary rounded-md" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
@@ -169,15 +170,15 @@ if (isset($_SESSION['codigoUsuario'])) {
         <!-- Modal perfil end -->
 
         <!-- Modal Cerrar sesion start -->
-        <div id="exampleModalCenter" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 1050;">
-          <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title text-xl text-bold" id="exampleModalCenterTitle">Mensaje</h5>
+                <h5 class="modal-title text-xl text-bold" id="mySmallModalLabel">Mensaje</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               </div>
               <div class="modal-body">
-                <p class="mb-0 text-gray-800">¿Desea cerrar sesión?</p>
+                <p class="mb-0 text-gray-800 text-center text-md">¿Desea cerrar sesi&oacute;n?</p>
               </div>
               <div class="modal-footer">
                 <a href="logout.php" class="btn btn-primary rounded-md text-white">Cerrar sesión</a>

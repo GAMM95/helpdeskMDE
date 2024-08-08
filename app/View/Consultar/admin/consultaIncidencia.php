@@ -19,13 +19,13 @@
     </div>
     <!-- Fin de miga de pan -->
 
+    <!-- Formulario Consulta de incidencias -->
     <form id="formConsultarIncidencia" action="consultar-incidencia-admin.php?action=consultar" method="GET" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
       <div class="flex flex-wrap -mx-2 justify-center">
         <!-- BUSCAR POR AREA -->
         <div class="w-full md:w-1/3 px-2 mb-2">
           <label for="area" class="block mb-1 font-bold text-xs">&Aacute;rea:</label>
           <select id="cbo_area" name="area" class="border p-2 w-full text-xs cursor-pointer">
-            <!-- Aquí puedes cargar opciones de área dinámicamente si es necesario -->
           </select>
         </div>
 
@@ -49,15 +49,12 @@
 
       <!-- BOTONES DEL FORMULARIO -->
       <div class="flex justify-center space-x-2 mt-2">
-        <button type="submit" id="buscar-incidencias" class="bg-blue-500 text-white font-bold hover:bg-[#4c8cf5] py-2 px-4 rounded-md">
-          Buscar
-        </button>
-        <button type="reset" id="limpiarCampos" class="bg-green-400 text-white font-bold hover:bg-gray-400 py-2 px-4 rounded-md">
-          Limpiar
-        </button>
+        <button type="submit" id="buscar-incidencias" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-search"></i>Buscar</button>
+        <button type="button" id="limpiarCampos" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-refresh-cw"></i>Limpiar</button>
       </div>
+      <!-- Fin de Botones -->
     </form>
-
+    <!-- Fin de formulario de consultas -->
 
     <!-- TABLA DE RESULTADOS DE LAS INCIDENCIAS -->
     <div class="relative shadow-md sm:rounded-lg">
@@ -92,7 +89,27 @@
                 echo "<td class='px-3 py-2'>" . $incidencia['CAT_nombre'] . "</td>";
                 echo "<td class='px-3 py-2'>" . $incidencia['INC_asunto'] . "</td>";
                 echo "<td class='px-3 py-2'>" . $incidencia['INC_documento'] . "</td>";
-                echo "<td class='px-3 py-2'>" . $incidencia['EST_descripcion'] . "</td>";
+                echo "<td class='px-3 py-2 text-center text-xs align-middle'>";
+                // Asignación de clases según el estado
+                $estadoDescripcion = htmlspecialchars($incidencia['EST_descripcion']);
+                $badgeClass = '';
+                switch ($estadoDescripcion) {
+                  case 'Abierta':
+                    $badgeClass = 'badge-light-danger';
+                    break;
+                  case 'Recepcionado':
+                    $badgeClass = 'badge-light-success';
+                    break;
+                  case 'Cerrado':
+                    $badgeClass = 'badge-light-primary';
+                    break;
+                  default:
+                    $badgeClass = 'badge-light-secondary';
+                    break;
+                }
+                // Renderización del contenido con la clase correspondiente
+                echo "<label class='badge {$badgeClass}'>{$estadoDescripcion}</label>";
+                echo "</td>";
                 echo "</tr>";
               }
             } else {
@@ -105,6 +122,7 @@
         </table>
       </div>
     </div>
+    <!-- Fin tabla de resultados de incidencias -->
   </div>
 </div>
 <script>

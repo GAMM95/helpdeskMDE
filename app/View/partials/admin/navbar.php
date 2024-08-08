@@ -65,18 +65,23 @@ if (session_status() == PHP_SESSION_NONE) {
         <li class="nav-item pcoded-menu-caption">
           <label>Consultas</label>
         </li>
-
-        <!-- <li class="nav-item ">
-          <a href="consultar-cierre-admin.php" class="nav-link ">
-            <span class="pcoded-micon"> <i class="feather icon-clipboard"></i> </span>
-            <span class="pcoded-mtext">Consultar incidencias</span>
-          </a>
-        </li> -->
         <li class="nav-item ">
           <a href="consultar-incidencia-admin.php" class="nav-link ">
             <span class="pcoded-micon"> <i class="feather icon-clipboard"></i> </span>
             <span class="pcoded-mtext">Consultar incidencias</span>
           </a>
+        </li>
+        <li class="nav-item pcoded-hasmenu">
+          <a href="#!" class="nav-link ">
+            <span class="pcoded-micon">
+              <i class="feather icon-clipboard"></i>
+            </span>
+            <span class="pcoded-mtext">Consultar</span>
+          </a>
+          <ul class="pcoded-submenu">
+            <li><a href="consultar-incidencia-admin.php">Incidencias</a></li>
+            <li><a href="consultar-cierre-admin.php">Cierres</a></li>
+          </ul>
         </li>
 
         <!-- Mantenedor -->
