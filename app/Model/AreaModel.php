@@ -29,12 +29,16 @@ class AreaModel extends Conexion
     }
   }
 
-  public function listarArea()
+  public function listarArea($start, $limit)
   {
+    $conector = parent::getConexion();
     try {
-      $conector = $this->getConexion();
-      $sql = "SELECT ARE_codigo, ARE_nombre FROM AREA ORDER BY ARE_codigo ASC";
+      $sql = "SELECT ARE_codigo, ARE_nombre FROM AREA ORDER BY ARE_codigo ASC
+      OFFSET ? ROWS
+      FETCH NEXT ? ROWS ONLY";
       $stmt = $conector->prepare($sql);
+      $stmt->bindParam(1, $start, PDO::PARAM_INT);
+      $stmt->bindParam(2, $limit, PDO::PARAM_INT);
       $stmt->execute();
       $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
       return $resultados;

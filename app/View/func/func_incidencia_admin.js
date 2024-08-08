@@ -169,7 +169,7 @@ $(document).ready(function () {
       mensajeError += 'Debe seleccionar una categoria.';
       valido = false;
     } else if (faltaArea) {
-      mensajeError += 'Debe seleccionar un area.';
+      mensajeError += 'Debe seleccionar un &aacute;rea.';
       valido = false;
     } else if (faltaAsunto) {
       mensajeError += 'Ingrese asunto de la incidencia.';
@@ -181,7 +181,7 @@ $(document).ready(function () {
 
     // Mostrar mensaje de error si hay
     if (!valido) {
-      toastr.error(mensajeError.trim());
+      toastr.warning(mensajeError.trim());
     }
     return valido;
   }

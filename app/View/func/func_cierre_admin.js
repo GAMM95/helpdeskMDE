@@ -126,7 +126,7 @@ $(document).ready(function () {
 
     // Mostrar el mensaje de error si hay
     if (!valido) {
-      toastr.error(mensajeError.trim());
+      toastr.warning(mensajeError.trim());
     }
     return valido;
   }

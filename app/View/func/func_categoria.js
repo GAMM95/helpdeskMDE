@@ -44,7 +44,7 @@ $(document).ready(function () {
     var nombreCategoria = $('#txt_nombreCategoria').val();
 
     if (!nombreCategoria) {
-      toastr.warning('El campo "Nombre categoría" no puede estar vacío');
+      toastr.warning('Debe ingresar el nombre de la categor&iacute;a.');
       return; // No enviar el formulario si el campo está vacío
     }
 

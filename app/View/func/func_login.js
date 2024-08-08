@@ -74,7 +74,7 @@ $(document).ready(function () {
 
     // Mostrar mensaje de error si hay
     if (!valido) {
-      toastr.error(mensajeError);
+      toastr.warning(mensajeError);
     }
     return valido;
   });

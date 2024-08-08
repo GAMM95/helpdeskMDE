@@ -45,7 +45,7 @@ $(document).ready(function () {
     var nombreArea = $('#txt_nombreArea').val();
 
     if (!nombreArea) {
-      toastr.error('El campo "Nombre área" no puede estar vacío');
+      toastr.warning('Debe ingresar el nombre de la nueva &aacute;rea.');
       return;
     }
 
@@ -89,3 +89,37 @@ $(document).ready(function () {
     enviarFormulario('editar');
   });
 });
+
+// Manejo de la paginacion
+$(document).on('click', '.pagination-link', function (e) {
+  e.preventDefault();
+  var page = $(this).data('page');
+  cambiarPaginaTablaAreas(page);
+});
+
+// Funcion para cambiar de pagina en la tabla de areas
+function cambiarPaginaTablaAreas(page) {
+  fetch(`?page=${page}`)
+    .then(response => response.text())
+    .then(data => {
+      const parser = new DOMParser();
+      const newDocument = parser.parseFromString(data, 'text/html');
+      const newTable = newDocument.querySelector('#tablaAreas');
+      const newPagination = newDocument.querySelector('.flex.justify-end.items-center.mt-1');
+
+      // Reemplazar la tabla actual con la nueva tabla obtenida
+      document.querySelector('#tablaAreas').parentNode.replaceChild(newTable, document.querySelector('#tablaAreas'));
+
+      // Reemplazar la paginación actual con la nueva paginación obtenida
+      const currentPagination = document.querySelector('.flex.justify-end.items-center.mt-1');
+      if (currentPagination && newPagination) {
+        currentPagination.parentNode.replaceChild(newPagination, currentPagination);
+      }
+
+      // Aplicar el filtro nuevamente a la nueva tabla
+      filtrarTablaTrabajador();
+    })
+    .catch(error => {
+      console.error('Error al cambiar de página:', error);
+    });
+}

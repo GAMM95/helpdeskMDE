@@ -60,6 +60,10 @@
 
 
     <!-- TABLA DE RESULTADOS DE LAS INCIDENCIAS -->
+    <?php
+    require_once './app/Model/IncidenciaModel.php';
+    $incidenciaModel = new IncidenciaModel();
+    $incidencias = $incidenciaModel->listarIncidenciasAdministrador(); ?>
     <div class="relative shadow-md sm:rounded-lg">
       <div class="max-w-full overflow-hidden">
         <table id="tablaConsultarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500">

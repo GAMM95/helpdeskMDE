@@ -188,7 +188,21 @@ class UsuarioModel extends Conexion
       throw new Exception("Error al guardar usuario: " . $e->getMessage());
     }
   }
-  
+
+  // TODO: Metodo para actualizar datos del usuario
+  public function actualizarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo)
+  {
+    $conector = parent::getConexion();
+    try {
+      $sql = "UPDATE USUARIO SET USU_nombre = ?, USU_password = ?, PER_codigo = ?, ROL_codigo = ?, ARE_codigo = ? WHERE USU_codigo = ?";
+      $stmt = $conector->prepare($sql);
+      $stmt->execute([$username, $password, $per_codigo, $rol_codigo, $are_codigo]);
+      return $stmt->rowCount();
+    } catch (PDOException $e) {
+      throw new Exception("Error al actualizar usuario: " . $e->getMessage());
+    }
+  }
+
   // TODO: Metodo para listar todos los usuarios registrados
   public function listarUsuarios($start, $limit)
   {

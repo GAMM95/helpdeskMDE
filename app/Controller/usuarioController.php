@@ -89,6 +89,33 @@ class UsuarioController
     }
   }
 
+  // Metodo para editar usuarios
+  public function editarUsuario()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      header('Content-Type: application/json');
+
+      try {
+        // Obtener los datos de formulario
+        $username = $_POST['username'] ?? null;
+        $password = $_POST['password'] ?? null;
+        $per_codigo = $_POST['persona'] ?? null;
+        $rol_codigo = $_POST['rol'] ?? null;
+        $are_codigo = $_POST['area'] ?? null;
+
+
+        // Actualizar usuario
+        $this->usuarioModel->actualizarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo);
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+    }
+  }
+
+
   public function habilitarUsuario()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
