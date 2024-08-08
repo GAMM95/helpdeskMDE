@@ -5,6 +5,18 @@ $(document).ready(function () {
     "timeOut": "2000"
   };
 
+  // Evento para manejar la tecla Enter cuando una fila está seleccionada
+  $(document).on('keydown', function (e) {
+    // Verificar si la tecla presionada es Enter (keyCode 13)
+    if (e.key === 'Enter') {
+      // Si la fila está seleccionada, proceder a actualizar
+      if ($('.bg-blue-200.font-semibold').length > 0) {
+        e.preventDefault();
+        enviarFormulario('editar');
+      }
+    }
+  });
+  
   // Evento de clic en una fila de la tabla usando delegación de eventos
   $(document).on('click', '#tablaTrabajadores tr', function () {
     var cod = $(this).data('cod');
@@ -33,7 +45,7 @@ $(document).ready(function () {
     $('#form-action').val('editar'); // Cambiar la acción a editar
 
     // Habilitar el botón de editar
-    $('#guardar-persona').prop('disabled', false);
+    $('#guardar-persona').prop('disabled', true);
     $('#editar-persona').prop('disabled', false);
     $('#nuevo-registro').prop('disabled', false);
   });
@@ -108,6 +120,7 @@ $(document).ready(function () {
     $('#form-action').val('registrar'); // Cambiar la acción a registrar
 
     // Deshabilitar el botón de editar
+    $('#guardar-persona').prop('disabled', false);
     $('#editar-persona').prop('disabled', true);
     $('#nuevo-registro').prop('disabled', true);
 

@@ -167,6 +167,7 @@
               <th scope="col" class="px-6 py-2">Documento</th>
               <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-6 py-2">&Aacute;rea</th>
+              <th scope="col" class="px-6 py-2 hidden">descripcion</th>
               <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
@@ -180,13 +181,14 @@
                 <td class='px-6 py-3'><?= $incidencia['INC_documento']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
+                <td class='px-6 py-3 hidden'><?= $incidencia['INC_descripcion']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
               </tr>
             <?php endforeach; ?>
 
             <?php if (empty($incidencias)) : ?>
               <tr>
-                <td colspan="7" class="text-center py-3">No hay incidencias sin recepcionar.</td>
+                <td colspan="8" class="text-center py-3">No hay incidencias sin recepcionar.</td>
               </tr>
             <?php endif; ?>
           </tbody>

@@ -69,9 +69,11 @@
             <!-- CUERPO DE LA TABLA -->
             <tbody>
               <?php
+              require_once './app/Model/CategoriaModel.php'; // Asegúrate de que este nombre coincide con el de la clase
+              $categoriaModel = new CategoriaModel(); // Asegúrate de que estás usando el nombre correcto de la clase
               $categorias = $categoriaModel->listarCategorias();
               foreach ($categorias as $categoria) {
-                echo "<tr class=' hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>";
+                echo "<tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>";
                 echo "<th scope='col' class='px-10 py-2 font-medium text-gray-900 whitespace-nowrap hidden' data-codcategoria='" . htmlspecialchars($categoria['CAT_codigo']) . "'>";
                 echo htmlspecialchars($categoria['CAT_codigo']);
                 echo "</th>";

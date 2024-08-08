@@ -207,6 +207,7 @@ $('#editar-usuario').on('click', function (e) {
   e.preventDefault();
   enviarFormulario($('#form-action').val());
 });
+
 // Función para validar campos antes de enviar
 function validarCampos() {
   var valido = true;

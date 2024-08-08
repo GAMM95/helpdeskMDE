@@ -22,15 +22,9 @@
 
       <!-- TODO: BOTONES DEL FORMULARIO -->
       <div class="flex justify-center space-x-2 mt-2">
-        <button type="button" id="buscarRecepcion" class="bg-blue-500 text-white font-bold hover:bg-[#4c8cf5] py-2 px-4 rounded">
-          Buscar
-        </button>
-        <button type="reset" class="bg-green-400 text-white font-bold hover:bg-gray-400 py-2 px-4 rounded">
-          Limpiar
-        </button>
-        <button type="submit" id="enviar" class="bg-blue-500 text-white font-bold hover:bg-[#4c8cf5] py-2 px-4 rounded">
-          Todos
-        </button>
+        <button type="button" id="buscarRecepcion" class="bg-blue-500 text-white font-bold hover:bg-[#4c8cf5] py-2 px-4 rounded"> Buscar </button>
+        <button type="reset" class="bg-green-400 text-white font-bold hover:bg-gray-400 py-2 px-4 rounded"> Limpiar </button>
+        <button type="submit" id="enviar" class="bg-blue-500 text-white font-bold hover:bg-[#4c8cf5] py-2 px-4 rounded"> Todos </button>
       </div>
     </form>
     <!-- TODO: TABLA DE RESULTADOS DE LAS INCIDENCIAS -->

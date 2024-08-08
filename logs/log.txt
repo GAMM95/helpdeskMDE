@@ -174,3 +174,17 @@ Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área:
 Nombre de Persona: Liliana Marcelo, Rol: Usuario, Codigo Area: 12, Área: Area de Liquidación de Obras, Código de Usuario: 15, Usuario: 123123
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95

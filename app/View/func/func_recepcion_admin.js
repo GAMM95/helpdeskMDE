@@ -14,15 +14,12 @@ $(document).ready(function () {
   });
 
   // Evento de clic en las filas de la tabla de incidencias recepcionadas
-  $(document).on('click', '#tablaIncidenciasRecepcionadas tbody tr', function () {
-    var numRecepcion = $(this).data('id');
-    $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('bg-blue-200 font-semibold');
-    $(this).addClass('bg-blue-200 font-semibold');
-    $('#num_recepcion').val(numRecepcion);
-  });
-
-  // Limpiar los campos del formulario
-  $('#nuevoRegistro').click(nuevoRegistro);
+  // $(document).on('click', '#tablaIncidenciasRecepcionadas tbody tr', function () {
+  //   var numRecepcion = $(this).data('id');
+  //   $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('bg-blue-200 font-semibold');
+  //   $(this).addClass('bg-blue-200 font-semibold');
+  //   $('#num_recepcion').val(numRecepcion);
+  // });
 
   // Manejo de la paginación
   $(document).on('click', '.pagination-link', function (e) {
@@ -238,3 +235,83 @@ document.addEventListener("DOMContentLoaded", function () {
     noIncidencias.classList.remove("hidden");
   }
 });
+
+
+// TODO: Seteo de los valores de los inputs y combos
+document.addEventListener('DOMContentLoaded', (event) => {
+  // Obtener todas las filas de la tabla
+  const filas = document.querySelectorAll('#tablaIncidenciasRecepcionadas tbody tr');
+
+  filas.forEach(fila => {
+    fila.addEventListener('click', () => {
+      // Obtener los datos de la fila
+      const celdas = fila.querySelectorAll('td');
+
+      // Mapeo de los valores de las celdas a los inputs del formulario
+
+      const codRecepcion = fila.querySelector('th').innerText.trim();
+      const prioridadValue = celdas[5].innerText.trim();
+      const impactoValue = celdas[6].innerText.trim();
+
+
+      // Seteo de valores en los inputs
+      document.getElementById('num_recepcion').value = codRecepcion;
+
+      // Seteo de los valores en los combos
+      setComboValue('prioridad', prioridadValue);
+      setComboValue('impacto', impactoValue);
+
+      // Cambiar estado de los botones
+      document.getElementById('guardar-recepcion').disabled = true;
+      document.getElementById('editar-recepcion').disabled = false;
+      document.getElementById('nuevo-registro').disabled = false;
+    });
+  });
+});
+
+// seteo de los valores de los combos
+function setComboValue(comboId, value) {
+  const select = document.getElementById(comboId);
+  const options = select.options;
+
+  console.log("Seteo de los valores para: ", comboId, "Valor: ", value);
+
+  // Verificar si el valor esta en el combo
+  let valueFound = false;
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].text.trim() === value) {
+      select.value = options[i].value;
+      valueFound = true;
+      break;
+    }
+  }
+  // Si no se encontró el valor, seleccionar el primer elemento
+  if (!valueFound) {
+    select.value = ''; // O establece un valor predeterminado si lo deseas
+  }
+
+  // Forzar actualización del select2 para mostrar el valor seleccionado
+  $(select).trigger('change');
+};
+
+// TODO: Funcion para manejar el nuevo registro
+function nuevoRegistro() {
+  const form = document.getElementById('formRecepcion');
+  form.reset();
+  $('#num_recepcion').val('');
+  $('tr').removeClass('bg-blue-200 font-semibold');
+
+  $('#form-action').val('registrar'); // Cambiar la acción a registrar
+
+  // Deshabilitar el botón de editar
+  $('#guardar-recepcion').prop('disabled', false);
+  $('#editar-recepcion').prop('disabled', true);
+  $('#nuevo-registro').prop('disabled', true);
+
+  // Seteo de valores por defecto en los combos
+  setComboValue('prioridad', 'Valor por defecto de categoría');
+  setComboValue('impacto', 'Valor por defecto de área');
+}
+
+// Evento para nuevo registro
+$('#nuevo-registro').on('click', nuevoRegistro);

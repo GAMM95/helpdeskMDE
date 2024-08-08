@@ -265,7 +265,7 @@
             <?php endforeach; ?>
             <?php if (empty($cierres)) : ?>
               <tr>
-                <td colspan="8" class="text-center py-3">No hay incidencias cerradas.</td>
+                <td colspan="9" class="text-center py-3">No hay incidencias cerradas.</td>
               </tr>
             <?php endif; ?>
           </tbody>

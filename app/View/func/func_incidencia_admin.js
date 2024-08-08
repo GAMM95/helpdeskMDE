@@ -66,7 +66,7 @@ $(document).ready(function () {
     placeholder: "Seleccione un area",
     allowClear: true,
     width: '100%',
-    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
+    dropdownCssClass: 'text-xs',
     language: {
       noResults: function () {
         return "No se encontraron resultados";
@@ -78,7 +78,7 @@ $(document).ready(function () {
     placeholder: "Seleccione una categoria",
     allowClear: true,
     width: '100%',
-    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
+    dropdownCssClass: 'text-xs',
     language: {
       noResults: function () {
         return "No se encontraron resultados";
@@ -111,8 +111,6 @@ function changePageTablaListarIncidencias(page) {
       console.error('Error al cambiar de página:', error);
     });
 }
-
-
 
 // TODO: GUARDAR INCIDENCIA
 $(document).ready(function () {
@@ -186,3 +184,90 @@ $(document).ready(function () {
     return valido;
   }
 });
+
+// TODO: Seteo de los valores de los inputs y combos
+document.addEventListener('DOMContentLoaded', (event) => {
+  // Obtener todas las filas de la tabla
+  const filas = document.querySelectorAll('#tablaListarIncidencias tbody tr');
+
+  filas.forEach(fila => {
+    fila.addEventListener('click', () => {
+      // Obtener los datos de la fila
+      const celdas = fila.querySelectorAll('td');
+
+      // Mapeo de los valores de las celdas a los inputs del formulario
+
+      const codIncidencia = fila.querySelector('th').innerText.trim();
+      const codigoPatrimonialValue = celdas[1].innerText.trim();
+      const asuntoValue = celdas[2].innerText.trim();
+      const documentoValue = celdas[3].innerText.trim();
+      const categoriaValue = celdas[4].innerText.trim();
+      const areaValue = celdas[5].innerText.trim();
+      const descripcionValue = celdas[6].innerText.trim();
+
+
+      // Seteo de valores en los inputs
+      document.getElementById('numero_incidencia').value = codIncidencia;
+      document.getElementById('codigo_patrimonial').value = codigoPatrimonialValue;
+      document.getElementById('asunto').value = asuntoValue;
+      document.getElementById('documento').value = documentoValue;
+      document.getElementById('descripcion').value = descripcionValue;
+
+      // Seteo de los valores en los combos
+      setComboValue('cbo_categoria', categoriaValue);
+      setComboValue('cbo_area', areaValue);
+
+      // Cambiar estado de los botones
+      document.getElementById('guardar-incidencia').disabled = true;
+      document.getElementById('editar-incidencia').disabled = false;
+      document.getElementById('nuevo-registro').disabled = false;
+    });
+  });
+});
+
+// seteo de los valores de los combos
+function setComboValue(comboId, value) {
+  const select = document.getElementById(comboId);
+  const options = select.options;
+
+  console.log("Seteo de los valores para: ", comboId, "Valor: ", value);
+
+  // Verificar si el valor esta en el combo
+  let valueFound = false;
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].text.trim() === value) {
+      select.value = options[i].value;
+      valueFound = true;
+      break;
+    }
+  }
+  // Si no se encontró el valor, seleccionar el primer elemento
+  if (!valueFound) {
+    select.value = ''; // O establece un valor predeterminado si lo deseas
+  }
+
+  // Forzar actualización del select2 para mostrar el valor seleccionado
+  $(select).trigger('change');
+};
+
+// TODO: Funcion para manejar el nuevo registro
+function nuevoRegistro() {
+  const form = document.getElementById('formIncidencia');
+  form.reset();
+  $('#numero_incidencia').val('');
+  $('tr').removeClass('bg-blue-200 font-semibold');
+
+  $('#form-action').val('registrar'); // Cambiar la acción a registrar
+
+  // Deshabilitar el botón de editar
+  $('#guardar-incidencia').prop('disabled', false);
+  $('#editar-incidencia').prop('disabled', true);
+  $('#nuevo-registro').prop('disabled', true);
+
+  // Seteo de valores por defecto en los combos
+  setComboValue('cbo_categoria', 'Valor por defecto de categoría');
+  setComboValue('cbo_area', 'Valor por defecto de área');
+}
+
+// Evento para nuevo registro
+$('#nuevo-registro').on('click', nuevoRegistro);

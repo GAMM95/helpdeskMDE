@@ -92,7 +92,7 @@ class PersonaModel extends Conexion
   }
 
   // TODO: Método para actualizar datos de la persona
-  public function actualizarPersona()
+  public function actualizarPersona($dni, $nombres, $apellidoPaterno, $apellidoMaterno, $celular, $email, $codigoPersona)
   {
     $conector = parent::getConexion();
     try {
@@ -100,13 +100,13 @@ class PersonaModel extends Conexion
               PER_apellidoMaterno = ?, PER_celular = ?, PER_email = ? WHERE PER_codigo = ?";
       $stmt = $conector->prepare($sql);
       $stmt->execute([
-        $this->dni,
-        $this->nombres,
-        $this->apellidoPaterno,
-        $this->apellidoMaterno,
-        $this->celular,
-        $this->email,
-        $this->codigoPersona
+        $dni,
+        $nombres,
+        $apellidoPaterno,
+        $apellidoMaterno,
+        $celular,
+        $email,
+        $codigoPersona
       ]);
       return $stmt->rowCount();
     } catch (PDOException $e) {
