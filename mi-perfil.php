@@ -45,9 +45,8 @@ switch ($action) {
     </div>
   </div>
   <!-- [ Pre-loader ] End -->
+
   <!-- [ navigation menu ] start -->
-
-
   <?php
   if ($rol === 'Administrador' || $rol === 'Soporte') {
     include('app/View/partials/admin/navbar.php');

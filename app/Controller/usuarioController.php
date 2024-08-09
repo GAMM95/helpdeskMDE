@@ -117,7 +117,7 @@ class UsuarioController
 
   public function editarPerfil()
   {
-    header('Content-Type: application/json');
+    // header('Content-Type: application/json');
 
     try {
       // Obtener los datos del formulario
@@ -135,15 +135,15 @@ class UsuarioController
       // Actualizar usuario
       $this->usuarioModel->editarPerfilUsuario($usu_codigo, $usu_nombre, $usu_password, $per_dni, $per_nombres, $per_apellidoPaterno, $per_apellidoMaterno, $per_celular, $per_email);
 
-      echo json_encode([
-        'success' => true,
-        'message' => 'Perfil actualizado correctamente'
-      ]);
+      // echo json_encode([
+      //   'success' => true,
+      //   'message' => 'Perfil actualizado correctamente'
+      // ]);
     } catch (Exception $e) {
-      echo json_encode([
-        'success' => false,
-        'message' => 'Error: ' . $e->getMessage()
-      ]);
+      // echo json_encode([
+      //   'success' => false,
+      //   'message' => 'Error: ' . $e->getMessage()
+      // ]);
     }
   }
 

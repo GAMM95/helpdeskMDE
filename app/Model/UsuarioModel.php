@@ -300,15 +300,15 @@ class UsuarioModel extends Conexion
       if ($conector != null) {
         // Llamada al procedimiento almacenado para actualizar persona y usuario
         $query = "EXEC EditarPersonaYUsuario 
-                      @USU_codigo = :usu_codigo,
-                      @USU_nombre = :usu_nombre,
-                      @USU_password = :usu_password,
-                      @PER_dni = :per_dni,
-                      @PER_nombres = :per_nombres,
-                      @PER_apellidoPaterno = :per_apellidoPaterno,
-                      @PER_apellidoMaterno = :per_apellidoMaterno,
-                      @PER_celular = :per_celular,
-                      @PER_email = :per_email";
+                  @USU_codigo = :usu_codigo,
+                  @USU_nombre = :usu_nombre,
+                  @USU_password = :usu_password,
+                  @PER_dni = :per_dni,
+                  @PER_nombres = :per_nombres,
+                  @PER_apellidoPaterno = :per_apellidoPaterno,
+                  @PER_apellidoMaterno = :per_apellidoMaterno,
+                  @PER_celular = :per_celular,
+                  @PER_email = :per_email";
         $stmt = $conector->prepare($query);
         $stmt->bindParam(':usu_codigo', $usu_codigo);
         $stmt->bindParam(':usu_nombre', $usu_nombre);

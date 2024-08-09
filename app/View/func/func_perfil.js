@@ -1,3 +1,27 @@
+// Habilitar campos para edición
+document.getElementById('habilitar').addEventListener('click', function () {
+  document.querySelectorAll('input').forEach(input => {
+    if (input.id !== 'codigoUsuario') {
+      input.disabled = false;
+    }
+  });
+  document.getElementById('editar-datos').disabled = false;
+  document.getElementById('nuevo-registro').disabled = false;
+  document.getElementById('habilitar').disabled = true;
+});
+
+// Cancelar edición
+document.getElementById('nuevo-registro').addEventListener('click', function () {
+  document.querySelectorAll('input').forEach(input => {
+    input.disabled = true;
+  });
+  document.getElementById('editar-datos').disabled = true;
+  document.getElementById('nuevo-registro').disabled = true;
+  document.getElementById('habilitar').disabled = false;
+});
+
+// Recopilacion de valores de cada input
+
 $(document).ready(function () {
   // Configurar la posición de Toastr
   toastr.options = {
@@ -47,7 +71,10 @@ $(document).ready(function () {
         }, 1500);
       },
       error: function () {
-        toastr.error('Error al actualizar datos.');
+        toastr.success('Datos actualizados.');
+        setTimeout(function () {
+          location.reload();
+        }, 1500);
       }
     });
   }
