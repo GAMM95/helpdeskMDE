@@ -161,7 +161,7 @@ if (isset($_SESSION['codigoUsuario'])) {
 
               </div>
               <div class="modal-footer">
-                <a href="logout.php" class="btn btn-info rounded-md text-white">Editar perfil</a>
+                <a href="mi-perfil.php" class="btn btn-info rounded-md text-white">Editar perfil</a>
                 <button type="button" class="btn btn-secondary rounded-md" data-dismiss="modal">Cerrar</button>
               </div>
             </div>

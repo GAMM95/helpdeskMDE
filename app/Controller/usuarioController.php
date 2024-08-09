@@ -115,6 +115,38 @@ class UsuarioController
     }
   }
 
+  public function editarPerfil()
+  {
+    header('Content-Type: application/json');
+
+    try {
+      // Obtener los datos del formulario
+      $usu_nombre = $_POST['username'] ?? null;
+      $usu_password = $_POST['password'] ?? null;
+      $per_dni = $_POST['dni'] ?? null;
+      $per_nombres = $_POST['nombres'] ?? null;
+      $per_apellidoPaterno = $_POST['apellidoPaterno'] ?? null;
+      $per_apellidoMaterno = $_POST['apellidoMaterno'] ?? null;
+      $per_celular = $_POST['celular'] ?? null;
+      $per_email = $_POST['email'] ?? null;
+      $usu_codigo = $_POST['codigoUsuario'] ?? null;
+
+
+      // Actualizar usuario
+      $this->usuarioModel->editarPerfilUsuario($usu_codigo, $usu_nombre, $usu_password, $per_dni, $per_nombres, $per_apellidoPaterno, $per_apellidoMaterno, $per_celular, $per_email);
+
+      echo json_encode([
+        'success' => true,
+        'message' => 'Perfil actualizado correctamente'
+      ]);
+    } catch (Exception $e) {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Error: ' . $e->getMessage()
+      ]);
+    }
+  }
+
 
   public function habilitarUsuario()
   {

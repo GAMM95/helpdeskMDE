@@ -152,6 +152,67 @@ BEGIN
 END;
 GO
 
+-- PROCEDIMIENTO ALMACENADO PA ACTUALIZAR DATOS PERSONALES Y USUARIO
+CREATE PROCEDURE EditarPersonaYUsuario
+    @USU_codigo SMALLINT,
+    @USU_nombre VARCHAR(20),
+    @USU_password VARCHAR(10),
+    @PER_dni CHAR(8),
+    @PER_nombres VARCHAR(20),
+    @PER_apellidoPaterno VARCHAR(15),
+    @PER_apellidoMaterno VARCHAR(15),
+    @PER_celular CHAR(9),
+    @PER_email VARCHAR(45)
+AS
+BEGIN
+    BEGIN TRY
+        -- Inicia una transacción para asegurar la consistencia de los datos
+        BEGIN TRANSACTION;
+
+        -- Actualiza los datos del usuario
+        UPDATE USUARIO
+        SET 
+            USU_nombre = @USU_nombre,
+            USU_password = @USU_password
+        WHERE USU_codigo = @USU_codigo;
+
+        -- Actualiza los datos de la persona vinculada al usuario
+        UPDATE PERSONA
+        SET 
+            PER_dni = @PER_dni,
+            PER_nombres = @PER_nombres,
+            PER_apellidoPaterno = @PER_apellidoPaterno,
+            PER_apellidoMaterno = @PER_apellidoMaterno,
+            PER_celular = @PER_celular,
+            PER_email = @PER_email
+        WHERE PER_codigo = (
+            SELECT PER_codigo 
+            FROM USUARIO 
+            WHERE USU_codigo = @USU_codigo
+        );
+
+        -- Confirma la transacción si todo está correcto
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Si hay un error, deshace la transacción
+        ROLLBACK TRANSACTION;
+
+        -- Manejo de errores: muestra el error en la salida
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END;
+GO
+
 
  -- Creacion de tabla prioridad
 CREATE TABLE PRIORIDAD(

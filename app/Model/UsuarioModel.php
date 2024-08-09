@@ -258,7 +258,8 @@ class UsuarioModel extends Conexion
   {
     $conector = parent::getConexion();
     $sql = "SELECT 
-            USU_nombre, (PER_nombres +' '+PER_apellidoPaterno +' '+ PER_apellidoMaterno) AS Persona,
+            USU_nombre, USU_password, PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno,
+            (PER_nombres +' '+ PER_apellidoPaterno +' '+ PER_apellidoMaterno) AS Persona,
             ROL_nombre, ARE_nombre, PER_celular, PER_email
             FROM USUARIO u
             INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
@@ -289,6 +290,44 @@ class UsuarioModel extends Conexion
       return $registros;
     } catch (PDOException $e) {
       throw new Exception("Error al obtener usuario: " . $e->getMessage());
+    }
+  }
+
+  public function editarPerfilUsuario($usu_codigo, $usu_nombre, $usu_password, $per_dni, $per_nombres, $per_apellidoPaterno, $per_apellidoMaterno, $per_celular, $per_email)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        // Llamada al procedimiento almacenado para actualizar persona y usuario
+        $query = "EXEC EditarPersonaYUsuario 
+                      @USU_codigo = :usu_codigo,
+                      @USU_nombre = :usu_nombre,
+                      @USU_password = :usu_password,
+                      @PER_dni = :per_dni,
+                      @PER_nombres = :per_nombres,
+                      @PER_apellidoPaterno = :per_apellidoPaterno,
+                      @PER_apellidoMaterno = :per_apellidoMaterno,
+                      @PER_celular = :per_celular,
+                      @PER_email = :per_email";
+        $stmt = $conector->prepare($query);
+        $stmt->bindParam(':usu_codigo', $usu_codigo);
+        $stmt->bindParam(':usu_nombre', $usu_nombre);
+        $stmt->bindParam(':usu_password', $usu_password);
+        $stmt->bindParam(':per_dni', $per_dni);
+        $stmt->bindParam(':per_nombres', $per_nombres);
+        $stmt->bindParam(':per_apellidoPaterno', $per_apellidoPaterno);
+        $stmt->bindParam(':per_apellidoMaterno', $per_apellidoMaterno);
+        $stmt->bindParam(':per_celular', $per_celular);
+        $stmt->bindParam(':per_email', $per_email);
+        $stmt->execute();
+
+        // Si la actualización fue exitosa
+        return true;
+      } else {
+        throw new Exception("Error de conexión a la base de datos.");
+      }
+    } catch (PDOException $e) {
+      throw new Exception("Error al actualizar el perfil del usuario: " . $e->getMessage());
     }
   }
 
