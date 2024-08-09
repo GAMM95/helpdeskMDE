@@ -47,14 +47,14 @@
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-6 py-2 hidden">N° recepcion</th>
-              <th scope="col" class="px-6 py-2">N° incidencia</th>
+              <th scope="col" class="px-6 py-2">N° inc</th>
               <th scope="col" class="px-6 py-2">Fecha recepci&oacute;n</th>
               <th scope="col" class="px-6 py-2">&Aacute;rea</th>
               <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
               <th scope="col" class="px-6 py-2">Asunto</th>
               <th scope="col" class="px-6 py-2">Documento</th>
               <th scope="col" class="px-6 py-2">Prioridad</th>
-              <th scope="col" class="px-6 py-2">Impacto</th>
+              <!-- <th scope="col" class="px-6 py-2">Impacto</th> -->
               <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
@@ -63,14 +63,14 @@
               <tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b '>
                 <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'><?= $recepcion['REC_numero']; ?></th>
                 <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'><?= $recepcion['INC_numero']; ?></th>
-                <td class='px-6 py-3'><?= $recepcion['fechaRecepcionFormateada']; ?></th>
-                <td class='px-6 py-3'><?= $recepcion['ARE_nombre']; ?></th>
-                <td class='px-6 py-3'><?= $recepcion['INC_codigoPatrimonial']; ?></th>
-                <td class='px-6 py-3'><?= $recepcion['INC_asunto']; ?></th>
-                <td class='px-6 py-3'><?= $recepcion['INC_documento']; ?></th>
-                <td class='px-6 py-3'><?= $recepcion['PRI_nombre']; ?></th>
-                <td class='px-6 py-3'><?= $recepcion['IMP_descripcion']; ?></th>
-                <td class='px-6 py-3'><?= $recepcion['Usuario']; ?></th>
+                <td class='px-6 py-1'><?= $recepcion['fechaRecepcionFormateada']; ?></th>
+                <td class='px-6 py-1'><?= $recepcion['ARE_nombre']; ?></th>
+                <td class='px-6 py-1'><?= $recepcion['INC_codigoPatrimonial']; ?></th>
+                <td class='px-6 py-1'><?= $recepcion['INC_asunto']; ?></th>
+                <td class='px-6 py-1'><?= $recepcion['INC_documento']; ?></th>
+                <td class='px-6 py-1'><?= $recepcion['PRI_nombre']; ?></th>
+                <!-- <td class='px-6 py-1'><?= $recepcion['IMP_descripcion']; ?></th> -->
+                <td class='px-6 py-1'><?= $recepcion['Usuario']; ?></th>
               </tr>
             <?php endforeach; ?>
 

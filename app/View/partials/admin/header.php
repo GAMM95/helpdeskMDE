@@ -47,7 +47,9 @@ if (isset($_SESSION['codigoUsuario'])) {
         <div class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown">
             <i class="icon feather icon-bell"></i>
-            <span class="badge badge-pill badge-danger"><?= count($incidencias); ?></span>
+            <?php if (count($incidencias) > 0) : ?>
+              <span class="badge badge-pill badge-danger"><?= count($incidencias); ?></span>
+            <?php endif; ?>
           </a>
           <div class="dropdown-menu dropdown-menu-right notification">
             <div class="noti-head">
@@ -85,6 +87,7 @@ if (isset($_SESSION['codigoUsuario'])) {
           </div>
         </div>
       </li>
+
 
 
       <!-- Perfil de usuario -->
