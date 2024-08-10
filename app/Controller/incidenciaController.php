@@ -47,22 +47,6 @@ class IncidenciaController
     }
   }
 
-  public function consultarIncidenciaAdministrador()
-  {
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-      $area = $_GET['area'] ?? null;
-      $codigoPatrimonial = $_GET['codigoPatrimonial'] ?? null;
-      $fechaInicio = $_GET['fechaInicio'] ?? null;
-      $fechaFin = $_GET['fechaFin'] ?? null;
-
-      // Llamar al método para consultar incidencias por área y fecha
-      $consultaIncidenciaAreaFecha = $this->incidenciaModel->buscarIncidenciaAdministrador($area, $codigoPatrimonial, $fechaInicio, $fechaFin);
-
-      // Retornar el resultado de la consulta
-      return $consultaIncidenciaAreaFecha;
-    }
-  }
-
   // TODO: Metodo de controlador para registrar incidencias - USUARIO
   public function registrarIncidenciaUsuario()
   {
@@ -100,19 +84,38 @@ class IncidenciaController
     }
   }
 
-  public function consultarIncidenciaUsuario()
+  // public function consultarIncidenciaUsuario()
+  // {
+  //   if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  //     // Obtener los valores de los parámetros GET o asignar null si no existen
+  //     $area = $_GET['area'];
+  //     $estado = $_GET['estado'];
+  //     $fechaInicio = $_GET['fechaInicio'];
+  //     $fechaFin = $_GET['fechaFin'];
+
+  //     // Llamar al método para consultar incidencias por área, estado y fecha
+  //     $consultaIncidencia = $this->incidenciaModel->buscarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin);
+
+  //     // Retornar el resultado de la consulta
+  //     return $consultaIncidencia;
+  //   }
+  // }
+
+  public function consultarIncidenciaAdministrador()
   {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-      $area = $_GET['area'] ?? null;
-      $codigoPatrimonial = $_GET['codigoPatrimonial'] ?? null;
-      $fechaInicio = $_GET['fechaInicio'] ?? null;
-      $fechaFin = $_GET['fechaFin'] ?? null;
+      // Obtener los valores de los parámetros GET o asignar null si no existen
+      $area = isset($_GET['area']) ? (int) $_GET['area'] : null;
+      $estado = isset($_GET['estado']) ? (int) $_GET['estado'] : null;
+      $fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : null;
+      $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : null;
+      error_log("Área: $area, Estado: $estado, Fecha Inicio: $fechaInicio, Fecha Fin: $fechaFin");
 
-      // Llamar al método para consultar incidencias por área y fecha
-      $consultaIncidenciaAreaFecha = $this->incidenciaModel->buscarIncidenciaAdministrador($area, $codigoPatrimonial, $fechaInicio, $fechaFin);
+      // Llamar al método para consultar incidencias por área, estado y fecha
+      $consultaIncidencia = $this->incidenciaModel->buscarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin);
 
       // Retornar el resultado de la consulta
-      return $consultaIncidenciaAreaFecha;
+      return $consultaIncidencia;
     }
   }
 }

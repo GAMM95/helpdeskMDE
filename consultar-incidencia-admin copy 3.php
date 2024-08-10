@@ -1,17 +1,59 @@
 <?php
-
+var_dump($_GET);
 require_once './app/Controller/IncidenciaController.php';
 
 $action = $_GET['action'] ?? '';
 
 $incidenciaController = new IncidenciaController();
 
-$resultadoBusqueda = NULL;
-
 if ($action === 'consultar') {
-  $resultadoBusqueda = $incidenciaController->consultarIncidenciaAdministrador();
+  $area = $_GET['area'] ?? null;
+  $estado = $_GET['estado'] ?? null;
+  $fechaInicio = $_GET['fechaInicio'] ?? null;
+  $fechaFin = $_GET['fechaFin'] ?? null;
+
+  $resultadoBusqueda = $incidenciaController->consultarIncidenciaUsuario($area, $estado, $fechaInicio, $fechaFin);
+
+  if (!empty($resultadoBusqueda)) {
+    foreach ($resultadoBusqueda as $incidencia) {
+      echo "<tr class='hover:bg-green-100 hover:scale-[101%] transition-all border-b'>";
+      echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_numero']) . "</td>";
+      echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . "</td>";
+      echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['ARE_nombre']) . "</td>";
+      echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . "</td>";
+      echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['CAT_nombre']) . "</td>";
+      echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_asunto']) . "</td>";
+      echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_documento']) . "</td>";
+      echo "<td class='px-3 py-2 text-center text-xs align-middle'>";
+
+      $estadoDescripcion = htmlspecialchars($incidencia['EST_descripcion']);
+      $badgeClass = '';
+      switch ($estadoDescripcion) {
+        case 'Abierta':
+          $badgeClass = 'badge-light-danger';
+          break;
+        case 'Recepcionado':
+          $badgeClass = 'badge-light-success';
+          break;
+        case 'Cerrado':
+          $badgeClass = 'badge-light-primary';
+          break;
+        default:
+          $badgeClass = 'badge-light-secondary';
+          break;
+      }
+      echo "<label class='badge {$badgeClass}'>{$estadoDescripcion}</label>";
+      echo "</td>";
+      echo "</tr>";
+    }
+  } else {
+    echo "<tr><td colspan='8' class='text-center py-4'>No se encontraron incidencias.</td></tr>";
+  }
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="es">

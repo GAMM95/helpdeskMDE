@@ -44,7 +44,7 @@
             <div class="form-group row">
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">DNI</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control form-control-sm" id="dni" name="dni" placeholder="DNI" value="<?php echo htmlspecialchars($perfil['PER_dni']); ?>" disabled>
+                <input type="text" class="form-control form-control-sm" id="dni" name="dni" maxlength="8" pattern="\d{1,8}" inputmode="numeric" placeholder="DNI" value="<?php echo htmlspecialchars($perfil['PER_dni']); ?>" disabled>
               </div>
             </div>
 
@@ -76,7 +76,7 @@
             <div class="form-group row">
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Celular</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control form-control-sm" id="celular" name="celular" placeholder="Celular" value="<?php echo htmlspecialchars($perfil['PER_celular']); ?>" disabled>
+                <input type="text" class="form-control form-control-sm" id="celular" name="celular" maxlength="9" pattern="\d{1,9}" inputmode="numeric"  placeholder="Celular" value="<?php echo htmlspecialchars($perfil['PER_celular']); ?>" disabled>
               </div>
             </div>
 

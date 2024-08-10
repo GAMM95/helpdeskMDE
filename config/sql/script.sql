@@ -451,4 +451,36 @@ SET
         THROW;
     END CATCH
 END;
+GO
 
+-- PROCEDIMIENTO ALMANCENADO PARA CONSULTAR INCIDENCIAS - ADMINISTRADOR
+CREATE PROCEDURE sp_ConsultarIncidencias
+@area INT,
+@estado INT,
+@fechaInicio DATE,
+@fechaFin DATE
+   
+AS
+BEGIN
+SELECT 
+    INC_numero, 
+    (CONVERT(VARCHAR(10), INC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada, 
+    INC_asunto, 
+    INC_descripcion, 
+    INC_documento, 
+    INC_codigoPatrimonial, 
+    c.CAT_nombre, 
+    a.ARE_nombre, 
+    u.USU_nombre, 
+    e.EST_descripcion
+FROM INCIDENCIA i
+INNER JOIN CATEGORIA c ON c.CAT_codigo = i.CAT_codigo
+INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
+INNER JOIN USUARIO u ON u.USU_codigo = i.USU_codigo
+INNER JOIN ESTADO e ON e.EST_codigo = i.EST_codigo
+WHERE 
+    (@estado IS NULL OR e.EST_codigo = @estado) AND  -- Solo filtra por estado si @estado no es NULL
+    (@fechaInicio IS NULL OR INC_fecha >= @fechaInicio) AND  -- Filtra por fecha de inicio si @fechaInicio no es NULL
+    (@fechaFin IS NULL OR INC_fecha <= @fechaFin) AND        -- Filtra por fecha de fin si @fechaFin no es NULL
+    (@area IS NULL OR a.ARE_codigo = @area);     -- Solo filtra por área si @areaCodigo no es NULL
+END

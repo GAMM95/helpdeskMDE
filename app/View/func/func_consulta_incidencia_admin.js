@@ -1,40 +1,53 @@
 $(document).ready(function () {
+  // Configuración de Toastr
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
     "timeOut": "2000"
   };
-});
 
-// TODO: SETEO DE COMBO AREA
-$(document).ready(function () {
-  console.log("FETCHING")
+  // TODO: SETEO DE COMBO AREA
   $.ajax({
     url: 'ajax/getAreaData.php',
     type: 'GET',
     dataType: 'json',
     success: function (data) {
-      var select = $('#cbo_area');
+      console.log("Areas cargadas:", data); // Depuración
+
+      var select = $('#area');
       select.empty();
       select.append('<option value="" selected disabled>Seleccione un &aacute;rea</option>');
       $.each(data, function (index, value) {
         select.append('<option value="' + value.ARE_codigo + '">' + value.ARE_nombre + '</option>');
       });
-      if (areaRegistrada !== '') {
-        select.val(areaRegistrada);
-      } else {
-        select.val('');
-      }
     },
     error: function (error) {
       console.error(error);
     }
   });
-});
 
-// TODO: BUSCADOR PARA EL COMBO CATEGORIA Y AREA
-$(document).ready(function () {
-  $('#cbo_area').select2({
+  // TODO: SETEO DE COMBO ESTADO
+  $.ajax({
+    url: 'ajax/getEstadoIncidencia.php',
+    type: 'POST',
+    dataType: 'json',
+    success: function (data) {
+      console.log("Estados recibidos:", data); // Depuración
+
+      var select = $('#estado');
+      select.empty();
+      select.append('<option value="" selected disabled>Seleccione un estado</option>');
+      $.each(data, function (index, value) {
+        select.append('<option value="' + value.EST_codigo + '">' + value.EST_descripcion + '</option>');
+      });
+    },
+    error: function (error) {
+      console.error(error);
+    }
+  });
+
+  // TODO: BUSCADOR PARA EL COMBO AREA Y ESTADO
+  $('#area').select2({
     placeholder: "Seleccione un área",
     allowClear: true,
     width: '100%',
@@ -45,46 +58,95 @@ $(document).ready(function () {
       }
     }
   });
+
+  $('#estado').select2({
+    placeholder: "Seleccione un estado",
+    allowClear: true,
+    width: '100%',
+    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
+    language: {
+      noResults: function () {
+        return "No se encontraron resultados";
+      }
+    }
+  });
+
+  function nuevaConsulta() {
+    const form = document.getElementById('formConsultarIncidencia');
+    form.reset();
+
+    // Restablecer Select2 manualmente
+    $('#area').val(null).trigger('change');
+    $('#estado').val(null).trigger('change');
+
+    window.location.reload();
+  }
+
+  // Evento para nueva consulta
+  $('#limpiarCampos').on('click', nuevaConsulta);
+
+
+  // Validar campos y manejar el envío del formulario
+  $('#formConsultarIncidencia').submit(function (event) {
+    event.preventDefault(); // Evita el envío del formulario por defecto
+
+    // Verifica si los campos son válidos
+    if (!validarCampos()) {
+      return; // Detiene el envío si los campos no son válidos
+    }
+
+    // Recopila los datos del formulario
+    var formData = $(this).serializeArray();
+
+    // Crea un objeto para los datos del formulario
+    var dataObject = {};
+
+    // Recorre los datos del formulario
+    formData.forEach(function (item) {
+      // Solo agrega los parámetros al objeto si tienen valor
+      if (item.value.trim() !== '') {
+        dataObject[item.name] = item.value;
+      }
+    });
+
+    // Realiza la solicitud AJAX
+    $.ajax({
+      url: 'consultar-incidencia-admin.php?action=consultar',
+      type: 'GET',
+      data: dataObject,
+      success: function (response) {
+        console.log("Respuesta AJAX:", response); // Depuración
+
+        $('#tablaConsultarIncidencias tbody').html(response);
+      },
+      error: function (xhr, status, error) {
+        console.error('Error en la consulta AJAX:', error);
+      }
+    });
+
+  });
+
+  function validarCampos() {
+    var valido = false;
+    var mensajeError = '';
+
+    var areaSeleccionada = ($('#area').val() !== null && $('#area').val().trim() !== '');
+    var estadoSeleccionado = ($('#estado').val() !== null && $('#estado').val().trim() !== '');
+    var fechaInicioSeleccionada = ($('#fechaInicio').val() !== null && $('#fechaInicio').val().trim() !== '');
+    var fechaFinSeleccionada = ($('#fechaFin').val() !== null && $('#fechaFin').val().trim() !== '');
+
+    // Verificar si al menos un campo está lleno
+    if (areaSeleccionada || estadoSeleccionado || fechaInicioSeleccionada || fechaFinSeleccionada) {
+      valido = true;
+    } else {
+      mensajeError = 'Debe completar al menos un campo para realizar la búsqueda.';
+    }
+
+    if (!valido) {
+      toastr.warning(mensajeError.trim());
+    }
+
+    return valido;
+  }
 });
-
-// TODO: METODO PARA LIMPIAR LOS CAMPOS 
-$('#limpiarCampos').click(limpiarCampos);
-function limpiarCampos() {
-  document.getElementById('formConsultarIncidencia').reset();
-}
-
-// TODO: METODO PARA BUSCAR INCIDENCIAS
-// $(document).ready(function () {
-//   $('#buscar-incidencias').submit(function (event) {
-//     event.preventDefault(); // Evita el envío normal del formulario
-
-//     // Obtener los valores de los campos del formulario
-//     var area = $('#cbo_area').val();
-//     var codigoPatrimonial = $('#codigo_patrimonial').val();
-//     var fechaInicio = $('#fechaInicio').val();
-//     var fechaFin = $('#fechaFin').val();
-
-//     // Enviar la solicitud AJAX
-//     $.ajax({
-//       url: 'consultar-incidencia-admin.php?action=consultar', // URL a la que se envía la solicitud
-//       method: 'GET', // Método HTTP (GET es el predeterminado para formularios GET)
-//       data: {
-//         area: area,
-//         codigoPatrimonial: codigoPatrimonial,
-//         fechaInicio: fechaInicio,
-//         fechaFin: fechaFin
-//       },
-//       success: function (response) {
-//         // Actualizar la tabla de incidencias con los resultados recibidos
-//         $('#tablaConsultarIncidencias tbody').html(response);
-//       },
-//       error: function (xhr, status, error) {
-//         // Manejar errores si los hubiera
-//         console.error(error);
-//         toastr.error('Ocurrió un error al buscar incidencias.');
-//       }
-//     });
-//   });
-// });
-
 

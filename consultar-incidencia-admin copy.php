@@ -1,17 +1,47 @@
 <?php
+session_start();
+// Verificar si no hay una sesión iniciada
+if (!isset($_SESSION['usuario'])) {
+  header("Location: index.php"); // Redirigir a la página de inicio de sesión si no hay sesión iniciada
+  exit();
+}
 
-require_once './app/Controller/IncidenciaController.php';
+$action = $_GET['action'] ?? ''; // Obtener la acción solicitada
+$INC_numero = $_GET['INC_numero'] ?? ''; // Obtener el número de incidencia si existe
 
-$action = $_GET['action'] ?? '';
+// $area = $_GET['area'] ?? null; // Obtener el área
+// $estado = $_GET['estado'] ?? null; // Obtener el estado
+// $fechaInicio = $_GET['fechaInicio'] ?? null; // Obtener la fecha de inicio
+// $fechaFin = $_GET['fechaFin'] ?? null; // Obtener la fecha de fin
 
+require_once 'app/Controller/incidenciaController.php';
 $incidenciaController = new IncidenciaController();
+$incidenciaModel = new IncidenciaModel();
 
-$resultadoBusqueda = NULL;
+if ($INC_numero != '') {
+  global $incidenciaRegistrada;
+  $incidenciaRegistrada = $incidenciaModel->obtenerIncidenciaPorId($INC_numero);
+} else {
+  $incidenciaRegistrada = null;
+}
 
-if ($action === 'consultar') {
-  $resultadoBusqueda = $incidenciaController->consultarIncidenciaAdministrador();
+switch ($action) {
+  case 'registrar':
+    $incidenciaController->registrarIncidencia();
+    break;
+  case 'consultar':
+    // Llamar al método de consulta y almacenar el resultado
+    $incidenciaController->consultarIncidenciaUsuario();
+    // Pasar el resultado a la vista
+    include('app/View/Consultar/admin/consultaIncidencia.php');
+    break;
+  default:
+    break;
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -52,13 +82,18 @@ if ($action === 'consultar') {
   <script src="dist/assets/js/pcoded.min.js"></script>
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
 
+
   <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
+
   <script src="./app/View/func/func_consulta_incidencia_admin.js"></script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <!-- Incluir CSS de Select2 -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <!-- Incluir JS de Select2 -->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 </body>
