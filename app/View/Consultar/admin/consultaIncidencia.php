@@ -1,38 +1,3 @@
-<?php
-// require_once './app/Model/IncidenciaModel.php';
-// require_once './app/Controller/IncidenciaController.php';
-
-// $incidenciaModel = new IncidenciaModel();
-// $incidenciaController = new IncidenciaController();
-
-// $incidencias = [];
-// if (isset($_GET['action']) && $_GET['action'] === 'consultar') {
-//   $area = $_GET['area'] ?? null;
-//   $estado = $_GET['estado'] ?? null;
-//   $fechaInicio = $_GET['fechaInicio'] ?? null;
-//   $fechaFin = $_GET['fechaFin'] ?? null;
-
-//   $incidencias = $incidenciaController->consultarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin);
-// } else {
-//   $incidencias = $incidenciaModel->listarIncidenciasAdministrador();
-// }
-
-
-require_once './app/Model/IncidenciaModel.php';
-require_once './app/Controller/IncidenciaController.php';
-
-$incidenciaModel = new IncidenciaModel();
-$incidenciaController = new IncidenciaController();
-
-$resultadoBusqueda = [];
-if (isset($_GET['action']) && $_GET['action'] === 'consultar') {
-  $resultadoBusqueda = $incidenciaController->consultarIncidenciaAdministrador();
-} else {
-  $resultadoBusqueda = $incidenciaModel->listarIncidenciasAdministrador();
-}
-?>
-
-
 <div class="pcoded-main-container mt-5">
   <div class="pcoded-content">
     <!-- Miga de pan -->
@@ -56,32 +21,28 @@ if (isset($_GET['action']) && $_GET['action'] === 'consultar') {
 
     <!-- Formulario Consulta de incidencias -->
     <form id="formConsultarIncidencia" action="consultar-incidencia-admin.php?action=consultar" method="GET" class="card table-card bg-white shadow-md p-6 w-full text-xs mb-2">
-      <input type="hidden" id="form-action" name="action" value="consultar">
+      <!-- <input type="hidden" id="form-action" name="action" value="consultar"> -->
 
       <div class="flex flex-wrap items-center -mx-2 justify-center space-x-2">
-        <!-- BUSCAR POR AREA (Más grande) -->
+        <!-- BUSCAR POR AREA -->
         <div class="w-full md:w-2/5 px-2 mb-2">
           <label for="area" class="block mb-1 font-bold text-xs">Área:</label>
-          <select id="area" name="area" class="border p-2 w-full text-xs cursor-pointer">
-            <!-- Opciones aquí -->
-          </select>
+          <select id="area" name="area" class="border p-2 w-full text-xs cursor-pointer"></select>
         </div>
 
-        <!-- BUSCAR POR ESTADO (Más pequeño) -->
+        <!-- BUSCAR POR ESTADO -->
         <div class="w-full md:w-1/6 px-2 mb-2">
           <label for="estado" class="block mb-1 font-bold text-xs">Estado:</label>
-          <select id="estado" name="estado" class="border p-2 w-full text-xs cursor-pointer">
-            <!-- Opciones aquí -->
-          </select>
+          <select id="estado" name="estado" class="border p-2 w-full text-xs cursor-pointer"></select>
         </div>
 
-        <!-- BUSCAR POR FECHA DE INICIO (Más pequeño) -->
+        <!-- BUSCAR POR FECHA DE INICIO -->
         <div class="w-full md:w-1/6 px-2 mb-2">
           <label for="fechaInicio" class="block mb-1 font-bold text-xs">Fecha Inicio:</label>
           <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs cursor-pointer rounded-md">
         </div>
 
-        <!-- BUSCAR POR FECHA DE FIN (Más pequeño) -->
+        <!-- BUSCAR POR FECHA DE FIN -->
         <div class="w-full md:w-1/6 px-2 mb-2">
           <label for="fechaFin" class="block mb-1 font-bold text-xs">Fecha Fin:</label>
           <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer rounded-md">
@@ -101,18 +62,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'consultar') {
     </form>
     <!-- Fin de formulario de consultas -->
 
-    <!-- Recopilación de valores de cada input y combobox -->
-    <script>
-      document.getElementById('area').value = '<?php echo $incidenciaConsultada ? $incidenciaConsultada['ARE_codigo'] : ''; ?>';
-      document.getElementById('estado').value = '<?php echo $incidenciaConsultada ? $incidenciaConsultada['EST_codigo'] : ''; ?>';
-      document.getElementById('fechaInicio').value = '<?php echo $incidenciaConsultada ? $incidenciaConsultada['fechaInicio'] : ''; ?>';
-      document.getElementById('fechaFin').value = '<?php echo $incidenciaConsultada ? $incidenciaConsultada['fechaFin'] : ''; ?>';
-    </script>
-
     <!-- TABLA DE RESULTADOS DE LAS INCIDENCIAS -->
     <div class="relative shadow-md sm:rounded-lg mt-4">
       <div class="max-w-full overflow-hidden">
-        <table id="tablaConsultarIncidencias" class="bg-white w-full text-xs text-left rtl:text-right text-gray-500">
+        <table id="tablaIncidencias" class="bg-white w-full text-xs text-left rtl:text-right text-gray-500">
+          <!-- Encabezado de tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-3 py-2">N°</th>
@@ -125,47 +79,51 @@ if (isset($_GET['action']) && $_GET['action'] === 'consultar') {
               <th scope="col" class="px-3 py-2">Estado</th>
             </tr>
           </thead>
+          <!-- Fin de encabezado -->
+
+          <!-- Cuerpo de tabla -->
           <tbody>
             <?php
-            $html = '';
-            if (!empty($resultadoBusqueda)) {
-              foreach ($resultadoBusqueda as $incidencia) {
-                echo "<tr class='hover:bg-green-100 hover:scale-[101%] transition-all border-b'>";
-                echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_numero']) . "</td>";
-                echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . "</td>";
-                echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['ARE_nombre']) . "</td>";
-                echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . "</td>";
-                echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['CAT_nombre']) . "</td>";
-                echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_asunto']) . "</td>";
-                echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_documento']) . "</td>";
-                echo "<td class='px-3 py-2 text-center text-xs align-middle'>";
-
-                // Asignación de clases según el estado
-                $estadoDescripcion = htmlspecialchars($incidencia['EST_descripcion']);
-                $badgeClass = '';
-                switch ($estadoDescripcion) {
-                  case 'Abierta':
-                    $badgeClass = 'badge-light-danger';
-                    break;
-                  case 'Recepcionado':
-                    $badgeClass = 'badge-light-success';
-                    break;
-                  case 'Cerrado':
-                    $badgeClass = 'badge-light-primary';
-                    break;
-                  default:
-                    $badgeClass = 'badge-light-secondary';
-                    break;
-                }
-                echo "<label class='badge {$badgeClass}'>{$estadoDescripcion}</label>";
-                echo "</td>";
-                echo "</tr>";
-              }
-            } else {
-              echo "<tr><td colspan='8' class='text-center py-4'>No se encontraron incidencias.</td></tr>";
-            }
-            ?>
+            if (!empty($resultadoBusqueda)):
+              foreach ($resultadoBusqueda as $incidencia): ?>
+                <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
+                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_numero']) ?></td>
+                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']) ?></td>
+                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['ARE_nombre']) ?></td>
+                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_codigoPatrimonial']) ?></td>
+                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['CAT_nombre']) ?></td>
+                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_asunto']) ?></td>
+                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_documento']) ?></td>
+                  <td class="px-3 py-2 text-center text-xs align-middle">
+                    <?php
+                    $estadoDescripcion = htmlspecialchars($incidencia['EST_descripcion']);
+                    $badgeClass = '';
+                    switch ($estadoDescripcion) {
+                      case 'Abierta':
+                        $badgeClass = 'badge-light-danger';
+                        break;
+                      case 'Recepcionado':
+                        $badgeClass = 'badge-light-success';
+                        break;
+                      case 'Cerrado':
+                        $badgeClass = 'badge-light-primary';
+                        break;
+                      default:
+                        $badgeClass = 'badge-light-secondary';
+                        break;
+                    }
+                    ?>
+                    <label class="badge <?= $badgeClass ?>"><?= $estadoDescripcion ?></label>
+                  </td>
+                </tr>
+              <?php endforeach;
+            else: ?>
+              <tr>
+                <td colspan="8" class="text-center py-4">No se encontraron incidencias.</td>
+              </tr>
+            <?php endif; ?>
           </tbody>
+          <!-- Fin de cuerpo de tabla -->
         </table>
       </div>
     </div>

@@ -12,7 +12,7 @@ $(document).ready(function () {
     type: 'GET',
     dataType: 'json',
     success: function (data) {
-      console.log("Areas cargadas:", data); // Depuración
+      // console.log("Areas cargadas:", data); // Depuración
 
       var select = $('#area');
       select.empty();
@@ -32,7 +32,7 @@ $(document).ready(function () {
     type: 'POST',
     dataType: 'json',
     success: function (data) {
-      console.log("Estados recibidos:", data); // Depuración
+      // console.log("Estados recibidos:", data); // Depuración
 
       var select = $('#estado');
       select.empty();
@@ -86,7 +86,71 @@ $(document).ready(function () {
   $('#limpiarCampos').on('click', nuevaConsulta);
 
 
-  // Validar campos y manejar el envío del formulario
+  // $('#formConsultarIncidencia').submit(function (event) {
+  //   event.preventDefault(); // Evita el envío del formulario por defecto
+
+  //   // Verifica si los campos son válidos
+  //   if (!validarCampos()) {
+  //     return; // Detiene el envío si los campos no son válidos
+  //   }
+
+  //   // Recopila los datos del formulario
+  //   var formData = $(this).serializeArray();
+
+  //   // Crea un objeto para los datos del formulario
+  //   var dataObject = {};
+
+  //   // Recorre los datos del formulario
+  //   formData.forEach(function (item) {
+  //     // Solo agrega los parámetros al objeto si tienen valor
+  //     if (item.value.trim() !== '') {
+  //       dataObject[item.name] = item.value;
+  //     }
+  //   });
+
+  //   // Realiza la solicitud AJAX
+  //   $.ajax({
+  //     url: 'consultar-incidencia-admin.php?action=consultar',
+  //     type: 'GET',
+  //     data: dataObject,
+  //     success: function (response) {
+  //       console.log("Resultados filtrados:", response); // Depuración
+
+  //       // Limpia el contenido actual de la tabla antes de agregar nuevos datos
+  //       $('#tablaIncidencias tbody').empty();
+
+  //       // Actualiza el contenido de la tabla con la respuesta
+  //       $('#tablaIncidencias tbody').append(response);
+  //     },
+  //     error: function (xhr, status, error) {
+  //       console.error('Error en la consulta AJAX:', error);
+  //     }
+  //   });
+
+
+  //   function validarCampos() {
+  //     var valido = false;
+  //     var mensajeError = '';
+
+  //     var areaSeleccionada = ($('#area').val() !== null && $('#area').val().trim() !== '');
+  //     var estadoSeleccionado = ($('#estado').val() !== null && $('#estado').val().trim() !== '');
+  //     var fechaInicioSeleccionada = ($('#fechaInicio').val() !== null && $('#fechaInicio').val().trim() !== '');
+  //     var fechaFinSeleccionada = ($('#fechaFin').val() !== null && $('#fechaFin').val().trim() !== '');
+
+  //     // Verificar si al menos un campo está lleno
+  //     if (areaSeleccionada || estadoSeleccionado || fechaInicioSeleccionada || fechaFinSeleccionada) {
+  //       valido = true;
+  //     } else {
+  //       mensajeError = 'Debe completar al menos un campo para realizar la búsqueda.';
+  //     }
+
+  //     if (!valido) {
+  //       toastr.warning(mensajeError.trim());
+  //     }
+
+  //     return valido;
+  //   }
+  // });
   $('#formConsultarIncidencia').submit(function (event) {
     event.preventDefault(); // Evita el envío del formulario por defecto
 
@@ -115,38 +179,43 @@ $(document).ready(function () {
       type: 'GET',
       data: dataObject,
       success: function (response) {
-        console.log("Respuesta AJAX:", response); // Depuración
+        console.log("Resultados filtrados:", response); // Depuración
 
-        $('#tablaConsultarIncidencias tbody').html(response);
+        // Limpia el contenido actual de la tabla antes de agregar nuevos datos
+        $('#tablaIncidencias tbody').empty();
+
+        // Actualiza el contenido de la tabla con la respuesta
+        $('#tablaIncidencias tbody').html(response);
       },
       error: function (xhr, status, error) {
         console.error('Error en la consulta AJAX:', error);
       }
     });
 
+    function validarCampos() {
+      var valido = false;
+      var mensajeError = '';
+
+      var areaSeleccionada = ($('#area').val() !== null && $('#area').val().trim() !== '');
+      var estadoSeleccionado = ($('#estado').val() !== null && $('#estado').val().trim() !== '');
+      var fechaInicioSeleccionada = ($('#fechaInicio').val() !== null && $('#fechaInicio').val().trim() !== '');
+      var fechaFinSeleccionada = ($('#fechaFin').val() !== null && $('#fechaFin').val().trim() !== '');
+
+      // Verificar si al menos un campo está lleno
+      if (areaSeleccionada || estadoSeleccionado || fechaInicioSeleccionada || fechaFinSeleccionada) {
+        valido = true;
+      } else {
+        mensajeError = 'Debe completar al menos un campo para realizar la búsqueda.';
+      }
+
+      if (!valido) {
+        toastr.warning(mensajeError.trim());
+      }
+
+      return valido;
+    }
   });
 
-  function validarCampos() {
-    var valido = false;
-    var mensajeError = '';
 
-    var areaSeleccionada = ($('#area').val() !== null && $('#area').val().trim() !== '');
-    var estadoSeleccionado = ($('#estado').val() !== null && $('#estado').val().trim() !== '');
-    var fechaInicioSeleccionada = ($('#fechaInicio').val() !== null && $('#fechaInicio').val().trim() !== '');
-    var fechaFinSeleccionada = ($('#fechaFin').val() !== null && $('#fechaFin').val().trim() !== '');
-
-    // Verificar si al menos un campo está lleno
-    if (areaSeleccionada || estadoSeleccionado || fechaInicioSeleccionada || fechaFinSeleccionada) {
-      valido = true;
-    } else {
-      mensajeError = 'Debe completar al menos un campo para realizar la búsqueda.';
-    }
-
-    if (!valido) {
-      toastr.warning(mensajeError.trim());
-    }
-
-    return valido;
-  }
 });
 

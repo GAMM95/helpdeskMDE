@@ -29,7 +29,7 @@ class cierreController
         echo "Error: La fecha es un campo obligatorio.";
         return;
       }
-      
+
       // Llamar al método del modelo para insertar el cierre en la base de datos
       $insertSuccess = $this->cierreModel->insertarCierre(
         $fecha,
@@ -50,6 +50,24 @@ class cierreController
       }
     } else {
       echo "Error: Método no permitido.";
+    }
+  }
+
+  public function consultarCierres($area = NULL, $codigoPatrimonial = null, $fechaInicio = null, $fechaFin = null)
+  {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+      // Obtener los valores de los parámetros GET o asignar null si no existen
+      $area = isset($_GET['area']) ? (int) $_GET['area'] : null;
+      $codigoPatrimonial = isset($_GET['codigoPatrimonial']) ? (int) $_GET['codigoPatrimonial'] : null;
+      $fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : null;
+      $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : null;
+      error_log("Área: $area, CodigoPatrimonial: $codigoPatrimonial, Fecha Inicio: $fechaInicio, Fecha Fin: $fechaFin");
+
+      // Llamar al método para consultar incidencias por área, estado y fecha
+      $consultaIncidencia = $this->cierreModel->buscarCierres($area, $codigoPatrimonial, $fechaInicio, $fechaFin);
+
+      // Retornar el resultado de la consulta
+      return $consultaIncidencia;
     }
   }
 }

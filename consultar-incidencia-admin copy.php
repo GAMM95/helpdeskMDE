@@ -1,47 +1,58 @@
 <?php
-session_start();
-// Verificar si no hay una sesión iniciada
-if (!isset($_SESSION['usuario'])) {
-  header("Location: index.php"); // Redirigir a la página de inicio de sesión si no hay sesión iniciada
-  exit();
-}
 
-$action = $_GET['action'] ?? ''; // Obtener la acción solicitada
-$INC_numero = $_GET['INC_numero'] ?? ''; // Obtener el número de incidencia si existe
+require_once './app/Controller/IncidenciaController.php';
+require_once './app/Model/IncidenciaModel.php';
 
-// $area = $_GET['area'] ?? null; // Obtener el área
-// $estado = $_GET['estado'] ?? null; // Obtener el estado
-// $fechaInicio = $_GET['fechaInicio'] ?? null; // Obtener la fecha de inicio
-// $fechaFin = $_GET['fechaFin'] ?? null; // Obtener la fecha de fin
+$action = $_GET['action'] ?? '';
 
-require_once 'app/Controller/incidenciaController.php';
 $incidenciaController = new IncidenciaController();
 $incidenciaModel = new IncidenciaModel();
 
-if ($INC_numero != '') {
-  global $incidenciaRegistrada;
-  $incidenciaRegistrada = $incidenciaModel->obtenerIncidenciaPorId($INC_numero);
+$resultadoBusqueda = NULL;
+
+if ($action === 'consultar') {
+  $resultadoBusqueda = $incidenciaController->consultarIncidenciaAdministrador();
 } else {
-  $incidenciaRegistrada = null;
+  $resultadoBusqueda =  $incidenciaModel->listarIncidenciasAdministrador();
 }
 
-switch ($action) {
-  case 'registrar':
-    $incidenciaController->registrarIncidencia();
-    break;
-  case 'consultar':
-    // Llamar al método de consulta y almacenar el resultado
-    $incidenciaController->consultarIncidenciaUsuario();
-    // Pasar el resultado a la vista
-    include('app/View/Consultar/admin/consultaIncidencia.php');
-    break;
-  default:
-    break;
+if (!empty($resultadoBusqueda)) {
+  foreach ($resultadoBusqueda as $incidencia) {
+    echo "<tr class='hover:bg-green-100 hover:scale-[101%] transition-all border-b'>";
+    echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_numero']) . "</td>";
+    echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . "</td>";
+    echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['ARE_nombre']) . "</td>";
+    echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . "</td>";
+    echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['CAT_nombre']) . "</td>";
+    echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_asunto']) . "</td>";
+    echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_documento']) . "</td>";
+    echo "<td class='px-3 py-2 text-center text-xs align-middle'>";
+
+    // Asignación de clases según el estado
+    $estadoDescripcion = htmlspecialchars($incidencia['EST_descripcion']);
+    $badgeClass = '';
+    switch ($estadoDescripcion) {
+      case 'Abierta':
+        $badgeClass = 'badge-light-danger';
+        break;
+      case 'Recepcionado':
+        $badgeClass = 'badge-light-success';
+        break;
+      case 'Cerrado':
+        $badgeClass = 'badge-light-primary';
+        break;
+      default:
+        $badgeClass = 'badge-light-secondary';
+        break;
+    }
+    echo "<label class='badge {$badgeClass}'>{$estadoDescripcion}</label>";
+    echo "</td>";
+    echo "</tr>";
+  }
+} else {
+  echo "<tr><td colspan='8' class='text-center py-4'>No se encontraron incidencias.</td></tr>";
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -82,18 +93,13 @@ switch ($action) {
   <script src="dist/assets/js/pcoded.min.js"></script>
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
 
-
   <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
-
   <script src="./app/View/func/func_consulta_incidencia_admin.js"></script>
-
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  <!-- Incluir CSS de Select2 -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-  <!-- Incluir JS de Select2 -->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 </body>

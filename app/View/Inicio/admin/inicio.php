@@ -105,7 +105,7 @@
                 </div>
                 <div class="col-sm-8 text-md-center">
                   <h5 class="font-bold text-lg"> <?php echo $cantidades['usuarios_total']; ?></h5>
-                  <span>Usuarios</span>
+                  <span>Usuarios activos</span>
                 </div>
               </div>
             </div>
@@ -116,7 +116,7 @@
                 </div>
                 <div class="col-sm-8 text-md-center">
                   <h5 class="font-bold text-lg"><?php echo $cantidades['cantidadAreas']; ?></h5>
-                  <span>&Aacute;reas</span>
+                  <span>&Aacute;reas de la MDE</span>
                 </div>
               </div>
             </div>
@@ -129,7 +129,7 @@
                 </div>
                 <div class="col-sm-8 text-md-center">
                   <h5 class="font-bold text-lg"><?php echo $cantidades['cantidadIncidencias']; ?></h5>
-                  <span>Incidencias</span>
+                  <span>Incidencias totales</span>
                 </div>
               </div>
             </div>

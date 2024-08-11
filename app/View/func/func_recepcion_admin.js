@@ -4,24 +4,47 @@ $(document).ready(function () {
     "progressBar": true,
     "timeOut": "2000"
   };
-
   // Evento de clic en las filas de la tabla de incidencias sin recepcionar
   $(document).on('click', '#tablaIncidenciasSinRecepcionar tbody tr', function () {
     var id = $(this).find('th').html();
     $('#tablaIncidenciasSinRecepcionar tbody tr').removeClass('bg-blue-200 font-semibold');
     $(this).addClass('bg-blue-200 font-semibold');
     $('#incidencia').val(id);
+
+    // Bloquear la tabla de incidencias recepcionadas
+    $('#tablaIncidenciasRecepcionadas tbody tr').addClass('pointer-events-none opacity-50');
+    document.getElementById('guardar-recepcion').disabled = false;
+    document.getElementById('nuevo-registro').disabled = false;
+
+    // Reactivar el botón "Nuevo"
+    $('#nuevo-registro').prop('disabled', false);
   });
 
   // Evento de clic en las filas de la tabla de incidencias recepcionadas
-  // $(document).on('click', '#tablaIncidenciasRecepcionadas tbody tr', function () {
-  //   var numRecepcion = $(this).data('id');
-  //   $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('bg-blue-200 font-semibold');
-  //   $(this).addClass('bg-blue-200 font-semibold');
-  //   $('#num_recepcion').val(numRecepcion);
-  // });
+  $(document).on('click', '#tablaIncidenciasRecepcionadas tbody tr', function () {
+    var numRecepcion = $(this).data('id');
+    $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('bg-blue-200 font-semibold');
+    $(this).addClass('bg-blue-200 font-semibold');
+    $('#num_recepcion').val(numRecepcion);
 
-  // Manejo de la paginación
+    // Bloquear la tabla de incidencias sin recepcionar
+    $('#tablaIncidenciasSinRecepcionar tbody tr').addClass('pointer-events-none opacity-50');
+
+    // Reactivar el botón "Nuevo"
+    $('#nuevo-registro').prop('disabled', false);
+  });
+
+  // Evento para nuevo registro
+  $('#nuevo-registro').on('click', function () {
+    nuevoRegistro();
+    // Reactivar ambas tablas
+    $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('pointer-events-none opacity-50');
+    $('#tablaIncidenciasSinRecepcionar tbody tr').removeClass('pointer-events-none opacity-50');
+    location.reload();
+  });
+
+
+  // TODO: Manejo de la paginacion de la tabla de incidencias sin recepcionar
   $(document).on('click', '.pagination-link', function (e) {
     e.preventDefault();
     var page = $(this).attr('href').split('page=')[1];
@@ -293,25 +316,3 @@ function setComboValue(comboId, value) {
   // Forzar actualización del select2 para mostrar el valor seleccionado
   $(select).trigger('change');
 };
-
-// TODO: Funcion para manejar el nuevo registro
-function nuevoRegistro() {
-  const form = document.getElementById('formRecepcion');
-  form.reset();
-  $('#num_recepcion').val('');
-  $('tr').removeClass('bg-blue-200 font-semibold');
-
-  $('#form-action').val('registrar'); // Cambiar la acción a registrar
-
-  // Deshabilitar el botón de editar
-  $('#guardar-recepcion').prop('disabled', false);
-  $('#editar-recepcion').prop('disabled', true);
-  $('#nuevo-registro').prop('disabled', true);
-
-  // Seteo de valores por defecto en los combos
-  setComboValue('prioridad', 'Valor por defecto de categoría');
-  setComboValue('impacto', 'Valor por defecto de área');
-}
-
-// Evento para nuevo registro
-$('#nuevo-registro').on('click', nuevoRegistro);

@@ -8,7 +8,7 @@ $cierreController = new cierreController();
 
 
 switch ($action) {
-  case 'registrar':
+  case 'consultar':
     $cierreController->registrarCierre();
     break;
 }

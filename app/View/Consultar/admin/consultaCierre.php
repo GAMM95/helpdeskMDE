@@ -101,7 +101,8 @@
     </div>
   </div>
 </div>
-</main>
+
+<script src="https://cdn.tailwindcss.com"></script>
 <script>
   $(document).ready(function() {
     $('#buscar-incidencias').submit(function(event) {

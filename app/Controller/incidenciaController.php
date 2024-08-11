@@ -101,7 +101,7 @@ class IncidenciaController
   //   }
   // }
 
-  public function consultarIncidenciaAdministrador()
+  public function consultarIncidenciaAdministrador($area = NULL, $estado = null, $fechaInicio = null, $fechaFin = null)
   {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
       // Obtener los valores de los parámetros GET o asignar null si no existen

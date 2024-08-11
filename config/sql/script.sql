@@ -482,5 +482,45 @@ WHERE
     (@estado IS NULL OR e.EST_codigo = @estado) AND  -- Solo filtra por estado si @estado no es NULL
     (@fechaInicio IS NULL OR INC_fecha >= @fechaInicio) AND  -- Filtra por fecha de inicio si @fechaInicio no es NULL
     (@fechaFin IS NULL OR INC_fecha <= @fechaFin) AND        -- Filtra por fecha de fin si @fechaFin no es NULL
-    (@area IS NULL OR a.ARE_codigo = @area);     -- Solo filtra por área si @areaCodigo no es NULL
+    (@area IS NULL OR a.ARE_codigo = @area)     -- Solo filtra por área si @areaCodigo no es NULL
+ORDER BY INC_numero DESC
 END
+GO
+
+-- PROCEDIMIENTO ALMANCENADO PARA CONSULTAR CIERRES - ADMINISTRADOR
+CREATE PROCEDURE sp_ConsultarCierres
+@area INT,
+@codigoPatrimonial CHAR(12),
+@fechaInicio DATE,
+@fechaFin DATE
+   
+AS
+BEGIN
+SELECT
+I.INC_numero,
+(CONVERT(VARCHAR(10),INC_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada,
+A.ARE_nombre,
+I.INC_codigoPatrimonial,
+(CONVERT(VARCHAR(10),CIE_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), CIE_hora, 0), 7), 6, 0, ' ')) AS fechaCierreFormateada,
+CIE_asunto,
+C.CIE_documento,
+O.CON_descripcion,
+PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
+FROM RECEPCION R
+RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
+INNER JOIN  AREA A ON I.ARE_codigo = A.ARE_codigo
+INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
+LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
+INNER JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
+INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
+INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
+WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5 AND
+    (@codigoPatrimonial IS NULL OR I.INC_codigoPatrimonial = @codigoPatrimonial) AND  -- Solo filtra por estado si @estado no es NULL
+    (@fechaInicio IS NULL OR CIE_fecha >= @fechaInicio) AND  -- Filtra por fecha de inicio si @fechaInicio no es NULL
+    (@fechaFin IS NULL OR CIE_fecha <= @fechaFin) AND        -- Filtra por fecha de fin si @fechaFin no es NULL
+    (@area IS NULL OR a.ARE_codigo = @area)     -- Solo filtra por área si @areaCodigo no es NULL
+ORDER BY C.CIE_numero DESC
+END
+GO

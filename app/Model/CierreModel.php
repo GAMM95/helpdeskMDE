@@ -224,4 +224,30 @@ class CierreModel extends Conexion
       return null;
     }
   }
+
+  public function buscarCierres($area, $codigoPatrimonial, $fechaInicio, $fechaFin)
+  {
+    $conector = parent::getConexion();
+
+    try {
+      if ($conector != null) {
+        $sql = "EXEC sp_ConsultarCierres :area, :codigoPatrimonial, :fechaInicio, :fechaFin";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':area', $area, PDO::PARAM_INT);
+        $stmt->bindParam(':codigoPatrimonial', $estado, PDO::PARAM_STR_CHAR);
+        $stmt->bindParam(':fechaInicio', $fechaInicio);
+        $stmt->bindParam(':fechaFin', $fechaFin);
+        // Ejecutar el procedimiento almacenado
+        $stmt->execute();
+
+        // Obtener los resultados
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+      } else {
+        throw new Exception("Error de conexión con la base de datos.");
+      }
+    } catch (PDOException $e) {
+      throw new Exception("Error al obtener los cierres XD: " . $e->getMessage());
+    }
+  }
 }

@@ -1,15 +1,27 @@
 <?php
 
 require_once './app/Controller/IncidenciaController.php';
+require_once './app/Model/IncidenciaModel.php';
 
 $action = $_GET['action'] ?? '';
 
 $incidenciaController = new IncidenciaController();
+$incidenciaModel = new IncidenciaModel();
 
 $resultadoBusqueda = NULL;
 
 if ($action === 'consultar') {
-  $resultadoBusqueda = $incidenciaController->consultarIncidenciaAdministrador();
+  // Capturar los datos del formulario
+  $area = $_GET['area'] ?? '';
+  $estado = $_GET['estado'] ?? '';
+  $fechaInicio = $_GET['fechaInicio'] ?? '';
+  $fechaFin = $_GET['fechaFin'] ?? '';
+
+  // Llamar al método del controlador para obtener datos del formulario
+  $resultadoBusqueda = $incidenciaController->consultarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin);
+} else {
+  // Si no hay acción, obtener la lista de incidencias
+  $resultadoBusqueda = $incidenciaModel->listarIncidenciasAdministrador();
 }
 ?>
 
@@ -42,9 +54,9 @@ if ($action === 'consultar') {
     </div>
   </div>
 
-  <?php include('app/View/partials/admin/navbar.php'); ?>
-  <?php include('app/View/partials/admin/header.php'); ?>
-  <?php include('app/View/Consultar/admin/consultaIncidencia.php');  ?>
+  <?php include_once('app/View/partials/admin/navbar.php'); ?>
+  <?php include_once('app/View/partials/admin/header.php'); ?>
+  <?php include_once('app/View/Consultar/admin/consultaIncidencia.php');  ?>
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>
