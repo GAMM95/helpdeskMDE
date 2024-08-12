@@ -24,7 +24,7 @@
       <div class="flex flex-wrap items-center -mx-2 justify-center space-x-2">
         <!-- BUSCAR POR AREA -->
         <div class="w-full md:w-2/5 px-2 mb-2">
-          <label for="area" class="block mb-1 font-bold text-xs">Área:</label>
+          <label for="area" class="block mb-1 font-bold text-xs">&Aacute;rea:</label>
           <select id="area" name="area" class="border p-2 w-full text-xs cursor-pointer"></select>
         </div>
 
@@ -44,7 +44,7 @@
         <div class="w-full md:w-1/6 px-2 mb-2">
           <label for="fechaFin" class="block mb-1 font-bold text-xs">Fecha Fin:</label>
           <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
-          </div>
+        </div>
       </div>
 
       <!-- BOTONES DEL FORMULARIO -->
@@ -61,7 +61,7 @@
     <!-- Fin de formulario de consultas -->
 
     <!-- TABLA DE RESULTADOS DE LAS INCIDENCIAS -->
-    <div class="relative shadow-md sm:rounded-lg mt-4">
+    <div class="relative shadow-md sm:rounded-lg">
       <div class="max-w-full overflow-hidden">
         <table id="tablaIncidencias" class="bg-white w-full text-xs text-left rtl:text-right text-gray-500">
           <!-- Encabezado de tabla -->
@@ -69,9 +69,9 @@
             <tr>
               <th scope="col" class="px-3 py-2">N°</th>
               <th scope="col" class="px-3 py-2">Fecha</th>
-              <th scope="col" class="px-3 py-2">Área</th>
-              <th scope="col" class="px-3 py-2">Código Patrimonial</th>
-              <th scope="col" class="px-3 py-2">Categoría</th>
+              <th scope="col" class="px-3 py-2">&Aacute;rea</th>
+              <th scope="col" class="px-3 py-2">C&oacute;digo Patrimonial</th>
+              <th scope="col" class="px-3 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-3 py-2">Asunto</th>
               <th scope="col" class="px-3 py-2">Documento</th>
               <th scope="col" class="px-3 py-2">Estado</th>

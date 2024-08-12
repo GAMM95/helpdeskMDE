@@ -69,11 +69,15 @@ class CierreModel extends Conexion
           CAT.CAT_nombre,
           I.INC_asunto,
           I.INC_documento,
+          PRI_nombre,
           I.INC_codigoPatrimonial,
 	        (CONVERT(VARCHAR(10),CIE_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), CIE_hora, 0), 7), 6, 0, ' ')) AS fechaCierreFormateada,
 	        O.CON_descripcion,
-	        u.USU_nombre
+          C.CIE_documento,
+	        u.USU_nombre,
+          C.EST_descripcion
         FROM RECEPCION R
+        INNER JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
         RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
         INNER JOIN  AREA A ON I.ARE_codigo = A.ARE_codigo
         INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
@@ -234,7 +238,7 @@ class CierreModel extends Conexion
         $sql = "EXEC sp_ConsultarCierres :area, :codigoPatrimonial, :fechaInicio, :fechaFin";
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':area', $area, PDO::PARAM_INT);
-        $stmt->bindParam(':codigoPatrimonial', $estado, PDO::PARAM_STR_CHAR);
+        $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial, PDO::PARAM_STR_CHAR);
         $stmt->bindParam(':fechaInicio', $fechaInicio);
         $stmt->bindParam(':fechaFin', $fechaFin);
         // Ejecutar el procedimiento almacenado
