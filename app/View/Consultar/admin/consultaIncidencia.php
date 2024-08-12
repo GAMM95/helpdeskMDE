@@ -21,8 +21,6 @@
 
     <!-- Formulario Consulta de incidencias -->
     <form id="formConsultarIncidencia" action="consultar-incidencia-admin.php?action=consultar" method="GET" class="card table-card bg-white shadow-md p-6 w-full text-xs mb-2">
-      <!-- <input type="hidden" id="form-action" name="action" value="consultar"> -->
-
       <div class="flex flex-wrap items-center -mx-2 justify-center space-x-2">
         <!-- BUSCAR POR AREA -->
         <div class="w-full md:w-2/5 px-2 mb-2">
@@ -39,14 +37,14 @@
         <!-- BUSCAR POR FECHA DE INICIO -->
         <div class="w-full md:w-1/6 px-2 mb-2">
           <label for="fechaInicio" class="block mb-1 font-bold text-xs">Fecha Inicio:</label>
-          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs cursor-pointer rounded-md">
+          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
         </div>
 
         <!-- BUSCAR POR FECHA DE FIN -->
         <div class="w-full md:w-1/6 px-2 mb-2">
           <label for="fechaFin" class="block mb-1 font-bold text-xs">Fecha Fin:</label>
-          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer rounded-md">
-        </div>
+          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
+          </div>
       </div>
 
       <!-- BOTONES DEL FORMULARIO -->
@@ -55,7 +53,7 @@
           <i class="feather mr-2 icon-search"></i>Buscar
         </button>
         <button type="button" id="limpiarCampos" class="bg-gray-500 text-white font-bold py-2 px-3 rounded-md">
-          <i class="feather mr-2 icon-refresh-cw"></i>Limpiar
+          <i class="feather mr-2 icon-refresh-cw"></i>Nueva consulta
         </button>
       </div>
       <!-- Fin de Botones -->
@@ -83,9 +81,8 @@
 
           <!-- Cuerpo de tabla -->
           <tbody>
-            <?php
-            if (!empty($resultadoBusqueda)):
-              foreach ($resultadoBusqueda as $incidencia): ?>
+            <?php if (!empty($resultadoBusqueda)): ?>
+              <?php foreach ($resultadoBusqueda as $incidencia): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
                   <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_numero']) ?></td>
                   <td class="px-3 py-2"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']) ?></td>
@@ -116,8 +113,8 @@
                     <label class="badge <?= $badgeClass ?>"><?= $estadoDescripcion ?></label>
                   </td>
                 </tr>
-              <?php endforeach;
-            else: ?>
+              <?php endforeach; ?>
+            <?php else: ?>
               <tr>
                 <td colspan="8" class="text-center py-4">No se encontraron incidencias.</td>
               </tr>
@@ -130,5 +127,4 @@
     <!-- Fin tabla de resultados de incidencias -->
   </div>
 </div>
-
 <script src="https://cdn.tailwindcss.com"></script>

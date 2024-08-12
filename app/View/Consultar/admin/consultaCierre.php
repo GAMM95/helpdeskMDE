@@ -76,6 +76,9 @@
           </thead>
           <tbody>
             <?php
+            require_once './app/Model/CierreModel.php';
+            $cierreModel = new CierreModel();
+            $incidencias = $cierreModel->listarCierresAdministrador();
             // Aquí deberías inicializar $resultadoBusqueda con la consulta adecuada
             if (!empty($resultadoBusqueda)) {
               foreach ($resultadoBusqueda as $incidencia) {

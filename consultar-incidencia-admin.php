@@ -1,24 +1,73 @@
 <?php
-
+session_start();
+$action = $_GET['action'] ?? '';
 require_once './app/Controller/IncidenciaController.php';
 require_once './app/Model/IncidenciaModel.php';
-
-$action = $_GET['action'] ?? '';
 
 $incidenciaController = new IncidenciaController();
 $incidenciaModel = new IncidenciaModel();
 
+// Capturar los datos del formulario
+$area = $_GET['area'] ?? '';
+$estado = $_GET['estado'] ?? '';
+$fechaInicio = $_GET['fechaInicio'] ?? '';
+$fechaFin = $_GET['fechaFin'] ?? '';
 $resultadoBusqueda = NULL;
 
 if ($action === 'consultar') {
-  // Capturar los datos del formulario
-  $area = $_GET['area'] ?? '';
-  $estado = $_GET['estado'] ?? '';
-  $fechaInicio = $_GET['fechaInicio'] ?? '';
-  $fechaFin = $_GET['fechaFin'] ?? '';
+  // Depuración: mostrar los parámetros recibidos
+  error_log("Área: " . $area);
+  error_log("Estado: " . $estado);
+  error_log("Fecha Inicio: " . $fechaInicio);
+  error_log("Fecha Fin: " . $fechaFin);
 
-  // Llamar al método del controlador para obtener datos del formulario
+  // Obtener los resultados de la búsqueda
   $resultadoBusqueda = $incidenciaController->consultarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin);
+
+  // Imprime el resultado para depuración
+  error_log("Resultado de la consulta: " . print_r($resultadoBusqueda, true));
+
+  // Dibujar tabla de consultas
+  $html = '';
+  if (!empty($resultadoBusqueda)) {
+    foreach ($resultadoBusqueda as $incidencia) {
+      $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_numero']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['ARE_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['CAT_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_asunto']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_documento']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center text-xs align-middle">';
+
+      $estadoDescripcion = htmlspecialchars($incidencia['EST_descripcion']);
+      $badgeClass = '';
+      switch ($estadoDescripcion) {
+        case 'Abierta':
+          $badgeClass = 'badge-light-danger';
+          break;
+        case 'Recepcionado':
+          $badgeClass = 'badge-light-success';
+          break;
+        case 'Cerrado':
+          $badgeClass = 'badge-light-primary';
+          break;
+        default:
+          $badgeClass = 'badge-light-secondary';
+          break;
+      }
+
+      $html .= '<label class="badge ' . $badgeClass . '">' . $estadoDescripcion . '</label>';
+      $html .= '</td></tr>';
+    }
+  } else {
+    $html = '<tr><td colspan="8" class="text-center py-4">No se encontraron incidencias.</td></tr>';
+  }
+
+  // Devolver el HTML de las filas
+  echo $html;
+  exit;
 } else {
   // Si no hay acción, obtener la lista de incidencias
   $resultadoBusqueda = $incidenciaModel->listarIncidenciasAdministrador();
