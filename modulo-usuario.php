@@ -22,10 +22,7 @@ switch ($action) {
     $usuarioController->registrarUsuario();
     break;
   case 'editar':
-    $personaController->editarPersona();
-    break;
-  case 'filtrar':
-    $personaController->filtrarPersonas();
+    $usuarioController->editarUsuario();
     break;
   case 'habilitar':
     $usuarioController->habilitarUsuario($USU_codigo);

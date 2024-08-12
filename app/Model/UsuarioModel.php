@@ -190,13 +190,13 @@ class UsuarioModel extends Conexion
   }
 
   // TODO: Metodo para actualizar datos del usuario
-  public function actualizarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo)
+  public function actualizarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo, $usu_codigo)
   {
     $conector = parent::getConexion();
     try {
       $sql = "UPDATE USUARIO SET USU_nombre = ?, USU_password = ?, PER_codigo = ?, ROL_codigo = ?, ARE_codigo = ? WHERE USU_codigo = ?";
       $stmt = $conector->prepare($sql);
-      $stmt->execute([$username, $password, $per_codigo, $rol_codigo, $are_codigo]);
+      $stmt->execute([$username, $password, $per_codigo, $rol_codigo, $are_codigo, $usu_codigo]);
       return $stmt->rowCount();
     } catch (PDOException $e) {
       throw new Exception("Error al actualizar usuario: " . $e->getMessage());
@@ -239,7 +239,8 @@ class UsuarioModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "SELECT COUNT(*) as usuarios_total FROM USUARIO";
+        $sql = "SELECT COUNT(*) as usuarios_total FROM USUARIO
+        WHERE EST_codigo = 1";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -293,6 +294,7 @@ class UsuarioModel extends Conexion
     }
   }
 
+  // TODO: Metodo para editar perfil del usuario
   public function editarPerfilUsuario($usu_codigo, $usu_nombre, $usu_password, $per_dni, $per_nombres, $per_apellidoPaterno, $per_apellidoMaterno, $per_celular, $per_email)
   {
     $conector = parent::getConexion();

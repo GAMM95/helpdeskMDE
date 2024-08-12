@@ -45,7 +45,7 @@
           <!-- Inicio de Card de formulario -->
           <div class="card-body">
             <!-- CAMPO ESCONDIDO -->
-            <div class="flex justify-center -mx-2 hidden">
+            <div class="flex justify-center -mx-2 ">
               <!-- CODIGO DE USUARIO -->
               <div class="w-full sm:w-1/4 px-2 mb-2">
                 <div class="flex items-center">

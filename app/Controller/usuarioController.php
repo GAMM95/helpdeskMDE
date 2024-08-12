@@ -62,7 +62,13 @@ class UsuarioController
 
       // Llamar al método del modelo para registrar el usuario en la base de datos
       try {
-        $insertSuccess = $this->usuarioModel->guardarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo);
+        $insertSuccess = $this->usuarioModel->guardarUsuario(
+          $username,
+          $password,
+          $per_codigo,
+          $rol_codigo,
+          $are_codigo
+        );
 
         if ($insertSuccess) {
           // header('Location: modulo-usuario.php?USU_codigo=' . $insertSuccess);
@@ -97,15 +103,15 @@ class UsuarioController
 
       try {
         // Obtener los datos de formulario
+        $codigoUsuario = $_POST['CodUsuario'] ?? null;
         $username = $_POST['username'] ?? null;
         $password = $_POST['password'] ?? null;
-        $per_codigo = $_POST['persona'] ?? null;
-        $rol_codigo = $_POST['rol'] ?? null;
-        $are_codigo = $_POST['area'] ?? null;
-
-
+        $persona = $_POST['persona'] ?? null;
+        $rol = $_POST['rol'] ?? null;
+        $area = $_POST['area'] ?? null;
         // Actualizar usuario
-        $this->usuarioModel->actualizarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo);
+        $this->usuarioModel->actualizarUsuario($username, $password, $persona, $rol, $area, $codigoUsuario);
+        header("Location: modulo-usuario.php");
       } catch (Exception $e) {
         echo json_encode([
           'success' => false,

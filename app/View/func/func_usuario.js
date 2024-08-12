@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 // Cargar opciones de personas
 $(document).ready(function () {
-  console.log("FETCHING")
+  // console.log("FETCHING")
   $.ajax({
     url: 'ajax/getPersona.php',
     type: 'GET',
@@ -19,14 +19,14 @@ $(document).ready(function () {
       select.empty();
       select.append('<option value="" selected disabled>Seleccione una persona</option>');
       $.each(data, function (index, value) {
-        console.log("Codigo: " + index + ", Area: ", value); // Mostrar índice y valor en la consola
+        // console.log("Codigo: " + index + ", Area: ", value); // Mostrar índice y valor en la consola
         select.append('<option value="' + value.PER_codigo + '">' + value.persona + '</option>');
       });
-      if (typeof personaRegistrada !== 'undefined' && personaRegistrada !== '') {
-        select.val(personaRegistrada);
-      } else {
-        select.val('');
-      }
+      // if (typeof personaRegistrada !== 'undefined' && personaRegistrada !== '') {
+      //   select.val(personaRegistrada);
+      // } else {
+      //   select.val('');
+      // }
     },
     error: function (error) {
       console.error("Error fetching personas:", error);
@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 // Cargar opciones de áreas
 $(document).ready(function () {
-  console.log("FETCHING");
+  // console.log("FETCHING");
   $.ajax({
     url: 'ajax/getAreaData.php',
     type: 'GET',
@@ -46,14 +46,9 @@ $(document).ready(function () {
       select.empty();
       select.append('<option value="" selected disabled>Seleccione un area</option>');
       $.each(data, function (index, value) {
-        console.log("Codigo: " + index + ", Area: ", value); // Mostrar índice y valor en la consola
+        // console.log("Codigo: " + index + ", Area: ", value); // Mostrar índice y valor en la consola
         select.append('<option value="' + value.ARE_codigo + '">' + value.ARE_nombre + '</option>');
       });
-      if (typeof areaRegistrada !== 'undefined' && areaRegistrada !== '') {
-        select.val(areaRegistrada);
-      } else {
-        select.val('');
-      }
     },
     error: function (error) {
       console.error("Error fetching areas:", error);
@@ -63,7 +58,7 @@ $(document).ready(function () {
 
 // Cargar opciones de roles
 $(document).ready(function () {
-  console.log("FETCHING");
+  // console.log("FETCHING");
   $.ajax({
     url: 'ajax/getRol.php',
     type: 'GET',
@@ -75,11 +70,6 @@ $(document).ready(function () {
       $.each(data, function (index, value) {
         select.append('<option value="' + value.ROL_codigo + '">' + value.ROL_nombre + '</option>');
       });
-      if (rolRegistrado !== '') {
-        select.val(rolRegistrado);
-      } else {
-        select.val('');
-      }
     },
     error: function (error) {
       console.error("Error fetching roles:", error);
@@ -164,29 +154,35 @@ function enviarFormulario(action) {
     url: url,
     method: 'POST',
     data: data,
-    success: function (response) {
+    success: function (response, error, status) {
+      console.log('Status:', status);
+      console.log('Error de success:', error);
+      console.log(response); // Verifica la respuesta aquí
       if (response.success) {
         if (action === 'registrar') {
           toastr.success('Usuario registrada 1');
         } else if (action === 'editar') {
           toastr.success('Usuario actualizado 1');
         }
-        setTimeout(function () {
-          location.reload();
-        }, 1500);
+        // setTimeout(function () {
+        //   location.reload();
+        // }, 1500);
       }
-      else {
-        if (action === 'registrar') {
-          toastr.success('Usuario registrado');
-        } else if (action === 'editar') {
-          toastr.success('Usuario actualizados');
-        }
-        setTimeout(function () {
-          location.reload();
-        }, 1500);
+      else if (action === 'editar') {
+        toastr.success('Usuario registrado');
+      } else if (action === 'editar') {
+        toastr.success('Usuario actualizados');
       }
+      // setTimeout(function () {
+      //   location.reload();
+      // }, 1500);
+
     },
-    error: function (error) {
+    error: function (response, status, error) {
+      console.log('Status:', status);
+      console.log('Error de error:', error);
+      console.log(response.error); // Verifica la respuesta aquí
+
       if (action === 'registrar') {
         toastr.success('xxx registrada');
       } else if (action === 'editar') {
