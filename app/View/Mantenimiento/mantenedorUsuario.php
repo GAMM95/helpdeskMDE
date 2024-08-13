@@ -45,7 +45,7 @@
           <!-- Inicio de Card de formulario -->
           <div class="card-body">
             <!-- CAMPO ESCONDIDO -->
-            <div class="flex justify-center -mx-2 ">
+            <div class="flex justify-center -mx-2 hidden">
               <!-- CODIGO DE USUARIO -->
               <div class="w-full sm:w-1/4 px-2 mb-2">
                 <div class="flex items-center">
@@ -56,12 +56,16 @@
             </div>
 
             <!-- SELECCION DE PERSONA -->
-            <div class="mb-4">
-              <label for="persona" class="block text-gray-700 font-bold mb-2">Trabajador:</label>
-              <select id="cbo_persona" name="persona" class="border p-2 w-full text-xs cursor-pointer rounded-md">
-                <option value="" selected disabled>Seleccione una persona</option>
-              </select>
+            <div class="mb-4 flex items-center gap-4">
+              <div class="flex-grow">
+                <label for="persona" class="block text-gray-700 font-bold mb-2">Trabajador:</label>
+                <select id="cbo_persona" name="persona" class="border p-2 w-full text-xs cursor-pointer rounded-md">
+                  <option value="" selected disabled>Seleccione una persona</option>
+                </select>
+              </div>
+              <a href="modulo-persona.php" class="bn btn-warning text-xs text-white font-bold py-2 px-3 mt-4 rounded-md" disabled> <i class="feather icon-user-plus"></i></a>
             </div>
+
 
             <!-- Seleccion de area -->
             <div class="mb-4">

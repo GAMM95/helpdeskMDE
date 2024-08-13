@@ -34,7 +34,7 @@
 
     <!-- TODO: TITULO TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
     <div id="noRecepcion" class="flex justify-between items-center mb-2">
-      <h1 class="text-xl text-gray-400">Incidencias recepcionadas</h1>
+      <h1 class="text-xl text-gray-400">Incidencias pendientes para cierre</h1>
       <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar..." oninput="filtrarTablaRecepcionesSinCerrar()" />
     </div>
 

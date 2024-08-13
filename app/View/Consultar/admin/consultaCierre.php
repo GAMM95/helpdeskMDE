@@ -65,11 +65,11 @@
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-3 py-3">N°</th>
-              <th scope="col" class="px-3 py-3">Fecha</th>
+              <th scope="col" class="px-3 py-3">Fecha de Cierre</th>
               <th scope="col" class="px-3 py-3">&Aacute;rea</th>
               <th scope="col" class="px-3 py-3">C&oacute;digo Patrimonial</th>
-              <th scope="col" class="px-3 py-3">Asunto</th>
-              <th scope="col" class="px-3 py-3">Documento</th>
+              <th scope="col" class="px-3 py-3">Asunto de Cierre</th>
+              <th scope="col" class="px-3 py-3">Documento de Cierre</th>
               <th scope="col" class="px-3 py-3">Prioridad</th>
               <th scope="col" class="px-3 py-3">Estado</th>
             </tr>
@@ -79,9 +79,6 @@
           <!-- Cuerpo de la tabla -->
           <tbody>
             <?php
-            // require_once './app/Model/CierreModel.php';
-            // $cierreModel = new CierreModel();
-            // $resultadoBusqueda = $cierreModel->listarCierresAdministrador();
             if (!empty($resultadoBusqueda)): ?>
               <?php foreach ($resultadoBusqueda as $cierre): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
@@ -94,7 +91,7 @@
                   <td class="px-3 py-2"><?= htmlspecialchars($cierre['PRI_nombre']) ?></td>
                   <td class="px-3 py-2 text-center text-xs align-middle">
                     <?php
-                    $estadoDescripcion = htmlspecialchars($cierre['EST_descripcion']);
+                    $estadoDescripcion = htmlspecialchars($cierre['Estado']);
                     $badgeClass = '';
                     switch ($estadoDescripcion) {
                       case 'Cerrado':

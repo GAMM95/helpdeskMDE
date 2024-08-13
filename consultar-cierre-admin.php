@@ -1,14 +1,11 @@
 <?php
 session_start();
 $action = $_GET['action'] ?? '';
-$state = $_GET['state'] ?? '';
-
 require_once 'app/Controller/cierreController.php';
 require_once './app/Model/CierreModel.php';
 
 $cierreController = new cierreController();
 $cierreModel = new CierreModel();
-
 // Capturar los datos del fomrulario
 $area = $_GET['area'] ?? '';
 $codigoPatrimonial = $_GET['codigoPatrimonial'] ?? '';
@@ -16,7 +13,7 @@ $fechaInicio = $_GET['fechaInicio'] ?? '';
 $fechaFin = $_GET['fechaFin'] ?? '';
 $resultadoBusqueda = NULL;
 
-if ($action = 'consultar') {
+if ($action === 'consultar') {
   // Depuración: mostrar los parámetros recibidos
   error_log("Área: " . $area);
   error_log("Codigo Patrimonial: " . $codigoPatrimonial);
@@ -25,44 +22,43 @@ if ($action = 'consultar') {
   // Obtener los resultados de la búsqueda
   $resultadoBusqueda = $cierreController->consultarCierres($area, $codigoPatrimonial, $fechaInicio, $fechaFin);
 
-  // // Dibujar tabla de consultas
-  // $html = '';
-  // require_once './app/Model/CierreModel.php';
-  // $cierreModel = new CierreModel();
-  // $resultadoBusqueda = $cierreModel->buscarCierres($area, $codigoPatrimonial, $fechaInicio, $fechaFin);
-  // if (!empty($resultadoBusqueda)) {
-  //   foreach ($resultadoBusqueda as $cierre) {
-  //     $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
-  //     $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_numero']) . '</td>';
-  //     $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['fechaCierreFormateada']) . '</td>';
-  //     $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['ARE_nombre']) . '</td>';
-  //     $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_codigoPatrimonial']) . '</td>';
-  //     $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_asunto']) . '</td>';
-  //     $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['CIE_documento']) . '</td>';
-  //     $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['PRI_nombre']) . '</td>';
-  //     $html .= '<td class="px-3 py-2 text-center text-xs align-middle">';
+  error_log("Resultado de la consulta: " . print_r($resultadoBusqueda, true));
 
-  //     $estadoDescripcion = htmlspecialchars($cierre['ESTADO']);
-  //     $badgeClass = '';
-  //     switch ($estadoDescripcion) {
-  //       case 'Cerrado':
-  //         $badgeClass = 'badge-light-primary';
-  //         break;
-  //       default:
-  //         $badgeClass = 'badge-light-secondary';
-  //         break;
-  //     }
+  // Dibujar tabla de consultas
+  $html = '';
+  if (!empty($resultadoBusqueda)) {
+    foreach ($resultadoBusqueda as $cierre) {
+      $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_numero']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['fechaCierreFormateada']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['ARE_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_codigoPatrimonial']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_asunto']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['CIE_documento']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['PRI_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center text-xs align-middle">';
 
-  //     $html .= '<label class="badge ' . $badgeClass . '">' . $estadoDescripcion . '</label>';
-  //     $html .= '</td></tr>';
-  //   }
-  // } else {
-  //   $html = '<tr><td colspan="8" class="text-center py-4">No se encontraron incidencias.</td></tr>';
-  // }
+      $estadoDescripcion = htmlspecialchars($cierre['Estado']);
+      $badgeClass = '';
+      switch ($estadoDescripcion) {
+        case 'Cerrado':
+          $badgeClass = 'badge-light-primary';
+          break;
+        default:
+          $badgeClass = 'badge-light-secondary';
+          break;
+      }
 
-  // // Devolver el HTML de las filas
-  // echo $html;
-  // exit;
+      $html .= '<label class="badge ' . $badgeClass . '">' . $estadoDescripcion . '</label>';
+      $html .= '</td></tr>';
+    }
+  } else {
+    $html = '<tr><td colspan="8" class="text-center py-4">No se encontraron incidencias.</td></tr>';
+  }
+
+  // Devolver el HTML de las filas
+  echo $html;
+  exit;
 } else {
   // Si no hay acción, obtener la lista de incidencias
   $resultadoBusqueda = $cierreModel->listarCierresAdministrador();

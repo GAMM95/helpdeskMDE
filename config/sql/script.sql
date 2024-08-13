@@ -500,13 +500,22 @@ SELECT
 I.INC_numero,
 (CONVERT(VARCHAR(10),INC_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada,
 A.ARE_nombre,
+CAT.CAT_nombre,
+I.INC_asunto,
+I.INC_documento,
+PRI_nombre,
 I.INC_codigoPatrimonial,
 (CONVERT(VARCHAR(10),CIE_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), CIE_hora, 0), 7), 6, 0, ' ')) AS fechaCierreFormateada,
 CIE_asunto,
 C.CIE_documento,
 O.CON_descripcion,
-PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
+PER_nombres + ' ' + PER_apellidoPaterno AS Usuario,
+CASE
+ WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
+  ELSE E.EST_descripcion
+END AS Estado
 FROM RECEPCION R
+INNER JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
 RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
 INNER JOIN  AREA A ON I.ARE_codigo = A.ARE_codigo
 INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo

@@ -58,7 +58,7 @@ class cierreController
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
       // Obtener los valores de los parámetros GET o asignar null si no existen
       $area = isset($_GET['area']) ? (int) $_GET['area'] : null;
-      $codigoPatrimonial = isset($_GET['codigoPatrimonial']) ? (int) $_GET['codigoPatrimonial'] : null;
+      $codigoPatrimonial = isset($_GET['codigoPatrimonial']) ? $_GET['codigoPatrimonial'] : null;
       $fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : null;
       $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : null;
       error_log("Área: $area, CodigoPatrimonial: $codigoPatrimonial, Fecha Inicio: $fechaInicio, Fecha Fin: $fechaFin");

@@ -75,7 +75,10 @@ class CierreModel extends Conexion
 	        O.CON_descripcion,
           C.CIE_documento,
 	        u.USU_nombre,
-          C.EST_descripcion
+             CASE
+          WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
+            ELSE E.EST_descripcion
+          END AS Estado
         FROM RECEPCION R
         INNER JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
         RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
@@ -238,7 +241,7 @@ class CierreModel extends Conexion
         $sql = "EXEC sp_ConsultarCierres :area, :codigoPatrimonial, :fechaInicio, :fechaFin";
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':area', $area, PDO::PARAM_INT);
-        $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial, PDO::PARAM_STR_CHAR);
+        $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial);
         $stmt->bindParam(':fechaInicio', $fechaInicio);
         $stmt->bindParam(':fechaFin', $fechaFin);
         // Ejecutar el procedimiento almacenado

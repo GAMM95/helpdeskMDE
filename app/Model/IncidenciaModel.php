@@ -148,7 +148,7 @@ class IncidenciaModel extends Conexion
           CASE
               WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
               ELSE E.EST_descripcion
-          END AS EST_descripcion
+          END AS Estado
         FROM INCIDENCIA I
         INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
         INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
