@@ -291,112 +291,154 @@ document.addEventListener('DOMContentLoaded', function () {
     const doc = new jsPDF();
     const logoUrl = './public/assets/escudo_mde.png';
 
-    // Espaciado para ajustar todo el contenido
-    const marginX = 20; // Margen horizontal
-    const marginY = 20; // Margen vertical
+    const marginX = 20;
+    const marginY = 5;
 
-    // Función para agregar encabezado
     function addHeader(doc) {
       doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
 
-      // Obtener la fecha actual
       const fechaImpresion = new Date().toLocaleDateString();
-
-      // Definir el texto del encabezado
       const headerText1 = 'Municipalidad Distrital de La Esperanza';
       const headerText2 = 'Subgerencia de Informática y Sistemas';
+      const reportTitle = 'REPORTE DE INCIDENCIA';
 
-      // Obtener el ancho de la página
       const pageWidth = doc.internal.pageSize.width;
+      const marginX = 10; // Margen desde el borde izquierdo
+      const marginY = 10; // Margen desde el borde superior
+      const logoWidth = 20;
+      const logoHeight = 20;
 
-      // Definir posiciones para el logo, el título y el texto adicional
-      const logoX = marginX; // Posición horizontal del logo
-      const logoY = marginY; // Posición vertical del logo
-      const logoWidth = 20; // Ancho del logo
-      const logoHeight = 20; // Alto del logo
-
-      // Agregar el logo a la izquierda
+      // Agregar el logo
+      const logoX = marginX;
+      const logoY = marginY;
       doc.addImage(logoUrl, 'PNG', logoX, logoY, logoWidth, logoHeight);
 
-      // Agregar el texto al lado del logo
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      const textLines = doc.splitTextToSize(headerText1, pageWidth - (logoWidth + 30 + marginX));
-      doc.text(textLines, logoX + logoWidth + 10, logoY + 10); // Texto a la derecha del logo
+      // Posiciones para los textos
+      const headerText1X = logoX + logoWidth + 10; // 10px de espacio después del logo
+      const headerText1Y = logoY + logoHeight / 2; // Centrar verticalmente con el logo
 
-      // Centrar el título
+      // Ajuste para el texto del centro (titulo del reporte)
       doc.setFontSize(16);
       doc.setFont('helvetica', 'bold');
-      const title = 'Detalles de la Incidencia';
-      const titleWidth = doc.getTextWidth(title);
+      const titleWidth = doc.getTextWidth(reportTitle);
       const titleX = (pageWidth - titleWidth) / 2;
-      const titleY = 40; // Ajusta la posición vertical del título
+      const titleY = logoY + logoHeight + 15; // Ajustar posición vertical del título
 
-      // Agregar el título al centro
-      doc.text(title, titleX, titleY);
-      doc.setLineWidth(0.5);
-      doc.line(titleX, titleY + 3, titleX + titleWidth, titleY + 3); // Subrayar el título
-
-      // Información adicional a la derecha
+      // Ajuste para el texto de la derecha (subgerencia y fecha)
       doc.setFontSize(8);
       doc.setFont('helvetica', 'normal');
-      doc.text(headerText2, pageWidth - marginX - doc.getTextWidth(headerText2), 50); // Ajusta la posición vertical si es necesario
-      doc.text(`Fecha de impresión: ${fechaImpresion}`, pageWidth - marginX - doc.getTextWidth(`Fecha de impresión: ${fechaImpresion}`), 60); // Ajusta la posición vertical si es necesario
+      const fechaText = `Fecha de impresión: ${fechaImpresion}`;
+      const headerText2Width = doc.getTextWidth(headerText2);
+      const fechaTextWidth = doc.getTextWidth(fechaText);
+      const headerText2X = pageWidth - marginX - headerText2Width;
+      const headerText2Y = logoY + logoHeight / 2; // Centrar verticalmente con el logo
+      const fechaTextX = pageWidth - marginX - fechaTextWidth;
+      const fechaTextY = headerText2Y + 10; // Espacio debajo del texto de la subgerencia
+
+      // Agregar texto del encabezado a la izquierda del logo
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text(headerText1, headerText1X, headerText1Y);
+
+      // Agregar el título centrado
+      doc.text(reportTitle, titleX, titleY);
+      doc.setLineWidth(0.5);
+      doc.line(titleX, titleY + 3, titleX + titleWidth, titleY + 3);
+
+      // Agregar texto de la subgerencia y fecha de impresión
+      doc.text(headerText2, headerText2X, headerText2Y);
+      doc.text(fechaText, fechaTextX, fechaTextY);
 
       // Línea horizontal debajo del encabezado
       doc.setLineWidth(0.1);
-      doc.line(marginX, 75, pageWidth - marginX, 75); // Línea horizontal debajo del encabezado
+      doc.line(marginX, titleY + 20, pageWidth - marginX, titleY + 20);
     }
 
-    // Agregar encabezado
+    // Llamar a la función para agregar el encabezado
     addHeader(doc);
 
+
     // Información de la incidencia
+    const marginXDetalle = 30; // Margen horizontal para la información
+    const lineHeight = 7; // Altura de línea
+    const bulletSize = 0.5; // Tamaño de la viñeta (círculo)
+    const textWidth = doc.internal.pageSize.width - 2 * marginXDetalle; // Ancho máximo del texto
+
+    // Ajusta la posición vertical del subtítulo y la información
+    const titleY = 60; // Posición vertical del subtítulo
+    const infoStartY = 70; // Posición vertical inicial de la información
+
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(11);
-    doc.text(`Número de incidencia: ${datos['th']}`, marginX, 85);
-    doc.text(`Fecha de entrada: ${datos[0]}`, marginX, 95);
-    doc.text(`Código Patrimonial: ${datos[1]}`, marginX, 105);
-    doc.text(`Asunto: ${datos[2]}`, marginX, 115);
-    doc.text(`Documento: ${datos[3]}`, marginX, 125);
-    doc.text(`Categoría: ${datos[4]}`, marginX, 135);
-    doc.text(`Área: ${datos[5]}`, marginX, 145);
-    doc.text(`Descripción: ${datos[6]}`, marginX, 155);
-    doc.text(`Usuario: ${datos[7]}`, marginX, 165);
+    doc.setFontSize(12); // Tamaño del subtítulo
+    doc.text('Detalle de la Incidencia:', marginX, titleY); // Subtítulo
 
-    // Función para agregar pie de página
-    function addFooter(doc, pageNumber, totalPages) {
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11); // Tamaño de texto normal
 
-      // Agregar una línea horizontal encima del pie de página
-      const footerY = 285; // Posición vertical del pie de página
-      doc.setLineWidth(0.1);
-      doc.line(marginX, footerY - 5, doc.internal.pageSize.width - marginX, footerY - 5); // Línea encima del pie de página
-
-      // Agregar texto en el pie de página
-      const footerText = 'Sistema HelpDesk de la MDE';
-      const pageInfo = `Página ${pageNumber} de ${totalPages}`;
-
-      // Obtener el ancho de la página
-      const pageWidth = doc.internal.pageSize.width;
-
-      // Posicionar el texto en el pie de página
-      doc.text(footerText, marginX, footerY); // Texto alineado a la izquierda
-      doc.text(pageInfo, pageWidth - marginX - doc.getTextWidth(pageInfo), footerY); // Texto alineado a la derecha
+    // Función para dibujar una viñeta (círculo)
+    function drawBullet(x, y) {
+      doc.setFillColor(0, 0, 0); // Color negro para la viñeta
+      doc.circle(x, y - 1.5, bulletSize, 'F'); // Dibuja un círculo lleno
     }
 
-    // Agregar pie de página
+    // Función para agregar texto con viñeta y ajuste de línea
+    function addTextWithBullet(text, yPosition) {
+      const lines = doc.splitTextToSize(text, textWidth); // Divide el texto en líneas ajustadas al ancho
+      lines.forEach((line, index) => {
+        drawBullet(marginXDetalle - bulletSize - 2, yPosition + (index * lineHeight));
+        doc.text(line, marginXDetalle, yPosition + (index * lineHeight));
+      });
+    }
+
+    // Añadir viñetas y texto
+    let currentY = infoStartY;
+
+    addTextWithBullet(`Número de incidencia: ${datos['th']}`, currentY);
+    currentY += lineHeight * (doc.splitTextToSize(`Número de incidencia: ${datos['th']}`, textWidth).length);
+    addTextWithBullet(`Fecha de entrada: ${datos[0]}`, currentY);
+    currentY += lineHeight * (doc.splitTextToSize(`Fecha de entrada: ${datos[0]}`, textWidth).length);
+    addTextWithBullet(`Código Patrimonial: ${datos[1]}`, currentY);
+    currentY += lineHeight * (doc.splitTextToSize(`Código Patrimonial: ${datos[1]}`, textWidth).length);
+    addTextWithBullet(`Asunto: ${datos[2]}`, currentY);
+    currentY += lineHeight * (doc.splitTextToSize(`Asunto: ${datos[2]}`, textWidth).length);
+    addTextWithBullet(`Documento: ${datos[3]}`, currentY);
+    currentY += lineHeight * (doc.splitTextToSize(`Documento: ${datos[3]}`, textWidth).length);
+    addTextWithBullet(`Categoría: ${datos[4]}`, currentY);
+    currentY += lineHeight * (doc.splitTextToSize(`Categoría: ${datos[4]}`, textWidth).length);
+    addTextWithBullet(`Área: ${datos[5]}`, currentY);
+    currentY += lineHeight * (doc.splitTextToSize(`Área: ${datos[5]}`, textWidth).length);
+    addTextWithBullet(`Descripción: ${datos[6]}`, currentY);
+    currentY += lineHeight * (doc.splitTextToSize(`Descripción: ${datos[6]}`, textWidth).length);
+    addTextWithBullet(`Usuario: ${datos[7]}`, currentY);
+    // Fin de la informacion de la incidencia
+
+    // Footer del PDF
+    function addFooter(doc, pageNumber, totalPages) {
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'italic');
+      const footerY = 285;
+      doc.setLineWidth(0.05);
+      doc.line(marginX, footerY - 5, doc.internal.pageSize.width - marginX, footerY - 5);
+
+      const footerText = 'Sistema HelpDesk de la MDE';
+      const pageInfo = `Página ${pageNumber} de ${totalPages}`;
+      const pageWidth = doc.internal.pageSize.width;
+
+      doc.text(footerText, marginX, footerY);
+      doc.text(pageInfo, pageWidth - marginX - doc.getTextWidth(pageInfo), footerY);
+    }
+
     const totalPages = doc.internal.getNumberOfPages();
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i);
       addFooter(doc, i, totalPages);
     }
+    // Fin del foote
 
-    doc.save('Detalle de incidencia.pdf');
+    doc.output('dataurlnewwindow');
   });
 });
+
 
 $(document).ready(function () {
   $('#tablaListarIncidencias').on('click', 'tr', function () {
