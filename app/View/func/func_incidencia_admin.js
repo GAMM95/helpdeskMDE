@@ -289,41 +289,40 @@ document.addEventListener('DOMContentLoaded', function () {
     }).get();
 
     const doc = new jsPDF();
-    const logoUrl = './public/assets/escudo_mde.png';
+    const logoUrl = './public/assets/escudo.png';
 
     const marginX = 20;
-    const marginY = 5;
 
     function addHeader(doc) {
       doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
 
       const fechaImpresion = new Date().toLocaleDateString();
-      const headerText1 = 'Municipalidad Distrital de La Esperanza';
       const headerText2 = 'Subgerencia de Informática y Sistemas';
       const reportTitle = 'REPORTE DE INCIDENCIA';
 
       const pageWidth = doc.internal.pageSize.width;
       const marginX = 10; // Margen desde el borde izquierdo
       const marginY = 10; // Margen desde el borde superior
-      const logoWidth = 20;
-      const logoHeight = 20;
+      const logoWidth = 25;
+      const logoHeight = 25;
 
       // Agregar el logo
       const logoX = marginX;
       const logoY = marginY;
       doc.addImage(logoUrl, 'PNG', logoX, logoY, logoWidth, logoHeight);
 
-      // Posiciones para los textos
-      const headerText1X = logoX + logoWidth + 10; // 10px de espacio después del logo
-      const headerText1Y = logoY + logoHeight / 2; // Centrar verticalmente con el logo
-
-      // Ajuste para el texto del centro (titulo del reporte)
-      doc.setFontSize(16);
-      doc.setFont('helvetica', 'bold');
+      // Ajuste para el texto del centro (título del reporte)
+      doc.setFont('helvetica', 'bold'); // Configurar fuente a bold
+      doc.setFontSize(16); // Aumentar tamaño del título
       const titleWidth = doc.getTextWidth(reportTitle);
       const titleX = (pageWidth - titleWidth) / 2;
-      const titleY = logoY + logoHeight + 15; // Ajustar posición vertical del título
+      const titleY = 25; // Fija la posición vertical del título de forma independiente
+
+      // Agregar el título centrado
+      doc.text(reportTitle, titleX, titleY);
+      doc.setLineWidth(0.5);
+      doc.line(titleX, titleY + 3, titleX + titleWidth, titleY + 3);
 
       // Ajuste para el texto de la derecha (subgerencia y fecha)
       doc.setFontSize(8);
@@ -334,83 +333,49 @@ document.addEventListener('DOMContentLoaded', function () {
       const headerText2X = pageWidth - marginX - headerText2Width;
       const headerText2Y = logoY + logoHeight / 2; // Centrar verticalmente con el logo
       const fechaTextX = pageWidth - marginX - fechaTextWidth;
-      const fechaTextY = headerText2Y + 10; // Espacio debajo del texto de la subgerencia
-
-      // Agregar texto del encabezado a la izquierda del logo
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      doc.text(headerText1, headerText1X, headerText1Y);
-
-      // Agregar el título centrado
-      doc.text(reportTitle, titleX, titleY);
-      doc.setLineWidth(0.5);
-      doc.line(titleX, titleY + 3, titleX + titleWidth, titleY + 3);
+      const fechaTextY = headerText2Y + 5; // Reducir este valor para disminuir el espacio entre líneas
 
       // Agregar texto de la subgerencia y fecha de impresión
       doc.text(headerText2, headerText2X, headerText2Y);
       doc.text(fechaText, fechaTextX, fechaTextY);
-
-      // Línea horizontal debajo del encabezado
-      doc.setLineWidth(0.1);
-      doc.line(marginX, titleY + 20, pageWidth - marginX, titleY + 20);
     }
 
     // Llamar a la función para agregar el encabezado
     addHeader(doc);
 
 
-    // Información de la incidencia
-    const marginXDetalle = 30; // Margen horizontal para la información
-    const lineHeight = 7; // Altura de línea
-    const bulletSize = 0.5; // Tamaño de la viñeta (círculo)
-    const textWidth = doc.internal.pageSize.width - 2 * marginXDetalle; // Ancho máximo del texto
-
     // Ajusta la posición vertical del subtítulo y la información
     const titleY = 60; // Posición vertical del subtítulo
-    const infoStartY = 70; // Posición vertical inicial de la información
-
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('helvetica', 'bold');
     doc.setFontSize(12); // Tamaño del subtítulo
     doc.text('Detalle de la Incidencia:', marginX, titleY); // Subtítulo
 
-    doc.setFontSize(11); // Tamaño de texto normal
-
-    // Función para dibujar una viñeta (círculo)
-    function drawBullet(x, y) {
-      doc.setFillColor(0, 0, 0); // Color negro para la viñeta
-      doc.circle(x, y - 1.5, bulletSize, 'F'); // Dibuja un círculo lleno
-    }
-
-    // Función para agregar texto con viñeta y ajuste de línea
-    function addTextWithBullet(text, yPosition) {
-      const lines = doc.splitTextToSize(text, textWidth); // Divide el texto en líneas ajustadas al ancho
-      lines.forEach((line, index) => {
-        drawBullet(marginXDetalle - bulletSize - 2, yPosition + (index * lineHeight));
-        doc.text(line, marginXDetalle, yPosition + (index * lineHeight));
-      });
-    }
-
-    // Añadir viñetas y texto
-    let currentY = infoStartY;
-
-    addTextWithBullet(`Número de incidencia: ${datos['th']}`, currentY);
-    currentY += lineHeight * (doc.splitTextToSize(`Número de incidencia: ${datos['th']}`, textWidth).length);
-    addTextWithBullet(`Fecha de entrada: ${datos[0]}`, currentY);
-    currentY += lineHeight * (doc.splitTextToSize(`Fecha de entrada: ${datos[0]}`, textWidth).length);
-    addTextWithBullet(`Código Patrimonial: ${datos[1]}`, currentY);
-    currentY += lineHeight * (doc.splitTextToSize(`Código Patrimonial: ${datos[1]}`, textWidth).length);
-    addTextWithBullet(`Asunto: ${datos[2]}`, currentY);
-    currentY += lineHeight * (doc.splitTextToSize(`Asunto: ${datos[2]}`, textWidth).length);
-    addTextWithBullet(`Documento: ${datos[3]}`, currentY);
-    currentY += lineHeight * (doc.splitTextToSize(`Documento: ${datos[3]}`, textWidth).length);
-    addTextWithBullet(`Categoría: ${datos[4]}`, currentY);
-    currentY += lineHeight * (doc.splitTextToSize(`Categoría: ${datos[4]}`, textWidth).length);
-    addTextWithBullet(`Área: ${datos[5]}`, currentY);
-    currentY += lineHeight * (doc.splitTextToSize(`Área: ${datos[5]}`, textWidth).length);
-    addTextWithBullet(`Descripción: ${datos[6]}`, currentY);
-    currentY += lineHeight * (doc.splitTextToSize(`Descripción: ${datos[6]}`, textWidth).length);
-    addTextWithBullet(`Usuario: ${datos[7]}`, currentY);
-    // Fin de la informacion de la incidencia
+    // Información de la incidencia en tabla
+    doc.autoTable({
+      startY: 65, // Posición vertical donde empezará la tabla
+      margin: { left: 20 }, // Margen izquierdo
+      head: [['Campo', 'Descripción']], // Encabezado de la tabla
+      body: [
+        ['Número de incidencia:', datos['th']],
+        ['Fecha de entrada:', datos[0]],
+        ['Categoría:', datos[4]],
+        ['Asunto:', datos[2]],
+        ['Documento:', datos[3]],
+        ['Código Patrimonial:', datos[1]],
+        ['Área:', datos[5]],
+        ['Descripción:', datos[6]],
+        ['Usuario:', datos[7]]
+      ],
+      styles: {
+        fontSize: 11,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [44, 62, 80],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+      },
+    });
 
     // Footer del PDF
     function addFooter(doc, pageNumber, totalPages) {
@@ -433,12 +398,11 @@ document.addEventListener('DOMContentLoaded', function () {
       doc.setPage(i);
       addFooter(doc, i, totalPages);
     }
-    // Fin del foote
 
     doc.output('dataurlnewwindow');
   });
-});
 
+});
 
 $(document).ready(function () {
   $('#tablaListarIncidencias').on('click', 'tr', function () {
