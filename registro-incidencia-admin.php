@@ -38,7 +38,7 @@ switch ($action) {
   <meta name="keywords" content="">
   <meta name="author" content="Phoenixcoded" />
   <!-- Favicon icon -->
-  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <!-- <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon"> -->
 
   <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">
@@ -53,7 +53,7 @@ switch ($action) {
     </div>
   </div>
 
-  <?php  include('app/View/partials/admin/navbar.php'); ?>
+  <?php include('app/View/partials/admin/navbar.php'); ?>
   <?php include('app/View/partials/admin/header.php'); ?>
   <?php include('app/View/Registrar/admin/registroIncidencias.php'); ?>
 
@@ -66,6 +66,7 @@ switch ($action) {
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
 
   <script src="./app/View/func/func_incidencia_admin.js"></script>
+  <script src="./app/View/func/Reports/reporteIncidencia.js"></script>
 
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
@@ -76,6 +77,11 @@ switch ($action) {
 
   <!-- Incluir JS de Select2 -->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+  <!-- jsPDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- jsPDF AutoTable plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
 </body>
 
 </html>
