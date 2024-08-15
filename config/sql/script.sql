@@ -287,6 +287,7 @@ GO
 
 -- CREACION DE TABLA INCIDENCIA
 CREATE TABLE INCIDENCIA (
+<<<<<<< HEAD
     INC_numero SMALLINT NOT NULL,
     INC_numero_formato VARCHAR(20) NULL,
     INC_fecha DATE NOT NULL,
@@ -394,6 +395,34 @@ GO
 --INSERT INTO INCIDENCIA  VALUES ('2024-05-31','10:32:15','No enciende CPU','Se presiona y no enciende','S/D','740895000365',3,1,21,3);
 --INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo) 
 --VALUES ('2024-03-12','12:32:10','abc','as','S/D','705402564789',3,1,1,1) ;
+=======
+	INC_numero SMALLINT IDENTITY(1, 1),
+	
+	INC_fecha DATE NOT NULL,
+	INC_hora TIME NOT NULL,
+	INC_asunto VARCHAR(200) NOT NULL,
+	INC_descripcion VARCHAR(500) NULL,
+	INC_documento VARCHAR(100) NOT NULL,
+	INC_codigoPatrimonial CHAR(12) NULL,
+	EST_codigo SMALLINT NOT NULL,
+	CAT_codigo SMALLINT NOT NULL,
+	ARE_codigo SMALLINT NOT NULL,
+	USU_codigo SMALLINT NOT NULL,
+	CONSTRAINT pk_incidencia PRIMARY KEY (INC_numero),
+	CONSTRAINT fk_estado_incidencia FOREIGN KEY (EST_codigo) REFERENCES ESTADO (EST_codigo),
+	CONSTRAINT fk_categoria_incidencia FOREIGN KEY (CAT_codigo) REFERENCES CATEGORIA (CAT_codigo),
+	CONSTRAINT fk_area_incidencia FOREIGN KEY (ARE_codigo) REFERENCES AREA (ARE_codigo),
+	CONSTRAINT fk_usuario_incidencia FOREIGN KEY (USU_codigo) REFERENCES USUARIO (USU_codigo)
+);
+GO
+
+ALTER TABLE INCIDENCIA
+ADD INC_numero_formato VARCHAR(20) NULL;
+GO
+
+
+
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
 
 -- CREACION DE TABLA RECEPCION
 CREATE TABLE RECEPCION (

@@ -27,7 +27,11 @@
     <form id="formIncidencia" action="registro-incidencia-admin.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
 
       <!-- TODO: FILA OCULTA DEL FORMULARIO - NUMERO DE INCIDENCIA -->
+<<<<<<< HEAD
       <div class="flex items-center mb-4">
+=======
+      <div class="flex items-center mb-4 ">
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
         <label for="numero_incidencia" class="block font-bold mb-1 mr-1 text-lime-500">Nro Incidencia:</label>
         <input type="text" id="numero_incidencia" name="numero_incidencia" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs" readonly>
       </div>
@@ -92,24 +96,43 @@
           <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese asunto">
         </div>
 
+<<<<<<< HEAD
         <!-- DOCUMENTO DE LA INCIDENCIA -->
+=======
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
         <div class="w-full sm:w-1/3 px-2 mb-2">
           <label for="documento" class="block mb-1 font-bold text-xs">Documento: *</label>
           <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese documento">
         </div>
       </div>
 
+<<<<<<< HEAD
       <!-- TODO: TERCERA FILA DEL FORMULARIO -->
       <div class="flex flex-wrap -mx-2">
+=======
+ 
+      </div>
+
+      <!-- TODO: TERCERA FILA DEL FORMULARIO -->
+      <div class="flex flex-wrap -mx-2">
+  
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
         <!-- DESCRIPCION DE LA INCIDENCIA -->
         <div class="w-full md:w-1/1 px-2 mb-2">
           <label for="descripcion" class="block mb-1 font-bold text-xs">Descripci&oacute;n:</label>
           <input type="text" id="descripcion" name="descripcion" class="border p-2 w-full text-xs mb-3 rounded-md" placeholder="Ingrese descripci&oacute;n (opcional)">
         </div>
       </div>
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
       <!-- TODO: RECOPILACION DE VALORES DE CADA INPUT Y COMBOBOX     -->
       <script>
         // Asignación de valores predefinidos al cargar la página
+        document.getElementById('numero_incidencia').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['INC_incidencia'] : $fecha_actual; ?>';
         document.getElementById('fecha_incidencia').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['INC_fecha'] : $fecha_actual; ?>';
         document.getElementById('hora').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['INC_hora'] : $hora_actual; ?>';
         document.getElementById('cbo_area').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['ARE_codigo'] : ''; ?>';
@@ -163,6 +186,7 @@
         <table id="tablaListarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
+              <th scope="col" class="px-6 py-2 hidden">N°</th>
               <th scope="col" class="px-6 py-2">N°</th>
               <th scope="col" class="px-6 py-2">Incidencia</th>
               <th scope="col" class="px-6 py-2">Fecha de entrada</th>
@@ -172,14 +196,22 @@
               <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-6 py-2">&Aacute;rea</th>
               <th scope="col" class="px-6 py-2 hidden">descripcion</th>
+<<<<<<< HEAD
               <th scope="col" class="px-6 py-2 hidden">Estado</th>
+=======
+              <th scope="col" class="px-6 py-2 hidden">estado</th>
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
               <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($incidencias as $incidencia) : ?>
               <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+<<<<<<< HEAD
                 <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero']; ?></th>
+=======
+                <th scope='row' class=' hidden px-6 py-3 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero']; ?></th>
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
                 <td class='px-6 py-3'><?= $incidencia['INC_numero_formato']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
@@ -207,7 +239,13 @@
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- jsPDF Library -->
+<!-- jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<<<<<<< HEAD
 <!-- jsPDF AutoTable plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+=======
+
+<!-- jsPDF AutoTable -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.24/jspdf.plugin.autotable.min.js"></script>
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5

@@ -38,7 +38,7 @@ switch ($action) {
   <meta name="keywords" content="">
   <meta name="author" content="Phoenixcoded" />
   <!-- Favicon icon -->
-  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <!-- <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon"> -->
 
   <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">
@@ -53,7 +53,7 @@ switch ($action) {
     </div>
   </div>
 
-  <?php  include('app/View/partials/admin/navbar.php'); ?>
+  <?php include('app/View/partials/admin/navbar.php'); ?>
   <?php include('app/View/partials/admin/header.php'); ?>
   <?php include('app/View/Registrar/admin/registroIncidencias.php'); ?>
 

@@ -3,7 +3,11 @@ $(document).ready(function () {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
     "timeOut": "2000"
+<<<<<<< HEAD
   }; 
+=======
+  };
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
 });
 // $('#imprimir-incidencia').click(function () {
 //   const filaSeleccionada = $('#tablaListarIncidencias .selected');
@@ -191,7 +195,11 @@ document.addEventListener('DOMContentLoaded', function () {
       doc.setFontSize(16); // Aumentar tamaño del título
       const titleWidth = doc.getTextWidth(reportTitle);
       const titleX = (pageWidth - titleWidth) / 2;
+<<<<<<< HEAD
       const titleY = 20; // Fija la posición vertical del título de forma independiente
+=======
+      const titleY = 25; // Fija la posición vertical del título de forma independiente
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
 
       // Agregar el título centrado
       doc.text(reportTitle, titleX, titleY);
@@ -199,8 +207,13 @@ document.addEventListener('DOMContentLoaded', function () {
       doc.line(titleX, titleY + 3, titleX + titleWidth, titleY + 3);
 
       // Ajuste para el texto de la derecha (subgerencia y fecha)
+<<<<<<< HEAD
       doc.setFontSize(9);
       doc.setFont('times', 'normal');
+=======
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
       const fechaText = `Fecha de impresión: ${fechaImpresion}`;
       const headerText2Width = doc.getTextWidth(headerText2);
       const fechaTextWidth = doc.getTextWidth(fechaText);
@@ -210,8 +223,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const fechaTextY = headerText2Y + 5; // Reducir este valor para disminuir el espacio entre líneas
 
       // Agregar texto de la subgerencia y fecha de impresión
+<<<<<<< HEAD
       doc.text(headerText2, headerText2X, headerText2Y - 10);
       doc.text(fechaText, fechaTextX, fechaTextY - 10);
+=======
+      doc.text(headerText2, headerText2X, headerText2Y);
+      doc.text(fechaText, fechaTextX, fechaTextY);
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
     }
 
     // Llamar a la función para agregar el encabezado
@@ -253,6 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Ajusta la posición vertical del subtítulo y la información
+<<<<<<< HEAD
     const titleFirma = 200; // Posición vertical del texto "Firma y Sello"
     const titleResponsable = titleFirma + 5; // Posición vertical del texto "Responsable del Área Usuaria"
     doc.setFont('times', 'normal');
@@ -286,6 +305,18 @@ document.addEventListener('DOMContentLoaded', function () {
     doc.text(textResponsable, centerX + (lineWidth - textWidthResponsable) / 2, titleResponsable);
 
 
+=======
+    const titleFirma = 200; // Posición vertical del subtítulo
+    doc.setFont('times', 'normal');
+    doc.setFontSize(10); // Tamaño del subtítulo
+    // Calcula el ancho del texto en píxeles
+    const text = '         Firma y Sello \nResponsable del Área Usuaria';
+    const textWidth = doc.getTextWidth(text);
+    // Dibuja la línea con el mismo ancho que el texto
+    doc.line(marginX + 80, titleFirma - 5, marginX + 80 + textWidth, titleFirma - 5);
+    // Dibuja el texto
+    doc.text(text, marginX + 80, titleFirma); // Subtítulo
+>>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
 
     // Footer del PDF
     function addFooter(doc, pageNumber, totalPages) {
