@@ -407,7 +407,9 @@ class IncidenciaModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "SELECT INC_numero, (CONVERT(VARCHAR(10),INC_fecha,103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VarChar(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada, 
+        $sql = "SELECT INC_numero, 
+        INC_numero_formato,
+        (CONVERT(VARCHAR(10),INC_fecha,103)) AS fechaIncidenciaFormateada, 
         INC_asunto, INC_descripcion, 
         INC_documento, INC_codigoPatrimonial, 
         c.CAT_nombre, a.ARE_nombre, u.USU_nombre,

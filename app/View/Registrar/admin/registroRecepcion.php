@@ -49,7 +49,8 @@
         <table id="tablaIncidenciasSinRecepcionar" class="w-full text-xs text-left rtl:text-right text-gray-500 bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-6 py-2">N°</th>
+              <th scope="col" class="px-6 py-2 hidden">N°</th>
+              <th scope="col" class="px-6 py-2">Incidencia</th>
               <th scope="col" class="px-6 py-2">Fecha incidencia</th>
               <th scope="col" class="px-6 py-2">&Aacute;rea</th>
               <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
@@ -62,7 +63,8 @@
           <tbody>
             <?php foreach ($incidencias as $incidencia) : ?>
               <tr class=' hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>
-                <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap'><?= $incidencia['INC_numero']; ?></th>
+                <th scope='row' class='hidden px-6 py-3 font-medium text-gray-900 whitespace-nowrap'><?= $incidencia['INC_numero']; ?></th>
+                <td class='px-6 py-2'><?= $incidencia['INC_numero_formato']; ?></td>
                 <td class='px-6 py-2'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
                 <td class='px-6 py-2'><?= $incidencia['ARE_nombre']; ?></td>
                 <td class='px-6 py-2'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
@@ -203,7 +205,7 @@
               <tr>
                 <th scope="col" class="px-6 py-2 hidden">Recepci&oacute;n</th>
                 <th scope="col" class="px-6 py-2">Incidencia</th>
-                <th scope="col" class="px-6 py-2">Fecha de recepci&oacute;n</th>
+                <th scope="col" class="px-6 py-2">Fecha  recepci&oacute;n</th>
                 <th scope="col" class="px-6 py-2">&Aacute;rea</th>
                 <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
                 <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
@@ -225,7 +227,7 @@
                 echo $recepcion['REC_numero'];
                 echo "</th>";
                 echo "<td class='px-6 py-3'>";
-                echo $recepcion['INC_numero'];
+                echo $recepcion['INC_numero_formato'];
                 echo "</td>";
                 echo "<td class='px-6 py-3'>";
                 echo $recepcion['fechaRecepcionFormateada'];

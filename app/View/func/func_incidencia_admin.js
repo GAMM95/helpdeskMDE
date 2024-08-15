@@ -183,8 +183,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       // Mapeo de los valores de las celdas a los inputs del formulario
 
-      // const codIncidencia = fila.querySelector('th').innerText.trim();
-      const incidencia = celdas[0].innerText.trim();
+      const codIncidencia = fila.querySelector('th').innerText.trim();
       const codigoPatrimonialValue = celdas[2].innerText.trim();
       const asuntoValue = celdas[3].innerText.trim();
       const documentoValue = celdas[4].innerText.trim();
@@ -194,8 +193,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
       // Seteo de valores en los inputs
-      // document.getElementById('numero_incidencia').value = codIncidencia;
-      document.getElementById('numero_incidencia').value = incidencia;
+      document.getElementById('numero_incidencia').value = codIncidencia;
       document.getElementById('codigo_patrimonial').value = codigoPatrimonialValue;
       document.getElementById('asunto').value = asuntoValue;
       document.getElementById('documento').value = documentoValue;

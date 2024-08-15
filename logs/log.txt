@@ -383,3 +383,5 @@ Nombre de Persona: Mery Cumpa, Rol: Usuario, Codigo Area: 15, Área: Secretaría
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
 >>>>>>> 184f8804edad350601fd1f18c4a694568e0b3fd5
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95

@@ -85,7 +85,7 @@ class RecepcionModel extends Conexion
     try {
       if ($conector != null) {
 
-        $sql = "SELECT i.INC_numero, REC_numero, 
+        $sql = "SELECT i.INC_numero, INC_numero_formato, REC_numero, 
         (CONVERT(VARCHAR(10),REC_fecha,103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VarChar(7), REC_hora, 0), 7), 6, 0, ' ')) AS fechaRecepcionFormateada,
         a.ARE_nombre, i.INC_codigoPatrimonial, INC_asunto, INC_documento, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre,
         PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
@@ -122,8 +122,8 @@ class RecepcionModel extends Conexion
     $conector = parent::getConexion();
     if ($conector != null) {
       try {
-        $sql = "SELECT REC_numero, i.INC_numero, 
-        (CONVERT(VARCHAR(10),REC_fecha,103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VarChar(7), REC_hora, 0), 7), 6, 0, ' ')) AS fechaRecepcionFormateada,
+        $sql = "SELECT REC_numero, i.INC_numero, INC_numero_formato,
+        (CONVERT(VARCHAR(10),REC_fecha,103)) AS fechaRecepcionFormateada,
         a.ARE_nombre, INC_codigoPatrimonial, c.CAT_nombre, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre,
         PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
         FROM RECEPCION r
