@@ -287,24 +287,109 @@ GO
 
 -- CREACION DE TABLA INCIDENCIA
 CREATE TABLE INCIDENCIA (
-	INC_numero SMALLINT IDENTITY(1, 1),
-	INC_fecha DATE NOT NULL,
-	INC_hora TIME NOT NULL,
-	INC_asunto VARCHAR(200) NOT NULL,
-	INC_descripcion VARCHAR(500) NULL,
-	INC_documento VARCHAR(100) NOT NULL,
-	INC_codigoPatrimonial CHAR(12) NULL,
-	EST_codigo SMALLINT NOT NULL,
-	CAT_codigo SMALLINT NOT NULL,
-	ARE_codigo SMALLINT NOT NULL,
-	USU_codigo SMALLINT NOT NULL,
-	CONSTRAINT pk_incidencia PRIMARY KEY (INC_numero),
-	CONSTRAINT fk_estado_incidencia FOREIGN KEY (EST_codigo) REFERENCES ESTADO (EST_codigo),
-	CONSTRAINT fk_categoria_incidencia FOREIGN KEY (CAT_codigo) REFERENCES CATEGORIA (CAT_codigo),
-	CONSTRAINT fk_area_incidencia FOREIGN KEY (ARE_codigo) REFERENCES AREA (ARE_codigo),
-	CONSTRAINT fk_usuario_incidencia FOREIGN KEY (USU_codigo) REFERENCES USUARIO (USU_codigo)
+    INC_numero SMALLINT NOT NULL,
+    INC_numero_formato VARCHAR(20) NULL,
+    INC_fecha DATE NOT NULL,
+    INC_hora TIME NOT NULL,
+    INC_asunto VARCHAR(200) NOT NULL,
+    INC_descripcion VARCHAR(500) NULL,
+    INC_documento VARCHAR(100) NOT NULL,
+    INC_codigoPatrimonial CHAR(12) NULL,
+    EST_codigo SMALLINT NOT NULL,
+    CAT_codigo SMALLINT NOT NULL,
+    ARE_codigo SMALLINT NOT NULL,
+    USU_codigo SMALLINT NOT NULL,
+    CONSTRAINT pk_incidencia PRIMARY KEY (INC_numero),
+    CONSTRAINT fk_estado_incidencia FOREIGN KEY (EST_codigo) REFERENCES ESTADO (EST_codigo),
+    CONSTRAINT fk_categoria_incidencia FOREIGN KEY (CAT_codigo) REFERENCES CATEGORIA (CAT_codigo),
+    CONSTRAINT fk_area_incidencia FOREIGN KEY (ARE_codigo) REFERENCES AREA (ARE_codigo),
+    CONSTRAINT fk_usuario_incidencia FOREIGN KEY (USU_codigo) REFERENCES USUARIO (USU_codigo)
 );
 GO
+
+
+CREATE FUNCTION dbo.GenerarNumeroIncidencia()
+RETURNS VARCHAR(20)
+AS
+BEGIN
+    DECLARE @numero INT;
+    DECLARE @año_actual CHAR(4);
+    DECLARE @formato VARCHAR(20);
+    DECLARE @resultado VARCHAR(20);
+
+    -- Obtener el año actual
+    SET @año_actual = YEAR(GETDATE());
+
+    -- Obtener el último número de incidencia del año actual
+    SELECT @numero = ISNULL(MAX(CAST(SUBSTRING(INC_numero_formato, 1, CHARINDEX('-', INC_numero_formato) - 1) AS INT)), 0) + 1
+    FROM INCIDENCIA
+    WHERE SUBSTRING(INC_numero_formato, CHARINDEX('-', INC_numero_formato) + 1, 4) = @año_actual;
+
+    -- Generar el formato con el número actual
+    SET @formato = RIGHT('0000' + CAST(@numero AS VARCHAR(4)), 4) + '-' + @año_actual + '-MDE';
+    SET @resultado = @formato;
+
+    RETURN @resultado;
+END;
+GO
+
+-- Crear un trigger para actualizar el campo INC_numero_formato
+CREATE TRIGGER trg_incrementar_inc_numero
+ON INCIDENCIA
+INSTEAD OF INSERT
+AS
+BEGIN
+    DECLARE @ultimo_numero SMALLINT;
+    
+    -- Obtener el último número de incidencia
+    SELECT @ultimo_numero = ISNULL(MAX(INC_numero), 0) FROM INCIDENCIA;
+    
+    -- Insertar el nuevo registro con INC_numero incrementado en 1
+    INSERT INTO INCIDENCIA (INC_numero, INC_numero_formato, INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo)
+    SELECT @ultimo_numero + 1, INC_numero_formato, INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo
+    FROM inserted;
+END;
+GO
+
+--Trigger para actualizar el numero del formato
+CREATE TRIGGER trg_UpdateNumeroFormato
+ON INCIDENCIA
+AFTER INSERT
+AS
+BEGIN
+    UPDATE INCIDENCIA
+    SET INC_numero_formato = dbo.GenerarNumeroIncidencia()
+    FROM INCIDENCIA i
+    INNER JOIN inserted ins
+    ON i.INC_numero = ins.INC_numero;
+END;
+GO
+
+-- PROCEDIMIENTO ALMACENADO PARA REGISTRAR INCIDENCIA PARA EL ADMINISTRADOR
+CREATE PROCEDURE SP_Registrar_Incidencia_Admin 
+    @INC_fecha DATE,
+    @INC_hora TIME,
+    @INC_asunto VARCHAR(200),
+    @INC_descripcion VARCHAR(500),
+    @INC_documento VARCHAR(100),
+    @INC_codigoPatrimonial CHAR(12),
+    @CAT_codigo SMALLINT,
+    @ARE_codigo SMALLINT,
+    @USU_codigo SMALLINT
+AS 
+BEGIN 
+    -- Variables para el número de incidencia
+    DECLARE @numero_formato VARCHAR(20);
+
+    -- Generar el número de incidencia formateado
+    SET @numero_formato = dbo.GenerarNumeroIncidencia();
+
+    -- Insertar la nueva incidencia
+    INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo,  USU_codigo, INC_numero_formato)
+    VALUES (@INC_fecha, @INC_hora, @INC_asunto, @INC_descripcion, @INC_documento, @INC_codigoPatrimonial, 3, @CAT_codigo, @ARE_codigo, @USU_codigo, @numero_formato);
+END;
+GO
+
 
 --INSERT INTO INCIDENCIA  VALUES ('2024-05-31','10:32:15','No enciende CPU','Se presiona y no enciende','S/D','740895000365',3,1,21,3);
 --INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo) 
@@ -328,26 +413,6 @@ CREATE TABLE RECEPCION (
 	CONSTRAINT fk_estado_recepcion FOREIGN KEY (EST_codigo) REFERENCES ESTADO (EST_codigo),
 );
 GO
-
--- PROCEDIMIENTO ALMACENADO PARA REGISTRAR INCIDENCIA PARA EL ADMINISTRADOR
-CREATE PROCEDURE SP_Registrar_Incidencia_Admin 
-	@INC_fecha DATE,
-	@INC_hora TIMe,
-	@INC_asunto VARCHAR,
-	@INC_descripcion VARCHAR,
-	@INC_documento VARCHAR,
-	@INC_codigoPatrimonial CHAR,
-	@CAT_codigo SMALLINT,
-	@ARE_codigo SMALLINT,
-	@USU_codigo SMALLINT 
-AS BEGIN 
-	-- Insertar el nuevo usuario con EST_codigo siempre igual a 3
-	INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial,  CAT_codigo, ARE_codigo, USU_codigo, EST_codigo)
-	VALUES (@INC_fecha, @INC_hora, @INC_asunto, @INC_descripcion, @INC_documento, @INC_codigoPatrimonial, @CAT_codigo, @ARE_codigo, @USU_codigo, 3);
-END;
-GO
-
-
 
 -- PROCEDIMIENTO ALMACENADO PARA INSERTAR LA RECEPCION Y ACTUALIZAR ESTADO DE INCIDENCIA
 CREATE PROCEDURE sp_InsertarRecepcionActualizarIncidencia(

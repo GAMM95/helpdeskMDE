@@ -8,7 +8,6 @@ $(document).ready(function () {
 
 // TODO: SETEO DE COMBO AREA
 $(document).ready(function () {
-  console.log("FETCHING")
   $.ajax({
     url: 'ajax/getAreaData.php',
     type: 'GET',
@@ -20,11 +19,6 @@ $(document).ready(function () {
       $.each(data, function (index, value) {
         select.append('<option value="' + value.ARE_codigo + '">' + value.ARE_nombre + '</option>');
       });
-      // if (areaRegistrada !== '') {
-      //   select.val(areaRegistrada);
-      // } else {
-      //   select.val('');
-      // }
     },
     error: function (error) {
       console.error(error);
@@ -34,7 +28,6 @@ $(document).ready(function () {
 
 // TODO: SETEO DEL COMBO CATEGORIA
 $(document).ready(function () {
-  console.log("FETCHING");
   $.ajax({
     url: 'ajax/getCategoryData.php',
     type: 'GET',
@@ -46,13 +39,6 @@ $(document).ready(function () {
       $.each(data, function (index, value) {
         select.append('<option value="' + value.CAT_codigo + '">' + value.CAT_nombre + '</option>');
       });
-
-      // // Verificar y establecer el valor seleccionado
-      // if (categoriaRegistrada !== '') {
-      //   select.val(categoriaRegistrada);
-      // } else {
-      //   select.val('');
-      // }
     },
     error: function (error) {
       console.error('Error en la carga de categorías:', error);
@@ -197,17 +183,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       // Mapeo de los valores de las celdas a los inputs del formulario
 
-      const codIncidencia = fila.querySelector('th').innerText.trim();
-      const codigoPatrimonialValue = celdas[1].innerText.trim();
-      const asuntoValue = celdas[2].innerText.trim();
-      const documentoValue = celdas[3].innerText.trim();
-      const categoriaValue = celdas[4].innerText.trim();
-      const areaValue = celdas[5].innerText.trim();
-      const descripcionValue = celdas[6].innerText.trim();
+      // const codIncidencia = fila.querySelector('th').innerText.trim();
+      const incidencia = celdas[0].innerText.trim();
+      const codigoPatrimonialValue = celdas[2].innerText.trim();
+      const asuntoValue = celdas[3].innerText.trim();
+      const documentoValue = celdas[4].innerText.trim();
+      const categoriaValue = celdas[5].innerText.trim();
+      const areaValue = celdas[6].innerText.trim();
+      const descripcionValue = celdas[7].innerText.trim();
 
 
       // Seteo de valores en los inputs
-      document.getElementById('numero_incidencia').value = codIncidencia;
+      // document.getElementById('numero_incidencia').value = codIncidencia;
+      document.getElementById('numero_incidencia').value = incidencia;
       document.getElementById('codigo_patrimonial').value = codigoPatrimonialValue;
       document.getElementById('asunto').value = asuntoValue;
       document.getElementById('documento').value = documentoValue;
@@ -230,7 +218,7 @@ function setComboValue(comboId, value) {
   const select = document.getElementById(comboId);
   const options = select.options;
 
-  console.log("Seteo de los valores para: ", comboId, "Valor: ", value);
+  // console.log("Seteo de los valores para: ", comboId, "Valor: ", value);
 
   // Verificar si el valor esta en el combo
   let valueFound = false;
@@ -271,143 +259,5 @@ function nuevoRegistro() {
 
 // Evento para nuevo registro
 $('#nuevo-registro').on('click', nuevoRegistro);
-
-// TODO: Funcion para exportar pdf
-
-document.addEventListener('DOMContentLoaded', function () {
-  const { jsPDF } = window.jspdf;
-
-  $('#imprimir-incidencia').click(function () {
-    const filaSeleccionada = $('#tablaListarIncidencias .selected');
-    if (filaSeleccionada.length === 0) {
-      toastr.warning('Selecciona una fila para imprimir.');
-      return;
-    }
-
-    const datos = filaSeleccionada.find('td').map(function () {
-      return $(this).text();
-    }).get();
-
-    const doc = new jsPDF();
-    const logoUrl = './public/assets/escudo.png';
-
-    const marginX = 20;
-
-    function addHeader(doc) {
-      doc.setFontSize(9);
-      doc.setFont('helvetica', 'normal');
-
-      const fechaImpresion = new Date().toLocaleDateString();
-      const headerText2 = 'Subgerencia de Informática y Sistemas';
-      const reportTitle = 'REPORTE DE INCIDENCIA';
-
-      const pageWidth = doc.internal.pageSize.width;
-      const marginX = 10; // Margen desde el borde izquierdo
-      const marginY = 10; // Margen desde el borde superior
-      const logoWidth = 25;
-      const logoHeight = 25;
-
-      // Agregar el logo
-      const logoX = marginX;
-      const logoY = marginY;
-      doc.addImage(logoUrl, 'PNG', logoX, logoY, logoWidth, logoHeight);
-
-      // Ajuste para el texto del centro (título del reporte)
-      doc.setFont('helvetica', 'bold'); // Configurar fuente a bold
-      doc.setFontSize(16); // Aumentar tamaño del título
-      const titleWidth = doc.getTextWidth(reportTitle);
-      const titleX = (pageWidth - titleWidth) / 2;
-      const titleY = 25; // Fija la posición vertical del título de forma independiente
-
-      // Agregar el título centrado
-      doc.text(reportTitle, titleX, titleY);
-      doc.setLineWidth(0.5);
-      doc.line(titleX, titleY + 3, titleX + titleWidth, titleY + 3);
-
-      // Ajuste para el texto de la derecha (subgerencia y fecha)
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      const fechaText = `Fecha de impresión: ${fechaImpresion}`;
-      const headerText2Width = doc.getTextWidth(headerText2);
-      const fechaTextWidth = doc.getTextWidth(fechaText);
-      const headerText2X = pageWidth - marginX - headerText2Width;
-      const headerText2Y = logoY + logoHeight / 2; // Centrar verticalmente con el logo
-      const fechaTextX = pageWidth - marginX - fechaTextWidth;
-      const fechaTextY = headerText2Y + 5; // Reducir este valor para disminuir el espacio entre líneas
-
-      // Agregar texto de la subgerencia y fecha de impresión
-      doc.text(headerText2, headerText2X, headerText2Y);
-      doc.text(fechaText, fechaTextX, fechaTextY);
-    }
-
-    // Llamar a la función para agregar el encabezado
-    addHeader(doc);
-
-
-    // Ajusta la posición vertical del subtítulo y la información
-    const titleY = 60; // Posición vertical del subtítulo
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(12); // Tamaño del subtítulo
-    doc.text('Detalle de la Incidencia:', marginX, titleY); // Subtítulo
-
-    // Información de la incidencia en tabla
-    doc.autoTable({
-      startY: 65, // Posición vertical donde empezará la tabla
-      margin: { left: 20 }, // Margen izquierdo
-      head: [['Campo', 'Descripción']], // Encabezado de la tabla
-      body: [
-        ['Número de incidencia:', datos['th']],
-        ['Fecha de entrada:', datos[0]],
-        ['Categoría:', datos[4]],
-        ['Asunto:', datos[2]],
-        ['Documento:', datos[3]],
-        ['Código Patrimonial:', datos[1]],
-        ['Área:', datos[5]],
-        ['Descripción:', datos[6]],
-        ['Usuario:', datos[7]]
-      ],
-      styles: {
-        fontSize: 11,
-        cellPadding: 2,
-      },
-      headStyles: {
-        fillColor: [44, 62, 80],
-        textColor: [255, 255, 255],
-        fontStyle: 'bold',
-      },
-    });
-
-    // Footer del PDF
-    function addFooter(doc, pageNumber, totalPages) {
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'italic');
-      const footerY = 285;
-      doc.setLineWidth(0.05);
-      doc.line(marginX, footerY - 5, doc.internal.pageSize.width - marginX, footerY - 5);
-
-      const footerText = 'Sistema HelpDesk de la MDE';
-      const pageInfo = `Página ${pageNumber} de ${totalPages}`;
-      const pageWidth = doc.internal.pageSize.width;
-
-      doc.text(footerText, marginX, footerY);
-      doc.text(pageInfo, pageWidth - marginX - doc.getTextWidth(pageInfo), footerY);
-    }
-
-    const totalPages = doc.internal.getNumberOfPages();
-    for (let i = 1; i <= totalPages; i++) {
-      doc.setPage(i);
-      addFooter(doc, i, totalPages);
-    }
-
-    doc.output('dataurlnewwindow');
-  });
-
-});
-
-$(document).ready(function () {
-  $('#tablaListarIncidencias').on('click', 'tr', function () {
-    $(this).toggleClass('selected').siblings().removeClass('selected');
-  });
-});
 
 
