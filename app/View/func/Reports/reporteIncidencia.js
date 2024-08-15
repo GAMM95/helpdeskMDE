@@ -3,7 +3,7 @@ $(document).ready(function () {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
     "timeOut": "2000"
-  };
+  }; 
 });
 // $('#imprimir-incidencia').click(function () {
 //   const filaSeleccionada = $('#tablaListarIncidencias .selected');
