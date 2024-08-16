@@ -1,24 +1,80 @@
 <?php
-
+session_start();
 $action = $_GET['action'] ?? '';
 $state = $_GET['state'] ?? '';
-$INC_numero = $_GET['INC_numero'] ?? '';
 
-require_once 'app/Controller/incidenciaController.php';
+require_once './app/Controller/IncidenciaController.php';
+require_once './app/Model/IncidenciaModel.php';
+
 $incidenciaController = new IncidenciaController();
 $incidenciaModel = new IncidenciaModel();
 
-if ($INC_numero != '') {
-  global $incidenciaRegistrada;
-  $incidenciaRegistrada = $incidenciaModel->obtenerIncidenciaPorId($INC_numero);
-} else {
-  $incidenciaRegistrada = null;
-}
+// Capturar los datos del formulario
+$area = $_SESSION['codigoArea']; // Asumiendo que tengas almacenado el código de área en $_SESSION
+$codigoPatrimonial = $_GET['codigoPatrimonial'] ?? '';
+$estado = $_GET['estado'] ?? '';
+$fechaInicio = $_GET['fechaInicio'] ?? '';
+$fechaFin = $_GET['fechaFin'] ?? '';
+$resultadoBusqueda = NULL;
 
-switch ($action) {
-  case 'registrar':
-    $incidenciaController->registrarIncidencia();
-    break;
+if ($action === 'consultar') {
+  // Depuración: mostrar los parámetros recibidos
+  error_log("Área: " . $area);
+  error_log("Código patrimonial: " . $codigoPatrimonial);
+  error_log("Estado: " . $estado);
+  error_log("Fecha Inicio: " . $fechaInicio);
+  error_log("Fecha Fin: " . $fechaFin);
+
+  // Obtener los resultados de la búsqueda
+  $resultadoBusqueda = $incidenciaController->consultarIncidenciaUsuario($area, $estado, $fechaInicio, $fechaFin);
+
+  // Imprime el resultado para depuración
+  error_log("Resultado de la consulta: " . print_r($resultadoBusqueda, true));
+
+  // Dibujar tabla de consultas
+  $html = '';
+  if (!empty($resultadoBusqueda)) {
+    foreach ($resultadoBusqueda as $incidencia) {
+      $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_numero_formato']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['ARE_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['CAT_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_asunto']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_documento']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center text-xs align-middle">';
+
+      $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
+      $badgeClass = '';
+      switch ($estadoDescripcion) {
+        case 'Abierta':
+          $badgeClass = 'badge-light-danger';
+          break;
+        case 'Recepcionado':
+          $badgeClass = 'badge-light-success';
+          break;
+        case 'Cerrado':
+          $badgeClass = 'badge-light-primary';
+          break;
+        default:
+          $badgeClass = 'badge-light-secondary';
+          break;
+      }
+
+      $html .= '<label class="badge ' . $badgeClass . '">' . $estadoDescripcion . '</label>';
+      $html .= '</td></tr>';
+    }
+  } else {
+    $html = '<tr><td colspan="8" class="text-center py-3">No se encontraron incidencias pendientes de cierre.</td></tr>';
+  }
+
+  // Devolver el HTML de las filas
+  echo $html;
+  exit;
+} else {
+  // Si no hay acción, obtener la lista de incidencias
+  $resultadoBusqueda = $incidenciaModel->listarIncidenciasUsuario($area);
 }
 ?>
 
@@ -35,8 +91,6 @@ switch ($action) {
   <meta name="description" content="" />
   <meta name="keywords" content="">
   <meta name="author" content="Phoenixcoded" />
-  <!-- Favicon icon -->
-  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 
   <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">

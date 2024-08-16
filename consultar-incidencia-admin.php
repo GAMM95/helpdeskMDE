@@ -32,7 +32,7 @@ if ($action === 'consultar') {
   if (!empty($resultadoBusqueda)) {
     foreach ($resultadoBusqueda as $incidencia) {
       $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_numero']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_numero_formato']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['ARE_nombre']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . '</td>';
@@ -41,7 +41,7 @@ if ($action === 'consultar') {
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_documento']) . '</td>';
       $html .= '<td class="px-3 py-2 text-center text-xs align-middle">';
 
-      $estadoDescripcion = htmlspecialchars($incidencia['EST_descripcion']);
+      $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
       $badgeClass = '';
       switch ($estadoDescripcion) {
         case 'Abierta':
@@ -62,7 +62,7 @@ if ($action === 'consultar') {
       $html .= '</td></tr>';
     }
   } else {
-    $html = '<tr><td colspan="8" class="text-center py-4">No se encontraron incidencias.</td></tr>';
+    $html = '<tr><td colspan="8" class="text-center py-3">No se encontraron incidencias pendientes de cierre.</td></tr>';
   }
 
   // Devolver el HTML de las filas
@@ -87,8 +87,6 @@ if ($action === 'consultar') {
   <meta name="description" content="" />
   <meta name="keywords" content="">
   <meta name="author" content="Phoenixcoded" />
-  <!-- Favicon icon -->
-  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 
   <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">

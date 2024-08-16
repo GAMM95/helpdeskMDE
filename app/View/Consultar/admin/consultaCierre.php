@@ -6,7 +6,7 @@
         <div class="row align-items-center">
           <div class="col-md-12">
             <div class="page-header-title">
-              <h1 class="text-2xl font-bold mb-2">Consulta de Cierres</h1>
+              <h1 class="text-2xl font-bold mb-2">Consulta de Incidencias atendidas</h1>
             </div>
             <ul class="breadcrumb">
               <li class="breadcrumb-item"><a href=""><i class="feather icon-clipboard"></i></a></li>
@@ -64,14 +64,14 @@
           <!-- Encabezado de la tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-3 py-3">N°</th>
-              <th scope="col" class="px-3 py-3">Fecha de Cierre</th>
-              <th scope="col" class="px-3 py-3">&Aacute;rea</th>
-              <th scope="col" class="px-3 py-3">C&oacute;digo Patrimonial</th>
-              <th scope="col" class="px-3 py-3">Asunto de Cierre</th>
-              <th scope="col" class="px-3 py-3">Documento de Cierre</th>
-              <th scope="col" class="px-3 py-3">Prioridad</th>
-              <th scope="col" class="px-3 py-3">Estado</th>
+              <th scope="col" class="px-3 py-2">N° INCIDENCIA</th>
+              <th scope="col" class="px-3 py-2">Fecha de Cierre</th>
+              <th scope="col" class="px-3 py-2">&Aacute;rea</th>
+              <th scope="col" class="px-3 py-2">C&oacute;digo Patrimonial</th>
+              <th scope="col" class="px-3 py-2">Asunto de Cierre</th>
+              <th scope="col" class="px-3 py-2">Documento de Cierre</th>
+              <th scope="col" class="px-3 py-2">Prioridad</th>
+              <th scope="col" class="px-3 py-2">Estado</th>
             </tr>
           </thead>
           <!-- Fin de encabezado -->
@@ -82,7 +82,7 @@
             if (!empty($resultadoBusqueda)): ?>
               <?php foreach ($resultadoBusqueda as $cierre): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
-                  <td class="px-3 py-2"><?= htmlspecialchars($cierre['INC_numero']) ?></td>
+                  <td class="px-3 py-2"><?= htmlspecialchars($cierre['INC_numero_formato']) ?></td>
                   <td class="px-3 py-2"><?= htmlspecialchars($cierre['fechaCierreFormateada']) ?></td>
                   <td class="px-3 py-2"><?= htmlspecialchars($cierre['ARE_nombre']) ?></td>
                   <td class="px-3 py-2"><?= htmlspecialchars($cierre['INC_codigoPatrimonial']) ?></td>
@@ -108,7 +108,7 @@
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
-                <td colspan="8" class="text-center py-4">No se encontraron cierres.</td>
+                <td colspan="8" class="text-center py-3">No se encontraron cierres.</td>
               </tr>
             <?php endif; ?>
           </tbody>

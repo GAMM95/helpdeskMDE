@@ -29,7 +29,7 @@ if ($action === 'consultar') {
   if (!empty($resultadoBusqueda)) {
     foreach ($resultadoBusqueda as $cierre) {
       $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_numero']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_numero_formato']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['fechaCierreFormateada']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['ARE_nombre']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_codigoPatrimonial']) . '</td>';
@@ -53,7 +53,7 @@ if ($action === 'consultar') {
       $html .= '</td></tr>';
     }
   } else {
-    $html = '<tr><td colspan="8" class="text-center py-4">No se encontraron incidencias.</td></tr>';
+    $html = '<tr><td colspan="8" class="text-center py-3">No se encontraron incidencias atentidas.</td></tr>';
   }
 
   // Devolver el HTML de las filas

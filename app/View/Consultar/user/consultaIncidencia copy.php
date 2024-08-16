@@ -20,7 +20,7 @@
     <!-- Fin de miga de pan -->
 
     <!-- Formulario Consulta de incidencias -->
-    <form id="formConsultarIncidenciaUser" action="consultar-incidencia-admin.php?action=consultar" method="GET" class="card table-card bg-white shadow-md p-6 w-full text-xs mb-2">
+    <form id="formConsultarIncidencia" action="consultar-incidencia-admin.php?action=consultar" method="GET" class="card table-card bg-white shadow-md p-6 w-full text-xs mb-2">
       <div class="flex flex-wrap items-center -mx-2 justify-center space-x-2">
         <!-- BUSCAR POR CODIGO PATRIMONIAL -->
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
@@ -84,6 +84,7 @@
 
           <!-- Cuerpo de tabla -->
           <tbody>
+
             <?php if (!empty($resultadoBusqueda)): ?>
               <?php foreach ($resultadoBusqueda as $incidencia): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
@@ -99,6 +100,7 @@
                   <td class="px-3 py-2"><?= htmlspecialchars($incidencia['fechaCierreFormateada']) ?></td>
                   <td class="px-3 py-2 hidden"><?= htmlspecialchars($incidencia['CON_descripcion']) ?></td>
                   <td class="px-3 py-2 hidden"><?= htmlspecialchars($incidencia['Usuario']) ?></td>
+
                   <td class="px-3 py-2 text-center text-xs align-middle">
                     <?php
                     $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
@@ -121,19 +123,20 @@
                     <label class="badge <?= $badgeClass ?>"><?= $estadoDescripcion ?></label>
                   </td>
                 </tr>
+
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
                 <td colspan="8" class="text-center py-3">No se encontraron incidencias.</td>
               </tr>
             <?php endif; ?>
+
+
+
           </tbody>
-          <!-- Fin del cuerpo de la tabla -->
         </table>
       </div>
     </div>
-    <!-- Fin de la tabla -->
-
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>

@@ -166,15 +166,15 @@
             <tr>
               <th scope="col" class="px-6 py-2 hidden">N°</th>
               <th scope="col" class="px-6 py-2">n° Incidencia</th>
-              <th scope="col" class="px-6 py-2">Fecha de entrada</th>
-              <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
-              <th scope="col" class="px-6 py-2">Asunto</th>
-              <th scope="col" class="px-6 py-2">Documento</th>
+              <th scope="col" class="px-4 py-2">Fecha de entrada</th>
+              <th scope="col" class="px-1 py-2">C&oacute;digo Patrimonial</th> <!-- Ajuste aquí -->
+              <th scope="col" class="px-10 py-2">Asunto</th>
+              <th scope="col" class="px-3 py-2">Documento</th>
               <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-6 py-2">&Aacute;rea</th>
               <th scope="col" class="px-6 py-2 hidden">descripcion</th>
               <th scope="col" class="px-6 py-2 ">Estado</th>
-              <th scope="col" class="px-6 py-2">Usuario</th>
+              <th scope="col" class="px-6 py-2 hidden">Usuario</th>
             </tr>
           </thead>
           <tbody>
@@ -182,15 +182,15 @@
               <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
                 <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['INC_numero']; ?></th>
                 <td class='px-6 py-3'><?= $incidencia['INC_numero_formato']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['INC_asunto']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['INC_documento']; ?></td>
+                <td class='px-4 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
+                <td class='px-1 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td> <!-- Ajuste aquí -->
+                <td class='px-10 py-3'><?= $incidencia['INC_asunto']; ?></td>
+                <td class='px-3 py-3'><?= $incidencia['INC_documento']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
                 <td class='px-6 py-3 hidden'><?= $incidencia['INC_descripcion']; ?></td>
                 <td class='px-6 py-3 '><?= $incidencia['ESTADO']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
+                <td class='px-6 py-3 hidden'><?= $incidencia['Usuario']; ?></td>
               </tr>
             <?php endforeach; ?>
 

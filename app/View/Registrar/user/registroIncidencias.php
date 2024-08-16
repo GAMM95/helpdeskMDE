@@ -186,16 +186,16 @@
             <?php foreach ($incidencias as $incidencia) : ?>
               <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
                 <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['INC_numero']; ?></th>
-                <td class='px-6 py-2'><?= $incidencia['INC_numero_formato']; ?></td>
-                <td class='px-6 py-2'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['INC_asunto']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['INC_documento']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['CAT_nombre']; ?></td>
-                <td class='px-6 py-4 hidden'><?= $incidencia['ARE_nombre']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_numero_formato']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_asunto']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['INC_documento']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
+                <td class='px-6 py-3 hidden'><?= $incidencia['ARE_nombre']; ?></td>
                 <td class='px-6 py-3 hidden'><?= $incidencia['INC_descripcion']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['ESTADO']; ?></td>
-                <td class='px-6 py-4'><?= $incidencia['Usuario']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['ESTADO']; ?></td>
+                <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
               </tr>
             <?php endforeach; ?>
             <?php if (empty($incidencias)) : ?>

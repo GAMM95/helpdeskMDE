@@ -64,6 +64,7 @@ class CierreModel extends Conexion
       if ($conector != null) {
         $sql = "SELECT
           I.INC_numero,
+          I.INC_numero_formato,
           (CONVERT(VARCHAR(10),INC_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada,
           A.ARE_nombre,
           CAT.CAT_nombre,
@@ -71,7 +72,7 @@ class CierreModel extends Conexion
           I.INC_documento,
           PRI_nombre,
           I.INC_codigoPatrimonial,
-	        (CONVERT(VARCHAR(10),CIE_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), CIE_hora, 0), 7), 6, 0, ' ')) AS fechaCierreFormateada,
+	        (CONVERT(VARCHAR(10),CIE_fecha,103)) AS fechaCierreFormateada,
 	        O.CON_descripcion,
           C.CIE_documento,
 	        u.USU_nombre,
@@ -142,6 +143,7 @@ class CierreModel extends Conexion
       if ($conector != null) {
         $sql = "SELECT
           I.INC_numero,
+          I.INC_numero_formato,
           (CONVERT(VARCHAR(10),INC_fecha,103) + ' - '+   STUFF(RIGHT('0' + CONVERT(VarChar(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada,
           A.ARE_nombre,
           i.INC_asunto,

@@ -68,7 +68,7 @@
         <table id="tablaConsultarIncidencias" class="bg-white w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-3 py-3">N°</th>
+              <th scope="col" class="px-3 py-3">N° Incidencia</th>
               <th scope="col" class="px-3 py-3">&Aacute;rea</th>
               <th scope="col" class="px-3 py-3">Fecha incidencia</th>
               <th scope="col" class="px-3 py-3">Categor&iacute;a</th>
@@ -91,7 +91,7 @@
             if (!empty($incidencias)) {
               foreach ($incidencias as $incidencia) {
                 echo "<tr class='bg-white hover:bg-green-100 hover:scale-[101%] transition-all border-b'>";
-                echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_numero']) . "</td>";
+                echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['INC_numero_formato']) . "</td>";
                 echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['ARE_nombre']) . "</td>";
                 echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . "</td>";
                 echo "<td class='px-3 py-2'>" . htmlspecialchars($incidencia['CAT_nombre']) . "</td>";

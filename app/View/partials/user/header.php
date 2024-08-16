@@ -36,68 +36,54 @@ if (isset($_SESSION['codigoUsuario'])) {
         </div>
       </li>
     </ul>
+
     <ul class="navbar-nav ml-auto">
+      <?php
+      require_once './app/Model/IncidenciaModel.php';
+      $incidenciaModel = new IncidenciaModel();
+      $incidencias = $incidenciaModel->notificacionesAdmin();
+      ?>
       <li>
         <div class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown">
             <i class="icon feather icon-bell"></i>
-            <span class="badge badge-pill badge-danger">5</span>
+            <?php if (count($incidencias) > 0) : ?>
+              <span class="badge badge-pill badge-danger"><?= count($incidencias); ?></span>
+            <?php endif; ?>
           </a>
           <div class="dropdown-menu dropdown-menu-right notification">
             <div class="noti-head">
-              <h6 class="d-inline-block m-b-0">Notificaciones</h6>
-              <div class="float-right">
-                <!-- <a href="#!" class="m-r-10">mark as read</a>
-                <a href="#!">clear all</a> -->
-              </div>
+              <h6 class="d-inline-block m-b-0">Nuevas incidencias</h6>
             </div>
-            <ul class="noti-body">
-              <li class="n-title">
-                <p class="m-b-0">Nuevos</p>
-              </li>
-              <li class="notification">
-                <div class="media">
-                  <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                  <div class="media-body">
-                    <p><strong>John Doe</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>5 min</span></p>
-                    <p>New ticket Added</p>
+            <ul class="noti-body" style="max-height: 250px; overflow-y: auto;">
+              <?php if (empty($incidencias)) : ?>
+                <li class="notification">
+                  <div class="media">
+                    <div class="media-body">
+                      <p class="text-center">No hay nuevas incidencias.</p>
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li class="n-title">
-                <p class="m-b-0">EARLIER</p>
-              </li>
-              <li class="notification">
-                <div class="media">
-                  <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                  <div class="media-body">
-                    <p><strong>Joseph William</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>10 min</span></p>
-                    <p>Prchace New Theme and make payment</p>
-                  </div>
-                </div>
-              </li>
-              <li class="notification">
-                <div class="media">
-                  <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                  <div class="media-body">
-                    <p><strong>Sara Soudein</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>12 min</span></p>
-                    <p>currently login</p>
-                  </div>
-                </div>
-              </li>
-              <li class="notification">
-                <div class="media">
-                  <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
-                  <div class="media-body">
-                    <p><strong>Joseph William</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>30 min</span></p>
-                    <p>Prchace New Theme and make payment</p>
-                  </div>
-                </div>
-              </li>
+                </li>
+              <?php else : ?>
+                <?php foreach (array_slice($incidencias, 0, 5) as $incidencia) : ?>
+                  <li class="notification">
+                    <div class="media">
+                      <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
+                      <div class="media-body">
+                        <p>
+                          <strong><?= htmlspecialchars($incidencia['Usuario']); ?></strong>
+                          <span class="n-time text-muted">
+                            <i class="icon feather icon-clock m-r-10"></i>
+                            <?= htmlspecialchars($incidencia['tiempoDesdeIncidencia']); ?>
+                          </span>
+                        </p>
+                        <p><?= htmlspecialchars($incidencia['INC_asunto']); ?></p>
+                      </div>
+                    </div>
+                  </li>
+                <?php endforeach; ?>
+              <?php endif; ?>
             </ul>
-            <!-- <div class="noti-footer">
-            <a href="#!">show all</a>
-          </div> -->
           </div>
         </div>
       </li>
@@ -196,7 +182,7 @@ if (isset($_SESSION['codigoUsuario'])) {
                 <p class="mb-0 text-gray-800 text-center text-md">¿Desea cerrar sesi&oacute;n?</p>
               </div>
               <div class="modal-footer">
-                <a href="logout.php" class="btn btn-primary rounded-md text-white">Cerrar sesión</a>
+                <a href="logout.php" class="btn btn-primary rounded-md text-white">Cerrar sesi&oacute;n</a>
               </div>
             </div>
           </div>

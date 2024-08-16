@@ -6,7 +6,7 @@
         <div class="row align-items-center">
           <div class="col-md-12">
             <div class="page-header-title">
-              <h1 class="text-2xl font-bold mb-2">Consulta de incidencias</h1>
+              <h1 class="text-2xl font-bold mb-2">Consulta de incidencias pendientes de cierre</h1>
             </div>
             <ul class="breadcrumb">
               <li class="breadcrumb-item"><a href=""><i class="feather icon-clipboard"></i></a></li>
@@ -67,8 +67,8 @@
           <!-- Encabezado de tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-3 py-2">N°</th>
-              <th scope="col" class="px-3 py-2">Fecha</th>
+              <th scope="col" class="px-3 py-2">N° INCIDENCIA</th>
+              <th scope="col" class="px-3 py-2">Fecha entrada</th>
               <th scope="col" class="px-3 py-2">&Aacute;rea</th>
               <th scope="col" class="px-3 py-2">C&oacute;digo Patrimonial</th>
               <th scope="col" class="px-3 py-2">Categor&iacute;a</th>
@@ -84,7 +84,7 @@
             <?php if (!empty($resultadoBusqueda)): ?>
               <?php foreach ($resultadoBusqueda as $incidencia): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_numero']) ?></td>
+                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_numero_formato']) ?></td>
                   <td class="px-3 py-2"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']) ?></td>
                   <td class="px-3 py-2"><?= htmlspecialchars($incidencia['ARE_nombre']) ?></td>
                   <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_codigoPatrimonial']) ?></td>
@@ -93,7 +93,7 @@
                   <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_documento']) ?></td>
                   <td class="px-3 py-2 text-center text-xs align-middle">
                     <?php
-                    $estadoDescripcion = htmlspecialchars($incidencia['EST_descripcion']);
+                    $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
                     $badgeClass = '';
                     switch ($estadoDescripcion) {
                       case 'Abierta':
@@ -116,7 +116,7 @@
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
-                <td colspan="8" class="text-center py-4">No se encontraron incidencias.</td>
+                <td colspan="8" class="text-center py-3">No se encontraron incidencias.</td>
               </tr>
             <?php endif; ?>
           </tbody>
