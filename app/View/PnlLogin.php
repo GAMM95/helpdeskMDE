@@ -54,7 +54,12 @@
           <div class="inputDiv w-60 mb-2 mx-auto">
             <div class="input flex items-center border rounded-2xl p-2">
               <i class='bx bxs-user icon-input icon text-2xl mr-2' style="color: #159A80;"></i>
-              <input type='text' id='username' placeholder='Ingrese su usuario' name='username' autofocus class="w-full max-w-xs outline-none text-md font-poppins ml-2 text-gray-600">
+              <input type='text' id='username' placeholder='Ingrese su usuario' name='username' autofocus class="w-full max-w-xs outline-none text-md font-poppins ml-2 text-gray-600" oninput="uppercaseInput(this)">
+              <script>
+                function uppercaseInput(element) {
+                  element.value = element.value.toUpperCase();
+                }
+              </script>
             </div>
           </div>
           <!-- Campo de entrada para contraseña -->

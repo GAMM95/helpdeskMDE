@@ -55,9 +55,9 @@ if (session_status() == PHP_SESSION_NONE) {
             <span class="pcoded-mtext">Registrar</span>
           </a>
           <ul class="pcoded-submenu">
-            <li><a href="registro-incidencia-admin.php">Incidencia</a></li>
             <li><a href="registro-recepcion-admin.php">Recepci&oacute;n</a></li>
             <li><a href="registro-cierre-admin.php">Cierre</a></li>
+            <li><a href="registro-incidencia-admin.php">Incidencia</a></li>
           </ul>
         </li>
 

@@ -106,10 +106,18 @@
         <form id="formRecepcion" action="registro-recepcion-admin.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
           <div class="card-body">
             <!-- NUMERO DE INCIDENCIA -->
-            <div class="flex justify-center mx-2 mb-2">
+            <div class="flex justify-center mx-2 mb-2 hidden">
               <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
-                <label for="incidencia" class="block font-bold mb-1 mr-3 text-[#32cfad]">Incidencia seleccionada:</label>
+                <label for="incidencia" class="block font-bold mb-1 mr-3 text-[#32cfad]">Codigo de incidencia:</label>
                 <input type="text" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" id="incidencia" name="incidencia" readonly required>
+              </div>
+            </div>
+
+            <!-- INCIDENCIA SELECCIONADA -->
+            <div class="flex justify-center items-center mb-3">
+              <div class="text-center">
+                <label for="incidenciaSeleccionada" class="block font-bold mb-1 text-[#32cfad]">Incidencia seleccionada:</label>
+                <input type="text" class="border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center w-full" id="incidenciaSeleccionada" name="incidenciaSeleccionada" readonly required>
               </div>
             </div>
 
@@ -205,7 +213,7 @@
               <tr>
                 <th scope="col" class="px-6 py-2 hidden">Recepci&oacute;n</th>
                 <th scope="col" class="px-6 py-2">Incidencia</th>
-                <th scope="col" class="px-6 py-2">Fecha  recepci&oacute;n</th>
+                <th scope="col" class="px-6 py-2">Fecha recepci&oacute;n</th>
                 <th scope="col" class="px-6 py-2">&Aacute;rea</th>
                 <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
                 <th scope="col" class="px-6 py-2">Categor&iacute;a</th>

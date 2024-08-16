@@ -245,56 +245,38 @@ function validarCampos() {
 
 
 // TODO: Seteo de valores en los inputs y combos
-document.addEventListener('DOMContentLoaded', (event) => {
-  // Obtén todas las filas de la tabla
-  const filas = document.querySelectorAll('#tablaListarUsuarios tbody tr');
+// Resaltar fila seleccionada en la tabla de usuarios
+$(document).on('click', '#tablaListarUsuarios tbody tr', function () {
+  $('#tablaListarUsuarios tbody tr').removeClass('bg-blue-200 font-semibold');
+  $(this).addClass('bg-blue-200 font-semibold');
 
-  filas.forEach(fila => {
-    fila.addEventListener('click', () => {
-      // Obtén los datos de la fila
-      const celdas = fila.querySelectorAll('td');
+  // Establecer valores en el formulario según la fila seleccionada
+  const celdas = $(this).find('td');
+  const codUsuario = $(this).find('th').text().trim();
+  const personaValue = celdas.eq(0).text().trim();
+  const areaValue = celdas.eq(1).text().trim();
+  const usernameValue = celdas.eq(2).text().trim();
+  const passwordValue = celdas.eq(3).text().trim();
+  const rolValue = celdas.eq(4).text().trim();
 
-      // Mapea los valores de las celdas a los inputs del formulario
-      const codUsuario = fila.querySelector('th').innerText.trim();
-      const personaValue = celdas[0].innerText.trim();
-      const areaValue = celdas[1].innerText.trim();
-      const usernameValue = celdas[2].innerText.trim();
-      const passwordValue = celdas[3].innerText.trim();
-      const rolValue = celdas[4].innerText.trim();
+  $('#CodUsuario').val(codUsuario);
+  $('#username').val(usernameValue);
+  $('#password').val(passwordValue);
 
-      // Setear valores en los inputs
-      document.getElementById('CodUsuario').value = codUsuario;
-      document.getElementById('username').value = usernameValue;
-      document.getElementById('password').value = passwordValue;
+  setComboValue('cbo_persona', personaValue);
+  setComboValue('cbo_area', areaValue);
+  setComboValue('cbo_rol', rolValue);
 
-      // Debug: Verifica los valores que estás estableciendo
-      console.log("CodUsuario:", codUsuario);
-      console.log("Persona:", personaValue);
-      console.log("Area:", areaValue);
-      console.log("Username:", usernameValue);
-      console.log("Password:", passwordValue);
-      console.log("Rol:", rolValue);
-
-      // Setear valores en los combos
-      setComboValue('cbo_persona', personaValue);
-      setComboValue('cbo_area', areaValue);
-      setComboValue('cbo_rol', rolValue);
-
-      // Cambiar estado de los botones
-      document.getElementById('guardar-usuario').disabled = true;
-      document.getElementById('editar-usuario').disabled = false;
-      document.getElementById('nuevo-registro').disabled = false;
-    });
-  });
+  // Cambiar estado de los botones
+  $('#guardar-usuario').prop('disabled', true);
+  $('#editar-usuario').prop('disabled', false);
+  $('#nuevo-registro').prop('disabled', false);
 });
 
 function setComboValue(comboId, value) {
   const select = document.getElementById(comboId);
   const options = select.options;
 
-  console.log("Setting value for:", comboId, "Value:", value);
-
-  // Verificar si el valor está en el combo
   let valueFound = false;
   for (let i = 0; i < options.length; i++) {
     if (options[i].text.trim() === value) {
@@ -304,11 +286,9 @@ function setComboValue(comboId, value) {
     }
   }
 
-  // Si no se encontró el valor, seleccionar el primer elemento
   if (!valueFound) {
-    select.value = ''; // O establece un valor predeterminado si lo deseas
+    select.value = '';
   }
 
-  // Forzar actualización del select2 para mostrar el valor seleccionado
   $(select).trigger('change');
 }

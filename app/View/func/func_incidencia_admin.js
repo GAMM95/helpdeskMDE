@@ -172,43 +172,36 @@ $(document).ready(function () {
 });
 
 // TODO: Seteo de los valores de los inputs y combos
-document.addEventListener('DOMContentLoaded', (event) => {
-  // Obtener todas las filas de la tabla
-  const filas = document.querySelectorAll('#tablaListarIncidencias tbody tr');
+$(document).on('click', '#tablaListarIncidencias tbody tr', function () {
+  $('#tablaListarIncidencias tbody tr').removeClass('bg-blue-200 font-semibold');
+  $(this).addClass('bg-blue-200 font-semibold');
 
-  filas.forEach(fila => {
-    fila.addEventListener('click', () => {
-      // Obtener los datos de la fila
-      const celdas = fila.querySelectorAll('td');
-
-      // Mapeo de los valores de las celdas a los inputs del formulario
-
-      const codIncidencia = fila.querySelector('th').innerText.trim();
-      const codigoPatrimonialValue = celdas[2].innerText.trim();
-      const asuntoValue = celdas[3].innerText.trim();
-      const documentoValue = celdas[4].innerText.trim();
-      const categoriaValue = celdas[5].innerText.trim();
-      const areaValue = celdas[6].innerText.trim();
-      const descripcionValue = celdas[7].innerText.trim();
+  // Establecer valores en el formulario segun la fila seleccionada
+  const celdas = $(this).find('td');
+  const codIncidencia = $(this).find('th').text().trim();
+  const codigoPatrimonialValue = celdas[2].innerText.trim();
+  const asuntoValue = celdas[3].innerText.trim();
+  const documentoValue = celdas[4].innerText.trim();
+  const categoriaValue = celdas[5].innerText.trim();
+  const areaValue = celdas[6].innerText.trim();
+  const descripcionValue = celdas[7].innerText.trim();
 
 
-      // Seteo de valores en los inputs
-      document.getElementById('numero_incidencia').value = codIncidencia;
-      document.getElementById('codigo_patrimonial').value = codigoPatrimonialValue;
-      document.getElementById('asunto').value = asuntoValue;
-      document.getElementById('documento').value = documentoValue;
-      document.getElementById('descripcion').value = descripcionValue;
+  // Seteo de valores en los inputs
+  document.getElementById('numero_incidencia').value = codIncidencia;
+  document.getElementById('codigo_patrimonial').value = codigoPatrimonialValue;
+  document.getElementById('asunto').value = asuntoValue;
+  document.getElementById('documento').value = documentoValue;
+  document.getElementById('descripcion').value = descripcionValue;
 
-      // Seteo de los valores en los combos
-      setComboValue('cbo_categoria', categoriaValue);
-      setComboValue('cbo_area', areaValue);
+  // Seteo de los valores en los combos
+  setComboValue('cbo_categoria', categoriaValue);
+  setComboValue('cbo_area', areaValue);
 
-      // Cambiar estado de los botones
-      document.getElementById('guardar-incidencia').disabled = true;
-      document.getElementById('editar-incidencia').disabled = false;
-      document.getElementById('nuevo-registro').disabled = false;
-    });
-  });
+  // Cambiar estado de los botones
+  document.getElementById('guardar-incidencia').disabled = true;
+  document.getElementById('editar-incidencia').disabled = false;
+  document.getElementById('nuevo-registro').disabled = false;
 });
 
 // seteo de los valores de los combos

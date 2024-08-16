@@ -11,6 +11,10 @@ $(document).ready(function () {
     $(this).addClass('bg-blue-200 font-semibold');
     $('#incidencia').val(id);
 
+    var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
+    $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
+
+
     // Bloquear la tabla de incidencias recepcionadas
     $('#tablaIncidenciasRecepcionadas tbody tr').addClass('pointer-events-none opacity-50');
     document.getElementById('guardar-recepcion').disabled = false;
@@ -68,12 +72,6 @@ $(document).ready(function () {
       $.each(data, function (index, value) {
         select.append('<option value="' + value.PRI_codigo + '">' + value.PRI_nombre + '</option>');
       });
-
-      if (prioridadRegistrada !== '') {
-        select.val(prioridadRegistrada);
-      } else {
-        select.val('');
-      }
     },
     error: function (error) {
       console.error(error);
@@ -92,12 +90,6 @@ $(document).ready(function () {
       $.each(data, function (index, value) {
         select.append('<option value="' + value.IMP_codigo + '">' + value.IMP_descripcion + '</option>');
       });
-
-      if (impactoRegistrado !== '') {
-        select.val(impactoRegistrado);
-      } else {
-        select.val('');
-      }
     },
     error: function (error) {
       console.error(error);

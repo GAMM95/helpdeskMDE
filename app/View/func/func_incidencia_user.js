@@ -8,7 +8,6 @@ $(document).ready(function () {
 
 // TODO: SETEO DEL COMBO CATEGORIA
 $(document).ready(function () {
-  console.log("FETCHING");
   $.ajax({
     url: 'ajax/getCategoryData.php',
     type: 'GET',
@@ -20,13 +19,6 @@ $(document).ready(function () {
       $.each(data, function (index, value) {
         select.append('<option value="' + value.CAT_codigo + '">' + value.CAT_nombre + '</option>');
       });
-
-      // Verificar y establecer el valor seleccionado
-      if (categoriaRegistrada !== '') {
-        select.val(categoriaRegistrada);
-      } else {
-        select.val('');
-      }
     },
     error: function (error) {
       console.error('Error en la carga de categorías:', error);
@@ -141,3 +133,59 @@ $(document).ready(function () {
     return valido;
   }
 });
+
+// TODO: Seteo de los valores de los inputs y combos
+$(document).on('click', '#tablaListarIncidencias tbody tr', function () {
+  $('#tablaListarIncidencias tbody tr').removeClass('bg-blue-200 font-semibold');
+  $(this).addClass('bg-blue-200 font-semibold');
+
+  // Establecer valores en el formulario segun la fila seleccionada
+  const celdas = $(this).find('td');
+  const codIncidencia = $(this).find('th').text().trim();
+  const codigoPatrimonialValue = celdas[2].innerText.trim();
+  const asuntoValue = celdas[3].innerText.trim();
+  const documentoValue = celdas[4].innerText.trim();
+  const categoriaValue = celdas[5].innerText.trim();
+  const descripcionValue = celdas[7].innerText.trim();
+
+
+  // Seteo de valores en los inputs
+  document.getElementById('numero_incidencia').value = codIncidencia;
+  document.getElementById('codigo_patrimonial').value = codigoPatrimonialValue;
+  document.getElementById('asunto').value = asuntoValue;
+  document.getElementById('documento').value = documentoValue;
+  document.getElementById('descripcion').value = descripcionValue;
+
+  // Seteo de los valores en los combos
+  setComboValue('cbo_categoria', categoriaValue);
+
+  // Cambiar estado de los botones
+  document.getElementById('guardar-incidencia').disabled = true;
+  document.getElementById('editar-incidencia').disabled = false;
+  document.getElementById('nuevo-registro').disabled = false;
+});
+
+// seteo de los valores de los combos
+function setComboValue(comboId, value) {
+  const select = document.getElementById(comboId);
+  const options = select.options;
+
+  // console.log("Seteo de los valores para: ", comboId, "Valor: ", value);
+
+  // Verificar si el valor esta en el combo
+  let valueFound = false;
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].text.trim() === value) {
+      select.value = options[i].value;
+      valueFound = true;
+      break;
+    }
+  }
+  // Si no se encontró el valor, seleccionar el primer elemento
+  if (!valueFound) {
+    select.value = ''; // O establece un valor predeterminado si lo deseas
+  }
+
+  // Forzar actualización del select2 para mostrar el valor seleccionado
+  $(select).trigger('change');
+};

@@ -67,24 +67,6 @@ if (session_status() == PHP_SESSION_NONE) {
             <span class="pcoded-mtext">Consultar incidencias</span>
           </a>
         </li>
-
-        <li class="nav-item pcoded-menu-caption">
-          <label>Reportes</label>
-        </li>
-        <li class="nav-item pcoded-hasmenu">
-          <a href="#!" class="nav-link ">
-            <span class="pcoded-micon">
-              <i class="feather icon-file"></i>
-            </span>
-            <span class="pcoded-mtext">Basic</span>
-          </a>
-          <ul class="pcoded-submenu">
-            <li><a href="bc_alert.html">Personas</a></li>
-            <li><a href="bc_button.html">Usuarios</a></li>
-            <li><a href="bc_badges.html">Áreas</a></li>
-            <li><a href="bc_badges.html">Categorías</a></li>
-          </ul>
-        </li>
       </ul>
     </div>
   </div>
