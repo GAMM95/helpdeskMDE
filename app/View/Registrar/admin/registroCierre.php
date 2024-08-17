@@ -255,7 +255,7 @@
           <tbody>
             <?php foreach ($cierres as $incidencia) : ?>
               <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
-                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero']; ?></th>
+                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero_formato']; ?></th>
                 <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>

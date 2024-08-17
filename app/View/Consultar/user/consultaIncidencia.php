@@ -20,8 +20,14 @@
     <!-- Fin de miga de pan -->
 
     <!-- Formulario Consulta de incidencias -->
-    <form id="formConsultarIncidenciaUser" action="consultar-incidencia-admin.php?action=consultar" method="GET" class="card table-card bg-white shadow-md p-6 w-full text-xs mb-2">
+    <form id="formConsultarIncidenciaUser" action="consultar-incidencia-user.php?action=consultar" method="GET" class="card table-card bg-white shadow-md p-6 w-full text-xs mb-2">
       <div class="flex flex-wrap items-center -mx-2 justify-center space-x-2">
+        <!-- AREA DEL USUARIO -->
+        <div class="w-full sm:w-1/6 px-2 mb-2 hidden">
+          <label for="codigoArea" class="block mb-1 font-bold text-xs">C&oacute;digo &Aacute;rea:</label>
+          <input type="text" id="codigoArea" name="codigoArea" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['codigoArea']; ?>" readonly>
+        </div>
+        
         <!-- BUSCAR POR CODIGO PATRIMONIAL -->
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
           <label for="codigoPatrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
@@ -77,7 +83,7 @@
               <th scope="col" class="px-3 py-3">Fecha Cierre</th>
               <th scope="col" class="px-3 py-3 hidden">Condic&oacute;n</th>
               <th scope="col" class="px-3 py-3 hidden">Usuario</th>
-              <th scope="col" class="px-3 py-3">Estado</th>
+              <th scope="col" class="px-3 py-3 text-center">Estado</th>
             </tr>
           </thead>
           <!-- Fin de encabezado de tabla -->

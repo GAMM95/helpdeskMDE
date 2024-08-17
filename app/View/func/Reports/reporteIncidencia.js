@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ['Área:', datos[6]],
         ['Descripción:', datos[7]],
         ['Estado de incidencia:', datos[8]],
-        ['Usuario:', datos[9]]
+        ['Usuario:', datos[10]]
       ],
       styles: {
         fontSize: 10,

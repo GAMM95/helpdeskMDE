@@ -575,6 +575,62 @@ ORDER BY
 END
 GO
 
+-- PROCEDIMIENTO ALMANCENADO PARA CONSULTAR INCIDENCIAS - USUARIO
+CREATE PROCEDURE sp_ConsultarIncidenciasUsuario
+@area INT,
+@codigoPatrimonial CHAR(12),
+@estado INT,
+@fechaInicio DATE,
+@fechaFin DATE
+   
+AS
+BEGIN
+SELECT 
+    I.INC_numero,
+    I.INC_numero_formato,
+    (CONVERT(VARCHAR(10), I.INC_fecha, 103)) AS fechaIncidenciaFormateada,
+    I.INC_codigoPatrimonial,
+    I.INC_asunto,
+    I.INC_documento,
+    I.INC_descripcion,
+    (CONVERT(VARCHAR(10), R.REC_fecha, 103)) AS fechaRecepcionFormateada,
+	PRI_nombre,
+	CON_descripcion,
+	(CONVERT(VARCHAR(10), C.CIE_fecha, 103)) AS fechaCierreFormateada,
+    CAT.CAT_nombre,
+    A.ARE_nombre,
+    CASE
+        WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
+        ELSE E.EST_descripcion
+    END AS ESTADO,
+    p.PER_nombres + ' ' + p.PER_apellidoPaterno AS Usuario
+FROM INCIDENCIA I
+INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
+INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+LEFT JOIN RECEPCION R ON R.INC_numero = I.INC_numero
+LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
+LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
+LEFT JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
+LEFT JOIN IMPACTO IMP ON IMP.IMP_codigo = R.IMP_codigo
+LEFT JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
+LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
+INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
+WHERE 
+    (@codigoPatrimonial IS NULL OR I.INC_codigoPatrimonial = @codigoPatrimonial) AND
+    (@estado IS NULL OR 
+        (EC.EST_codigo = @estado OR 
+        (I.EST_codigo = @estado AND C.CIE_numero IS NULL))) AND
+    (@fechaInicio IS NULL OR I.INC_fecha >= @fechaInicio) AND
+    (@fechaFin IS NULL OR I.INC_fecha <= @fechaFin) AND
+    (@area IS NULL OR A.ARE_codigo = @area)
+    AND (I.EST_codigo IN (3, 4, 5) OR EC.EST_codigo IN (3, 4, 5))
+ORDER BY 
+    SUBSTRING(I.INC_numero_formato, CHARINDEX('-', I.INC_numero_formato) + 1, 4) DESC,
+    I.INC_numero_formato DESC;
+END
+GO
+
 -- PROCEDIMIENTO ALMANCENADO PARA CONSULTAR CIERRES - ADMINISTRADOR
 CREATE PROCEDURE sp_ConsultarCierres
 @area INT,

@@ -178,7 +178,8 @@
               <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-6 py-2 hidden">Area</th>
               <th scope="col" class="px-6 py-2 hidden">descripcion</th>
-              <th scope="col" class="px-6 py-2">Estado</th>
+              <th scope="col" class="px-6 py-2 text-center hidden">Estado</th>
+              <th scope="col" class="px-6 py-2 text-center">Estado</th>
               <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
@@ -194,13 +195,34 @@
                 <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
                 <td class='px-6 py-3 hidden'><?= $incidencia['ARE_nombre']; ?></td>
                 <td class='px-6 py-3 hidden'><?= $incidencia['INC_descripcion']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['ESTADO']; ?></td>
+                <td class='px-6 py-3 text-center hidden'><?= $incidencia['ESTADO']; ?></td>
+                <td class="px-3 py-3 text-center">
+                  <?php
+                  $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
+                  $badgeClass = '';
+                  switch ($estadoDescripcion) {
+                    case 'Abierta':
+                      $badgeClass = 'badge-light-danger';
+                      break;
+                    case 'Recepcionado':
+                      $badgeClass = 'badge-light-success';
+                      break;
+                    case 'Cerrado':
+                      $badgeClass = 'badge-light-primary';
+                      break;
+                    default:
+                      $badgeClass = 'badge-light-secondary';
+                      break;
+                  }
+                  ?>
+                  <label class="badge <?= $badgeClass ?>"><?= $estadoDescripcion ?></label>
+                </td>
                 <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
               </tr>
             <?php endforeach; ?>
             <?php if (empty($incidencias)) : ?>
               <tr>
-                <td colspan="7" class="text-center py-3">No hay incidencias sin recepcionar.</td>
+                <td colspan="8" class="text-center py-3">No hay incidencias.</td>
               </tr>
             <?php endif; ?>
           </tbody>

@@ -173,6 +173,7 @@
               <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-6 py-2">&Aacute;rea</th>
               <th scope="col" class="px-6 py-2 hidden">descripcion</th>
+              <th scope="col" class="px-6 py-2 hidden">Estado</th>
               <th scope="col" class="px-6 py-2 ">Estado</th>
               <th scope="col" class="px-6 py-2 hidden">Usuario</th>
             </tr>
@@ -189,7 +190,28 @@
                 <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
                 <td class='px-6 py-3 hidden'><?= $incidencia['INC_descripcion']; ?></td>
-                <td class='px-6 py-3 '><?= $incidencia['ESTADO']; ?></td>
+                <td class='px-6 py-3 text-center hidden'><?= $incidencia['ESTADO']; ?></td>
+                <td class="px-3 py-3 text-center">
+                  <?php
+                  $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
+                  $badgeClass = '';
+                  switch ($estadoDescripcion) {
+                    case 'Abierta':
+                      $badgeClass = 'badge-light-danger';
+                      break;
+                    case 'Recepcionado':
+                      $badgeClass = 'badge-light-success';
+                      break;
+                    case 'Cerrado':
+                      $badgeClass = 'badge-light-primary';
+                      break;
+                    default:
+                      $badgeClass = 'badge-light-secondary';
+                      break;
+                  }
+                  ?>
+                  <label class="badge <?= $badgeClass ?>"><?= $estadoDescripcion ?></label>
+                </td>
                 <td class='px-6 py-3 hidden'><?= $incidencia['Usuario']; ?></td>
               </tr>
             <?php endforeach; ?>

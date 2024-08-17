@@ -3,6 +3,7 @@ require_once 'app/Model/UsuarioModel.php';
 // Código PHP para obtener los datos del usuario
 if (isset($_SESSION['codigoUsuario'])) {
   $user_id = $_SESSION['codigoUsuario'];
+  $area = $_SESSION['codigoArea'];
   $usuario = new UsuarioModel();
   $perfil = $usuario->setearDatosUsuario($user_id);
 } else {
@@ -41,7 +42,7 @@ if (isset($_SESSION['codigoUsuario'])) {
       <?php
       require_once './app/Model/IncidenciaModel.php';
       $incidenciaModel = new IncidenciaModel();
-      $incidencias = $incidenciaModel->notificacionesAdmin();
+      $incidencias = $incidenciaModel->notificacionesUser($area);
       ?>
       <li>
         <div class="dropdown">
@@ -53,14 +54,14 @@ if (isset($_SESSION['codigoUsuario'])) {
           </a>
           <div class="dropdown-menu dropdown-menu-right notification">
             <div class="noti-head">
-              <h6 class="d-inline-block m-b-0">Nuevas incidencias</h6>
+              <h6 class="d-inline-block m-b-0">Notificaciones</h6>
             </div>
             <ul class="noti-body" style="max-height: 250px; overflow-y: auto;">
               <?php if (empty($incidencias)) : ?>
                 <li class="notification">
                   <div class="media">
                     <div class="media-body">
-                      <p class="text-center">No hay nuevas incidencias.</p>
+                      <p class="text-center">No hay nuevas notificaciones.</p>
                     </div>
                   </div>
                 </li>
@@ -71,13 +72,13 @@ if (isset($_SESSION['codigoUsuario'])) {
                       <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
                       <div class="media-body">
                         <p>
-                          <strong><?= htmlspecialchars($incidencia['Usuario']); ?></strong>
+                          <strong><?= htmlspecialchars($incidencia['INC_asunto']); ?></strong>
                           <span class="n-time text-muted">
                             <i class="icon feather icon-clock m-r-10"></i>
                             <?= htmlspecialchars($incidencia['tiempoDesdeIncidencia']); ?>
                           </span>
                         </p>
-                        <p><?= htmlspecialchars($incidencia['INC_asunto']); ?></p>
+                        <p><?= htmlspecialchars($incidencia['INC_numero_formato'] . '  cerrada'); ?></p>
                       </div>
                     </div>
                   </li>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 $action = $_GET['action'] ?? '';
-$state = $_GET['state'] ?? '';
+// $state = $_GET['state'] ?? '';
 
 require_once './app/Controller/IncidenciaController.php';
 require_once './app/Model/IncidenciaModel.php';
@@ -26,7 +26,7 @@ if ($action === 'consultar') {
   error_log("Fecha Fin: " . $fechaFin);
 
   // Obtener los resultados de la búsqueda
-  $resultadoBusqueda = $incidenciaController->consultarIncidenciaUsuario($area, $estado, $fechaInicio, $fechaFin);
+  $resultadoBusqueda = $incidenciaController->consultarIncidenciaUsuario($area, $codigoPatrimonial, $estado, $fechaInicio, $fechaFin);
 
   // Imprime el resultado para depuración
   error_log("Resultado de la consulta: " . print_r($resultadoBusqueda, true));
@@ -36,13 +36,18 @@ if ($action === 'consultar') {
   if (!empty($resultadoBusqueda)) {
     foreach ($resultadoBusqueda as $incidencia) {
       $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
+      $html .= '<td class="px-3 py-2 hidden">' . htmlspecialchars($incidencia['INC_numero']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_numero_formato']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['ARE_nombre']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['CAT_nombre']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_asunto']) . '</td>';
       $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_documento']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . '</td>';
+      $html .= '<td class="px-3 py-2 hidden">' . htmlspecialchars($incidencia['fechaRecepcionFormateada']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['PRI_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['fechaCierreFormateada']) . '</td>';
+      $html .= '<td class="px-3 py-2 hidden">' . htmlspecialchars($incidencia['CON_descripcion']) . '</td>';
+      $html .= '<td class="px-3 py-2 hidden">' . htmlspecialchars($incidencia['Usuario']) . '</td>';
       $html .= '<td class="px-3 py-2 text-center text-xs align-middle">';
 
       $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
@@ -66,7 +71,7 @@ if ($action === 'consultar') {
       $html .= '</td></tr>';
     }
   } else {
-    $html = '<tr><td colspan="8" class="text-center py-3">No se encontraron incidencias pendientes de cierre.</td></tr>';
+    $html = '<tr><td colspan="8" class="text-center py-3">No  sds se encontraron incidencias pendientes de cierre.</td></tr>';
   }
 
   // Devolver el HTML de las filas
@@ -124,6 +129,8 @@ if ($action === 'consultar') {
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 
 </html>

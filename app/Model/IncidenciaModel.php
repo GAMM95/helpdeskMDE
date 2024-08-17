@@ -263,7 +263,8 @@ class IncidenciaModel extends Conexion
         LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
         INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
         WHERE (I.EST_codigo IN (3, 4, 5) OR C.EST_codigo IN (3, 4, 5))
-        AND A.ARE_codigo = :are_codigo"; // Usamos el parámetro nombrado :are_codigo
+        AND A.ARE_codigo = :are_codigo
+        ORDER BY I.INC_numero_formato DESC"; // Usamos el parámetro nombrado :are_codigo
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':are_codigo', $ARE_codigo, PDO::PARAM_INT); // Vinculamos el parámetro
         $stmt->execute();
@@ -341,6 +342,7 @@ class IncidenciaModel extends Conexion
         // Prepara la consulta SQL con un marcador de posición para la fecha
         $sql = "SELECT 
           I.INC_numero,
+          I.INC_numero_formato,
           (CONVERT(VARCHAR(10), INC_fecha, 103)) AS fechaIncidenciaFormateada,
           A.ARE_nombre,
           CAT.CAT_nombre,
@@ -388,7 +390,63 @@ class IncidenciaModel extends Conexion
     }
   }
 
+  public function listarIncidenciasUserFecha($area, $fecha)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        // Prepara la consulta SQL con un marcador de posición para la fecha
+        $sql = "SELECT 
+          I.INC_numero,
+          I.INC_numero_formato,
+          (CONVERT(VARCHAR(10), INC_fecha, 103)) AS fechaIncidenciaFormateada,
+          A.ARE_nombre,
+          CAT.CAT_nombre,
+          I.INC_asunto,
+          I.INC_documento,
+          I.INC_codigoPatrimonial,
+          (CONVERT(VARCHAR(10), REC_fecha, 103)) AS fechaRecepcionFormateada,
+          PRI.PRI_nombre,
+          IMP.IMP_descripcion,
+          (CONVERT(VARCHAR(10), CIE_fecha, 103)) AS fechaCierreFormateada,
+          O.CON_descripcion,
+          U.USU_nombre,
+          p.PER_nombres + ' ' + PER_apellidoPaterno AS Usuario,
+          CASE
+              WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
+              ELSE E.EST_descripcion
+          END AS ESTADO
+      FROM INCIDENCIA I
+      INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
+      INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+      INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+      LEFT JOIN RECEPCION R ON R.INC_numero = I.INC_numero
+      LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
+      LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
+      LEFT JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
+      LEFT JOIN IMPACTO IMP ON IMP.IMP_codigo = R.IMP_codigo
+      LEFT JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
+      LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
+      INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
+      WHERE (I.EST_codigo IN (3, 4, 5) OR C.EST_codigo IN (3, 4, 5)) 
+      AND A.ARE_codigo = :area
+      AND CAST(I.INC_fecha AS DATE) = CAST(:fechaConsulta AS DATE)
+      ORDER BY I.INC_numero DESC";
 
+        // Prepara y ejecuta la consulta
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':area', $area); // Asigna el parámetro area
+        $stmt->bindParam(':fechaConsulta', $fecha, PDO::PARAM_STR); // Asigna el parámetro de fecha
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+      } else {
+        throw new Exception("Error de conexión a la base de datos.");
+      }
+    } catch (PDOException $e) {
+      throw new Exception("Error al listar incidencias registradas por el administrador: " . $e->getMessage());
+    }
+  }
 
   //  TODO: Contar el total de incidencias para empaginar tabla - ADMINISTRADOR
   public function contarIncidenciasAdministrador()
@@ -630,8 +688,7 @@ class IncidenciaModel extends Conexion
   }
 
   // METODOS PARA CONSULTAS
-
-  // TODO:  Metodo para consultar incidencias por area
+  // TODO:  Metodo para consultar incidencias por area - ADMINISTRADOR
   public function buscarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin)
   {
     $conector = parent::getConexion(); // Asumiendo que getConexion() devuelve la conexión PDO
@@ -662,19 +719,20 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO:  Metodo para consultar incidencias por area
-  public function buscarIncidenciaUsuario($area, $INC_codigoPatrimonial, $estado, $fechaInicio, $fechaFin)
+  // TODO:  Metodo para consultar incidencias por area - USUARIO
+  public function buscarIncidenciaUsuario($area, $codigoPatrimonial, $estado, $fechaInicio, $fechaFin)
   {
     $conector = parent::getConexion(); // Asumiendo que getConexion() devuelve la conexión PDO
 
     try {
       if ($conector != null) {
-        $sql = "EXEC sp_ConsultarIncidencias :area, :estado, :fechaInicio, :fechaFin";
+        $sql = "EXEC sp_ConsultarIncidenciasUsuario :area, :codigoPatrimonial, :estado, :fechaInicio, :fechaFin";
 
         $stmt = $conector->prepare($sql);
 
         // Bindear los parámetros
         $stmt->bindParam(':area', $area, PDO::PARAM_INT);
+        $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial);
         $stmt->bindParam(':estado', $estado, PDO::PARAM_INT);
         $stmt->bindParam(':fechaInicio', $fechaInicio);
         $stmt->bindParam(':fechaFin', $fechaFin);
@@ -689,7 +747,7 @@ class IncidenciaModel extends Conexion
         throw new Exception("Error de conexión con la base de datos.");
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al obtener las incidencias DX: " . $e->getMessage());
+      throw new Exception("Error al obtener las incidencias  usuario DX: " . $e->getMessage());
     }
   }
 
@@ -785,6 +843,71 @@ class IncidenciaModel extends Conexion
 
         // Prepara y ejecuta la consulta
         $stmt = $conector->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+      } else {
+        throw new Exception("Error de conexión a la base de datos.");
+      }
+    } catch (PDOException $e) {
+      throw new Exception("Error al listar notificaciones: " . $e->getMessage());
+    }
+  }
+
+  // TODO: Notificaiones para el usuario
+  public function notificacionesUser($area)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT 
+        I.INC_numero,
+        I.INC_numero_formato,
+        (CONVERT(VARCHAR(10), I.INC_fecha, 103) + ' - ' + CONVERT(VARCHAR(5), I.INC_hora, 108)) AS fechaIncidenciaFormateada,
+        A.ARE_nombre AS NombreAreaIncidencia,
+        I.INC_asunto,
+        C.USU_codigo,
+        U.USU_nombre,
+        p.PER_nombres + ' ' + p.PER_apellidoPaterno AS Usuario,
+        A2.ARE_nombre AS NombreAreaCierre, -- Agregamos el nombre del área del usuario de cierre
+        CASE
+            WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
+            ELSE E.EST_descripcion
+        END AS ESTADO,
+        CASE
+            WHEN DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) < 60 THEN 
+                CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' min'
+            WHEN DATEDIFF(DAY, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) < 1 THEN 
+                CAST(DATEDIFF(HOUR, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' h ' +
+                CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) % 60 AS VARCHAR) + ' min'
+            ELSE 
+                CAST(DATEDIFF(DAY, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' d ' +
+                CAST(DATEDIFF(HOUR, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) % 24 AS VARCHAR) + ' h ' +
+                CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) % 60 AS VARCHAR) + ' min'
+        END AS tiempoDesdeIncidencia
+        FROM INCIDENCIA I
+        INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
+        INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+        INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+        LEFT JOIN RECEPCION R ON R.INC_numero = I.INC_numero
+        LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
+        LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
+        LEFT JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
+        LEFT JOIN IMPACTO IMP ON IMP.IMP_codigo = R.IMP_codigo
+        LEFT JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
+        LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
+        LEFT JOIN USUARIO U2 ON U2.USU_codigo = C.USU_codigo -- Relacionamos el usuario del cierre
+        LEFT JOIN AREA A2 ON U2.ARE_codigo = A2.ARE_codigo -- Relacionamos el área del usuario del cierre
+        INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
+        WHERE (I.EST_codigo NOT IN (3, 4) OR C.EST_codigo NOT IN (3, 4))
+        AND A.ARE_codigo = :area
+        ORDER BY tiempoDesdeIncidencia DESC";
+
+        // ORDER BY I.INC_numero DESC";
+
+        // Prepara y ejecuta la consulta
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':area', $area, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;

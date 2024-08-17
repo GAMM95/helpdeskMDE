@@ -210,7 +210,7 @@
                 <!-- Encabezado -->
                 <thead>
                   <tr>
-                    <th class="text-center">N°</th>
+                    <th class="text-center">N° INCIDENCIA</th>
                     <th class="text-center">Usuario</th>
                     <th class="text-center">Fecha</th>
                     <th class="text-center">Incidencia</th>
@@ -224,7 +224,7 @@
                   <?php foreach ($incidencias as $incidencia) : ?>
                     <tr class="align-middle"> <!-- Añadido 'align-middle' para centrar verticalmente -->
                       <!-- código de la incidencia -->
-                      <td class="text-center text-xs align-middle"><?= htmlspecialchars($incidencia['INC_numero']); ?></td>
+                      <td class="text-center text-xs align-middle"><?= htmlspecialchars($incidencia['INC_numero_formato']); ?></td>
                       <!-- Usuario y área -->
                       <td>
                         <div class="flex items-center">
@@ -282,6 +282,7 @@
         </div>
 
       </div>
+      
     </div>
     <!-- [ Main Content ] end -->
   </div>
