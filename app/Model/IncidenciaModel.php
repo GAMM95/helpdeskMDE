@@ -31,6 +31,17 @@ class IncidenciaModel extends Conexion
     }
   }
 
+  /**
+   * Método para insertar una nueva incidencia en la base de datos (Administrador - Usuario).
+   * 
+   * Este método permite a un administrador registrar una nueva incidencia en el sistema. 
+   * La incidencia se almacena con los detalles proporcionados, incluyendo la fecha, hora, 
+   * asunto, descripción, documento adjunto, código patrimonial, código de estado, código de categoría, 
+   * código de área, y el código de usuario que registra la incidencia.
+   * 
+   * @return int|false Retorna el ID de la incidencia recién insertada si la operación es exitosa. 
+   *                   En caso de error, retorna false.
+   */
   // TODO: Metodo para insertar incidencias - Administrador
   public function insertarIncidenciaAdministrador($INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial,  $EST_codigo, $CAT_codigo, $ARE_codigo, $USU_codigo)
   {
@@ -39,18 +50,7 @@ class IncidenciaModel extends Conexion
       if ($conector != null) {
         $sql = "INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conector->prepare($sql);
-        $success = $stmt->execute([
-          $INC_fecha,
-          $INC_hora,
-          $INC_asunto,
-          $INC_descripcion,
-          $INC_documento,
-          $INC_codigoPatrimonial,
-          3,
-          $CAT_codigo,
-          $ARE_codigo,
-          $USU_codigo
-        ]);
+        $success = $stmt->execute([$INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial, 3, $CAT_codigo, $ARE_codigo, $USU_codigo]);
         if ($success) {
           $lastId = $conector->lastInsertId();
           return $lastId;
@@ -97,6 +97,18 @@ class IncidenciaModel extends Conexion
     }
   }
 
+
+  /**
+   * Método para consultar incidencias de la base de datos (Administrador - Usuario).
+   * 
+   * Este método permite a un administrador y usuario consultar incidencias en el sistema. 
+   * La incidencia se consulta con los detalles proporcionados, incluyendo la fecha, 
+   * asunto, descripción, documento adjunto, código patrimonial, código de estado, código de categoría, 
+   * código de área, y el código de usuario que registra la incidencia.
+   * 
+   * @return int|false Retorna el ID de la incidencia recién insertada si la operación es exitosa. 
+   *                   En caso de error, retorna false.
+   */
   // TODO: Metodo listar incidencias Administrador - FORM CONSULTAR INCIDENCIA
   public function listarIncidenciasAdministrador()
   {
@@ -691,7 +703,7 @@ class IncidenciaModel extends Conexion
   // TODO:  Metodo para consultar incidencias por area - ADMINISTRADOR
   public function buscarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin)
   {
-    $conector = parent::getConexion(); // Asumiendo que getConexion() devuelve la conexión PDO
+    $conector = parent::getConexion(); 
 
     try {
       if ($conector != null) {
@@ -722,7 +734,7 @@ class IncidenciaModel extends Conexion
   // TODO:  Metodo para consultar incidencias por area - USUARIO
   public function buscarIncidenciaUsuario($area, $codigoPatrimonial, $estado, $fechaInicio, $fechaFin)
   {
-    $conector = parent::getConexion(); // Asumiendo que getConexion() devuelve la conexión PDO
+    $conector = parent::getConexion(); 
 
     try {
       if ($conector != null) {
@@ -902,8 +914,6 @@ class IncidenciaModel extends Conexion
         WHERE (I.EST_codigo NOT IN (3, 4) OR C.EST_codigo NOT IN (3, 4))
         AND A.ARE_codigo = :area
         ORDER BY tiempoDesdeIncidencia DESC";
-
-        // ORDER BY I.INC_numero DESC";
 
         // Prepara y ejecuta la consulta
         $stmt = $conector->prepare($sql);

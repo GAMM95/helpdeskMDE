@@ -9,7 +9,7 @@ class cierreController
     $this->cierreModel = new CierreModel();
   }
 
-  //TODO: Metodo controller para registrar cierre
+  //TODO: Metodo para registrar cierre
   public function registrarCierre()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -53,6 +53,7 @@ class cierreController
     }
   }
 
+  // TODO: Metodo para consultar cierres - Administrador
   public function consultarCierres($area = NULL, $codigoPatrimonial = null, $fechaInicio = null, $fechaFin = null)
   {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
