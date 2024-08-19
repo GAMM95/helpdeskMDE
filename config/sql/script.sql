@@ -390,7 +390,29 @@ BEGIN
 END;
 GO
 
-
+-- PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR INCIDENCIA
+CREATE PROCEDURE sp_ActualizarIncidencia
+    @INC_numero SMALLINT,
+    @CAT_codigo SMALLINT,
+    @ARE_codigo SMALLINT,
+    @INC_codigoPatrimonial CHAR(12),
+    @INC_asunto VARCHAR(200),
+    @INC_documento VARCHAR(100),
+    @INC_descripcion VARCHAR(500)
+AS
+BEGIN
+    -- Actualizar el registro en la tabla INCIDENCIA solo si el estado es 3
+    UPDATE INCIDENCIA
+    SET CAT_codigo = @CAT_codigo,
+        ARE_codigo = @ARE_codigo,
+        INC_codigoPatrimonial = @INC_codigoPatrimonial,
+        INC_asunto = @INC_asunto,
+        INC_documento = @INC_documento,
+        INC_descripcion = @INC_descripcion
+    WHERE INC_numero = @INC_numero
+    AND EST_codigo = 3;
+END;
+GO 
 --INSERT INTO INCIDENCIA  VALUES ('2024-05-31','10:32:15','No enciende CPU','Se presiona y no enciende','S/D','740895000365',3,1,21,3);
 --INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo) 
 --VALUES ('2024-03-12','12:32:10','abc','as','S/D','705402564789',3,1,1,1) ;

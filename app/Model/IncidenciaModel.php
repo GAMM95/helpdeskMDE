@@ -31,6 +31,34 @@ class IncidenciaModel extends Conexion
     }
   }
 
+  public function obtenerEstadoIncidencia($numeroIncidencia)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT EST_codigo FROM INCIDENCIA WHERE INC_numero = :numeroIncidencia";
+        $stmt = $conector->prepare($sql);
+
+        // Bindear el parámetro
+        $stmt->bindParam(':numeroIncidencia', $numeroIncidencia, PDO::PARAM_INT);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener el resultado
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['EST_codigo'] : null;
+      } else {
+        throw new Exception("Error de conexión con la base de datos.");
+      }
+    } catch (PDOException $e) {
+      // Manejar el error lanzando una excepción
+      throw new Exception("Error al obtener el estado de la incidencia: " . $e->getMessage());
+    }
+  }
+
+
   /**
    * Método para insertar una nueva incidencia en la base de datos (Administrador - Usuario).
    * 
@@ -97,6 +125,41 @@ class IncidenciaModel extends Conexion
     }
   }
 
+  // Metodo para actualizar incidencia - Administrador
+  public function editarIncidenciaAdmin($num_incidencia, $categoria, $area, $codigoPatrimonial, $asunto, $documento, $descripcion)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "EXEC sp_ActualizarIncidencia :num_incidencia, :categoria, :area, :codigoPatrimonial, :asunto, :documento, :descripcion";
+        $stmt = $conector->prepare($sql);
+
+        // Bindear los parámetros
+        $stmt->bindParam(':num_incidencia', $num_incidencia, PDO::PARAM_INT);
+        $stmt->bindParam(':categoria', $categoria, PDO::PARAM_INT);
+        $stmt->bindParam(':area', $area, PDO::PARAM_INT);
+        $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial);
+        $stmt->bindParam(':asunto', $asunto);
+        $stmt->bindParam(':documento', $documento);
+        $stmt->bindParam(':descripcion', $descripcion);
+
+        // Ejecutar el procedimiento almacenado
+        $stmt->execute();
+
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        throw new Exception("Error de conexión con la base de datos.");
+      }
+    } catch (PDOException $e) {
+      echo "Error al editar incidencia para el administrador: " . $e->getMessage();
+      return false;
+    }
+  }
 
   /**
    * Método para consultar incidencias de la base de datos (Administrador - Usuario).
@@ -703,7 +766,7 @@ class IncidenciaModel extends Conexion
   // TODO:  Metodo para consultar incidencias por area - ADMINISTRADOR
   public function buscarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin)
   {
-    $conector = parent::getConexion(); 
+    $conector = parent::getConexion();
 
     try {
       if ($conector != null) {
@@ -734,7 +797,7 @@ class IncidenciaModel extends Conexion
   // TODO:  Metodo para consultar incidencias por area - USUARIO
   public function buscarIncidenciaUsuario($area, $codigoPatrimonial, $estado, $fechaInicio, $fechaFin)
   {
-    $conector = parent::getConexion(); 
+    $conector = parent::getConexion();
 
     try {
       if ($conector != null) {

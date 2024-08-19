@@ -437,3 +437,9 @@ Nombre de Persona: Alfonzo Mantilla, Rol: Usuario, Codigo Area: 53, Área: Equip
 Nombre de Persona: Liliana Marcelo, Rol: Usuario, Codigo Area: 4, Área: Alcaldía, Código de Usuario: 2, Usuario: LMM96
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Alfonzo Mantilla, Rol: Usuario, Codigo Area: 53, Área: Equipo Mecánico y Maestranza, Código de Usuario: 3, Usuario: ALMANRO67
+------- START LOGIN LOGS ---------
+Nombre de Persona: Alfonzo Mantilla, Rol: Usuario, Codigo Area: 53, Área: Equipo Mecánico y Maestranza, Código de Usuario: 3, Usuario: ALMANRO67
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95

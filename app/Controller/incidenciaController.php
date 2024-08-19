@@ -62,6 +62,67 @@ class IncidenciaController
     }
   }
 
+  public function actualizarIncidenciaAdministrador()
+  {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+      // Obtener y validar los parámetros
+      $numeroIncidencia = $_POST['numero_incidencia'] ?? null;
+      $categoria = $_POST['categoria'] ?? null;
+      $area = $_POST['area'] ?? null;
+      $codigoPatrimonial = $_POST['codigo_patrimonial'] ?? null;
+      $asunto = $_POST['asunto'] ?? null;
+      $documento = $_POST['documento'] ?? null;
+      $descripcion = $_POST['descripcion'] ?? null;
+
+      header('Content-Type: application/json');
+      try {
+
+        if (is_null($asunto) || is_null($documento)) {
+          // Respuesta en caso de parámetros faltantes
+          echo json_encode([
+            'success' => false,
+            'message' => 'Faltan parámetros requeridos.'
+          ]);
+          exit();
+        }
+
+        // Verificar el estado de la incidencia
+        $estado = $this->incidenciaModel->obtenerEstadoIncidencia($numeroIncidencia);
+
+        if ($estado === 3) {
+          // Estado permitido para actualización
+          echo json_encode([
+            'success' => false,
+            'message' => 'La incidencia no está Abierta y no puede ser actualizada.'
+          ]);
+          exit();
+        }
+
+        // Llamar al modelo para actualizar la incidencia
+        $updateSuccess = $this->incidenciaModel->editarIncidenciaAdmin($numeroIncidencia, $categoria, $area, $codigoPatrimonial, $asunto, $documento, $descripcion);
+
+        if ($updateSuccess) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Incidencia actualizada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se realizó ninguna actualización.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+    }
+  }
+
+
   // TODO: Metodo para consultar incidencias para el administrador
   public function consultarIncidenciaAdministrador($area = NULL, $estado = null, $fechaInicio = null, $fechaFin = null)
   {
