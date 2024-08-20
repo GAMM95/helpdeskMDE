@@ -158,13 +158,6 @@
           <input type="text" id="usuario" name="usuario" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['codigoUsuario']; ?>" readonly>
         </div>
 
-        <!-- OPERATIVIDAD -->
-        <div class="w-full md:w-1/5 px-2 mb-2">
-          <label for="operatividad" class="block font-bold mb-1 text-xs">Condici&oacute;n: *</label>
-          <select id="cbo_operatividad" name="operatividad" class="border p-2 w-full text-xs cursor-pointer rounded-md">
-          </select>
-        </div>
-
         <!-- ASUNTO DEL CIERRE -->
         <div class="w-full md:w-2/5 px-2 mb-2">
           <label for="asunto" class="block mb-1 font-bold text-xs">Asunto: *</label>
@@ -176,6 +169,14 @@
           <label for="documento" class="block mb-1 font-bold text-xs">Documento de Cierre: *</label>
           <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese documento de cierre">
         </div>
+
+        <!-- OPERATIVIDAD -->
+        <div class="w-full md:w-1/5 px-2 mb-2">
+          <label for="operatividad" class="block font-bold mb-1 text-xs">Condici&oacute;n: *</label>
+          <select id="cbo_operatividad" name="operatividad" class="border p-2 w-full text-xs cursor-pointer rounded-md">
+          </select>
+        </div>
+
       </div>
 
       <!-- DIAGNOSTICO DEL CIERRE -->

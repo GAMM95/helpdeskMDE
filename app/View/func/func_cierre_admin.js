@@ -5,6 +5,37 @@ $(document).ready(function () {
     "timeOut": "2000"
   };
 
+  // Seteo del combo condicion
+  $.ajax({
+    url: 'ajax/getOperatividadData.php',
+    type: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      var select = $('#cbo_operatividad');
+      select.empty();
+      select.append('<option value="" selected disabled>Seleccione una condici&oacute;n</option>');
+      $.each(data, function (index, value) {
+        select.append('<option value="' + value.CON_codigo + '">' + value.CON_descripcion + '</option>');
+      });
+    },
+    error: function (error) {
+      console.error('Error en la carga de condiciones:', error);
+    }
+  });
+
+
+  // BUSCADOR PARA EL COMBO CATEGORIA Y AREA
+  $('#cbo_operatividad').select2({
+    allowClear: true,
+    width: '100%',
+    dropdownCssClass: 'text-xs',
+    language: {
+      noResults: function () {
+        return "No se encontraron resultados";
+      }
+    }
+  });
+  
   //Evento de clic en las filas de la tabla de recepciones sin cerrar
   $(document).on('click', '#tablaRecepcionesSinCerrar tbody tr', function () {
     // seteo del numero de recepcion
