@@ -40,28 +40,25 @@
           <hr class="mb-2">
 
           <!-- Contenedor para alinear los inputs horizontalmente -->
-          <div class="flex  justify-center space-x-4 mt-4"> <!-- Usa flex y space-x-4 para alinear los elementos y agregar espacio entre ellos -->
+          <div class="flex justify-center space-x-4 mt-4 mr-5 ml-5">
             <!-- BUSCAR POR FECHA DE INICIO -->
-            <div class="w-full md:w-auto">
-              <label for="fechaInicio" class="block mb-1 font-bold text-xs">Fecha Inicio:</label>
-              <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
+            <div class="w-full">
+              <label for="fechaInicio" class="block mb-1 text-center font-bold text-xs">Fecha Inicio:</label>
+              <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs text-center cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
             </div>
 
             <!-- Buscar por fecha fin -->
-            <div class="w-full md:w-auto">
-              <label for="fechaFin" class="block mb-1 font-bold text-xs">Fecha Fin:</label>
-              <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
+            <div class="w-full">
+              <label for="fechaFin" class="block mb-1 text-center font-bold text-xs">Fecha Fin:</label>
+              <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer text-center rounded-md" max="<?php echo date('Y-m-d'); ?>">
             </div>
           </div>
 
+
           <!-- Botones -->
           <div class="flex justify-center space-x-2 mt-4">
-            <button type="button" id="buscar-cierres" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md">
-              <i class="feather mr-2 icon-printer"></i>Incidencias
-            </button>
-            <button type="button" id="limpiarCampos" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md">
-              <i class="feather mr-2 icon-printer"></i>Cierres
-            </button>
+            <button type="button" id="reporte-incidencias-fechas" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Incidencias </button>
+            <button type="button" id="reportes-cierres-fechas" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Cierres </button>
           </div>
         </div>
         <!-- Fin de reporte por fechas -->
@@ -72,7 +69,7 @@
           <h5 class="mb-1 text-lg text-bold">Reportes por &aacute;rea</h5>
           <hr class="mb-2">
           <!-- Contenedor para alinear los inputs horizontalmente -->
-          <div class="flex justify-center space-x-4">
+          <div class="flex justify-center space-x-4 mt-4">
             <!-- Buscar por area -->
             <div class="w-full md:w-1/1 px-2 mb-2">
               <!-- <label for="area"class="block font-bold mb-1 text-[#32cfad]">&Aacute;rea:</label> -->
@@ -81,7 +78,7 @@
             </div>
           </div>
           <!-- Botones -->
-          <div class="flex justify-center space-x-2 mt-2">
+          <div class="flex justify-center space-x-2 mt-4">
             <button type="button" id="reportes-areas" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-printer"></i>Imprimir</button>
           </div>
         </div>
@@ -91,13 +88,13 @@
         <div class="col-md-6 mt-5">
           <h5 class="mb-1 text-lg text-bold">Reportes por c&oacute;digo patrimonial</h5>
           <hr class="mb-2">
-          <div class="flex justify-center space-x-4">
+          <div class="flex justify-center space-x-4 mt-4">
             <div class="text-center w-full md:w-3/4"> <!-- Ajuste de ancho con md:w-2/3 -->
               <input type="text" id="codigoPatrimonial" name="codigoPatrimonial" class="border p-2 w-full text-xs rounded-md" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" placeholder="Ingrese c&oacute;digo patrimonial">
             </div>
           </div>
           <!-- Botones -->
-          <div class="flex justify-center space-x-2 mt-2">
+          <div class="flex justify-center space-x-2 mt-4">
             <button type="button" id="reportes-codigoPatrimonial" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-printer"></i>Imprimir</button>
           </div>
         </div>
