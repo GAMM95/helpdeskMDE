@@ -31,6 +31,9 @@ $(document).ready(function () {
     $(this).addClass('bg-blue-200 font-semibold');
     $('#num_recepcion').val(numRecepcion);
 
+    var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
+    $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
+
     // Bloquear la tabla de incidencias sin recepcionar
     $('#tablaIncidenciasSinRecepcionar tbody tr').addClass('pointer-events-none opacity-50');
 

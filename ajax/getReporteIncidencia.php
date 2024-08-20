@@ -12,7 +12,9 @@ class ReporteIncidencia extends Conexion
     $conector = parent::getConexion();
     $sql = "SELECT 
         I.INC_numero,
-        (CONVERT(VARCHAR(10), INC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada,
+        I.INC_numero_formato,
+        (CONVERT(VARCHAR(10), INC_fecha, 103)) AS fechaIncidenciaFormateada,
+        -- (CONVERT(VARCHAR(10), INC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), INC_hora, 0), 7), 6, 0, ' ')) AS fechaIncidenciaFormateada,
         I.INC_codigoPatrimonial,
         I.INC_asunto,
         I.INC_documento,

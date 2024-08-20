@@ -104,18 +104,24 @@
 
       <!-- NUMERO DE RECEPCION -->
       <div class="flex justify-center mx-2 mb-4">
-        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center ">
+        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden ">
           <label for="num_incidencia" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero de Incidencia:</label>
           <input type="text" id="num_incidencia" name="num_incidencia" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
         </div>
 
-        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center ">
+        <!-- INCIDENCIA SELECCIONADA -->
+        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
+          <label for="incidenciaSeleccionada" class="block font-bold mb-1 text-[#32cfad]">Incidencia seleccionada:</label>
+          <input type="text" class="border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center w-full" id="incidenciaSeleccionada" name="incidenciaSeleccionada" readonly required>
+        </div>
+
+        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden">
           <label for="recepcion" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero de Recepci&oacute;n:</label>
           <input type="text" id="recepcion" name="recepcion" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
         </div>
 
         <!-- INPUT ESCONDIDO PARA EL NUMERO DE CIERRE -->
-        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
+        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden">
           <label for="num_cierre" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero Cierre:</label>
           <input type="text" id="num_cierre" name="num_cierre" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" disabled>
         </div>
@@ -238,9 +244,10 @@
 
     <div>
       <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
-        <table class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
+        <table id="tablaIncidenciasCerradas" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
+              <th scope="col" class="px-6 py-2 hidden">num Cierre</th>
               <th scope="col" class="px-6 py-2">Incidencia</th>
               <th scope="col" class="px-6 py-2">Fecha Incidencia</th>
               <th scope="col" class="px-6 py-2">&Aacute;rea</th>
@@ -255,7 +262,8 @@
           <tbody>
             <?php foreach ($cierres as $incidencia) : ?>
               <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
-                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'> <?= $incidencia['INC_numero_formato']; ?></th>
+                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['CIE_numero']; ?></th>
+                <td class='px-6 py-3'><?= $incidencia['INC_numero_formato']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
                 <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>

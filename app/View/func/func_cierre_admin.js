@@ -7,21 +7,57 @@ $(document).ready(function () {
 
   //Evento de clic en las filas de la tabla de recepciones sin cerrar
   $(document).on('click', '#tablaRecepcionesSinCerrar tbody tr', function () {
+    // seteo del numero de recepcion
     var id = $(this).find('th').html();
     $('#tablaRecepcionesSinCerrar tbody tr').removeClass('bg-blue-200 font-semibold');
     $(this).addClass('bg-blue-200 font-semibold');
     $('#recepcion').val(id);
-  });
 
-  $(document).on('click', '#tablaRecepcionesSinCerrar tbody tr', function () {
+    // Seteo del codigo de incidencia
     var numIncidencia = $(this).find('th').eq(1).html();
     $('#tablaRecepcionesSinCerrar tbody tr').removeClass('bg-blue-200 font-semibold');
     $(this).addClass('bg-blue-200 font-semibold');
     $('#num_incidencia').val(numIncidencia);
+
+    // Seteo del numero formateado de la incidencia
+    var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
+    $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
+
+    // Bloquear la tabla de cierres
+    $('#tablaIncidenciasCerradas tbody tr').addClass('pointer-events-none opacity-50');
+    document.getElementById('guardar-cierre').disabled = false;
+    document.getElementById('nuevo-registro').disabled = false;
+
+    // Reactivar el botón "Nuevo"
+    $('#nuevo-registro').prop('disabled', false);
   });
 
-  // Limpiar los campos del formulario
-  $('#nuevoRegistro').click(nuevoRegistro);
+  // Evento de click en las filas de la tabla de incidencias cerradas
+  $(document).on('click', '#tablaIncidenciasCerradas tbody tr', function () {
+    var numCierre = $(this).find('th').html();
+    $('#tablaIncidenciasCerradas tbody tr').removeClass('bg-blue-200 font-semibold');
+    $(this).addClass('bg-blue-200 font-semibold');
+    $('#num_cierre').val(numCierre);
+
+    // Seteo del numero formateado de la incidencia
+    var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
+    $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
+
+    // Bloquear la tabla de cierres
+    $('#tablaRecepcionesSinCerrar tbody tr').addClass('pointer-events-none opacity-50');
+    // Reactivar el botón "Nuevo"
+    $('#nuevo-registro').prop('disabled', false);
+  });
+
+  // Evento para nuevo registro
+  $('#nuevo-registro').on('click', function () {
+    nuevoRegistro();
+    // Reactivar ambas tablas
+    $('#tablaRecepcionesSinCerrar tbody tr').removeClass('pointer-events-none opacity-50');
+    $('#tablaIncidenciasCerradas tbody tr').removeClass('pointer-events-none opacity-50');
+    location.reload();
+  });
+
 
   // Manejo de la paginacion
 

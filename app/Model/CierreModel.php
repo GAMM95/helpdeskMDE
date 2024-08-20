@@ -151,6 +151,7 @@ class CierreModel extends Conexion
           I.INC_codigoPatrimonial,
           (CONVERT(VARCHAR(10),CIE_fecha,103)) AS fechaCierreFormateada,
           CIE_asunto,
+          CIE_numero,
           C.CIE_documento,
 	        O.CON_descripcion,
 	        u.USU_nombre,
