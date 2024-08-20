@@ -49,7 +49,7 @@
         <table id="tablaIncidenciasSinRecepcionar" class="w-full text-xs text-left rtl:text-right text-gray-500 bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-6 py-2 hidden">N°</th>
+              <th scope="col" class="px-6 py-2 hidden">N&deg;</th>
               <th scope="col" class="px-6 py-2">Incidencia</th>
               <th scope="col" class="px-6 py-2">Fecha incidencia</th>
               <th scope="col" class="px-6 py-2">&Aacute;rea</th>

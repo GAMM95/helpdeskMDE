@@ -152,7 +152,7 @@
             <!-- Encabezado -->
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
-                <th scope="col" class="px-6 py-2 hidden">N°</th>
+                <th scope="col" class="px-6 py-2 hidden">N&deg;</th>
                 <th scope="col" class="px-6 py-2">Trabajador</th>
                 <th scope="col" class="px-6 py-2">&Aacute;rea</th>
                 <th scope="col" class="px-6 py-2">Usuario</th>

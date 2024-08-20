@@ -26,7 +26,6 @@ class ReporteCierre extends Conexion
       C.CIE_numero,
       C.CIE_documento,
       C.CIE_diagnostico,
-      C.CIE_solucion,
       C.CIE_recomendaciones,
       O.CON_descripcion,
       I.USU_codigo,

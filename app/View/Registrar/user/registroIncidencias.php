@@ -27,7 +27,7 @@
     <form id="formIncidencia" action="registro-incidencia-user.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
 
       <!-- TODO: FILA OCULTA DEL FORMULARIO - NUMERO DE INCIDENCIA -->
-      <div class="flex items-center mb-4 ">
+      <div class="flex items-center mb-4 hidden">
         <label for="numero_incidencia" class="block font-bold mb-1 mr-1 text-lime-500">Nro Incidencia:</label>
         <input type="text" id="numero_incidencia" name="numero_incidencia" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs" readonly>
       </div>
@@ -169,8 +169,8 @@
         <table id="tablaListarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
-              <th scope="col" class="px-6 py-2 hidden">N°</th>
-              <th scope="col" class="px-6 py-2">n° Incidencia</th>
+              <th scope="col" class="px-6 py-2 hidden">N&deg;</th>
+              <th scope="col" class="px-6 py-2">N&deg; Incidencia</th>
               <th scope="col" class="px-6 py-2">Fecha de entrada</th>
               <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
               <th scope="col" class="px-6 py-2">Asunto</th>

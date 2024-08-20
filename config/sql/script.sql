@@ -487,8 +487,7 @@ CREATE TABLE CIERRE(
 	CIE_diagnostico VARCHAR(200) NULL,
 	CIE_documento VARCHAR(500) NOT NULL,
 	CIE_asunto VARCHAR(200) NOT NULL,
-	CIE_solucion VARCHAR(200) NULL,
-	CIE_recomendaciones VARCHAR(200) NULL,
+	CIE_recomendaciones VARCHAR(500) NULL,
 	CON_codigo SMALLINT NOT NULL,
 	EST_codigo SMALLINT NOT NULL,
 	REC_numero SMALLINT NOT NULL,
@@ -512,8 +511,7 @@ CREATE PROCEDURE sp_InsertarCierreActualizarRecepcion
     @CIE_diagnostico VARCHAR(200),
     @CIE_documento VARCHAR(500),
     @CIE_asunto VARCHAR(200),
-    @CIE_solucion VARCHAR(200),
-    @CIE_recomendaciones VARCHAR(200),
+    @CIE_recomendaciones VARCHAR(500),
     @CON_codigo SMALLINT,
     @REC_numero SMALLINT,
     @USU_codigo SMALLINT
@@ -524,8 +522,8 @@ SET
         BEGIN TRANSACTION;
 
         -- Insertar el nuevo cierre
-        INSERT INTO CIERRE (CIE_fecha, CIE_hora, CIE_diagnostico, CIE_documento, CIE_asunto, CIE_solucion, CIE_recomendaciones, CON_codigo, REC_numero, USU_codigo, EST_codigo)
-        VALUES (@CIE_fecha, @CIE_hora , @CIE_diagnostico, @CIE_documento, @CIE_asunto, @CIE_solucion, @CIE_recomendaciones, @CON_codigo, @REC_numero, @USU_codigo, 5);
+        INSERT INTO CIERRE (CIE_fecha, CIE_hora, CIE_diagnostico, CIE_documento, CIE_asunto, CIE_recomendaciones, CON_codigo, REC_numero, USU_codigo, EST_codigo)
+        VALUES (@CIE_fecha, @CIE_hora , @CIE_diagnostico, @CIE_documento, @CIE_asunto, @CIE_recomendaciones, @CON_codigo, @REC_numero, @USU_codigo, 5);
         
         -- Actualizar el estado de la recepcion
         UPDATE RECEPCION SET EST_codigo = 5

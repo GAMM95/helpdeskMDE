@@ -6,29 +6,35 @@ $(document).ready(function () {
   };
 });
 
-$('#imprimir-incidencia').click(function () {
+$('#reportes-codigoPatrimonial').click(function () {
   // Obtener el número de incidencia desde el campo de entrada
-  const numeroIncidencia = $('#numero_incidencia').val().trim();
+  const codigoPatrimonial = $('#codigoPatrimonial').val();
 
-  if (!numeroIncidencia) {
-    toastr.warning('Seleccione una incidencia para generar PDF.');
+  if (!codigoPatrimonial) {
+    toastr.warning('Ingrese c&oacute;digo patrimonial para generar reporte.');
     return;
   }
 
   // Realizar una solicitud AJAX para obtener los datos de la incidencia
   $.ajax({
-    url: 'ajax/getReporteIncidencia.php',
+    url: 'ajax/getReportePorCodigoPatrimonial.php',
     method: 'GET',
-    data: { numero: numeroIncidencia },
+    data: { codigoPatrimonial: codigoPatrimonial }, // Asegúrate de que el parámetro coincida con el que espera el PHP
     dataType: 'json',
     success: function (data) {
       console.log("Datos recibidos:", data);
-      const incidencia = data.find(inc => inc.INC_numero === numeroIncidencia);
 
-      if (incidencia) {
-        try {
+      if (data.error) {
+        toastr.error('Error en la solicitud: ' + data.error);
+        return;
+      }
+
+      const incidencia = data.find(inc => inc.INC_codigoPatrimonial == codigoPatrimonial);
+      try {
+        if (incidencia) {
+
           const { jsPDF } = window.jspdf;
-          const doc = new jsPDF();
+          const doc = new jsPDF('landscape');
 
           const logoUrl = './public/assets/escudo.png';
 
@@ -38,26 +44,27 @@ $('#imprimir-incidencia').click(function () {
 
             const fechaImpresion = new Date().toLocaleDateString();
             const headerText2 = 'Subgerencia de Informática y Sistemas';
-            const reportTitle = 'REPORTE DE INCIDENCIA';
+            const reportTitle = 'REPORTE DE INCIDENCIAS POR CÓDIGO PATRIMONIAL';
 
             const pageWidth = doc.internal.pageSize.width;
             const marginX = 10;
-            const marginY = 10;
+            const marginY = 5;
             const logoWidth = 25;
             const logoHeight = 25;
 
             doc.addImage(logoUrl, 'PNG', marginX, marginY, logoWidth, logoHeight);
 
+            // TITULO CENTRAL DEL DOCUMENTO
             doc.setFont('helvetica', 'bold');
-            doc.setFontSize(16);
+            doc.setFontSize(15);
             const titleWidth = doc.getTextWidth(reportTitle);
             const titleX = (pageWidth - titleWidth) / 2;
-            const titleY = 25;
-
+            const titleY = 15;
             doc.text(reportTitle, titleX, titleY);
-            doc.setLineWidth(0.5);
-            doc.line(titleX, titleY + 3, titleX + titleWidth, titleY + 3);
+            doc.setLineWidth(0.5); // Ancho de subrayado
+            doc.line(titleX, titleY + 1, titleX + titleWidth, titleY + 1); // ubicacion del subrayado del titulo
 
+            // Fecha de impresion 
             doc.setFontSize(8);
             doc.setFont('helvetica', 'normal');
             const fechaText = `Fecha de impresión: ${fechaImpresion}`;
@@ -74,29 +81,48 @@ $('#imprimir-incidencia').click(function () {
 
           addHeader(doc);
 
-          const titleY = 45;
+          // Detalle del cierre
+          const titleY = 25;
           doc.setFont('helvetica', 'bold');
           doc.setFontSize(12);
-          doc.text('Detalle de la Incidencia:', 20, titleY);
 
+          const codigoText = 'Código Patrimonial:';
+          const codigoWidth = doc.getTextWidth(codigoText);
+          const codigoValue = ` ${codigoPatrimonial}`;
+          const codigoValueWidth = doc.getTextWidth(codigoValue);
+
+          const pageWidth = doc.internal.pageSize.width;
+          const totalWidth = codigoWidth + codigoValueWidth;
+          const startX = (pageWidth - totalWidth) / 2;
+
+          // Dibujar el texto "Código Patrimonial" en negrita
+          doc.text(codigoText, startX, titleY);
+
+          // Cambiar a estilo normal para el valor del código patrimonial
+          doc.setFont('helvetica', 'normal');
+          doc.text(codigoValue, startX + codigoWidth, titleY);
+
+          // Inicializar el contador
+          let item = 1;
+
+          // Lista de incidencias por codigo patrimonial
           doc.autoTable({
-            startY: 48,
-            margin: { left: 20 },
-            head: [['Campo', 'Descripción']],
-            body: [
-              [{ content: 'Número de incidencia:', styles: { fontStyle: 'bold' } }, incidencia.INC_numero_formato],
-              [{ content: 'Fecha:', styles: { fontStyle: 'bold' } }, incidencia.fechaIncidenciaFormateada],
-              [{ content: 'Categoría:', styles: { fontStyle: 'bold' } }, incidencia.CAT_nombre],
-              [{ content: 'Asunto:', styles: { fontStyle: 'bold' } }, incidencia.INC_asunto],
-              [{ content: 'Documento:', styles: { fontStyle: 'bold' } }, incidencia.INC_documento],
-              [{ content: 'Código Patrimonial:', styles: { fontStyle: 'bold' } }, incidencia.INC_codigoPatrimonial],
-              [{ content: 'Área solicitante:', styles: { fontStyle: 'bold' } }, incidencia.ARE_nombre],
-              [{ content: 'Descripción:', styles: { fontStyle: 'bold' } }, incidencia.INC_descripcion],
-              [{ content: 'Estado:', styles: { fontStyle: 'bold' } }, incidencia.ESTADO],
-              [{ content: 'Usuario:', styles: { fontStyle: 'bold' } }, incidencia.Usuario]
-            ],
+            startY: 35, // Altura de la tabla respecto a la parte superior
+            margin: { left: 10 },
+            head: [['Ítem', 'Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Área', 'Prioridad', 'Estado']],
+            body: data.map(reporte => [
+              item++,
+              reporte.INC_numero_formato,
+              reporte.fechaIncidenciaFormateada,
+              reporte.CAT_nombre,
+              reporte.INC_asunto,
+              reporte.INC_documento,
+              reporte.ARE_nombre,
+              reporte.PRI_nombre,
+              reporte.ESTADO
+            ]),
             styles: {
-              fontSize: 11,
+              fontSize: 8,
               cellPadding: 2,
             },
             headStyles: {
@@ -105,35 +131,22 @@ $('#imprimir-incidencia').click(function () {
               fontStyle: 'bold',
             },
             columnStyles: {
-              0: { cellWidth: 50 }, // Ancho para la columna Campo
-              1: { cellWidth: 120 } // Ancho para la columna Descripcion
+              0: { cellWidth: 10 },
+              1: { cellWidth: 25 }, // Ancho para la columna Incidencia
+              2: { cellWidth: 20 }, // Ancho para la columna fecha
+              3: { cellWidth: 45 }, // Ancho para la columna categoria
+              4: { cellWidth: 50 }, // Ancho para la columna asunto
+              5: { cellWidth: 40 }, // Ancho para la columna Documento
+              6: { cellWidth: 50 }, // Ancho para la columna area
+              7: { cellWidth: 20 }, // Ancho para la columna prioridad
+              8: { cellWidth: 20 } // Ancho para la columna estado
             }
           });
-
-          const titleFirma = 200;
-          const titleResponsable = titleFirma + 5;
-          doc.setFont('times', 'normal');
-          doc.setFontSize(11);
-
-          const textFirmaSello = 'Firma y Sello';
-          const textResponsable = 'Responsable del Área Usuaria';
-          const textWidthFirmaSello = doc.getTextWidth(textFirmaSello);
-          const textWidthResponsable = doc.getTextWidth(textResponsable);
-          const maxTextWidth = Math.max(textWidthFirmaSello, textWidthResponsable);
-          const lineExtraWidth = 20;
-          const lineWidth = maxTextWidth + lineExtraWidth;
-          const pageWidth = doc.internal.pageSize.width;
-          const centerX = (pageWidth - lineWidth) / 2;
-
-          doc.setLineWidth(0.5);
-          doc.line(centerX, titleFirma - 5, centerX + lineWidth, titleFirma - 5);
-          doc.text(textFirmaSello, centerX + (lineWidth - textWidthFirmaSello) / 2, titleFirma);
-          doc.text(textResponsable, centerX + (lineWidth - textWidthResponsable) / 2, titleResponsable);
 
           function addFooter(doc, pageNumber, totalPages) {
             doc.setFontSize(8);
             doc.setFont('helvetica', 'italic');
-            const footerY = 285;
+            const footerY = 250;
             doc.setLineWidth(0.05);
             doc.line(20, footerY - 5, doc.internal.pageSize.width - 20, footerY - 5);
 
@@ -155,12 +168,14 @@ $('#imprimir-incidencia').click(function () {
           window.open(doc.output('bloburl')); // Para algunos navegadores es necesario abrir el PDF antes de imprimir
 
           toastr.success('Archivo PDF generado.');
-        } catch (error) {
-          toastr.error('Hubo un error al generar PDF.');
-          console.error('Error al generar el PDF:', error.message);
+
         }
-      } else {
-        toastr.warning('No se ha seleccionado una incidencia.');
+        // else {
+        //   toastr.warning('No se ha encontrado incidencia para el área seleccionada.');
+        // }
+      } catch (error) {
+        toastr.error('Hubo un error al generar reporte.');
+        console.error('Error al generar el PDF:', error.message);
       }
     },
     error: function (xhr, status, error) {
@@ -168,8 +183,4 @@ $('#imprimir-incidencia').click(function () {
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });
-});
-
-$('#tablaListarIncidencias').on('click', 'tr', function () {
-  $(this).toggleClass('selected').siblings().removeClass('selected');
 });

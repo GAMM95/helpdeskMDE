@@ -6,29 +6,35 @@ $(document).ready(function () {
   };
 });
 
-$('#imprimir-cierre').click(function () {
+$('#reportes-areas').click(function () {
   // Obtener el número de incidencia desde el campo de entrada
-  const numeroCierre = $('#num_cierre').val().trim();
+  const codigoArea = $('#area').val();
 
-  if (!numeroCierre) {
-    toastr.warning('Seleccione una incidencia cerrada para generar PDF.');
+  if (!codigoArea) {
+    toastr.warning('Seleccione una área para generar reporte.');
     return;
   }
 
   // Realizar una solicitud AJAX para obtener los datos de la incidencia
   $.ajax({
-    url: 'ajax/getReporteCierre.php',
+    url: 'ajax/getReportePorArea.php',
     method: 'GET',
-    data: { numero: numeroCierre },
+    data: { area: codigoArea }, // Asegúrate de que el parámetro coincida con el que espera el PHP
     dataType: 'json',
     success: function (data) {
       console.log("Datos recibidos:", data);
-      const cierre = data.find(cie => cie.CIE_numero === numeroCierre);
 
-      if (cierre) {
-        try {
+      if (data.error) {
+        toastr.error('Error en la solicitud: ' + data.error);
+        return;
+      }
+
+      const incidencia = data.find(inc => inc.ARE_codigo == codigoArea); // Asegúrate de comparar correctamente
+      try {
+        if (incidencia) {
+
           const { jsPDF } = window.jspdf;
-          const doc = new jsPDF();
+          const doc = new jsPDF('landscape');
 
           const logoUrl = './public/assets/escudo.png';
 
@@ -38,7 +44,7 @@ $('#imprimir-cierre').click(function () {
 
             const fechaImpresion = new Date().toLocaleDateString();
             const headerText2 = 'Subgerencia de Informática y Sistemas';
-            const reportTitle = 'REPORTE DE CIERRE';
+            const reportTitle = 'REPORTE DE INCIDENCIA';
 
             const pageWidth = doc.internal.pageSize.width;
             const marginX = 10;
@@ -74,62 +80,39 @@ $('#imprimir-cierre').click(function () {
 
           addHeader(doc);
 
-          // Detalle del cierre
           const titleY = 45;
           doc.setFont('helvetica', 'bold');
           doc.setFontSize(12);
-          doc.text('Detalle del cierre:', 20, titleY);
+          doc.text('Detalle de la Incidencia:', 20, titleY);
 
-          doc.setFontSize(10);
-          doc.text(`Número de incidencia: ${cierre.INC_numero_formato}`, 120, titleY);  // Ajusta la coordenada x para colocar el número de incidencia
-          // [{ content: 'Número de incidencia:', styles: { fontStyle: 'bold' } }, cierre.INC_numero_formato],
-
-            doc.autoTable({
-              startY: 48,
-              margin: { left: 20 },
-              head: [['Campo', 'Descripción']],
-              body: [
-                [{ content: 'Cierre:', styles: { fontStyle: 'bold' } }, cierre.CIE_numero],
-                [{ content: 'Fecha de cierre:', styles: { fontStyle: 'bold' } }, cierre.fechaCierreFormateada],
-                [{ content: 'Prioridad:', styles: { fontStyle: 'bold' } }, cierre.PRI_nombre],
-                [{ content: 'Asunto:', styles: { fontStyle: 'bold' } }, cierre.CIE_asunto],
-                [{ content: 'Documento:', styles: { fontStyle: 'bold' } }, cierre.CIE_documento],
-                [{ content: 'Condición:', styles: { fontStyle: 'bold' } }, cierre.CON_descripcion],
-                [{ content: 'Diagnóstico:', styles: { fontStyle: 'bold' } }, cierre.CIE_diagnostico],
-                [{ content: 'Recomendaciones:', styles: { fontStyle: 'bold' } }, cierre.CIE_recomendaciones],
-                [{ content: 'Estado:', styles: { fontStyle: 'bold' } }, cierre.ESTADO]
-
-              ],
-              styles: {
-                fontSize: 10,
-                cellPadding: 2,
-              },
-              headStyles: {
-                fillColor: [44, 62, 80],
-                textColor: [255, 255, 255],
-                fontStyle: 'bold',
-              },
-              columnStyles: {
-                0: { cellWidth: 50 }, // Ancho para la columna Campo
-                1: { cellWidth: 120 } // Ancho para la columna Descripcion
-              }
-            });
-
-          const titleFirma = 200;
-          doc.setFont('times', 'normal');
-          doc.setFontSize(11);
-
-          const textFirmaSello = 'Firma y Sello';
-          const textWidthFirmaSello = doc.getTextWidth(textFirmaSello);
-          const maxTextWidth = Math.max(textWidthFirmaSello);
-          const lineExtraWidth = 20;
-          const lineWidth = maxTextWidth + lineExtraWidth;
-          const pageWidth = doc.internal.pageSize.width;
-          const centerX = (pageWidth - lineWidth) / 2;
-
-          doc.setLineWidth(0.5);
-          doc.line(centerX, titleFirma - 5, centerX + lineWidth, titleFirma - 5);
-          doc.text(textFirmaSello, centerX + (lineWidth - textWidthFirmaSello) / 2, titleFirma);
+          doc.autoTable({
+            startY: 48,
+            margin: { left: 20 },
+            head: [['Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Código patrimonial', 'Prioridad', 'Estado']],
+            body: [
+              [{ content: 'Número de incidencia:', styles: { fontStyle: 'bold' } }, incidencia.INC_numero_formato],
+              [{ content: 'Fecha:', styles: { fontStyle: 'bold' } }, incidencia.fechaIncidenciaFormateada],
+              [{ content: 'Categoría:', styles: { fontStyle: 'bold' } }, incidencia.CAT_nombre],
+              [{ content: 'Asunto:', styles: { fontStyle: 'bold' } }, incidencia.INC_asunto],
+              [{ content: 'Documento:', styles: { fontStyle: 'bold' } }, incidencia.INC_documento],
+              [{ content: 'Código Patrimonial:', styles: { fontStyle: 'bold' } }, incidencia.INC_codigoPatrimonial],
+              [{ content: 'Prioridad:', styles: { fontStyle: 'bold' } }, incidencia.PRI_nombre],
+              [{ content: 'Estado:', styles: { fontStyle: 'bold' } }, incidencia.ESTADO],
+            ],
+            styles: {
+              fontSize: 11,
+              cellPadding: 2,
+            },
+            headStyles: {
+              fillColor: [44, 62, 80],
+              textColor: [255, 255, 255],
+              fontStyle: 'bold',
+            },
+            columnStyles: {
+              0: { cellWidth: 50 }, // Ancho para la columna Campo
+              1: { cellWidth: 120 } // Ancho para la columna Descripción
+            }
+          });
 
           function addFooter(doc, pageNumber, totalPages) {
             doc.setFontSize(8);
@@ -156,12 +139,14 @@ $('#imprimir-cierre').click(function () {
           window.open(doc.output('bloburl')); // Para algunos navegadores es necesario abrir el PDF antes de imprimir
 
           toastr.success('Archivo PDF generado.');
-        } catch (error) {
-          toastr.error('Hubo un error al generar PDF.');
-          console.error('Error al generar el PDF:', error.message);
+
         }
-      } else {
-        toastr.warning('No se ha seleccionado una incidencia.');
+        // else {
+        //   toastr.warning('No se ha encontrado incidencia para el área seleccionada.');
+        // }
+      } catch (error) {
+        toastr.error('Hubo un error al generar reporte.');
+        console.error('Error al generar el PDF:', error.message);
       }
     },
     error: function (xhr, status, error) {
@@ -169,8 +154,4 @@ $('#imprimir-cierre').click(function () {
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });
-});
-
-$('#tablaIncidenciasCerradas').on('click', 'tr', function () {
-  $(this).toggleClass('selected').siblings().removeClass('selected');
 });

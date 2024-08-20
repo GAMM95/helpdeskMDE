@@ -6,7 +6,7 @@ define("USUARIO", "sa");
 // define("PASSWORD", "S0p0rt3");
 define("PASSWORD", "sql");
 // Nombre de la BD
-define("DATABASE", "SISTEMA_HELPDESK");
+define("DATABASE", "SISTEMA_INCIDENCIAS");
 // Dirección del servidor de la base de datos
 // define("SERVIDOR", "SGIS05");
 define("SERVIDOR", "JHONATANMM");

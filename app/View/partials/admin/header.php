@@ -31,7 +31,7 @@ if (isset($_SESSION['codigoUsuario'])) {
       <li class="nav-item ixed flex items-center">
         <div class="dropdown">
           <span class="dropdown-toggle h-drop" href="#" data-toggle="dropdown">
-            Sistema HelpDesk de la Municipalidad Distrital de La Esperanza
+            Sistema de Gesti&oacute;n de Incidencias
           </span>
         </div>
       </li>

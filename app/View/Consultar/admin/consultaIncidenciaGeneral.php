@@ -68,7 +68,7 @@
         <table id="tablaConsultarIncidencias" class="bg-white w-full text-xs text-left rtl:text-right text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-3 py-3">N° Incidencia</th>
+              <th scope="col" class="px-3 py-3">N&deg; Incidencia</th>
               <th scope="col" class="px-3 py-3">&Aacute;rea</th>
               <th scope="col" class="px-3 py-3">Fecha incidencia</th>
               <th scope="col" class="px-3 py-3">Categor&iacute;a</th>

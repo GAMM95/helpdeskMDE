@@ -18,7 +18,6 @@ class cierreController
       $diagnostico = $_POST['diagnostico'] ?? null;
       $documento = $_POST['documento'] ?? null;
       $asunto = $_POST['asunto'] ?? null;
-      $solucion = $_POST['solucion'] ?? null;
       $recomendaciones = $_POST['recomendaciones'] ?? null;
       $operatividad = $_POST['operatividad'] ?? null;
       $recepcion = $_POST['recepcion'] ?? null;
@@ -37,7 +36,6 @@ class cierreController
         $diagnostico,
         $documento,
         $asunto,
-        $solucion,
         $recomendaciones,
         $operatividad,
         $recepcion,

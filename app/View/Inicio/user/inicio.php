@@ -131,7 +131,7 @@
                 <!-- Encabezado -->
                 <thead>
                   <tr>
-                    <th class="text-center">N° INCIDENCIA</th>
+                    <th class="text-center">N&deg; INCIDENCIA</th>
                     <th class="text-center">Usuario</th>
                     <th class="text-center">Fecha</th>
                     <th class="text-center">Incidencia</th>

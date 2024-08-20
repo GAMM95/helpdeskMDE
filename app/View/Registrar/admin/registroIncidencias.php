@@ -165,8 +165,8 @@
         <table id="tablaListarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
-              <th scope="col" class="px-6 py-2 hidden">N°</th>
-              <th scope="col" class="px-6 py-2">n° Incidencia</th>
+              <th scope="col" class="px-6 py-2 hidden">N&deg;</th>
+              <th scope="col" class="px-6 py-2">N&deg; Incidencia</th>
               <th scope="col" class="px-4 py-2">Fecha de entrada</th>
               <th scope="col" class="px-1 py-2">C&oacute;digo Patrimonial</th> <!-- Ajuste aquí -->
               <th scope="col" class="px-10 py-2">Asunto</th>

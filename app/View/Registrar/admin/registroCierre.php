@@ -46,8 +46,8 @@
         <table id="tablaRecepcionesSinCerrar" class="w-full text-xs text-left rtl:text-right text-gray-500 bg-white">
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-6 py-2 hidden">N° recepcion</th>
-              <th scope="col" class="px-6 py-2 hidden">N° inc</th>
+              <th scope="col" class="px-6 py-2 hidden">N&deg; recepcion</th>
+              <th scope="col" class="px-6 py-2 hidden">N&deg; inc</th>
               <th scope="col" class="px-6 py-2">INCIDENCIA</th>
               <th scope="col" class="px-6 py-2">Fecha recepci&oacute;n</th>
               <th scope="col" class="px-6 py-2">&Aacute;rea</th>
@@ -189,14 +189,8 @@
 
       <!-- TODO: SEGUNDA FILA DEL FORMULARIO -->
       <div class="flex flex-wrap -mx-2 mb-3">
-        <!-- SOLUCION DE LA INCIDENCIA -->
-        <div class="w-full md:w-1/2 px-2 mb-2">
-          <label for="solucion" class="block mb-1 font-bold text-xs">Soluci&oacute;n:</label>
-          <input type="text" id="solucion" name="solucion" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese solución (opcional)">
-        </div>
-
         <!-- RECOMENDACIONES -->
-        <div class="w-full md:w-1/2 px-2 mb-2">
+        <div class="w-full md:w-1/1 px-2 mb-2">
           <label for="recomendaciones" class="block mb-1 font-bold text-xs">Recomendaciones:</label>
           <input type="text" id="recomendaciones" name="recomendaciones" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese recomendaciones (opcional)">
         </div>
@@ -213,7 +207,6 @@
         document.getElementById('asunto').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_asunto'] : ''; ?>';
         document.getElementById('documento').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_documento'] : ''; ?>';
         document.getElementById('diagnostico').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_diagnostico'] : ''; ?>';
-        document.getElementById('solucion').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_solucion'] : ''; ?>';
         document.getElementById('recomendaciones').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_recomendaciones'] : ''; ?>';
       </script>
 

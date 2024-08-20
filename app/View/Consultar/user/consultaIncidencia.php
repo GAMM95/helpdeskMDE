@@ -70,8 +70,8 @@
           <!-- Encabezado de la tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-3 py-3 hidden">N°</th>
-              <th scope="col" class="px-3 py-2">N° INCIDENCIA</th>
+              <th scope="col" class="px-3 py-3 hidden">N&deg;</th>
+              <th scope="col" class="px-3 py-2">N&deg; INCIDENCIA</th>
               <th scope="col" class="px-3 py-3">Fecha incidencia</th>
               <th scope="col" class="px-3 py-3">Categor&iacute;a</th>
               <th scope="col" class="px-3 py-3">Asunto</th>

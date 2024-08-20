@@ -84,6 +84,19 @@ if (session_status() == PHP_SESSION_NONE) {
             <li><a href="consultar-incidencia-general-admin.php">Todas</a></li>
           </ul>
         </li>
+        <!-- Fin de opcion de consultas -->
+
+        <!-- Reportes -->
+        <li class="nav-item pcoded-menu-caption">
+          <label>Reportes</label>
+        </li>
+        <li class="nav-item">
+          <a href="reportes.php" class="nav-link ">
+            <span class="pcoded-micon"> <i class="feather icon-file"></i> </span>
+            <span class="pcoded-mtext">Reportes de incidencias</span>
+          </a>
+        </li>
+        <!-- fin de opcion Reportes -->
 
         <!-- Mantenedor -->
         <li class="nav-item pcoded-menu-caption">
@@ -103,38 +116,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <li><a href="modulo-categoria.php">Categor&iacute;as</a></li>
           </ul>
         </li>
-
-        <!-- Registros -->
-        <!-- <li class="nav-item pcoded-menu-caption">
-          <label>Reportes</label>
-        </li>
-
-        <li class="nav-item pcoded-hasmenu">
-          <a href="#!" class="nav-link ">
-            <span class="pcoded-micon">
-              <i class="feather icon-file"></i>
-            </span>
-            <span class="pcoded-mtext">Incidencias</span>
-          </a>
-          <ul class="pcoded-submenu">
-            <li><a href="bc_alert.html">Totales</a></li>
-            <li><a href="bc_alert.html">Pendientes</a></li>
-            <li><a href="bc_button.html">Por fecha</a></li>
-            <li><a href="bc_button.html">Por &aacute;rea</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item pcoded-hasmenu">
-          <a href="#!" class="nav-link ">
-            <span class="pcoded-micon">
-              <i class="feather icon-file"></i>
-            </span>
-            <span class="pcoded-mtext">Cierres</span>
-          </a>
-          <ul class="pcoded-submenu">
-            <li><a href="bc_alert.html">Por fecha</a></li>
-          </ul>
-        </li> -->
+        <!-- Fin de opcion mantenedor -->
 
       </ul>
     </div>

@@ -25,7 +25,7 @@ class ReporteIncidencia extends Conexion
         WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
         ELSE E.EST_descripcion
         END AS ESTADO,
-        p.PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
+        p.PER_nombres + ' ' + PER_apellidoPaterno + ' ' + PER_apellidoMaterno AS Usuario
         FROM INCIDENCIA I
         INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
         INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo

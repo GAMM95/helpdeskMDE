@@ -67,7 +67,7 @@
           <!-- Encabezado de tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-3 py-2">N° INCIDENCIA</th>
+              <th scope="col" class="px-3 py-2">N&deg; INCIDENCIA</th>
               <th scope="col" class="px-3 py-2">Fecha entrada</th>
               <th scope="col" class="px-3 py-2">&Aacute;rea</th>
               <th scope="col" class="px-3 py-2">C&oacute;digo Patrimonial</th>

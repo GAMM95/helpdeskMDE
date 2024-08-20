@@ -27,19 +27,18 @@ class CierreModel extends Conexion
   }
 
   //TODO: Metodo para insertar Cierre
-  public function insertarCierre($fecha, $hora, $diagnostico, $documento, $asunto, $solucion, $recomendaciones, $operatividad, $recepcion, $usuario)
+  public function insertarCierre($fecha, $hora, $diagnostico, $documento, $asunto, $recomendaciones, $operatividad, $recepcion, $usuario)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "EXEC sp_InsertarCierreActualizarRecepcion @CIE_fecha = :fecha, @CIE_hora = :hora, @CIE_diagnostico = :diagnostico, @CIE_documento = :documento, @CIE_asunto = :asunto, @CIE_solucion = :solucion, @CIE_recomendaciones = :recomendaciones, @CON_codigo = :operatividad, @REC_numero = :recepcion, @USU_codigo = :usuario";
+        $sql = "EXEC sp_InsertarCierreActualizarRecepcion @CIE_fecha = :fecha, @CIE_hora = :hora, @CIE_diagnostico = :diagnostico, @CIE_documento = :documento, @CIE_asunto = :asunto, @CIE_recomendaciones = :recomendaciones, @CON_codigo = :operatividad, @REC_numero = :recepcion, @USU_codigo = :usuario";
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':fecha', $fecha);
         $stmt->bindParam(':hora', $hora);
         $stmt->bindParam(':diagnostico', $diagnostico);
         $stmt->bindParam(':documento', $documento);
         $stmt->bindParam(':asunto', $asunto);
-        $stmt->bindParam(':solucion', $solucion);
         $stmt->bindParam(':recomendaciones', $recomendaciones);
         $stmt->bindParam(':operatividad', $operatividad);
         $stmt->bindParam(':recepcion', $recepcion);
