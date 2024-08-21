@@ -11,7 +11,7 @@ $('#reportes-areas').click(function () {
   const codigoArea = $('#area').val();
 
   if (!codigoArea) {
-    toastr.warning('Seleccione una área para generar reporte.');
+    toastr.warning('Seleccione una &acute;rea para generar reporte.');
     return;
   }
 
@@ -19,8 +19,7 @@ $('#reportes-areas').click(function () {
   $.ajax({
     url: 'ajax/getReportePorArea.php',
     method: 'GET',
-    data: { area: codigoArea }, // Asegúrate de que el parámetro coincida con el que espera el PHP
-    dataType: 'json',
+    data: { area: codigoArea },
     success: function (data) {
       console.log("Datos recibidos:", data);
 
@@ -29,7 +28,7 @@ $('#reportes-areas').click(function () {
         return;
       }
 
-      const incidencia = data.find(inc => inc.ARE_codigo == codigoArea); // Asegúrate de comparar correctamente
+      const incidencia = data.find(inc => inc.ARE_codigo == codigoArea);
       try {
         if (incidencia) {
 
@@ -85,20 +84,24 @@ $('#reportes-areas').click(function () {
           doc.setFontSize(12);
           doc.text('Detalle de la Incidencia:', 20, titleY);
 
+          // Inicializar el contador
+          let item = 1;
+
           doc.autoTable({
             startY: 48,
             margin: { left: 20 },
-            head: [['Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Código patrimonial', 'Prioridad', 'Estado']],
-            body: [
-              [{ content: 'Número de incidencia:', styles: { fontStyle: 'bold' } }, incidencia.INC_numero_formato],
-              [{ content: 'Fecha:', styles: { fontStyle: 'bold' } }, incidencia.fechaIncidenciaFormateada],
-              [{ content: 'Categoría:', styles: { fontStyle: 'bold' } }, incidencia.CAT_nombre],
-              [{ content: 'Asunto:', styles: { fontStyle: 'bold' } }, incidencia.INC_asunto],
-              [{ content: 'Documento:', styles: { fontStyle: 'bold' } }, incidencia.INC_documento],
-              [{ content: 'Código Patrimonial:', styles: { fontStyle: 'bold' } }, incidencia.INC_codigoPatrimonial],
-              [{ content: 'Prioridad:', styles: { fontStyle: 'bold' } }, incidencia.PRI_nombre],
-              [{ content: 'Estado:', styles: { fontStyle: 'bold' } }, incidencia.ESTADO],
-            ],
+            head: [['Ítem', 'Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Código Patrimonial', 'Prioridad', 'Estado']],
+            body: data.map(reporte => [
+              item++,
+              reporte.INC_numero_formato,
+              reporte.fechaIncidenciaFormateada,
+              reporte.CAT_nombre,
+              reporte.INC_asunto,
+              reporte.INC_documento,
+              reporte.INC_codigoPatrimonial,
+              reporte.PRI_nombre,
+              reporte.ESTADO
+            ]),
             styles: {
               fontSize: 11,
               cellPadding: 2,
@@ -109,8 +112,15 @@ $('#reportes-areas').click(function () {
               fontStyle: 'bold',
             },
             columnStyles: {
-              0: { cellWidth: 50 }, // Ancho para la columna Campo
-              1: { cellWidth: 120 } // Ancho para la columna Descripción
+              0: { cellWidth: 10 },
+              1: { cellWidth: 25 }, // Ancho para la columna Incidencia
+              2: { cellWidth: 20 }, // Ancho para la columna fecha
+              3: { cellWidth: 45 }, // Ancho para la columna categoria
+              4: { cellWidth: 50 }, // Ancho para la columna asunto
+              5: { cellWidth: 40 }, // Ancho para la columna Documento
+              6: { cellWidth: 50 }, // Ancho para la columna codigo patrimonial
+              7: { cellWidth: 20 }, // Ancho para la columna prioridad
+              8: { cellWidth: 20 } // Ancho para la columna estado
             }
           });
 

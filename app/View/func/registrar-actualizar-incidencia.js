@@ -50,9 +50,9 @@ function enviarFormulario(action) {
       } else if (action === 'editar') {
         toastr.success('Incidencia actualizada');
       }
-      // setTimeout(function () {
-      //   location.reload();
-      // }, 1500);
+      setTimeout(function () {
+        location.reload();
+      }, 1500);
     }
   });
 

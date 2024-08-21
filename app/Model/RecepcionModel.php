@@ -49,6 +49,58 @@ class RecepcionModel extends Conexion
     }
   }
 
+  public function obtenerEstadoRecepcion($numeroRecepcion)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT EST_codigo FROM RECEPCION WHERE REC_numero = :numeroRecepcion";
+        $stmt = $conector->prepare($sql);
+
+        // Bindear el parámetro
+        $stmt->bindParam(':numeroRecepcion', $numeroRecepcion, PDO::PARAM_INT);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener el resultado
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['EST_codigo'] : null;
+      } else {
+        throw new Exception("Error de conexión con la base de datos.");
+      }
+    } catch (PDOException $e) {
+      // Manejar el error lanzando una excepción
+      throw new Exception("Error al obtener el estado de la incidencia: " . $e->getMessage());
+    }
+  }
+
+
+  // TODO: Metodo para editar recepcion
+  public function editarRecepcion($prioridad, $impacto, $recepcion)
+  {
+    $conector = parent::getConexion();
+    try {
+      $sql = "EXEC sp_ActualizarRecepcion @REC_numero = :num_recepcion, @PRI_codigo = :prioridad, @IMP_codigo = :impacto";
+      $stmt = $conector->prepare($sql);
+      $stmt->bindParam(':num_recepcion', $recepcion);
+      $stmt->bindParam(':prioridad', $prioridad);
+      $stmt->bindParam(':impacto', $impacto);
+      $stmt->execute();
+
+      // Confirmar que se ha actualizado al menos una fila
+      if ($stmt->rowCount() > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (PDOException $e) {
+      echo "Error al editar recepcion para el administrador: " . $e->getMessage();
+      return false;
+    }
+  }
+
   // TODO: Metodo listar recepciones Administrador - FORM CONSULTAR RECEPCION
   public function listarRecepcionesAdministrador()
   {

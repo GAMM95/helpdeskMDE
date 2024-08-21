@@ -465,6 +465,22 @@ SET
 END;
 GO
 
+-- PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR INCIDENCIA
+CREATE PROCEDURE sp_ActualizarRecepcion
+    @REC_numero SMALLINT,
+    @PRI_codigo SMALLINT,
+    @IMP_codigo SMALLINT
+AS
+BEGIN
+    -- Actualizar el registro en la tabla RECEPCION solo si el estado es 4
+    UPDATE RECEPCION
+    SET PRI_codigo = @PRI_codigo,
+        IMP_codigo = @IMP_codigo
+    WHERE REC_numero = @REC_numero
+	AND EST_codigo = 4;
+END;
+GO 
+
 -- Creacion de tabla Condicion
 CREATE TABLE CONDICION (
 	CON_codigo SMALLINT IDENTITY(1,1) NOT NULL,

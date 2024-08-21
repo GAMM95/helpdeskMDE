@@ -48,4 +48,53 @@ class RecepcionController
       echo "Error: Método no permitido.";
     }
   }
+
+  // TODO: Metodo para editar la recepcion 
+  public function actualizarRecepcion()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      // Obtener y validar los parámetros
+      $numeroRecepcion = $_POST['numero_incidencia'] ?? null;
+      $prioridad = $_POST['prioridad'] ?? null;
+      $impacto = $_POST['impacto'] ?? null;
+
+      header('Content-Type: application/json');
+      try {
+
+        // Verificar el estado de la incidencia
+        $estado = $this->recepcionModel->obtenerEstadoRecepcion($numeroRecepcion);
+
+        if ($estado === 4) {
+          // Estado permitido para actualización
+          echo json_encode([
+            'success' => false,
+            'message' => 'La recepcion no está Recepcionada y no puede ser actualizada.'
+          ]);
+          exit();
+        }
+
+        // Llamar al modelo para actualizar la incidencia
+        $updateSuccess = $this->recepcionModel->editarRecepcion($numeroRecepcion, $prioridad, $impacto);
+
+        if ($updateSuccess) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Recepcion actualizada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se realizó ninguna actualización.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+    } else {
+      echo "Error: Metodo no permitido";
+    }
+  }
 }

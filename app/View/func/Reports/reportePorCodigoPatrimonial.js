@@ -19,7 +19,7 @@ $('#reportes-codigoPatrimonial').click(function () {
   $.ajax({
     url: 'ajax/getReportePorCodigoPatrimonial.php',
     method: 'GET',
-    data: { codigoPatrimonial: codigoPatrimonial }, // Asegúrate de que el parámetro coincida con el que espera el PHP
+    data: { codigoPatrimonial: codigoPatrimonial }, 
     dataType: 'json',
     success: function (data) {
       console.log("Datos recibidos:", data);

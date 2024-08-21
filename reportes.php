@@ -7,7 +7,6 @@ if (!isset($_SESSION['usuario'])) {
 }
 $action = $_GET['action'] ?? '';
 $state = $_GET['state'] ?? '';
-$REC_numero = $_GET['REC_numero'] ?? '';
 
 require_once 'app/Controller/recepcionController.php';
 require_once 'app/Model/recepcionModel.php';
@@ -72,4 +71,4 @@ $recepcionModel = new RecepcionModel();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
 </body>
 
-</html>
+</html> 
