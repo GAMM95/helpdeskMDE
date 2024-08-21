@@ -142,6 +142,25 @@ class IncidenciaController
     }
   }
 
+  // TODO: Metodo para consultar incidencias  totales para el administrador
+  public function consultarIncidenciasTotales($area = NULL, $codigoPatrimonial = null, $fechaInicio = null, $fechaFin = null)
+  {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+      // Obtener los valores de los parámetros GET o asignar null si no existen
+      $area = isset($_GET['area']) ? (int) $_GET['area'] : null;
+      $codigoPatrimonial = isset($_GET['codigoPatrimonial']) ? (int) $_GET['codigoPatrimonial'] : null;
+      $fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : null;
+      $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : null;
+      error_log("Área: $area, Codigo patrimonial: $codigoPatrimonial, Fecha Inicio: $fechaInicio, Fecha Fin: $fechaFin");
+
+      // Llamar al método para consultar incidencias por área, estado y fecha
+      $consultaIncidencia = $this->incidenciaModel->buscarIncidenciaTotales($area, $codigoPatrimonial, $fechaInicio, $fechaFin);
+
+      // Retornar el resultado de la consulta
+      return $consultaIncidencia;
+    }
+  }
+
   // TODO: Metodo para consultar incidencias para el usuario
   public function consultarIncidenciaUsuario($area = NULL, $estado = null, $fechaInicio = null, $fechaFin = null)
   {

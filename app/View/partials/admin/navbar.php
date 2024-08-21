@@ -81,7 +81,7 @@ if (session_status() == PHP_SESSION_NONE) {
           <ul class="pcoded-submenu">
             <li><a href="consultar-incidencia-admin.php">Incidencias pendientes</a></li>
             <li><a href="consultar-cierre-admin.php">Incidencias atendidas</a></li>
-            <li><a href="consultar-incidencia-general-admin.php">Todas</a></li>
+            <li><a href="consultar-incidencia-general-admin.php">Incidencias totales</a></li>
           </ul>
         </li>
         <!-- Fin de opcion de consultas -->

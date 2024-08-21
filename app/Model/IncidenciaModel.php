@@ -264,6 +264,7 @@ class IncidenciaModel extends Conexion
           CAT.CAT_nombre,
           I.INC_asunto,
           I.INC_codigoPatrimonial,
+          I.INC_documento,
           (CONVERT(VARCHAR(10), REC_fecha, 103) + ' - ' + STUFF(RIGHT('0' + CONVERT(VARCHAR(7), REC_hora, 0), 7), 6, 0, ' ')) AS fechaRecepcionFormateada,
           PRI.PRI_nombre,
           IMP.IMP_descripcion,
@@ -777,6 +778,37 @@ class IncidenciaModel extends Conexion
         // Bindear los parámetros
         $stmt->bindParam(':area', $area, PDO::PARAM_INT);
         $stmt->bindParam(':estado', $estado, PDO::PARAM_INT);
+        $stmt->bindParam(':fechaInicio', $fechaInicio);
+        $stmt->bindParam(':fechaFin', $fechaFin);
+
+        // Ejecutar el procedimiento almacenado
+        $stmt->execute();
+
+        // Obtener los resultados
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+      } else {
+        throw new Exception("Error de conexión con la base de datos.");
+      }
+    } catch (PDOException $e) {
+      throw new Exception("Error al obtener las incidencias DX: " . $e->getMessage());
+    }
+  }
+
+  // TODO:  Metodo para consultar incidencias totales - ADMINISTRADOR
+  public function buscarIncidenciaTotales($area, $codigoPatrimonial, $fechaInicio, $fechaFin)
+  {
+    $conector = parent::getConexion();
+
+    try {
+      if ($conector != null) {
+        $sql = "EXEC sp_ConsultarIncidenciasTotales :area, :codigoPatrimonial, :fechaInicio, :fechaFin";
+
+        $stmt = $conector->prepare($sql);
+
+        // Bindear los parámetros
+        $stmt->bindParam(':area', $area, PDO::PARAM_INT);
+        $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial);
         $stmt->bindParam(':fechaInicio', $fechaInicio);
         $stmt->bindParam(':fechaFin', $fechaFin);
 

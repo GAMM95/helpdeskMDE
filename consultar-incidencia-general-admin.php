@@ -5,43 +5,77 @@ if (!isset($_SESSION['usuario'])) {
   header("Location: index.php"); // Redirigir a la página de inicio de sesión si no hay sesión iniciada
   exit();
 }
-
 $action = $_GET['action'] ?? '';
-$INC_numero = $_GET['INC_numero'] ?? '';
+require_once './app/Controller/IncidenciaController.php';
+require_once './app/Model/IncidenciaModel.php';
 
-$area = isset($_GET['area']) ? $_GET['area'] : '';
-$codigoPatrimonial = isset($_GET['codigoPatrimonial']) ? $_GET['codigoPatrimonial'] : '';
-$fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : '';
-$fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : '';
-
-require_once 'app/Controller/incidenciaController.php';
 $incidenciaController = new IncidenciaController();
 $incidenciaModel = new IncidenciaModel();
 
-if ($INC_numero != '') {
-  global $incidenciaRegistrada;
-  $incidenciaRegistrada = $incidenciaModel->obtenerIncidenciaPorId($INC_numero);
-} else {
-  $incidenciaRegistrada = null;
-}
+// Capturar los datos del formulario
+$area = $_GET['area'] ?? '';
+$codigoPatrimonial = $_GET['codigoPatrimonial'] ?? '';
+$fechaInicio = $_GET['fechaInicio'] ?? '';
+$fechaFin = $_GET['fechaFin'] ?? '';
+$resultadoBusqueda = NULL;
 
-switch ($action) {
-  case 'registrar':
-    $incidenciaController->registrarIncidencia();
-    break;
-  case 'consultar':
-    $resultadoBusqueda = NULL;
-    if (!empty($area) || !empty($codigoPatrimonial) || !empty($fechaInicio) || !empty($fechaFin)) {
-      $resultadoBusqueda = $incidenciaController->consultarIncidenciaAdministrador();
-    } else {
-      $error = "No se encontraron incidencias para los criterios especificados.";
+if ($action === 'consultar') {
+  // Depuracion: mostrar los parametros recibidos
+  error_log("Área: " . $area);
+  error_log("Codigo patrimonial: " . $codigoPatrimonial);
+  error_log("Fecha Inicio: " . $fechaInicio);
+  error_log("Fecha Fin: " . $fechaFin);
+
+  // obtener los resultados de la busqueda
+  $resultadoBusqueda = $incidenciaController->consultarIncidenciasTotales($area, $codigoPatrimonial, $fechaInicio, $fechaFin);
+
+  // Imprimir el resultado de la depuracion
+  error_log("Resultado de la consulta: " . print_r($resultadoBusqueda, true));
+  // Dibujar tabla de consultas
+  $html = '';
+  if (!empty($resultadoBusqueda)) {
+    foreach ($resultadoBusqueda as $incidencia) {
+      $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_numero_formato']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['ARE_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['CAT_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_asunto']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_documento']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . '</td>';
+      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['PRI_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center text-xs align-middle">';
+      $estadoDescripcion = htmlspecialchars($incidencia['Estado']);
+      $badgeClass = '';
+      switch ($estadoDescripcion) {
+        case 'Abierta':
+          $badgeClass = 'badge-light-danger';
+          break;
+        case 'Recepcionado':
+          $badgeClass = 'badge-light-success';
+          break;
+        case 'Cerrado':
+          $badgeClass = 'badge-light-primary';
+          break;
+        default:
+          $badgeClass = 'badge-light-secondary';
+          break;
+      }
+
+      $html .= '<label class="badge ' . $badgeClass . '">' . $estadoDescripcion . '</label>';
+      $html .= '</td></tr>';
     }
-    break;
-  default:
-    break;
+  } else {
+    $html = '<tr><td colspan="9" class="text-center py-3">No se encontraron incidencias pendientes de cierre.</td></tr>';
+  }
+  // Devolver el HTML de las filas
+  echo $html;
+  exit;
+} else {
+  // Si no hay accion, obtener la lista de las incidencias
+  $resultadoBusqueda = $incidenciaModel->listarIncidenciasAdministradorGeneral();
 }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -57,8 +91,6 @@ switch ($action) {
   <meta name="description" content="" />
   <meta name="keywords" content="">
   <meta name="author" content="Phoenixcoded" />
-  <!-- Favicon icon -->
-  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 
   <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">
@@ -87,7 +119,7 @@ switch ($action) {
   <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
 
-  <script src="./app/View/func/func_consulta_incidencia_admin.js"></script>
+  <script src="./app/View/func/func_consulta_incidencia_total.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">

@@ -36,14 +36,14 @@
 
         <!-- BUSCAR POR FECHA DE INICIO -->
         <div class="w-full md:w-1/6 px-2 mb-2">
-          <label for="fechaInicio" class="block mb-1 font-bold text-xs">Fecha Inicio:</label>
-          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
+          <label for="fechaInicio" class="block mb-1 font-bold text-center text-xs">Fecha Inicio:</label>
+          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs text-center cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
         </div>
 
         <!-- BUSCAR POR FECHA DE FIN -->
         <div class="w-full md:w-1/6 px-2 mb-2">
-          <label for="fechaFin" class="block mb-1 font-bold text-xs">Fecha Fin:</label>
-          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
+          <label for="fechaFin" class="block mb-1 font-bold text-center text-xs">Fecha Fin:</label>
+          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs text-center cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
         </div>
       </div>
 

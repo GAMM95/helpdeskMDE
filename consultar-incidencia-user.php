@@ -1,5 +1,10 @@
 <?php
 session_start();
+// Verificar si no hay una sesión iniciada
+if (!isset($_SESSION['usuario'])) {
+  header("Location: index.php"); // Redirigir a la página de inicio de sesión si no hay sesión iniciada
+  exit();
+}
 $action = $_GET['action'] ?? '';
 // $state = $_GET['state'] ?? '';
 
@@ -10,7 +15,7 @@ $incidenciaController = new IncidenciaController();
 $incidenciaModel = new IncidenciaModel();
 
 // Capturar los datos del formulario
-$area = $_SESSION['codigoArea']; // Asumiendo que tengas almacenado el código de área en $_SESSION
+$area = $_SESSION['codigoArea'];
 $codigoPatrimonial = $_GET['codigoPatrimonial'] ?? '';
 $estado = $_GET['estado'] ?? '';
 $fechaInicio = $_GET['fechaInicio'] ?? '';
