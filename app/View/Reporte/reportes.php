@@ -64,25 +64,26 @@
         <!-- Fin de reporte por fechas -->
 
 
-        <!-- Reportes por area -->
         <div class="col-md-6 mt-5">
           <h5 class="mb-1 text-lg text-bold">Reportes por &aacute;rea</h5>
           <hr class="mb-2">
           <!-- Contenedor para alinear los inputs horizontalmente -->
           <div class="flex justify-center space-x-4 mt-4">
-            <!-- Buscar por area -->
+            <!-- Buscar por área -->
             <div class="w-full md:w-1/1 px-2 mb-2">
-              <!-- <label for="area"class="block font-bold mb-1 text-[#32cfad]">&Aacute;rea:</label> -->
               <select id="area" name="area" class="border p-2 w-full text-xs cursor-pointer">
               </select>
+              <input type="hidden" id="codigoArea" name="codigoArea">
             </div>
-          </div>
+                      </div>
           <!-- Botones -->
           <div class="flex justify-center space-x-2 mt-4">
-            <button type="button" id="reportes-areas" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-printer"></i>Imprimir</button>
+            <button type="button" id="reportes-areas" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md">
+              <i class="feather mr-2 icon-printer"></i>Imprimir
+            </button>
           </div>
         </div>
-        <!-- Fin de reporte por areas -->
+
 
         <!-- Reportes por codigo patrimonial -->
         <div class="col-md-6 mt-5">

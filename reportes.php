@@ -57,6 +57,8 @@ $recepcionModel = new RecepcionModel();
   <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
   <script src="./app/View/func/func_reportes.js"></script>
+
+  
   <script src="./app/View/func/Reports/reporteTotalIncidencias.js"></script>
   <script src="./app/View/func/Reports/reportesPorArea.js"></script>
   <script src="./app/View/func/Reports/reportePorCodigoPatrimonial.js"></script>

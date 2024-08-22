@@ -26,10 +26,20 @@ $(document).ready(function () {
       console.error("Error fetching areas:", error);
     }
   });
+
+   // Setear el código del área seleccionada
+   $('#area').change(function() {
+    var selectedOption = $(this).find('option:selected');
+    var areaCodigo = selectedOption.val(); // Obtén el valor (código) del área seleccionada
+    console.log("Código de área seleccionada:", areaCodigo); // Para depuración
+
+    // Aquí puedes setear este valor en otro campo si es necesario
+    $('#codigoArea').val(areaCodigo); // Ejemplo: campo oculto o visible
+  });
 });
 
 
-// TODO: BUSCADOR PARA EL COMBO PERSONA AREA Y ROL
+// TODO: BUSCADOR PARA EL COMBO PERSONA AREA
 $(document).ready(function () {
   $('#area').select2({
     placeholder: "Seleccione un area",

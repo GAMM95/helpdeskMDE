@@ -7,7 +7,6 @@ $(document).ready(function () {
 });
 
 $('#reportes-codigoPatrimonial').click(function () {
-  // Obtener el número de incidencia desde el campo de entrada
   const codigoPatrimonial = $('#codigoPatrimonial').val();
 
   if (!codigoPatrimonial) {
@@ -146,7 +145,7 @@ $('#reportes-codigoPatrimonial').click(function () {
           function addFooter(doc, pageNumber, totalPages) {
             doc.setFontSize(8);
             doc.setFont('helvetica', 'italic');
-            const footerY = 250;
+            const footerY = 200;
             doc.setLineWidth(0.05);
             doc.line(20, footerY - 5, doc.internal.pageSize.width - 20, footerY - 5);
 
@@ -165,10 +164,8 @@ $('#reportes-codigoPatrimonial').click(function () {
           }
 
           // Enviar el documento directamente a la impresora
-          window.open(doc.output('bloburl')); // Para algunos navegadores es necesario abrir el PDF antes de imprimir
-
+          window.open(doc.output('bloburl')); 
           toastr.success('Archivo PDF generado.');
-
         }
         // else {
         //   toastr.warning('No se ha encontrado incidencia para el área seleccionada.');

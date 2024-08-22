@@ -467,3 +467,11 @@ Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área:
 Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Silvia Miñano, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 3, Usuario: VIOLET
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Freysi  Benites, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 103, Usuario: FREYSI
+------- START LOGIN LOGS ---------
+Nombre de Persona: Carlos  Leyva, Rol: Usuario, Codigo Area: 10, Área: Gerencia de Recursos Humanos, Código de Usuario: 104, Usuario: CLEYVA
