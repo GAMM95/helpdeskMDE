@@ -2,11 +2,14 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "2000"
+    "timeOut": "1500"
   };
 });
 
+// Generacion del PDF al hacer clic en boton
 $('#reporte-incidencias-totales').click(function () {
+
+  // Realziar la solicitud AJAX para obtener los datos de la incidencia
   $.ajax({
     url: 'ajax/getReporteIncidenciaTotales.php',
     method: 'GET',
@@ -34,7 +37,7 @@ $('#reporte-incidencias-totales').click(function () {
 
           const pageWidth = doc.internal.pageSize.width;
           const marginX = 10;
-          const marginY = 10;
+          const marginY = 5;
           const logoWidth = 25;
           const logoHeight = 25;
 
@@ -44,11 +47,10 @@ $('#reporte-incidencias-totales').click(function () {
           doc.setFontSize(16);
           const titleWidth = doc.getTextWidth(reportTitle);
           const titleX = (pageWidth - titleWidth) / 2;
-          const titleY = 25;
-
+          const titleY = 20;
           doc.text(reportTitle, titleX, titleY);
           doc.setLineWidth(0.5);
-          doc.line(titleX, titleY + 3, titleX + titleWidth, titleY + 3);
+          doc.line(titleX, titleY + 1, titleX + titleWidth, titleY + 1);
 
           doc.setFontSize(8);
           doc.setFont('helvetica', 'normal');
@@ -71,10 +73,10 @@ $('#reporte-incidencias-totales').click(function () {
         doc.setFontSize(12);
         doc.text('Detalle de la Incidencia:', 20, titleY);
 
-        let item = 1;
 
+        let item = 1; // Contador para item
         doc.autoTable({
-          startY: 48,
+          startY: 35,
           margin: { left: 5, right: 10 },
           head: [['Item', 'Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Código patrimonial', 'Área solicitante', 'Prioridad', 'Estado']],
           body: data.map(reporte => [
@@ -127,16 +129,20 @@ $('#reporte-incidencias-totales').click(function () {
           doc.text(pageInfo, pageWidth - 20 - doc.getTextWidth(pageInfo), footerY);
         }
 
+        // Pie de pagina
         const totalPages = doc.internal.getNumberOfPages();
         for (let i = 1; i <= totalPages; i++) {
           doc.setPage(i);
           addFooter(doc, i, totalPages);
         }
 
-        // Mostrar PDF en una nueva pestaña
-        window.open(doc.output('bloburl'));
-
+        // Mostrar mensaje de exito de pdf generado
         toastr.success('Archivo PDF generado.');
+        // Retrasar la apertura del PDF y limpiar el campo de entrada
+        setTimeout(() => {
+          window.open(doc.output('bloburl'));
+          $('#codigoPatrimonial').val('');
+        }, 1500);
       } catch (error) {
         toastr.error('Hubo un error al generar PDF.');
         console.error('Error al generar el PDF:', error.message);

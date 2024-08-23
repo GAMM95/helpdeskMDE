@@ -2,7 +2,7 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "2000"
+    "timeOut": "1500"
   };
 });
 // Manejar la generación de PDF al hacer clic en el botón
@@ -115,9 +115,13 @@ function generarPDF(data) {
     addFooter(doc, i, totalPages);
   }
 
-  // Enviar el PDF directamente a la impresora o descargarlo
-  window.open(doc.output('bloburl'));
+  // Mostrar mensaje de exito de pdf generado
   toastr.success('Archivo PDF generado.');
+  // Retrasar la apertura del PDF y limpiar el campo de entrada
+  setTimeout(() => {
+    window.open(doc.output('bloburl'));
+    $('#codigoPatrimonial').val('');
+  }, 1500);
 }
 
 // Encabezado
@@ -158,7 +162,9 @@ function addHeader(doc, logoUrl) {
   doc.text(headerText2, headerText2X, headerText2Y);
   doc.text(fechaText, fechaTextX, fechaTextY);
 }
+// Fin de encabezado
 
+// Pie de pagina
 function addFooter(doc, pageNumber, totalPages) {
   doc.setFontSize(8);
   doc.setFont('helvetica', 'italic');
@@ -173,3 +179,4 @@ function addFooter(doc, pageNumber, totalPages) {
   doc.text(footerText, 20, footerY);
   doc.text(pageInfo, pageWidth - 20 - doc.getTextWidth(pageInfo), footerY);
 }
+// Fin de pie de pagina

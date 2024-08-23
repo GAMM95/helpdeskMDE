@@ -61,6 +61,7 @@ $recepcionModel = new RecepcionModel();
   <script src="./app/View/func/Reports/reporteTotalIncidencias.js"></script>
   <script src="./app/View/func/Reports/reportesPorArea.js"></script>
   <script src="./app/View/func/Reports/reportePorCodigoPatrimonial.js"></script>
+  <script src="./app/View/func/Reports/reporteIncidenciasPorFecha.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
