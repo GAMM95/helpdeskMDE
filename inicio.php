@@ -34,7 +34,6 @@ if ($rol === 'Administrador' || $rol === 'Soporte') {
 } else {
   $cantidades = $controller->mostrarCantidadesUsuario($area);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -49,10 +48,8 @@ if ($rol === 'Administrador' || $rol === 'Soporte') {
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="" />
   <meta name="keywords" content="">
-  <meta name="author" content="Phoenixcoded" />
-  <!-- Favicon icon -->
-  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
-  <!-- vendor css -->
+  <meta name="author" content="GAMM95" />
+¿  <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">
 
 </head>

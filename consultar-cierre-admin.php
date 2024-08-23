@@ -61,7 +61,6 @@ if ($action === 'consultar') {
     $html = '<tr><td colspan="8" class="text-center py-3">No se encontraron incidencias atentidas.</td></tr>';
   }
 
-  // Devolver el HTML de las filas
   echo $html;
   exit;
 } else {
@@ -82,10 +81,7 @@ if ($action === 'consultar') {
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="" />
   <meta name="keywords" content="">
-  <meta name="author" content="Phoenixcoded" />
-  <!-- Favicon icon -->
-  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
-
+  <meta name="author" content="GAMM95" />
   <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">
 

@@ -100,7 +100,7 @@ if ($action === 'consultar') {
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="" />
   <meta name="keywords" content="">
-  <meta name="author" content="Phoenixcoded" />
+  <meta name="author" content="GAMM95" />
 
   <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">

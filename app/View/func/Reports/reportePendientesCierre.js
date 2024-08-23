@@ -7,11 +7,11 @@ $(document).ready(function () {
 });
 
 // Generacion del PDF al hacer clic en boton
-$('#reporte-incidencias-totales').click(function () {
+$('#reporte-pendientes-cierre').click(function () {
 
   // Realziar la solicitud AJAX para obtener los datos de la incidencia
   $.ajax({
-    url: 'ajax/getReporteIncidenciaTotales.php',
+    url: 'ajax/getReportePendientesCierre.php',
     method: 'GET',
     dataType: 'json',
     success: function (data) {
@@ -33,7 +33,7 @@ $('#reporte-incidencias-totales').click(function () {
 
           const fechaImpresion = new Date().toLocaleDateString();
           const headerText2 = 'Subgerencia de Informática y Sistemas';
-          const reportTitle = 'REPORTE TOTAL DE INCIDENCIAS';
+          const reportTitle = 'REPORTE DE INCIDENCIAS PENDIENTES DE CIERRE';
 
           const pageWidth = doc.internal.pageSize.width;
           const marginX = 10;

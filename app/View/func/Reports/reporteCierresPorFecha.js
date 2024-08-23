@@ -6,7 +6,7 @@ $(document).ready(function () {
   };
 });
 
-$('#reporte-incidencias-fechas').click(function () {
+$('#reportes-cierres-fechas').click(function () {
   const fechaInicio = $('#fechaInicio').val();
   const fechaFin = $('#fechaFin').val();
 
@@ -14,9 +14,9 @@ $('#reporte-incidencias-fechas').click(function () {
     return;
   }
 
-  // Realizar una solicitud AJAX para obtener los datos de la incidencia
+  // Realizar una solicitud AJAX para obtener los datos del cierre de incidencia
   $.ajax({
-    url: 'ajax/getReporteIncidenciasPorFecha.php',
+    url: 'ajax/getReporteCierresPorFecha.php',
     method: 'GET',
     data: { fechaInicio: fechaInicio, fechaFin: fechaFin },
     dataType: 'json',
@@ -41,7 +41,7 @@ $('#reporte-incidencias-fechas').click(function () {
 
             const fechaImpresion = new Date().toLocaleDateString();
             const headerText2 = 'Subgerencia de Informática y Sistemas';
-            const reportTitle = 'REPORTE DE INCIDENCIAS POR FECHA';
+            const reportTitle = 'REPORTE DE CIERRES POR FECHA';
 
             const pageWidth = doc.internal.pageSize.width;
             const marginX = 10;
@@ -131,16 +131,13 @@ $('#reporte-incidencias-fechas').click(function () {
           doc.setFont('helvetica', 'normal');
           doc.text(fechaFinValue, startX + fechaInicioAncho + fechaInicioValueAncho + spacing + fechaFinAncho, titleY);
 
-
-
-
           // Inicializar el contador
           let item = 1;
 
           // Lista de incidencias por codigo patrimonial
           doc.autoTable({
             startY: 35, // Altura de la tabla respecto a la parte superior
-            margin: { left: 8 },
+            margin: { left: 10 },
             head: [['Ítem', 'Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Área', 'Prioridad', 'Estado']],
             body: data.map(reporte => [
               item++,
@@ -171,7 +168,7 @@ $('#reporte-incidencias-fechas').click(function () {
               5: { cellWidth: 40 }, // Ancho para la columna Documento
               6: { cellWidth: 50 }, // Ancho para la columna area
               7: { cellWidth: 20 }, // Ancho para la columna prioridad
-              8: { cellWidth: 22 } // Ancho para la columna estado
+              8: { cellWidth: 20 } // Ancho para la columna estado
             }
           });
 
@@ -205,7 +202,7 @@ $('#reporte-incidencias-fechas').click(function () {
             $('#fechaFin').val('');
           }, 1500);
         } else {
-          toastr.warning('No se ha encontrado incidencia para las fechas seleccionadas.');
+          toastr.warning('No se ha encontrado cierres de incidencias para las fechas seleccionadas.');
         }
       } catch (error) {
         toastr.error('Hubo un error al generar reporte.');
@@ -213,7 +210,7 @@ $('#reporte-incidencias-fechas').click(function () {
       }
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos de la incidencia.');
+      toastr.error('Hubo un error al obtener los datos de los cierres de incidencia.');
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });

@@ -477,3 +477,5 @@ Nombre de Persona: Freysi  Benites, Rol: Administrador, Codigo Area: 1, Área: S
 Nombre de Persona: Carlos  Leyva, Rol: Usuario, Codigo Area: 10, Área: Gerencia de Recursos Humanos, Código de Usuario: 104, Usuario: CLEYVA
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95

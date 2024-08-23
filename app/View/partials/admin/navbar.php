@@ -65,12 +65,6 @@ if (session_status() == PHP_SESSION_NONE) {
         <li class="nav-item pcoded-menu-caption">
           <label>Consultas</label>
         </li>
-        <!-- <li class="nav-item ">
-          <a href="consultar-incidencia-general-admin.php" class="nav-link ">
-            <span class="pcoded-micon"> <i class="feather icon-clipboard"></i> </span>
-            <span class="pcoded-mtext">Consultar incidencias</span>
-          </a>
-        </li> -->
         <li class="nav-item pcoded-hasmenu">
           <a href="#!" class="nav-link ">
             <span class="pcoded-micon">
@@ -79,9 +73,9 @@ if (session_status() == PHP_SESSION_NONE) {
             <span class="pcoded-mtext">Consultar</span>
           </a>
           <ul class="pcoded-submenu">
+            <li><a href="consultar-incidencia-general-admin.php">Incidencias totales</a></li>
             <li><a href="consultar-incidencia-admin.php">Incidencias pendientes</a></li>
             <li><a href="consultar-cierre-admin.php">Incidencias atendidas</a></li>
-            <li><a href="consultar-incidencia-general-admin.php">Incidencias totales</a></li>
           </ul>
         </li>
         <!-- Fin de opcion de consultas -->

@@ -29,7 +29,7 @@
           <!-- Botones -->
           <div class="flex justify-center space-x-2 mt-10">
             <button type="button" id="reporte-incidencias-totales" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-file"></i>Incidencias totales</button>
-            <button type="button" id="reporte-cierres-totales" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-file"></i>Pendientes de cierre</button>
+            <button type="button" id="reporte-pendientes-cierre" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-file"></i>Pendientes de cierre</button>
           </div>
         </div>
         <!-- Fin de reportes generales -->

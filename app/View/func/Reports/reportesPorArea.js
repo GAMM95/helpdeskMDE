@@ -72,7 +72,7 @@ function generarPDF(data) {
   let item = 1;
   doc.autoTable({
     startY: 35,
-    margin: { left: 10, right: 10 },
+    margin: { left: 8, right: 10 },
     head: [['Ítem', 'Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Código Patrimonial', 'Prioridad', 'Estado']],
     body: data.map(reporte => [
       item++,
@@ -104,7 +104,7 @@ function generarPDF(data) {
       5: { cellWidth: 45 }, // ancho para la columna documento
       6: { cellWidth: 35 }, // ancho para la columna codigo patrimonial
       7: { cellWidth: 20 }, // ancho para la columna prioridad
-      8: { cellWidth: 20 } // ancho para la columna estado
+      8: { cellWidth: 22 } // ancho para la columna estado
     }
   });
 
@@ -120,7 +120,7 @@ function generarPDF(data) {
   // Retrasar la apertura del PDF y limpiar el campo de entrada
   setTimeout(() => {
     window.open(doc.output('bloburl'));
-    $('#codigoPatrimonial').val('');
+    $('#area').val('');
   }, 1500);
 }
 

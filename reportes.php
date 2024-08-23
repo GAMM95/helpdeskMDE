@@ -7,13 +7,6 @@ if (!isset($_SESSION['usuario'])) {
 }
 $action = $_GET['action'] ?? '';
 $state = $_GET['state'] ?? '';
-
-require_once 'app/Controller/recepcionController.php';
-require_once 'app/Model/recepcionModel.php';
-
-$recepcionController = new RecepcionController();
-$recepcionModel = new RecepcionModel();
-
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +21,7 @@ $recepcionModel = new RecepcionModel();
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="" />
   <meta name="keywords" content="">
-  <meta name="author" content="Phoenixcoded" />
+  <meta name="author" content="GAMM95" />
   <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">
 
@@ -59,9 +52,11 @@ $recepcionModel = new RecepcionModel();
   <script src="./app/View/func/func_reportes.js"></script>
 
   <script src="./app/View/func/Reports/reporteTotalIncidencias.js"></script>
+  <script src="./app/View/func/Reports/reportePendientesCierre.js"></script>
   <script src="./app/View/func/Reports/reportesPorArea.js"></script>
   <script src="./app/View/func/Reports/reportePorCodigoPatrimonial.js"></script>
   <script src="./app/View/func/Reports/reporteIncidenciasPorFecha.js"></script>
+  <script src="./app/View/func/Reports/reporteCierresPorFecha.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
