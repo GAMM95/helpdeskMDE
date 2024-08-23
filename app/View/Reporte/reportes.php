@@ -74,8 +74,9 @@
               <select id="area" name="area" class="border p-2 w-full text-xs cursor-pointer">
               </select>
               <input type="hidden" id="codigoArea" name="codigoArea">
+              <input type="hidden" id="nombreArea" name="nombreArea">
             </div>
-                      </div>
+          </div>
           <!-- Botones -->
           <div class="flex justify-center space-x-2 mt-4">
             <button type="button" id="reportes-areas" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md">

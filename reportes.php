@@ -58,19 +58,21 @@ $recepcionModel = new RecepcionModel();
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
   <script src="./app/View/func/func_reportes.js"></script>
 
-  
   <script src="./app/View/func/Reports/reporteTotalIncidencias.js"></script>
   <script src="./app/View/func/Reports/reportesPorArea.js"></script>
   <script src="./app/View/func/Reports/reportePorCodigoPatrimonial.js"></script>
 
-
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Mensajes toastr -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- Generacion de PDF con js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+  <!-- Buscador de combobox -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 
-</html> 
+</html>

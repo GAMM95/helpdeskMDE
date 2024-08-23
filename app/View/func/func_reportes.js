@@ -27,14 +27,16 @@ $(document).ready(function () {
     }
   });
 
-   // Setear el código del área seleccionada
-   $('#area').change(function() {
+  // Setear el código del área seleccionada
+  $('#area').change(function () {
     var selectedOption = $(this).find('option:selected');
     var areaCodigo = selectedOption.val(); // Obtén el valor (código) del área seleccionada
-    console.log("Código de área seleccionada:", areaCodigo); // Para depuración
+    var areaNombre = selectedOption.text(); // Obtén el texto (nombre) del área seleccionada
+
 
     // Aquí puedes setear este valor en otro campo si es necesario
     $('#codigoArea').val(areaCodigo); // Ejemplo: campo oculto o visible
+    $('#nombreArea').val(areaNombre); // Setear el nombre del área en el input oculto
   });
 });
 

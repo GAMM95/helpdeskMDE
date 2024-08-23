@@ -53,7 +53,7 @@ function generarPDF(data) {
 
   const areaText = 'Área:';
   const codigoWidth = doc.getTextWidth(areaText);
-  const codigoValue = ` ${$('#area').val()}`;
+  const codigoValue = ` ${$('#nombreArea').val()}`;
   const codigoValueWidth = doc.getTextWidth(codigoValue);
 
   const pageWidth = doc.internal.pageSize.width;

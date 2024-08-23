@@ -8,7 +8,7 @@ $(document).ready(function () {
 
 $('#reporte-incidencias-totales').click(function () {
   $.ajax({
-    url: 'ajax/getReporteIncidenciasTotales.php',
+    url: 'ajax/getReporteIncidenciaTotales.php',
     method: 'GET',
     dataType: 'json',
     success: function (data) {
@@ -71,11 +71,14 @@ $('#reporte-incidencias-totales').click(function () {
         doc.setFontSize(12);
         doc.text('Detalle de la Incidencia:', 20, titleY);
 
+        let item = 1;
+
         doc.autoTable({
           startY: 48,
-          margin: { left: 20 },
-          head: [['Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Código patrimonial', 'Área solicitante', 'Prioridad', 'Estado']],
+          margin: { left: 5, right: 10 },
+          head: [['Item', 'Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Código patrimonial', 'Área solicitante', 'Prioridad', 'Estado']],
           body: data.map(reporte => [
+            item++,
             reporte.INC_numero_formato,
             reporte.fechaIncidenciaFormateada,
             reporte.CAT_nombre,
@@ -87,7 +90,7 @@ $('#reporte-incidencias-totales').click(function () {
             reporte.ESTADO
           ]),
           styles: {
-            fontSize: 11,
+            fontSize: 8,
             cellPadding: 2,
           },
           headStyles: {
@@ -96,12 +99,16 @@ $('#reporte-incidencias-totales').click(function () {
             fontStyle: 'bold',
           },
           columnStyles: {
-            0: { cellWidth: 30 }, // Ancho para la columna Número de incidencia
-            1: { cellWidth: 30 }, // Ancho para la columna Fecha
-            2: { cellWidth: 40 }, // Ancho para la columna Categoría
-            3: { cellWidth: 50 }, // Ancho para la columna Asunto
-            4: { cellWidth: 50 }, // Ancho para la columna Área solicitante
-            5: { cellWidth: 30 }  // Ancho para la columna Estado
+            0: { cellWidth: 10 }, // Ancho para la columna item
+            1: { cellWidth: 25 }, // Ancho para la columna Número de incidencia
+            2: { cellWidth: 20 }, // Ancho para la columna Fecha
+            3: { cellWidth: 40 }, // Ancho para la columna Categoría
+            4: { cellWidth: 40 }, // Ancho para la columna Asunto
+            5: { cellWidth: 35 }, // Ancho para la columna Documento
+            6: { cellWidth: 35 }, // Ancho para la columna codigo patrimonial
+            7: { cellWidth: 40 }, // Ancho para la columna Área solicitante
+            8: { cellWidth: 20 }, // Ancho para la columna prioridad
+            9: { cellWidth: 20 }  // Ancho para la columna Estado
           }
         });
 
