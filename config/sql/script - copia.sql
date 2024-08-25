@@ -285,24 +285,7 @@ INSERT INTO IMPACTO (IMP_descripcion) VALUES ('Medio');
 INSERT INTO IMPACTO (IMP_descripcion) VALUES ('Alto');
 GO
 
--- CREACIÓN DE LA TABLA BIEN
-CREATE TABLE BIEN (
-    BIE_codigo SMALLINT IDENTITY(1,1),
-    BIE_codigoPatrimonial VARCHAR(12) NULL,
-    BIE_nombre VARCHAR(50) NULL,
-    CONSTRAINT pk_bien PRIMARY KEY (BIE_codigo),
-    CONSTRAINT uk_bie_codigoPatrimonial UNIQUE (BIE_codigoPatrimonial)  -- Único para asegurar la integridad
-);
-GO
-
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('','SIN CODIGO');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74089950','CPU');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74088187','MONITOR');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74089500','TECLADO');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74088600','MOUSE');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('46225215','ESTABILIZADOR');
-
--- CREACIÓN DE LA TABLA INCIDENCIA
+-- CREACION DE TABLA INCIDENCIA
 CREATE TABLE INCIDENCIA (
     INC_numero SMALLINT NOT NULL,
     INC_numero_formato VARCHAR(20) NULL,
@@ -311,7 +294,7 @@ CREATE TABLE INCIDENCIA (
     INC_asunto VARCHAR(200) NOT NULL,
     INC_descripcion VARCHAR(500) NULL,
     INC_documento VARCHAR(100) NOT NULL,
-    INC_codigoPatrimonial CHAR(12) NULL, 
+    INC_codigoPatrimonial CHAR(12) NULL,
     EST_codigo SMALLINT NOT NULL,
     CAT_codigo SMALLINT NOT NULL,
     ARE_codigo SMALLINT NOT NULL,
@@ -323,6 +306,7 @@ CREATE TABLE INCIDENCIA (
     CONSTRAINT fk_usuario_incidencia FOREIGN KEY (USU_codigo) REFERENCES USUARIO (USU_codigo)
 );
 GO
+
 
 CREATE FUNCTION dbo.GenerarNumeroIncidencia()
 RETURNS VARCHAR(20)
@@ -388,7 +372,7 @@ CREATE PROCEDURE SP_Registrar_Incidencia_Admin
     @INC_asunto VARCHAR(200),
     @INC_descripcion VARCHAR(500),
     @INC_documento VARCHAR(100),
-    @INC_codigoPatrimonial CHAR(12) = NULL,
+    @INC_codigoPatrimonial CHAR(12),
     @CAT_codigo SMALLINT,
     @ARE_codigo SMALLINT,
     @USU_codigo SMALLINT

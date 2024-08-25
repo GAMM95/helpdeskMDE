@@ -20,7 +20,7 @@ class IncidenciaController
       $asunto =  $_POST['asunto'] ?? null;
       $descripcion = $_POST['descripcion'] ?? null;
       $documento = $_POST['documento'] ?? null;
-      $codigoPatrimonial = $_POST['codigo_patrimonial'] ?? null;
+      $codigoPatrimonial = $_POST['codigoPatrimonial'] ?? null;
       $categoria = $_POST['categoria'] ?? null;
       $area = $_POST['area'] ?? null;
       $usuario = $_POST['usuario'] ?? null;
@@ -70,7 +70,7 @@ class IncidenciaController
       $numeroIncidencia = $_POST['numero_incidencia'] ?? null;
       $categoria = $_POST['categoria'] ?? null;
       $area = $_POST['area'] ?? null;
-      $codigoPatrimonial = $_POST['codigo_patrimonial'] ?? null;
+      $codigoPatrimonial = $_POST['codigoPatrimonial'] ?? null;
       $asunto = $_POST['asunto'] ?? null;
       $documento = $_POST['documento'] ?? null;
       $descripcion = $_POST['descripcion'] ?? null;

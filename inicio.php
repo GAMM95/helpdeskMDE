@@ -49,7 +49,7 @@ if ($rol === 'Administrador' || $rol === 'Soporte') {
   <meta name="description" content="" />
   <meta name="keywords" content="">
   <meta name="author" content="GAMM95" />
-¿  <!-- vendor css -->
+  <!-- vendor css -->
   <link rel="stylesheet" href="dist/assets/css/style.css">
 
 </head>

@@ -78,9 +78,19 @@
         </div>
 
         <!-- CODIGO PATROMONIAL -->
-        <div class="w-full sm:w-1/3 px-2 mb-2">
-          <label for="codigo_patrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
-          <input type="text" id="codigo_patrimonial" name="codigo_patrimonial" class="border p-2 w-full text-xs rounded-md" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, ''); " placeholder="Ingrese c&oacute;digo patrimonial">
+        <div class="w-full sm:w-1/6 px-2 mb-2">
+          <label for="codigoPatrimonial" class="block mb-1 font-bold text-xs">Código Patrimonial:</label>
+          <input type="text" id="codigoPatrimonial" name="codigoPatrimonial"
+            class="border p-2 w-full text-xs rounded-md" maxlength="12"
+            pattern="\d{1,12}" inputmode="numeric"
+            title="Ingrese solo dígitos"
+            placeholder="Ingrese código patrimonial">
+        </div>
+
+        <!-- TIPO DE BIEN -->
+        <div class="w-full sm:w-1/6 px-2 mb-2">
+          <label for="tipoBien" class="block mb-1 font-bold text-center text-xs">Tipo de bien:</label>
+          <input type="text" id="tipoBien" name="tipoBien" class="border p-2 w-full text-center text-xs rounded-md" disabled readonly>
         </div>
       </div>
 

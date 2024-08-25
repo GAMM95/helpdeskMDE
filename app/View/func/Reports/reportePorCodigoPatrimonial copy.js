@@ -6,36 +6,79 @@ $(document).ready(function () {
   };
 });
 
-$('#reportes-codigoPatrimonial').click(function () {
-  const codigoPatrimonial = $('#codigoPatrimonial').val();
-
-  if (!codigoPatrimonial) {
-    toastr.warning('Ingrese c&oacute;digo patrimonial para generar reporte.');
-    return;
-  }
-
-  // Realizar una solicitud AJAX para obtener los datos de la incidencia
-  $.ajax({
-    url: 'ajax/getReportePorCodigoPatrimonial.php',
-    method: 'GET',
-    data: { codigoPatrimonial: codigoPatrimonial },
-    dataType: 'json',
-    success: function (data) {
-      if (data.error) {
-        toastr.error('Error en la solicitud: ' + data.error);
-        return;
-      }
-
-      // Generar PDF
-      generarPDFControlPatrimonial(data);
-
-    },
-    error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos del c&oacute;digo patrimonial.');
-      console.error('Error al realizar la solicitud AJAX:', error);
+// Realizar una solicitud AJAX para obtener el tipo de bien
+$.ajax({
+  url: 'ajax/getTipoBienReporte.php',
+  method: 'GET',
+  data: { codigo_patrimonial: codigoPatrimonial },
+  dataType: 'json',
+  success: function (response) {
+    if (response.tipo_bien === 'No encontrado' || response.tipo_bien === 'Error') {
+      toastr.warning('No se encontr&oacute; informaci&oacute;n para el c&oacute;digo patrimonial ingresado.');
+      return;
     }
-  });
+
+    const tipoBien = response.tipo_bien;
+
+    // Realizar la solicitud AJAX para obtener los datos de la incidencia
+    $.ajax({
+      url: 'ajax/getReportePorCodigoPatrimonial.php',
+      method: 'GET',
+      data: { codigoPatrimonial: codigoPatrimonial },
+      dataType: 'json',
+      success: function (data) {
+        if (data.error) {
+          toastr.error('Error en la solicitud: ' + data.error);
+          return;
+        }
+
+        // Generar PDF pasando el tipo de bien
+        generarPDFControlPatrimonial(data, tipoBien);
+
+      },
+      error: function (xhr, status, error) {
+        toastr.error('Hubo un error al obtener los datos del c&oacute;digo patrimonial.');
+        console.error('Error al realizar la solicitud AJAX:', error);
+      }
+    });
+
+  },
+  error: function (xhr, status, error) {
+    toastr.error('Hubo un error al obtener el tipo de bien.');
+    console.error('Error al realizar la solicitud AJAX:', error);
+  }
 });
+
+// $('#reportes-codigoPatrimonial').click(function () {
+//   const codigoPatrimonial = $('#codigoPatrimonial').val();
+
+//   if (!codigoPatrimonial) {
+//     toastr.warning('Ingrese c&oacute;digo patrimonial para generar reporte.');
+//     return;
+//   }
+
+//   // Realizar una solicitud AJAX para obtener los datos de la incidencia
+//   $.ajax({
+//     url: 'ajax/getReportePorCodigoPatrimonial.php',
+//     method: 'GET',
+//     data: { codigoPatrimonial: codigoPatrimonial },
+//     dataType: 'json',
+//     success: function (data) {
+//       if (data.error) {
+//         toastr.error('Error en la solicitud: ' + data.error);
+//         return;
+//       }
+
+//       // Generar PDF
+//       generarPDFControlPatrimonial(data);
+
+//     },
+//     error: function (xhr, status, error) {
+//       toastr.error('Hubo un error al obtener los datos del c&oacute;digo patrimonial.');
+//       console.error('Error al realizar la solicitud AJAX:', error);
+//     }
+//   });
+// });
 
 function generarPDFControlPatrimonial(data) {
   if (!data || data.length === 0) {
@@ -71,13 +114,13 @@ function generarPDFControlPatrimonial(data) {
   doc.text(codigoValue, startX + codigoWidth, titleY);
 
   // Detalle del título respecto al tipo de bien
-  const titleU = 30;
+  const titleU = 28;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(12);
 
   const bienText = 'Tipo de bien:';
   const bienTextWidth = doc.getTextWidth(bienText);
-  const bienValue = ` ${$('#tipoBien').val()}`;
+  const bienValue = ` ${$('#codigoPatrimonial').val()}`;
   const bienValueWidth = doc.getTextWidth(bienValue);
 
   const totalBienWidth = bienTextWidth + bienValueWidth;

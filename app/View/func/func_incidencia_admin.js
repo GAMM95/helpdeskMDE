@@ -195,7 +195,7 @@ $(document).on('click', '#tablaListarIncidencias tbody tr', function () {
 
   // Seteo de valores en los inputs
   document.getElementById('numero_incidencia').value = codIncidencia;
-  document.getElementById('codigo_patrimonial').value = codigoPatrimonialValue;
+  document.getElementById('codigoPatrimonial').value = codigoPatrimonialValue;
   document.getElementById('asunto').value = asuntoValue;
   document.getElementById('documento').value = documentoValue;
   document.getElementById('descripcion').value = descripcionValue;
@@ -250,7 +250,7 @@ function nuevoRegistro() {
   $('#cbo_categoria').val('').trigger('change');
   $('#cbo_area').val('').trigger('change');
 
-  $('#codigo_patrimonial').val('');
+  $('#codigoPatrimonial').val('');
   $('#asunto').val('');
   $('#documento').val('');
   $('#descripcion').val('');

@@ -92,6 +92,12 @@
               <input type="text" id="codigoPatrimonial" name="codigoPatrimonial" class="border p-2 w-full text-md text-center rounded-md" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Ingrese c&oacute;digo patrimonial">
             </div>
           </div>
+          <!-- TIPO DE BIEN -->
+          <div class="flex justify-center space-x-4 mt-2">
+            <div class="text-center w-full md:w-3/4"> <!-- Ajuste de ancho con md:w-2/3 -->
+              <input type="text" id="tipoBien" name="tipoBien" class="border p-2 w-full text-center text-xs rounded-md" disabled readonly>
+            </div>
+          </div>
           <!-- Botones -->
           <div class="flex justify-center space-x-2 mt-4">
             <button type="button" id="reportes-codigoPatrimonial" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-printer"></i>Imprimir</button>
