@@ -11,9 +11,27 @@ $REC_numero = $_GET['REC_numero'] ?? '';
 
 require_once 'app/Controller/recepcionController.php';
 require_once 'app/Model/recepcionModel.php';
+require_once 'app/Model/incidenciaModel.php';
 
 $recepcionController = new RecepcionController();
 $recepcionModel = new RecepcionModel();
+$incidenciaModel = new IncidenciaModel();
+$resultado = NULL;
+
+// Paginacion de la tabla
+$limit = 2; // Número de filas por página
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
+$start = ($page - 1) * $limit; // Calcula el índice de inicio
+// Obtener el total de registros
+$totalIncidenciasSinRecepcionar = $incidenciaModel->contarIncidenciasSinRecepcionar();
+$totalPages = ceil($totalIncidenciasSinRecepcionar / $limit);
+
+// Listar las incidencias para la pagina actual
+// $incidencias = $incidenciaModel->obtenerIncidenciasSinRecepcionar($start, $limit);
+$resultadoIncidencias = $incidenciaModel->listarIncidenciasRegistroAdmin($start, $limit);
+
+// Listar incidencias recepcionadas
+$resultado = $recepcionModel->listarRecepciones();
 
 if ($REC_numero != '') {
   global $recepcionRegistrada;

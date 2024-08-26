@@ -71,17 +71,58 @@ class IncidenciaModel extends Conexion
    *                   En caso de error, retorna false.
    */
   // TODO: Metodo para insertar incidencias - Administrador
-  public function insertarIncidenciaAdministrador($INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial,  $EST_codigo, $CAT_codigo, $ARE_codigo, $USU_codigo)
+  // public function insertarIncidenciaAdministrador($INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial,  $EST_codigo, $CAT_codigo, $ARE_codigo, $USU_codigo)
+  // {
+  //   $conector = parent::getConexion();
+  //   try {
+  //     if ($conector != null) {
+  //       $sql = "INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  //       $stmt = $conector->prepare($sql);
+  //       $success = $stmt->execute([$INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial, 3, $CAT_codigo, $ARE_codigo, $USU_codigo]);
+  //       if ($success) {
+  //         $lastId = $conector->lastInsertId();
+  //         return $lastId;
+  //       } else {
+  //         return false;
+  //       }
+  //     }
+  //   } catch (PDOException $e) {
+  //     echo "Error al insertar la incidencia para el administrador: " . $e->getMessage();
+  //     return false;
+  //   }
+  // }
+
+  // TODO: Metodo para insertar incidencias - Administrador
+  public function insertarIncidenciaAdministrador($INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial, $CAT_codigo, $ARE_codigo, $USU_codigo)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "EXEC SP_Registrar_Incidencia_Admin 
+                @INC_fecha = :fecha, 
+                @INC_hora = :hora, 
+                @INC_asunto = :asunto, 
+                @INC_descripcion = :descripcion, 
+                @INC_documento = :documento, 
+                @INC_codigoPatrimonial = :codigoPatrimonial, 
+                @CAT_codigo = :categoria, 
+                @ARE_codigo = :area, 
+                @USU_codigo = :usuario";
         $stmt = $conector->prepare($sql);
-        $success = $stmt->execute([$INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial, 3, $CAT_codigo, $ARE_codigo, $USU_codigo]);
+        $stmt->bindParam(':fecha', $INC_fecha);
+        $stmt->bindParam(':hora', $INC_hora);
+        $stmt->bindParam(':asunto', $INC_asunto);
+        $stmt->bindParam(':descripcion', $INC_descripcion);
+        $stmt->bindParam(':documento', $INC_documento);
+        $stmt->bindParam(':codigoPatrimonial', $INC_codigoPatrimonial);
+        $stmt->bindParam(':categoria', $CAT_codigo);
+        $stmt->bindParam(':area', $ARE_codigo);
+        $stmt->bindParam(':usuario', $USU_codigo);
+
+        $success = $stmt->execute();
+
         if ($success) {
-          $lastId = $conector->lastInsertId();
-          return $lastId;
+          return true;
         } else {
           return false;
         }
@@ -355,47 +396,20 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO: Metodo para listar incidencias registradas por el administrador
+  // TODO: Método para listar incidencias registradas por el administrador
   public function listarIncidenciasRegistroAdmin($start, $limit)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "SELECT 
-        I.INC_numero,
-        INC_numero_formato,
-        (CONVERT(VARCHAR(10), INC_fecha, 103)) AS fechaIncidenciaFormateada,
-        I.INC_codigoPatrimonial,
-        I.INC_asunto,
-        I.INC_documento,
-        I.INC_descripcion,
-        CAT.CAT_nombre,
-        A.ARE_nombre,
-        CASE
-            WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
-            ELSE E.EST_descripcion
-        END AS ESTADO,
-        p.PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
-        FROM INCIDENCIA I
-        INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
-        INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
-        INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
-        LEFT JOIN RECEPCION R ON R.INC_numero = I.INC_numero
-        LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
-        LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
-        LEFT JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
-        LEFT JOIN IMPACTO IMP ON IMP.IMP_codigo = R.IMP_codigo
-        LEFT JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
-        LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
-        INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
-        WHERE (I.EST_codigo IN (3, 4, 5) OR C.EST_codigo IN (3, 4, 5))
-        ORDER BY 
-        -- Extraer el año de INC_numero_formato y ordenar por año de forma descendente
-        SUBSTRING(INC_numero_formato, CHARINDEX('-', INC_numero_formato) + 1, 4) DESC,
-        -- Ordenar por el número de incidencia también en orden descendente
-        I.INC_numero_formato DESC
-        OFFSET :start ROWS
-        FETCH NEXT :limit ROWS ONLY";
+        $sql = "SELECT * FROM vista_incidencias_administrador
+          ORDER BY 
+          -- Extraer el año de INC_numero_formato y ordenar por año de forma descendente
+          SUBSTRING(INC_numero_formato, CHARINDEX('-', INC_numero_formato) + 1, 4) DESC,
+          -- Ordenar por el número de incidencia también en orden descendente
+          INC_numero_formato DESC
+          OFFSET :start ROWS
+          FETCH NEXT :limit ROWS ONLY";
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':start', $start, PDO::PARAM_INT);
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -409,6 +423,7 @@ class IncidenciaModel extends Conexion
       throw new Exception("Error al listar incidencias registradas por el administrador: " . $e->getMessage());
     }
   }
+
 
   public function listarIncidenciasAdminFecha($fecha)
   {
@@ -608,42 +623,42 @@ class IncidenciaModel extends Conexion
   }
 
   //TODO: Metodo para obtener incidencias sin recepcionar
-  public function obtenerIncidenciasSinRecepcionar($start, $limit)
-  {
-    $conector = parent::getConexion();
-    try {
-      if ($conector != null) {
-        $sql = "SELECT INC_numero, 
-        INC_numero_formato,
-        (CONVERT(VARCHAR(10),INC_fecha,103)) AS fechaIncidenciaFormateada, 
-        INC_asunto, INC_descripcion, 
-        INC_documento, INC_codigoPatrimonial, 
-        c.CAT_nombre, a.ARE_nombre, u.USU_nombre,
-        p.PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
-        FROM INCIDENCIA i
-        INNER JOIN CATEGORIA c ON c.CAT_codigo = i.CAT_codigo
-        INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
-        INNER JOIN USUARIO u ON u.USU_codigo = i.USU_codigo
-        INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
-        WHERE i.EST_codigo = 3
-        ORDER BY INC_numero DESC
-        OFFSET :start ROWS
-        FETCH NEXT :limit ROWS ONLY";
-        $stmt = $conector->prepare($sql);
-        $stmt->bindParam(':start', $start, PDO::PARAM_INT);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $stmt->execute();
-        $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $registros;
-      } else {
-        echo "Error de conexión cierre Controller la base de datos.";
-        return null;
-      }
-    } catch (PDOException $e) {
-      echo "Error al obtener los registros de incidencias sin recepcionar: " . $e->getMessage();
-      return null;
-    }
-  }
+  // public function obtenerIncidenciasSinRecepcionar($start, $limit)
+  // {
+  //   $conector = parent::getConexion();
+  //   try {
+  //     if ($conector != null) {
+  //       $sql = "SELECT INC_numero, 
+  //       INC_numero_formato,
+  //       (CONVERT(VARCHAR(10),INC_fecha,103)) AS fechaIncidenciaFormateada, 
+  //       INC_asunto, INC_descripcion, 
+  //       INC_documento, INC_codigoPatrimonial, 
+  //       c.CAT_nombre, a.ARE_nombre, u.USU_nombre,
+  //       p.PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
+  //       FROM INCIDENCIA i
+  //       INNER JOIN CATEGORIA c ON c.CAT_codigo = i.CAT_codigo
+  //       INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
+  //       INNER JOIN USUARIO u ON u.USU_codigo = i.USU_codigo
+  //       INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
+  //       WHERE i.EST_codigo = 3
+  //       ORDER BY INC_numero DESC
+  //       OFFSET :start ROWS
+  //       FETCH NEXT :limit ROWS ONLY";
+  //       $stmt = $conector->prepare($sql);
+  //       $stmt->bindParam(':start', $start, PDO::PARAM_INT);
+  //       $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+  //       $stmt->execute();
+  //       $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  //       return $registros;
+  //     } else {
+  //       echo "Error de conexión cierre Controller la base de datos.";
+  //       return null;
+  //     }
+  //   } catch (PDOException $e) {
+  //     echo "Error al obtener los registros de incidencias sin recepcionar: " . $e->getMessage();
+  //     return null;
+  //   }
+  // }
 
   // TODO: Contar el total de incidencias sin recepcionar
   public function contarIncidenciasSinRecepcionar()
@@ -944,7 +959,7 @@ class IncidenciaModel extends Conexion
         INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
         WHERE I.EST_codigo NOT IN (4, 5) 
         AND A.ARE_codigo <> 1
-        ORDER BY tiempoDesdeIncidencia DESC";
+        ORDER BY tiempoDesdeIncidencia ASC";
 
         // ORDER BY I.INC_numero DESC";
 
@@ -1008,7 +1023,7 @@ class IncidenciaModel extends Conexion
         INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
         WHERE (I.EST_codigo NOT IN (3, 4) OR C.EST_codigo NOT IN (3, 4))
         AND A.ARE_codigo = :area
-        ORDER BY tiempoDesdeIncidencia DESC";
+        ORDER BY tiempoDesdeIncidencia ASC";
 
         // Prepara y ejecuta la consulta
         $stmt = $conector->prepare($sql);

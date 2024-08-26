@@ -11,9 +11,12 @@ $CIE_numero = $_GET['CIE_numero'] ?? '';
 
 require_once 'app/Controller/cierreController.php';
 require_once 'app/Model/cierreModel.php';
+require_once './app/Model/RecepcionModel.php';
 
 $cierreController = new CierreController();
 $cierreModel = new CierreModel();
+$recepcionModel = new RecepcionModel();
+
 
 if ($CIE_numero != '') {
   global $cierreRegistrado;
@@ -75,7 +78,7 @@ switch ($action) {
 
   <script src="./app/View/func/func_cierre_admin.js"></script>
   <script src="./app/View/func/Reports/reporteCierre.js"></script>
-  
+
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

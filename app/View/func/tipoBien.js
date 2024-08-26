@@ -24,6 +24,10 @@ $(document).ready(function () {
           $('#tipoBien').val('Error al buscar');
         }
       });
+    } else if (codigo.length === 0) {
+      // Si el código está vacío, borrar el valor de tipoBien
+      $('#tipoBien').val('');
+      lastValidResult = ''; // Limpiar el último resultado válido
     } else {
       // No cambiar el valor si el código es menor de 8 dígitos, solo mantener el último resultado válido
       $('#tipoBien').val(lastValidResult);

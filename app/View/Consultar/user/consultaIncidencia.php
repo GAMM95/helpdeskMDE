@@ -110,13 +110,13 @@
                     $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
                     $badgeClass = '';
                     switch ($estadoDescripcion) {
-                      case 'Abierta':
+                      case 'ABIERTO':
                         $badgeClass = 'badge-light-danger';
                         break;
-                      case 'Recepcionado':
+                      case 'RECEPCIONADO':
                         $badgeClass = 'badge-light-success';
                         break;
-                      case 'Cerrado':
+                      case 'CERRADO':
                         $badgeClass = 'badge-light-primary';
                         break;
                       default:

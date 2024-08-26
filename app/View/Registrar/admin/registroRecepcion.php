@@ -2,18 +2,8 @@
   <div class="pcoded-content">
     <?php
     global $recepcionRegistrada;
-    require_once './app/Model/IncidenciaModel.php';
-    $incidenciaModel = new IncidenciaModel();
-    $limit = 2; // Número de filas por página
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
-    $start = ($page - 1) * $limit; // Calcula el índice de inicio
-    $totalIncidenciasSinRecepcionar = $incidenciaModel->contarIncidenciasSinRecepcionar();
-    $totalPages = ceil($totalIncidenciasSinRecepcionar / $limit);
-    $incidencias = $incidenciaModel->obtenerIncidenciasSinRecepcionar($start, $limit);
     ?>
 
-
-    <!-- Segundo Apartado - Formulario de registro de Recepcion de incidencia -->
     <!-- Miga de pan -->
     <div class="page-header">
       <div class="page-block">
@@ -33,20 +23,30 @@
     </div>
     <!-- Fin de miga de pan -->
 
-    <!-- TODO: TITULO TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
-    <!-- Buscador de incidencias nuevas -->
+    <!-- Titulo de incidencias y paginador -->
     <div id="noIncidencias" class="flex justify-between items-center mb-2">
       <h1 class="text-xl text-gray-400">Nuevas incidencias</h1>
-      <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar..." oninput="filtrarTablaIncidenciasSinRecepcionar()" />
+      <?php if ($totalPages > 1) : // Mostrar el contenedor solo si hay más de una página
+      ?>
+        <div class="flex justify-end items-center mt-1">
+          <?php if ($page > 1) : ?>
+            <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-l-md" onclick="changePageTablaSinRecepcionar(<?php echo $page - 1; ?>)"><i class="feather mr-2 icon-chevrons-left"></i> Anterior</a>
+          <?php endif; ?>
+          <span class="px-2 py-1 bg-gray-400 text-gray-200"><?php echo $page; ?> de <?php echo $totalPages; ?></span>
+          <?php if ($page < $totalPages) : ?>
+            <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-r-md" onclick="changePageTablaSinRecepcionar(<?php echo $page + 1; ?>)"> Siguiente <i class="feather ml-2 icon-chevrons-right"></i></a>
+          <?php endif; ?>
+        </div>
+      <?php endif; ?>
     </div>
-    <!-- Fin de buscador -->
+    <!-- Fin de titulo y paginador -->
 
     <!-- Tabla de incidencias sin recepcionar -->
-    <input type="hidden" id="incidenciaCount" value="<?php echo count($incidencias); ?>">
-
-    <div class="mb-2">
+    <input type="hidden" id="incidenciaCount" value="<?php echo count($resultadoIncidencias); ?>">
+    <div class="mb-4">
       <div id="tablaContainer" class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
         <table id="tablaIncidenciasSinRecepcionar" class="w-full text-xs text-left rtl:text-right text-gray-500 bg-white">
+          <!-- Encabezado de la tabla -->
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-6 py-2 hidden">N&deg;</th>
@@ -60,8 +60,11 @@
               <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
+          <!-- Fin de encabezado -->
+
+          <!-- Cuerpo de la tabla -->
           <tbody>
-            <?php foreach ($incidencias as $incidencia) : ?>
+            <?php foreach ($resultadoIncidencias as $incidencia) : ?>
               <tr class=' hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>
                 <th scope='row' class='hidden px-6 py-3 font-medium text-gray-900 whitespace-nowrap'><?= $incidencia['INC_numero']; ?></th>
                 <td class='px-6 py-2'><?= $incidencia['INC_numero_formato']; ?></td>
@@ -74,36 +77,22 @@
                 <td class='px-6 py-2'><?= $incidencia['Usuario']; ?></td>
               </tr>
             <?php endforeach; ?>
-
             <?php if (empty($incidencias)) : ?>
               <tr>
-                <td colspan="7" class="text-center py-4">No hay incidencias sin recepcionar.</td>
+                <td colspan="8" class="text-center py-4">No se han registrado nuevas incidencias.</td>
               </tr>
             <?php endif; ?>
           </tbody>
+          <!-- Fin de cuerpo de la tabla -->
         </table>
       </div>
-
-      <!-- Paginación -->
-      <?php if ($totalPages > 0) : ?>
-        <div class="flex justify-end items-center mt-1">
-          <?php if ($page > 1) : ?>
-            <a href="#" class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" onclick="changePageTablaSinRecepcionar(<?php echo $page - 1; ?>)">&lt;</a>
-          <?php endif; ?>
-          <span class="mx-2">P&aacute;gina <?php echo $page; ?> de <?php echo $totalPages; ?></span>
-          <?php if ($page < $totalPages) : ?>
-            <a href="#" class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" onclick="changePageTablaSinRecepcionar(<?php echo $page + 1; ?>)">&gt;</a>
-          <?php endif; ?>
-        </div>
-      <?php endif; ?>
     </div>
+    <!-- Fin de tabla de incidencias sin recepcionar -->
 
-
+    <!-- Formulario de registro de recepcion de incidencias -->
     <div class="flex space-x-4 ">
-
-      <!-- TODO: Formulario -->
       <div class="flex flex-col w-1/5">
-        <form id="formRecepcion" action="registro-recepcion-admin.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
+        <form id="formRecepcion" action="registro-recepcion.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
           <div class="card-body">
             <!-- NUMERO DE INCIDENCIA -->
             <div class="flex justify-center mx-2 mb-2 hidden">
@@ -198,82 +187,63 @@
                 </div>
               </div>
             </div>
-
-
           </div>
         </form>
       </div>
+      <!-- Fin de formulario -->
 
-
-      <!-- TODO: TABLA DE INCIDENCIAS  RECEPCIONADAS -->
+      <!-- Tabla de incidencias recepcionadas -->
       <div class="w-4/5">
+        <div>
+          <h1 class="text-xl text-gray-400 mb-3">Lista de incidencias recepcionadas</h1>
+        </div>
         <div class="relative max-h-[500px] overflow-x-hidden shadow-md sm:rounded-lg">
           <table id="tablaIncidenciasRecepcionadas" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
+            <!-- Encabezado de la tabla -->
             <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
               <tr>
                 <th scope="col" class="px-6 py-2 hidden">Recepci&oacute;n</th>
                 <th scope="col" class="px-6 py-2">Incidencia</th>
                 <th scope="col" class="px-6 py-2">Fecha recepci&oacute;n</th>
                 <th scope="col" class="px-6 py-2">&Aacute;rea</th>
-                <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
+                <th scope="col" class="px-6 py-2">C&oacute;d. Patrimonial</th>
                 <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
                 <th scope="col" class="px-6 py-2">Prioridad</th>
                 <th scope="col" class="px-6 py-2">Impacto</th>
-                <th scope="col" class="px-6 py-2">Usuario</th>
+                <th scope="col" class="px-6 py-2">Usuario receptor</th>
               </tr>
             </thead>
-            <tbody>
-              <?php
-              require_once './app/Model/RecepcionModel.php';
-              $recepcionModel = new RecepcionModel();
-              $recepciones = $recepcionModel->listarRecepciones();
-              foreach ($recepciones as $recepcion) {
+            <!-- Fin de encabezado -->
 
-                // echo "<tr class='second-table bg-white hover:bg-green-100 hover:scale-[101%] transition-all  border-b '>";
-                echo "<tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id='{$recepcion['REC_numero']}'>";
-                echo "<th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'>";
-                echo $recepcion['REC_numero'];
-                echo "</th>";
-                echo "<td class='px-6 py-3'>";
-                echo $recepcion['INC_numero_formato'];
-                echo "</td>";
-                echo "<td class='px-6 py-3'>";
-                echo $recepcion['fechaRecepcionFormateada'];
-                echo "</td>";
-                echo "<td class='px-6 py-3'>";
-                echo $recepcion['ARE_nombre'];
-                echo "</td>";
-                echo "<td class='px-6 py-3'>";
-                echo $recepcion['INC_codigoPatrimonial'];
-                echo "</td>";
-                echo "<td class='px-6 py-3'>";
-                echo $recepcion['CAT_nombre'];
-                echo "</td>";
-                echo "<td class='px-6 py-3'>";
-                echo $recepcion['PRI_nombre'];
-                echo "</td>";
-                echo "<td class='px-6 py-3'>";
-                echo $recepcion['IMP_descripcion'];
-                echo "</td>";
-                echo "<td class='px-6 py-3'>";
-                // echo $recepcion['USU_nombre'];
-                echo $recepcion['Usuario'];
-                echo "</td>";
-                echo "</tr>";
-              }
-              ?>
-              <?php if (empty($recepciones)) : ?>
+            <!-- Cuerpo de la tabla -->
+            <tbody>
+              <?php if (!empty($resultado)) : ?>
+                <?php foreach ($resultado as $recepcion) : ?>
+                  <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+                    <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $recepcion['REC_numero']; ?></th>
+                    <td class='px-6 py-3'><?= $recepcion['INC_numero_formato']; ?></td>
+                    <td class='px-6 py-3'><?= $recepcion['fechaRecepcionFormateada']; ?></td>
+                    <td class='px-6 py-3'><?= $recepcion['ARE_nombre']; ?></td>
+                    <td class='px-6 py-3'><?= $recepcion['INC_codigoPatrimonial']; ?></td>
+                    <td class='px-6 py-3'><?= $recepcion['CAT_nombre']; ?></td>
+                    <td class='px-6 py-3'><?= $recepcion['PRI_nombre']; ?></td>
+                    <td class='px-6 py-3'><?= $recepcion['IMP_descripcion']; ?></td>
+                    <td class='px-6 py-3'><?= $recepcion['UsuarioRecepcion']; ?></td>
+                  </tr>
+                <?php endforeach; ?>
+              <?php else: ?>
                 <tr>
-                  <td colspan="8" class="text-center py-3">No hay incidencias recepcionadas.</td>
+                  <td colspan="8" class="text-center py-3">No se han recepcionado incidencias.</td>
                 </tr>
               <?php endif; ?>
             </tbody>
+            <!-- Fin del cuerpo de la tabla -->
           </table>
         </div>
       </div>
+      <!-- Fin de la tabla -->
     </div>
   </div>
 </div>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="./app/View/func/func_recepcion_admin.js"></script>

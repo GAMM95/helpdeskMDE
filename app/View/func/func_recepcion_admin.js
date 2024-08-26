@@ -59,9 +59,9 @@ $(document).ready(function () {
   });
 
   // Buscar en la tabla de incidencias sin recepcionar
-  $('#searchInput').on('input', function () {
-    filtrarTablaIncidenciasSinRecepcionar();
-  });
+  // $('#searchInput').on('input', function () {
+  //   filtrarTablaIncidenciasSinRecepcionar();
+  // });
 
   // Cargar opciones de prioridad
   $.ajax({
@@ -193,25 +193,25 @@ $(document).ready(function () {
 });
 
 // Función para filtrar la tabla de incidencias sin recepcionar
-function filtrarTablaIncidenciasSinRecepcionar() {
-  var input, filter, table, rows, cells, i, j, match;
-  input = document.getElementById('searchInput');
-  filter = input.value.toUpperCase();
-  table = document.getElementById('tablaIncidenciasSinRecepcionar');
-  rows = table.getElementsByTagName('tr');
+// function filtrarTablaIncidenciasSinRecepcionar() {
+//   var input, filter, table, rows, cells, i, j, match;
+//   input = document.getElementById('searchInput');
+//   filter = input.value.toUpperCase();
+//   table = document.getElementById('tablaIncidenciasSinRecepcionar');
+//   rows = table.getElementsByTagName('tr');
 
-  for (i = 1; i < rows.length; i++) {
-    cells = rows[i].getElementsByTagName('td');
-    match = false;
-    for (j = 0; j < cells.length; j++) {
-      if (cells[j].innerText.toUpperCase().indexOf(filter) > -1) {
-        match = true;
-        break;
-      }
-    }
-    rows[i].style.display = match ? '' : 'none';
-  }
-}
+//   for (i = 1; i < rows.length; i++) {
+//     cells = rows[i].getElementsByTagName('td');
+//     match = false;
+//     for (j = 0; j < cells.length; j++) {
+//       if (cells[j].innerText.toUpperCase().indexOf(filter) > -1) {
+//         match = true;
+//         break;
+//       }
+//     }
+//     rows[i].style.display = match ? '' : 'none';
+//   }
+// }
 
 // Función para cambiar de página en la tabla de incidencias sin recepcionar
 function changePageTablaSinRecepcionar(page) {

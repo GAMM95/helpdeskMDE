@@ -479,3 +479,17 @@ Nombre de Persona: Carlos  Leyva, Rol: Usuario, Codigo Area: 10, Área: Gerencia
 Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: JHONATAN MANTILLA, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Administrador, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Silvia Violeta Miñano, Rol: Usuario, Codigo Area: 4, Área: ALCALDÍA, Código de Usuario: 2, Usuario: VIOLET
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95

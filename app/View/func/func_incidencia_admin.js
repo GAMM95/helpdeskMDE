@@ -178,36 +178,79 @@ function changePageTablaListarIncidencias(page) {
 //   return valido;
 // }
 
-// Seteo de los valores de los inputs y combos
-$(document).on('click', '#tablaListarIncidencias tbody tr', function () {
-  $('#tablaListarIncidencias tbody tr').removeClass('bg-blue-200 font-semibold');
-  $(this).addClass('bg-blue-200 font-semibold');
+// // Seteo de los valores de los inputs y combos
+// $(document).on('click', '#tablaListarIncidencias tbody tr', function () {
+//   $('#tablaListarIncidencias tbody tr').removeClass('bg-blue-200 font-semibold');
+//   $(this).addClass('bg-blue-200 font-semibold');
 
-  // Establecer valores en el formulario según la fila seleccionada
-  const celdas = $(this).find('td');
-  const codIncidencia = $(this).find('th').text().trim();
-  const codigoPatrimonialValue = celdas[2].innerText.trim();
-  const asuntoValue = celdas[3].innerText.trim();
-  const documentoValue = celdas[4].innerText.trim();
-  const categoriaValue = celdas[5].innerText.trim();
-  const areaValue = celdas[6].innerText.trim();
-  const descripcionValue = celdas[7].innerText.trim();
+// Establecer valores en el formulario según la fila seleccionada
+$(document).ready(function () {
+  // Seteo de los valores de los inputs y combos cuando se hace clic en una fila de la tabla
+  $(document).on('click', '#tablaListarIncidencias tbody tr', function () {
+    $('#tablaListarIncidencias tbody tr').removeClass('bg-blue-200 font-semibold');
+    $(this).addClass('bg-blue-200 font-semibold');
 
-  // Seteo de valores en los inputs
-  document.getElementById('numero_incidencia').value = codIncidencia;
-  document.getElementById('codigoPatrimonial').value = codigoPatrimonialValue;
-  document.getElementById('asunto').value = asuntoValue;
-  document.getElementById('documento').value = documentoValue;
-  document.getElementById('descripcion').value = descripcionValue;
+    // Establecer valores en el formulario según la fila seleccionada
+    const celdas = $(this).find('td');
+    const codIncidencia = $(this).find('th').text().trim();
+    const codigoPatrimonialValue = celdas[2].innerText.trim();
+    const asuntoValue = celdas[3].innerText.trim();
+    const documentoValue = celdas[4].innerText.trim();
+    const categoriaValue = celdas[5].innerText.trim();
+    const areaValue = celdas[6].innerText.trim();
+    const descripcionValue = celdas[7].innerText.trim();
 
-  // Seteo de los valores en los combos
-  setComboValue('cbo_categoria', categoriaValue);
-  setComboValue('cbo_area', areaValue);
+    // Seteo de valores en los inputs
+    document.getElementById('numero_incidencia').value = codIncidencia;
+    document.getElementById('codigoPatrimonial').value = codigoPatrimonialValue;
+    document.getElementById('asunto').value = asuntoValue;
+    document.getElementById('documento').value = documentoValue;
+    document.getElementById('descripcion').value = descripcionValue;
 
-  // Cambiar estado de los botones
-  $('#guardar-incidencia').prop('disabled', true);
-  $('#editar-incidencia').prop('disabled', false);
-  $('#nuevo-registro').prop('disabled', false);
+    // Seteo de los valores en los combos
+    setComboValue('cbo_categoria', categoriaValue);
+    setComboValue('cbo_area', areaValue);
+
+    // Cambiar estado de los botones
+    $('#guardar-incidencia').prop('disabled', true);
+    $('#editar-incidencia').prop('disabled', false);
+    $('#nuevo-registro').prop('disabled', false);
+
+    // Si existe un código patrimonial, buscar el tipo de bien
+    if (codigoPatrimonialValue) {
+      buscarTipoBien(codigoPatrimonialValue);
+    } else {
+      // Si no hay código patrimonial, dejar el campo de tipo de bien en blanco
+      $('#tipoBien').val('');
+    }
+  });
+
+  // Función para buscar el tipo de bien en el servidor
+  function buscarTipoBien(codigo) {
+    // Limitar el código a los primeros 12 dígitos y obtener los primeros 8 dígitos para búsqueda
+    var codigoLimite = codigo.substring(0, 12);
+    var codigoBusqueda = codigoLimite.substring(0, 8);
+
+    if (codigoBusqueda.length === 8) {
+      $.ajax({
+        url: 'ajax/getTipoBien.php',
+        type: 'GET',
+        data: { codigo_patrimonial: codigoBusqueda },
+        success: function (response) {
+          if (response.tipo_bien) {
+            $('#tipoBien').val(response.tipo_bien);
+          } else {
+            $('#tipoBien').val('No encontrado');
+          }
+        },
+        error: function () {
+          $('#tipoBien').val('Error al buscar');
+        }
+      });
+    } else {
+      $('#tipoBien').val('Código inválido');
+    }
+  }
 });
 
 // seteo de los valores de los combos

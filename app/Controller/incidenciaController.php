@@ -26,7 +26,7 @@ class IncidenciaController
       $usuario = $_POST['usuario'] ?? null;
 
       // Llamar al método del modelo para insertar la incidencia en la base de datos
-      $insertSuccessId = $this->incidenciaModel->insertarIncidenciaAdministrador($fecha, $hora, $asunto, $descripcion, $documento, $codigoPatrimonial, 3, $categoria, $area, $usuario);
+      $insertSuccessId = $this->incidenciaModel->insertarIncidenciaAdministrador($fecha, $hora, $asunto, $descripcion, $documento, $codigoPatrimonial, $categoria, $area, $usuario);
 
       if ($insertSuccessId) {
         header('Location: registro-incidencia-admin.php?INC_numero=' . $insertSuccessId);

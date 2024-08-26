@@ -40,7 +40,7 @@ class RecepcionController
       );
 
       if ($insertSuccessId) {
-        header('Location: registro-recepcion-admin.php?REC_numero=' . $insertSuccessId);
+        header('Location: registro-recepcion.php?REC_numero=' . $insertSuccessId);
       } else {
         echo "Error al registrar la recepcion.";
       }

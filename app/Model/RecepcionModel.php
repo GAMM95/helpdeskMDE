@@ -169,25 +169,47 @@ class RecepcionModel extends Conexion
   }
 
   // TODO: Metodo para listar incidencias recepciondas
+  // public function listarRecepciones()
+  // {
+  //   $conector = parent::getConexion();
+  //   if ($conector != null) {
+  //     try {
+  //       $sql = "SELECT REC_numero, i.INC_numero, INC_numero_formato,
+  //       (CONVERT(VARCHAR(10),REC_fecha,103)) AS fechaRecepcionFormateada,
+  //       a.ARE_nombre, INC_codigoPatrimonial, c.CAT_nombre, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre,
+  //       PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
+  //       FROM RECEPCION r
+  //       INNER JOIN INCIDENCIA i ON i.INC_numero = r.INC_numero
+  //       INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
+  //       INNER JOIN CATEGORIA c ON c.CAT_codigo = i.CAT_codigo
+  //       INNER JOIN PRIORIDAD p ON p.PRI_codigo = r.PRI_codigo
+  //       INNER JOIN IMPACTO imp ON imp.IMP_codigo = r.IMP_codigo
+  //       INNER JOIN USUARIO u ON u.USU_codigo = r.USU_codigo
+  //       INNER JOIN PERSONA per ON per.PER_codigo = u.PER_codigo
+  //       ORDER BY  i.INC_numero DESC";
+  //       $stmt = $conector->prepare($sql);
+  //       $stmt->execute();
+  //       $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  //       return $registros;
+  //     } catch (PDOException $e) {
+  //       // Manejar cualquier excepción o error que pueda surgir al ejecutar la consulta
+  //       echo "Error al listar recepciones: " . $e->getMessage();
+  //       return null;
+  //     }
+  //   } else {
+  //     echo "Error de conexión cierre Controller la base de datos.";
+  //     return null;
+  //   }
+  // }
   public function listarRecepciones()
   {
     $conector = parent::getConexion();
     if ($conector != null) {
       try {
-        $sql = "SELECT REC_numero, i.INC_numero, INC_numero_formato,
-        (CONVERT(VARCHAR(10),REC_fecha,103)) AS fechaRecepcionFormateada,
-        a.ARE_nombre, INC_codigoPatrimonial, c.CAT_nombre, p.PRI_nombre, imp.IMP_descripcion, u.USU_nombre,
-        PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
-        FROM RECEPCION r
-        INNER JOIN INCIDENCIA i ON i.INC_numero = r.INC_numero
-        INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
-        INNER JOIN CATEGORIA c ON c.CAT_codigo = i.CAT_codigo
-        INNER JOIN PRIORIDAD p ON p.PRI_codigo = r.PRI_codigo
-        INNER JOIN IMPACTO imp ON imp.IMP_codigo = r.IMP_codigo
-        INNER JOIN USUARIO u ON u.USU_codigo = r.USU_codigo
-        INNER JOIN PERSONA per ON per.PER_codigo = u.PER_codigo
-        ORDER BY  i.INC_numero DESC
-";
+        $sql = "SELECT * FROM vista_recepciones
+          ORDER BY 
+            SUBSTRING(INC_numero_formato, CHARINDEX('-', INC_numero_formato) + 1, 4) DESC,
+            INC_numero_formato DESC;";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
         $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -198,7 +220,7 @@ class RecepcionModel extends Conexion
         return null;
       }
     } else {
-      echo "Error de conexión cierre Controller la base de datos.";
+      echo "Error de conexión a la base de datos.";
       return null;
     }
   }
