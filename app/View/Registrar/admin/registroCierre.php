@@ -110,9 +110,11 @@
         </div>
 
         <!-- INCIDENCIA SELECCIONADA -->
-        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
-          <label for="incidenciaSeleccionada" class="block font-bold mb-1 text-[#32cfad]">Incidencia seleccionada:</label>
-          <input type="text" class="border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center w-full" id="incidenciaSeleccionada" name="incidenciaSeleccionada" readonly required>
+        <div class="flex justify-center items-center mr-5 ml-5">
+          <div class="text-center">
+            <label for="incidenciaSeleccionada" class="block font-bold mb-1 text-[#32cfad]">Incidencia seleccionada:</label>
+            <input type="text" class="border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center w-full" id="incidenciaSeleccionada" name="incidenciaSeleccionada" readonly required>
+          </div>
         </div>
 
         <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden">

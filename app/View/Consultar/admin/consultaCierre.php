@@ -94,7 +94,7 @@
                     $estadoDescripcion = htmlspecialchars($cierre['Estado']);
                     $badgeClass = '';
                     switch ($estadoDescripcion) {
-                      case 'Cerrado':
+                      case 'CERRADO':
                         $badgeClass = 'badge-light-primary';
                         break;
                       default:

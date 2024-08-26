@@ -33,7 +33,13 @@ class RecepcionModel extends Conexion
   {
     $conector = parent::getConexion();
     try {
-      $sql = "EXEC sp_InsertarRecepcionActualizarIncidencia @REC_fecha = :fecha, @REC_hora = :hora, @INC_numero = :incidencia, @PRI_codigo = :prioridad, @IMP_codigo = :impacto, @USU_codigo = :usuario";
+      $sql = "EXEC sp_InsertarRecepcionActualizarIncidencia 
+        @REC_fecha = :fecha, 
+        @REC_hora = :hora, 
+        @INC_numero = :incidencia, 
+        @PRI_codigo = :prioridad, 
+        @IMP_codigo = :impacto, 
+        @USU_codigo = :usuario";
       $stmt = $conector->prepare($sql);
       $stmt->bindParam(':fecha', $fecha);
       $stmt->bindParam(':hora', $hora);
@@ -82,7 +88,10 @@ class RecepcionModel extends Conexion
   {
     $conector = parent::getConexion();
     try {
-      $sql = "EXEC sp_ActualizarRecepcion @REC_numero = :num_recepcion, @PRI_codigo = :prioridad, @IMP_codigo = :impacto";
+      $sql = "EXEC sp_ActualizarRecepcion 
+          @REC_numero = :num_recepcion, 
+          @PRI_codigo = :prioridad, 
+          @IMP_codigo = :impacto";
       $stmt = $conector->prepare($sql);
       $stmt->bindParam(':num_recepcion', $recepcion);
       $stmt->bindParam(':prioridad', $prioridad);
@@ -215,7 +224,6 @@ class RecepcionModel extends Conexion
         $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $registros;
       } catch (PDOException $e) {
-        // Manejar cualquier excepción o error que pueda surgir al ejecutar la consulta
         echo "Error al listar recepciones: " . $e->getMessage();
         return null;
       }
