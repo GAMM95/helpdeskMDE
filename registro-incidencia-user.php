@@ -69,6 +69,7 @@ switch ($action) {
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
   <script src="./app/View/func/func_incidencia_user.js"></script>
   <script src="./app/View/func/Reports/reporteIncidencia.js"></script>
+  <script src="./app/View/func/tipoBien.js"></script>
 
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">

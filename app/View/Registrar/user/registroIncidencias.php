@@ -23,16 +23,16 @@
     </div>
     <!-- Fin de miga de pan -->
 
-    <!-- TODO: FORMULARIO -->
+    <!-- Formulario de registro -->
     <form id="formIncidencia" action="registro-incidencia-user.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
 
-      <!-- TODO: FILA OCULTA DEL FORMULARIO - NUMERO DE INCIDENCIA -->
+      <!-- Fila oculta del numero de incidencia -->
       <div class="flex items-center mb-4 hidden">
-        <label for="numero_incidencia" class="block font-bold mb-1 mr-1 text-lime-500">Nro Incidencia:</label>
+        <label for="numero_incidencia" class="block font-bold mb-1 mr-1 text-lime-500">N&deg; Incidencia:</label>
         <input type="text" id="numero_incidencia" name="numero_incidencia" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs" readonly>
       </div>
 
-      <!-- TODO: PRIMERA FILA DEL FORMULARIO  -->
+      <!-- Primera fila del formulario -->
       <div class="flex flex-wrap -mx-2">
         <!-- AREA DEL USUARIO -->
         <div class="w-full sm:w-1/6 px-2 mb-2 hidden">
@@ -84,8 +84,18 @@
 
         <!-- CODIGO PATRIMONIAL -->
         <div class="w-full sm:w-1/4 px-2 mb-2">
-          <label for="codigo_patrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
-          <input type="text" id="codigo_patrimonial" name="codigo_patrimonial" class="border p-2 w-full text-xs rounded-md" maxlength="12" pattern="\d{1,12}" inputmode="numeric" title="Ingrese solo dígitos" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); " placeholder="Ingrese c&oacute;digo patrimonial">
+          <label for="codigoPatrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
+          <input type="text" id="codigoPatrimonial" name="codigoPatrimonial"
+            class="border p-2 w-full text-xs rounded-md" maxlength="12"
+            pattern="\d{1,12}" inputmode="numeric"
+            title="Ingrese solo dígitos"
+            placeholder="Ingrese código patrimonial">
+        </div>
+
+        <!-- TIPO DE BIEN -->
+        <div class="w-full sm:w-1/4 px-2 mb-2">
+          <label for="tipoBien" class="block mb-1 font-bold text-center text-xs">Tipo de bien:</label>
+          <input type="text" id="tipoBien" name="tipoBien" class="border p-2 w-full text-center text-xs rounded-md" disabled readonly>
         </div>
       </div>
 

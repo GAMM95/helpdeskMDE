@@ -2,7 +2,7 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "2000"
+    "timeOut": "1500"
   };
 });
 
@@ -151,10 +151,13 @@ $('#imprimir-incidencia').click(function () {
             addFooter(doc, i, totalPages);
           }
 
-          // Enviar el documento directamente a la impresora
-          window.open(doc.output('bloburl')); // Para algunos navegadores es necesario abrir el PDF antes de imprimir
-
+          // Mostrar mensaje de exito de pdf generado
           toastr.success('Archivo PDF generado.');
+          // Retrasar la apertura del PDF y limpiar el campo de entrada
+          setTimeout(() => {
+            window.open(doc.output('bloburl'));
+            $('#codigoPatrimonial').val('');
+          }, 1500);
         } catch (error) {
           toastr.error('Hubo un error al generar PDF.');
           console.error('Error al generar el PDF:', error.message);

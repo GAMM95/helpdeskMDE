@@ -44,7 +44,7 @@ $(document).ready(function () {
     $('#recepcion').val(id);
 
     // Seteo del codigo de incidencia
-    var numIncidencia = $(this).find('th').eq(1).html();
+    var numIncidencia = $(this).find('th').eq(1).html().trim();
     $('#tablaRecepcionesSinCerrar tbody tr').removeClass('bg-blue-200 font-semibold');
     $(this).addClass('bg-blue-200 font-semibold');
     $('#num_incidencia').val(numIncidencia);

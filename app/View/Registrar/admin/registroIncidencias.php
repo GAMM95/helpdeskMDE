@@ -23,17 +23,17 @@
     </div>
     <!-- Fin de miga de pan -->
 
-    <!-- TODO: FORMULARIO -->
+    <!-- Formulario de registro -->
     <form id="formIncidencia" action="registro-incidencia-admin.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
       <input type="hidden" id="form-action" name="action" value="registrar">
 
-      <!-- TODO: FILA OCULTA DEL FORMULARIO - NUMERO DE INCIDENCIA -->
+      <!-- Fila oculta del numero de incidencia -->
       <div class="flex items-center mb-4 hidden">
         <label for="numero_incidencia" class="block font-bold mb-1 mr-1 text-lime-500">Nro Incidencia:</label>
         <input type="text" id="numero_incidencia" name="numero_incidencia" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs" readonly>
       </div>
 
-      <!-- TODO: PRIMERA FILA DEL FORMULARIO  -->
+      <!-- Primera fila del formulario -->
       <div class="flex flex-wrap -mx-2">
         <!-- CATEGORIA SELECCIONADA -->
         <div class="w-full sm:w-1/3 px-2 mb-2">

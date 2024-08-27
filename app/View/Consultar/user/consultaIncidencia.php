@@ -27,7 +27,7 @@
           <label for="codigoArea" class="block mb-1 font-bold text-xs">C&oacute;digo &Aacute;rea:</label>
           <input type="text" id="codigoArea" name="codigoArea" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['codigoArea']; ?>" readonly>
         </div>
-        
+
         <!-- BUSCAR POR CODIGO PATRIMONIAL -->
         <div class="w-full sm:w-1/3 md:w-1/5 px-2 mb-2">
           <label for="codigoPatrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
@@ -42,14 +42,14 @@
 
         <!-- BUSCAR POR FECHA DE INICIO -->
         <div class="w-full md:w-1/6 px-2 mb-2">
-          <label for="fechaInicio" class="block mb-1 font-bold text-xs">Fecha Inicio:</label>
-          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
+          <label for="fechaInicio" class="block mb-1 font-bold text-xs text-center">Fecha Inicio:</label>
+          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full text-center border p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
         </div>
 
         <!-- BUSCAR POR FECHA DE FIN -->
         <div class="w-full md:w-1/6 px-2 mb-2">
-          <label for="fechaFin" class="block mb-1 font-bold text-xs">Fecha Fin:</label>
-          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
+          <label for="fechaFin" class="block mb-1 font-bold text-xs text-center">Fecha Fin:</label>
+          <input type="date" id="fechaFin" name="fechaFin" class="w-full border text-center p-2 text-xs cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
         </div>
       </div>
 

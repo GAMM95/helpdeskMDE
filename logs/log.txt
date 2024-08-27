@@ -497,3 +497,11 @@ Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGE
 Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Gustavo Mantilla, Rol: Usuario, Codigo Area: 4, Área: ALCALDÍA, Código de Usuario: 2, Usuario: GUSH98
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95

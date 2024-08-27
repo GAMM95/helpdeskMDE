@@ -151,7 +151,7 @@ $(document).on('click', '#tablaListarIncidencias tbody tr', function () {
 
   // Seteo de valores en los inputs
   document.getElementById('numero_incidencia').value = codIncidencia;
-  document.getElementById('codigo_patrimonial').value = codigoPatrimonialValue;
+  document.getElementById('codigoPatrimonial').value = codigoPatrimonialValue;
   document.getElementById('asunto').value = asuntoValue;
   document.getElementById('documento').value = documentoValue;
   document.getElementById('descripcion').value = descripcionValue;
@@ -163,7 +163,43 @@ $(document).on('click', '#tablaListarIncidencias tbody tr', function () {
   document.getElementById('guardar-incidencia').disabled = true;
   document.getElementById('editar-incidencia').disabled = false;
   document.getElementById('nuevo-registro').disabled = false;
+
+  // Si existe un código patrimonial, buscar el tipo de bien
+  if (codigoPatrimonialValue) {
+    buscarTipoBien(codigoPatrimonialValue);
+  } else {
+    // Si no hay código patrimonial, dejar el campo de tipo de bien en blanco
+    $('#tipoBien').val('');
+  }
 });
+
+// Función para buscar el tipo de bien en el servidor
+function buscarTipoBien(codigo) {
+  // Limitar el código a los primeros 12 dígitos y obtener los primeros 8 dígitos para búsqueda
+  var codigoLimite = codigo.substring(0, 12);
+  var codigoBusqueda = codigoLimite.substring(0, 8);
+
+  if (codigoBusqueda.length === 8) {
+    $.ajax({
+      url: 'ajax/getTipoBien.php',
+      type: 'GET',
+      data: { codigo_patrimonial: codigoBusqueda },
+      success: function (response) {
+        if (response.tipo_bien) {
+          $('#tipoBien').val(response.tipo_bien);
+        } else {
+          $('#tipoBien').val('No encontrado');
+        }
+      },
+      error: function () {
+        $('#tipoBien').val('Error al buscar');
+      }
+    });
+  } else {
+    $('#tipoBien').val('Código inválido');
+  }
+}
+
 
 // seteo de los valores de los combos
 function setComboValue(comboId, value) {
