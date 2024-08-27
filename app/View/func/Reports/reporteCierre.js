@@ -84,36 +84,36 @@ $('#imprimir-cierre').click(function () {
           doc.text(`Número de incidencia: ${cierre.INC_numero_formato}`, 120, titleY);  // Ajusta la coordenada x para colocar el número de incidencia
           // [{ content: 'Número de incidencia:', styles: { fontStyle: 'bold' } }, cierre.INC_numero_formato],
 
-            doc.autoTable({
-              startY: 48,
-              margin: { left: 20 },
-              head: [['Campo', 'Descripción']],
-              body: [
-                [{ content: 'Cierre:', styles: { fontStyle: 'bold' } }, cierre.CIE_numero],
-                [{ content: 'Fecha de cierre:', styles: { fontStyle: 'bold' } }, cierre.fechaCierreFormateada],
-                [{ content: 'Prioridad:', styles: { fontStyle: 'bold' } }, cierre.PRI_nombre],
-                [{ content: 'Asunto:', styles: { fontStyle: 'bold' } }, cierre.CIE_asunto],
-                [{ content: 'Documento:', styles: { fontStyle: 'bold' } }, cierre.CIE_documento],
-                [{ content: 'Condición:', styles: { fontStyle: 'bold' } }, cierre.CON_descripcion],
-                [{ content: 'Diagnóstico:', styles: { fontStyle: 'bold' } }, cierre.CIE_diagnostico],
-                [{ content: 'Recomendaciones:', styles: { fontStyle: 'bold' } }, cierre.CIE_recomendaciones],
-                [{ content: 'Estado:', styles: { fontStyle: 'bold' } }, cierre.ESTADO]
+          doc.autoTable({
+            startY: 48,
+            margin: { left: 20 },
+            head: [['Campo', 'Descripción']],
+            body: [
+              [{ content: 'Cierre:', styles: { fontStyle: 'bold' } }, cierre.CIE_numero],
+              [{ content: 'Fecha de cierre:', styles: { fontStyle: 'bold' } }, cierre.fechaCierreFormateada],
+              [{ content: 'Prioridad:', styles: { fontStyle: 'bold' } }, cierre.PRI_nombre],
+              [{ content: 'Asunto:', styles: { fontStyle: 'bold' } }, cierre.CIE_asunto],
+              [{ content: 'Documento:', styles: { fontStyle: 'bold' } }, cierre.CIE_documento],
+              [{ content: 'Condición:', styles: { fontStyle: 'bold' } }, cierre.CON_descripcion],
+              [{ content: 'Diagnóstico:', styles: { fontStyle: 'bold' } }, cierre.CIE_diagnostico],
+              [{ content: 'Recomendaciones:', styles: { fontStyle: 'bold' } }, cierre.CIE_recomendaciones],
+              [{ content: 'Estado:', styles: { fontStyle: 'bold' } }, cierre.ESTADO]
 
-              ],
-              styles: {
-                fontSize: 10,
-                cellPadding: 2,
-              },
-              headStyles: {
-                fillColor: [44, 62, 80],
-                textColor: [255, 255, 255],
-                fontStyle: 'bold',
-              },
-              columnStyles: {
-                0: { cellWidth: 50 }, // Ancho para la columna Campo
-                1: { cellWidth: 120 } // Ancho para la columna Descripcion
-              }
-            });
+            ],
+            styles: {
+              fontSize: 10,
+              cellPadding: 2,
+            },
+            headStyles: {
+              fillColor: [44, 62, 80],
+              textColor: [255, 255, 255],
+              fontStyle: 'bold',
+            },
+            columnStyles: {
+              0: { cellWidth: 50 }, // Ancho para la columna Campo
+              1: { cellWidth: 120 } // Ancho para la columna Descripcion
+            }
+          });
 
           const titleFirma = 200;
           doc.setFont('times', 'normal');
@@ -152,10 +152,13 @@ $('#imprimir-cierre').click(function () {
             addFooter(doc, i, totalPages);
           }
 
-          // Enviar el documento directamente a la impresora
-          window.open(doc.output('bloburl')); // Para algunos navegadores es necesario abrir el PDF antes de imprimir
-
+          // Mostrar mensaje de exito de pdf generado
           toastr.success('Archivo PDF generado.');
+          // Retrasar la apertura del PDF y limpiar el campo de entrada
+          setTimeout(() => {
+            window.open(doc.output('bloburl'));
+            $('#codigoPatrimonial').val('');
+          }, 1500);
         } catch (error) {
           toastr.error('Hubo un error al generar PDF.');
           console.error('Error al generar el PDF:', error.message);

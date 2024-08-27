@@ -66,19 +66,18 @@ class InicioController extends Conexion
     }
   }
 
-  public function listarIncidenciasFecha()
-  {
-    try {
-      // Obtener la fecha desde la solicitud (GET o POST)
-      $fecha = isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d');
+  // public function listarIncidenciasFecha()
+  // {
+  //   try {
+  //     $fecha = isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d');
 
-      // Obtener las incidencias para la fecha especificada
-      $incidencias = $this->incidenciasModel->listarIncidenciasAdminFecha($fecha);
+  //     // Obtener las incidencias para la fecha especificada
+  //     $this->incidenciasModel->listarIncidenciasAdminFecha($fecha);
 
-      // Renderizar la vista con las incidencias
-      require_once './View/incidencias.php';
-    } catch (Exception $e) {
-      throw new Exception('Error al listar incidencias por fecha: ' . $e->getMessage());
-    }
-  }
+  //     // Renderizar la vista con las incidencias
+  //     require_once './View/incidencias.php';
+  //   } catch (Exception $e) {
+  //     throw new Exception('Error al listar incidencias por fecha: ' . $e->getMessage());
+  //   }
+  // }
 }

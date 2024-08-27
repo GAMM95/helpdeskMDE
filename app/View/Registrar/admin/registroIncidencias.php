@@ -140,6 +140,7 @@
         <button type="button" id="imprimir-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-printer"></i>Imprimir</button>
       </div>
     </form>
+    <!-- Fin de Formulario -->
 
     <!-- Paginacion de la tabla -->
     <div class="mt-3 mb-2">
@@ -156,6 +157,7 @@
         </div>
       <?php endif; ?>
     </div>
+    <!-- Fin de la paginacion -->
 
     <!-- TABLA DE INCIDENCIAS REGISTRADAS -->
     <div class="relative overflow-x-hidden shadow-md sm:rounded-lg">
@@ -234,7 +236,3 @@
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- jsPDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<!-- jsPDF AutoTable plugin -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>

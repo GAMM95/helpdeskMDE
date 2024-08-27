@@ -10,14 +10,21 @@ class IncidenciaController
     $this->incidenciaModel = new IncidenciaModel();
   }
 
-  // TODO: Metodo de controlador para registrar incidencias - ADMINISTRADOR
-  public function registrarIncidencia()
+  /**
+   * TODO: Método de controlador para registrar una incidencia - ADMINISTRADOR 
+   * 
+   * Este método se ejecuta cuando el administrador envía un formulario para registrar una nueva
+   * incidencia. Recoge los datos del formulario, los valida, y luego llama al método del modelo
+   * correspondiente para insertar la incidencia en la base de datos. Si la inserción es exitosa,
+   * redirige al administrador a una página de confirmación con el número de incidencia registrado.
+   */
+  public function registrarIncidenciaAdministrador()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Obtener los datos del formulario
       $fecha = $_POST['fecha_incidencia'] ?? null;
       $hora = $_POST['hora'] ?? null;
-      $asunto =  $_POST['asunto'] ?? null;
+      $asunto = $_POST['asunto'] ?? null;
       $descripcion = $_POST['descripcion'] ?? null;
       $documento = $_POST['documento'] ?? null;
       $codigoPatrimonial = $_POST['codigoPatrimonial'] ?? null;
@@ -26,24 +33,41 @@ class IncidenciaController
       $usuario = $_POST['usuario'] ?? null;
 
       // Llamar al método del modelo para insertar la incidencia en la base de datos
-      $insertSuccessId = $this->incidenciaModel->insertarIncidenciaAdministrador($fecha, $hora, $asunto, $descripcion, $documento, $codigoPatrimonial, $categoria, $area, $usuario);
+      $insertSuccessId = $this->incidenciaModel->insertarIncidencia($fecha, $hora, $asunto, $descripcion, $documento, $codigoPatrimonial, $categoria, $area, $usuario);
 
       if ($insertSuccessId) {
-        header('Location: registro-incidencia-admin.php?INC_numero=' . $insertSuccessId);
+        // Respuesta JSON de éxito
+        echo json_encode([
+          'success' => true,
+          'message' => 'Incidencia registrada exitosamente.',
+          'INC_numero' => $insertSuccessId
+        ]);
       } else {
-        echo "Error al registrar la incidencia.";
+        // Respuesta JSON de error
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error al registrar la incidencia.'
+        ]);
       }
+      exit(); // Terminar el script para evitar cualquier salida adicional
     }
   }
 
-  // TODO: Metodo de controlador para registrar incidencias - USUARIO
+  /**
+   * TODO: Método de controlador para registrar una incidencia - USUARIO.
+   * 
+   * Este método se ejecuta cuando un usuario envía un formulario para registrar una nueva
+   * incidencia. Recoge los datos del formulario, los valida, y luego llama al método del modelo
+   * correspondiente para insertar la incidencia en la base de datos. Si la inserción es exitosa,
+   * redirige al usuario a una página de confirmación con el número de incidencia registrado.
+   */
   public function registrarIncidenciaUsuario()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Obtener los datos del formulario
       $fecha = $_POST['fecha_incidencia'] ?? null;
       $hora = $_POST['hora'] ?? null;
-      $asunto =  $_POST['asunto'] ?? null;
+      $asunto = $_POST['asunto'] ?? null;
       $descripcion = $_POST['descripcion'] ?? null;
       $documento = $_POST['documento'] ?? null;
       $codigoPatrimonial = $_POST['codigoPatrimonial'] ?? null;
@@ -52,15 +76,26 @@ class IncidenciaController
       $usuario = $_POST['codigoUsuario'] ?? null;
 
       // Llamar al método del modelo para insertar la incidencia en la base de datos
-      $insertSuccessId = $this->incidenciaModel->insertarIncidenciaUsuario($fecha, $hora, $asunto, $descripcion, $documento, $codigoPatrimonial, 3, $categoria, $area, $usuario);
+      $insertSuccessId = $this->incidenciaModel->insertarIncidencia($fecha, $hora, $asunto, $descripcion, $documento, $codigoPatrimonial, $categoria, $area, $usuario);
 
       if ($insertSuccessId) {
-        header('Location: registro-incidencia-user.php?INC_numero=' . $insertSuccessId);
+        // Respuesta JSON de éxito
+        echo json_encode([
+          'success' => true,
+          'message' => 'Incidencia registrada exitosamente.',
+          'INC_numero' => $insertSuccessId
+        ]);
       } else {
-        echo "Error al registrar la incidencia.";
+        // Respuesta JSON de error
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error al registrar la incidencia.'
+        ]);
       }
+      exit(); // Terminar el script para evitar cualquier salida adicional
     }
   }
+
 
   public function actualizarIncidenciaAdministrador()
   {
@@ -122,8 +157,16 @@ class IncidenciaController
     }
   }
 
-
-  // TODO: Metodo para consultar incidencias para el administrador
+  /**
+   * TODO: Método de controlador para consultar incidencias filtradas - ADMINISTRADOR
+   * 
+   * Este método permite al administrador consultar incidencias basadas en varios filtros opcionales,
+   * incluyendo área, estado, fecha de inicio y fecha de fin. Los parámetros se obtienen de la solicitud
+   * GET, y luego se utiliza el modelo para realizar la consulta correspondiente en la base de datos.
+   * 
+   * Retorno:
+   * - Array con los resultados de la consulta o `false` si no se encontraron resultados.
+   */
   public function consultarIncidenciaAdministrador($area = NULL, $estado = null, $fechaInicio = null, $fechaFin = null)
   {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -133,16 +176,24 @@ class IncidenciaController
       $fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : null;
       $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : null;
       error_log("Área: $area, Estado: $estado, Fecha Inicio: $fechaInicio, Fecha Fin: $fechaFin");
-
       // Llamar al método para consultar incidencias por área, estado y fecha
       $consultaIncidencia = $this->incidenciaModel->buscarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin);
-
       // Retornar el resultado de la consulta
       return $consultaIncidencia;
     }
   }
 
-  // TODO: Metodo para consultar incidencias  totales para el administrador
+  /**
+   * TODO: Método de controlador para consultar las incidencias totales - ADMINISTRADOR
+   * 
+   * Este método permite al administrador consultar todas las incidencias basadas en varios filtros
+   * opcionales, incluyendo área, código patrimonial, fecha de inicio y fecha de fin. Los parámetros
+   * se obtienen de la solicitud GET, y luego se utiliza el modelo para realizar la consulta
+   * correspondiente en la base de datos.
+   * 
+   * Retorno:
+   * - Array con los resultados de la consulta o `false` si no se encontraron resultados.
+   */
   public function consultarIncidenciasTotales($area = NULL, $codigoPatrimonial = null, $fechaInicio = null, $fechaFin = null)
   {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -152,16 +203,24 @@ class IncidenciaController
       $fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : null;
       $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : null;
       error_log("Área: $area, Codigo patrimonial: $codigoPatrimonial, Fecha Inicio: $fechaInicio, Fecha Fin: $fechaFin");
-
-      // Llamar al método para consultar incidencias por área, estado y fecha
+      // Llamar al método para consultar incidencias por área, código patrimonial y fecha
       $consultaIncidencia = $this->incidenciaModel->buscarIncidenciaTotales($area, $codigoPatrimonial, $fechaInicio, $fechaFin);
-
       // Retornar el resultado de la consulta
       return $consultaIncidencia;
     }
   }
 
-  // TODO: Metodo para consultar incidencias para el usuario
+
+  /**
+   * TODO: Método de controlador para consultar incidencias filtradas - USUARIO
+   * 
+   * Este método permite a los usuarios consultar incidencias basadas en varios filtros opcionales,
+   * incluyendo área, código patrimonial, estado, fecha de inicio y fecha de fin. Los parámetros se obtienen
+   * de la solicitud GET, y luego se utiliza el modelo para realizar la consulta correspondiente en la base de datos.
+   * 
+   * Retorno:
+   * - Array con los resultados de la consulta o `false` si no se encontraron resultados.
+   */
   public function consultarIncidenciaUsuario($area = NULL, $estado = null, $fechaInicio = null, $fechaFin = null)
   {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -172,10 +231,8 @@ class IncidenciaController
       $fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : null;
       $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : null;
       error_log("Área: $area, Estado: $estado, Fecha Inicio: $fechaInicio, Fecha Fin: $fechaFin");
-
       // Llamar al método para consultar incidencias por área, estado y fecha
       $consultaIncidencia = $this->incidenciaModel->buscarIncidenciaUsuario($area,  $codigoPatrimonial, $estado, $fechaInicio, $fechaFin);
-
       // Retornar el resultado de la consulta
       return $consultaIncidencia;
     }

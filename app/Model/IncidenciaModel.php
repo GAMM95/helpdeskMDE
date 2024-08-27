@@ -31,6 +31,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
+  // Metodo para obtener los estados de la incidencia
   public function obtenerEstadoIncidencia($numeroIncidencia)
   {
     $conector = parent::getConexion();
@@ -38,76 +39,34 @@ class IncidenciaModel extends Conexion
       if ($conector != null) {
         $sql = "SELECT EST_codigo FROM INCIDENCIA WHERE INC_numero = :numeroIncidencia";
         $stmt = $conector->prepare($sql);
-
-        // Bindear el parámetro
         $stmt->bindParam(':numeroIncidencia', $numeroIncidencia, PDO::PARAM_INT);
-
-        // Ejecutar la consulta
-        $stmt->execute();
-
-        // Obtener el resultado
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        $stmt->execute(); // ejecutar la consulta
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); // Obtener el resultado
         return $result ? $result['EST_codigo'] : null;
       } else {
         throw new Exception("Error de conexión con la base de datos.");
       }
     } catch (PDOException $e) {
-      // Manejar el error lanzando una excepción
       throw new Exception("Error al obtener el estado de la incidencia: " . $e->getMessage());
     }
   }
 
-
   /**
-   * Método para insertar una nueva incidencia en la base de datos (Administrador - Usuario).
+   * TODO: Método para insertar una nueva incidencia en la base de datos - ADMINISTRADOR / USUARIO.
    * 
-   * Este método permite a un administrador registrar una nueva incidencia en el sistema. 
-   * La incidencia se almacena con los detalles proporcionados, incluyendo la fecha, hora, 
-   * asunto, descripción, documento adjunto, código patrimonial, código de estado, código de categoría, 
-   * código de área, y el código de usuario que registra la incidencia.
+   * Este método permite registrar una nueva incidencia en el sistema. Es utilizado tanto por
+   * administradores como por usuarios. La incidencia se almacena en la base de datos a través
+   * de un procedimiento almacenado.
    * 
-   * @return int|false Retorna el ID de la incidencia recién insertada si la operación es exitosa. 
-   *                   En caso de error, retorna false.
+   * Retorno:
+   * - @return bool: Retorna `true` si la incidencia fue registrada exitosamente, `false` en caso contrario.
    */
-  // TODO: Metodo para insertar incidencias - Administrador
-  // public function insertarIncidenciaAdministrador($INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial,  $EST_codigo, $CAT_codigo, $ARE_codigo, $USU_codigo)
-  // {
-  //   $conector = parent::getConexion();
-  //   try {
-  //     if ($conector != null) {
-  //       $sql = "INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-  //       $stmt = $conector->prepare($sql);
-  //       $success = $stmt->execute([$INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial, 3, $CAT_codigo, $ARE_codigo, $USU_codigo]);
-  //       if ($success) {
-  //         $lastId = $conector->lastInsertId();
-  //         return $lastId;
-  //       } else {
-  //         return false;
-  //       }
-  //     }
-  //   } catch (PDOException $e) {
-  //     echo "Error al insertar la incidencia para el administrador: " . $e->getMessage();
-  //     return false;
-  //   }
-  // }
-
-  // TODO: Metodo para insertar incidencias - Administrador
-  public function insertarIncidenciaAdministrador($INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial, $CAT_codigo, $ARE_codigo, $USU_codigo)
+  public function insertarIncidencia($INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial, $CAT_codigo, $ARE_codigo, $USU_codigo)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "EXEC SP_Registrar_Incidencia_Admin 
-                @INC_fecha = :fecha, 
-                @INC_hora = :hora, 
-                @INC_asunto = :asunto, 
-                @INC_descripcion = :descripcion, 
-                @INC_documento = :documento, 
-                @INC_codigoPatrimonial = :codigoPatrimonial, 
-                @CAT_codigo = :categoria, 
-                @ARE_codigo = :area, 
-                @USU_codigo = :usuario";
+        $sql = "EXEC SP_Registrar_Incidencia :fecha, :hora, :asunto, :descripcion, :documento, :codigoPatrimonial, :categoria, :area, :usuario";
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':fecha', $INC_fecha);
         $stmt->bindParam(':hora', $INC_hora);
@@ -118,53 +77,16 @@ class IncidenciaModel extends Conexion
         $stmt->bindParam(':categoria', $CAT_codigo);
         $stmt->bindParam(':area', $ARE_codigo);
         $stmt->bindParam(':usuario', $USU_codigo);
-
-        $success = $stmt->execute();
-
-        if ($success) {
-          return true;
-        } else {
-          return false;
-        }
+        $success = $stmt->execute(); // Ejecutar la consulta
+        return $success;
       }
+      return false;
     } catch (PDOException $e) {
-      echo "Error al insertar la incidencia para el administrador: " . $e->getMessage();
+      echo "Error al insertar la incidencia para el administrador y usuario: " . $e->getMessage();
       return false;
     }
   }
 
-  // TODO: Metodo para insertar incidencias - Usuario
-  public function insertarIncidenciaUsuario($INC_fecha, $INC_hora, $INC_asunto, $INC_descripcion, $INC_documento, $INC_codigoPatrimonial,  $EST_codigo, $CAT_codigo, $ARE_codigo, $USU_codigo)
-  {
-    $conector = parent::getConexion();
-    try {
-      if ($conector != null) {
-        $sql = "INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo, USU_codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conector->prepare($sql);
-        $success = $stmt->execute([
-          $INC_fecha,
-          $INC_hora,
-          $INC_asunto,
-          $INC_descripcion,
-          $INC_documento,
-          $INC_codigoPatrimonial,
-          3,
-          $CAT_codigo,
-          $ARE_codigo,
-          $USU_codigo
-        ]);
-        if ($success) {
-          $lastId = $conector->lastInsertId();
-          return $lastId;
-        } else {
-          return false;
-        }
-      }
-    } catch (PDOException $e) {
-      echo "Error al insertar la incidencia para el usuario: " . $e->getMessage();
-      return false;
-    }
-  }
 
   // Metodo para actualizar incidencia - Administrador
   public function editarIncidenciaAdmin($num_incidencia, $categoria, $area, $codigoPatrimonial, $asunto, $documento, $descripcion)

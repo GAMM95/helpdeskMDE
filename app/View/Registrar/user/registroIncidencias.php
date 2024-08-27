@@ -136,47 +136,38 @@
         document.getElementById('descripcion').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['INC_descripcion'] : ''; ?>';
       </script>
 
-      <!-- TODO: BOTONES -->
+      <!-- Botones del formulario -->
       <div class="flex justify-center space-x-4">
         <button type="submit" id="guardar-incidencia" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
         <button type="button" id="editar-incidencia" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
         <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
         <button type="button" id="imprimir-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-printer"></i>Imprimir</button>
       </div>
+      <!-- Fin de botones -->
     </form>
 
-    <!-- TODO: TABLA DE INCIDENCIAS REGISTRADAS -->
-    <?php
-    require_once './app/Model/IncidenciaModel.php';
-
-    $incidenciaModel = new IncidenciaModel();
-    $limit = 5; // Número de filas por página
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
-    $start = ($page - 1) * $limit; // Calcula el índice de inicio
-
-    // Obtiene el total de registros
-    $totalIncidencias = $incidenciaModel->contarIncidenciasUsuario($_SESSION['codigoArea']);
-    $totalPages = ceil($totalIncidencias / $limit);
-
-    // Obtiene las incidencias para la página actual
-    $incidencias = $incidenciaModel->listarIncidenciasRegistroUsuario($_SESSION['codigoArea'], $start, $limit);
-    ?>
-
-    <div>
-      <?php if ($totalPages > 0) : ?>
+    <!-- Paginacion de la tabla -->
+    <div class="mt-3 mb-2">
+      <?php if ($totalPages > 1) : // Mostrar el contenedor solo si hay más de una página 
+      ?>
         <div class="flex justify-end items-center mt-1">
           <?php if ($page > 1) : ?>
-            <a href="#" class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" onclick="changePageTablaListarIncidencias(<?php echo $page - 1; ?>)">&lt;</a>
+            <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-l-md" onclick="changePageTablaListarIncidencias(<?php echo $page - 1; ?>)"><i class="feather mr-2 icon-chevrons-left"></i> Anterior</a>
           <?php endif; ?>
-          <span class="mx-2">P&aacute;gina <?php echo $page; ?> de <?php echo $totalPages; ?></span>
+          <span class="px-2 py-1 bg-gray-400 text-gray-200"><?php echo $page; ?> de <?php echo $totalPages; ?></span>
           <?php if ($page < $totalPages) : ?>
-            <a href="#" class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" onclick="changePageTablaListarIncidencias(<?php echo $page + 1; ?>)">&gt;</a>
+            <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-r-md" onclick="changePageTablaListarIncidencias(<?php echo $page + 1; ?>)"> Siguiente <i class="feather ml-2 icon-chevrons-right"></i></a>
           <?php endif; ?>
         </div>
       <?php endif; ?>
+    </div>
+    <!-- fin de paginacion de la tabla -->
 
-      <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
+    <!-- Tabla de incidencias registradas -->
+    <div class="relative overflow-x-hidden shadow-md sm:rounded-lg">
+      <div class="max-w-full overflow-hidden rounded-lg">
         <table id="tablaListarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
+          <!-- Encabezado de la tabla -->
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
               <th scope="col" class="px-6 py-2 hidden">N&deg;</th>
@@ -193,55 +184,63 @@
               <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
+          <!-- fin de encabezado -->
+
+          <!-- Cuerpo de la tabla -->
           <tbody>
-            <?php foreach ($incidencias as $incidencia) : ?>
-              <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
-                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['INC_numero']; ?></th>
-                <td class='px-6 py-3'><?= $incidencia['INC_numero_formato']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['INC_asunto']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['INC_documento']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
-                <td class='px-6 py-3 hidden'><?= $incidencia['ARE_nombre']; ?></td>
-                <td class='px-6 py-3 hidden'><?= $incidencia['INC_descripcion']; ?></td>
-                <td class='px-6 py-3 text-center hidden'><?= $incidencia['ESTADO']; ?></td>
-                <td class="px-3 py-3 text-center">
-                  <?php
-                  $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
-                  $badgeClass = '';
-                  switch ($estadoDescripcion) {
-                    case 'ABIERTO':
-                      $badgeClass = 'badge-light-danger';
-                      break;
-                    case 'RECEPCIONADO':
-                      $badgeClass = 'badge-light-success';
-                      break;
-                    case 'CERRADO':
-                      $badgeClass = 'badge-light-primary';
-                      break;
-                    default:
-                      $badgeClass = 'badge-light-secondary';
-                      break;
-                  }
-                  ?>
-                  <label class="badge <?= $badgeClass ?>"><?= $estadoDescripcion ?></label>
-                </td>
-                <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
-              </tr>
-            <?php endforeach; ?>
-            <?php if (empty($incidencias)) : ?>
+            <?php if (!empty($resultado)) : ?>
+              <?php foreach ($resultado as $incidencia) : ?>
+                <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+                <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+                  <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['INC_numero']; ?></th>
+                  <td class='px-6 py-3'><?= $incidencia['INC_numero_formato']; ?></td>
+                  <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
+                  <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
+                  <td class='px-6 py-3'><?= $incidencia['INC_asunto']; ?></td>
+                  <td class='px-6 py-3'><?= $incidencia['INC_documento']; ?></td>
+                  <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
+                  <td class='px-6 py-3 hidden'><?= $incidencia['ARE_nombre']; ?></td>
+                  <td class='px-6 py-3 hidden'><?= $incidencia['INC_descripcion']; ?></td>
+                  <td class='px-6 py-3 text-center hidden'><?= $incidencia['ESTADO']; ?></td>
+                  <td class="px-3 py-3 text-center">
+                    <?php
+                    $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
+                    $badgeClass = '';
+                    switch ($estadoDescripcion) {
+                      case 'ABIERTO':
+                        $badgeClass = 'badge-light-danger';
+                        break;
+                      case 'RECEPCIONADO':
+                        $badgeClass = 'badge-light-success';
+                        break;
+                      case 'CERRADO':
+                        $badgeClass = 'badge-light-primary';
+                        break;
+                      default:
+                        $badgeClass = 'badge-light-secondary';
+                        break;
+                    }
+                    ?>
+                    <label class="badge <?= $badgeClass ?>"><?= $estadoDescripcion ?></label>
+                  </td>
+                  <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
               <tr>
-                <td colspan="8" class="text-center py-3">No hay incidencias.</td>
+                <td colspan="8" class="text-center py-3">No se han registrado nuevas incidencias.</td>
               </tr>
             <?php endif; ?>
           </tbody>
+          <!-- Fin del cuerpo de tabla -->
         </table>
       </div>
-
     </div>
+    <!-- Fin de tabla de incidencias registradas -->
+
   </div>
 </div>
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script src="./app/View/func/func_incidencia_user.js"></script>

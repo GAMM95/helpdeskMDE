@@ -12,7 +12,6 @@ class LoginController
   {
     // Incluye la vista del formulario de inicio de sesión
     require_once 'app/View/PnlLogin.php';
-    // require_once 'dist/auth-signin.php';
   }
 
   /**

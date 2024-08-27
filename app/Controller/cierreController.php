@@ -30,16 +30,7 @@ class cierreController
       }
 
       // Llamar al método del modelo para insertar el cierre en la base de datos
-      $insertSuccess = $this->cierreModel->insertarCierre(
-        $fecha,
-        $hora,
-        $diagnostico,
-        $documento,
-        $asunto,
-        $recomendaciones,
-        $operatividad,
-        $recepcion,
-        $usuario
+      $insertSuccess = $this->cierreModel->insertarCierre($fecha, $hora, $diagnostico, $documento, $asunto, $recomendaciones, $operatividad, $recepcion, $usuario
       );
       if ($insertSuccess) {
         header('Location: registro-cierre.php?CIE_numero=' . $insertSuccess);
