@@ -42,7 +42,7 @@ class cierreController
         $usuario
       );
       if ($insertSuccess) {
-        header('Location: registro-cierre-admin.php?CIE_numero=' . $insertSuccess);
+        header('Location: registro-cierre.php?CIE_numero=' . $insertSuccess);
       } else {
         echo "Error al registrar cierre.";
       }

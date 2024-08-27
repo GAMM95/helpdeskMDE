@@ -2,17 +2,8 @@
   <div class="pcoded-content">
     <?php
     global $cierreRegistrado;
-    require_once './app/Model/RecepcionModel.php';
-    $recepcionModel = new RecepcionModel();
-    $limit = 2; //Numero de filas por pagina
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
-    $start = ($page - 1) * $limit; // Calcula el índice de inicio
-    $totalRecepcionesSinCerrar = $recepcionModel->contarRecepcionesSinCerrar();
-    $totalPages = ceil($totalRecepcionesSinCerrar / $limit);
-    $recepciones = $recepcionModel->obtenerRecepcionesSinCerrar($start, $limit);
     ?>
 
-    <!-- Segundo Apartado - Formulario de registro de Recepcion de incidencia -->
     <!-- Miga de pan -->
     <div class="page-header">
       <div class="page-block">
@@ -32,18 +23,29 @@
     </div>
     <!-- Fin de miga de pan -->
 
-    <!-- TODO: TITULO TABLA DE INCIDENCIAS NO RECEPCIONADAS -->
+    <!-- Titulo de recepciones y paginador -->
     <div id="noRecepcion" class="flex justify-between items-center mb-2">
       <h1 class="text-xl text-gray-400">Incidencias pendientes para cierre</h1>
-      <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar..." oninput="filtrarTablaRecepcionesSinCerrar()" />
+      <div id="paginadorRecepcionesSinCerrar" class="flex justify-end items-center mt-1">
+        <!-- Paginación aquí -->
+        <?php if ($totalPages > 1) : ?>
+          <?php if ($page > 1) : ?>
+            <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-l-md" onclick="changePageTablaSinCerrar(<?php echo $page - 1; ?>)"><i class="feather mr-2 icon-chevrons-left"></i> Anterior</a>
+          <?php endif; ?>
+          <span class="px-2 py-1 bg-gray-400 text-gray-200"><?php echo $page; ?> de <?php echo $totalPages; ?></span>
+          <?php if ($page < $totalPages) : ?>
+            <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-r-md" onclick="changePageTablaSinCerrar(<?php echo $page + 1; ?>)"> Siguiente <i class="feather ml-2 icon-chevrons-right"></i></a>
+          <?php endif; ?>
+        <?php endif; ?>
+      </div>
     </div>
 
-    <!-- TODO: TABLA DE RECEPCIONES SIN CERRAR -->
+    <!-- Tabla de recepciones sin cerrar -->
     <input type="hidden" id="recepcionCount" value="<?php echo count($recepciones); ?>">
-
-    <div class="mb-2">
+    <div class="mb-4">
       <div id="tablaContainer" class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
         <table id="tablaRecepcionesSinCerrar" class="w-full text-xs text-left rtl:text-right text-gray-500 bg-white">
+          <!-- Encabezado de la tabla -->
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
               <th scope="col" class="px-6 py-2 hidden">N&deg; recepcion</th>
@@ -59,6 +61,9 @@
               <th scope="col" class="px-6 py-2">Usuario</th>
             </tr>
           </thead>
+          <!-- Fin de encabezado -->
+
+          <!-- Cuerpo de la tabla -->
           <tbody>
             <?php foreach ($recepciones as $recepcion) : ?>
               <tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b '>
@@ -82,26 +87,14 @@
               </tr>
             <?php endif; ?>
           </tbody>
+          <!-- Fin de cuerpo de la tabla -->
         </table>
       </div>
-
-      <!-- Paginación -->
-      <?php if ($totalPages > 0) : ?>
-        <div class="flex justify-end items-center mt-1">
-          <?php if ($page > 1) : ?>
-            <a href="#" class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" onclick="changePageTablaSinCerrar(<?php echo $page - 1; ?>)">&lt;</a>
-          <?php endif; ?>
-          <span class="mx-2">P&aacute;gina <?php echo $page; ?> de <?php echo $totalPages; ?></span>
-          <?php if ($page < $totalPages) : ?>
-            <a href="#" class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" onclick="changePageTablaSinCerrar(<?php echo $page + 1; ?>)">&gt;</a>
-          <?php endif; ?>
-        </div>
-      <?php endif; ?>
     </div>
+    <!-- Fin de tabla de recepciones sin cerrar -->
 
-    <!-- TODO: Formulario -->
-    <form id="formCierre" action="registro-cierre-admin.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
-
+    <!-- Formulario de registro de cierres -->
+    <form id="formCierre" action="registro-cierre.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
       <!-- NUMERO DE RECEPCION -->
       <div class="flex justify-center mx-2 mb-4">
         <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden ">
@@ -117,6 +110,7 @@
           </div>
         </div>
 
+        <!-- Numero de recepcion -->
         <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden">
           <label for="recepcion" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero de Recepci&oacute;n:</label>
           <input type="text" id="recepcion" name="recepcion" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
@@ -212,87 +206,79 @@
         document.getElementById('recomendaciones').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_recomendaciones'] : ''; ?>';
       </script>
 
-      <!-- TODO: BOTONES DEL FORMULARIO -->
+      <!-- Botones del formulario -->
       <div class="flex justify-center space-x-4">
         <button type="submit" id="guardar-cierre" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
         <button type="button" id="editar-cierre" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
         <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
         <button type="button" id="imprimir-cierre" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-printer"></i>Imprimir</button>
       </div>
+      <!-- Fin de botones -->
     </form>
+    <!-- Fin de formulario -->
 
-    <!-- TODO: TABLA DE INCIDENCIAS REGISTRADAS -->
-    <?php
-    require_once './app/Model/CierreModel.php';
-
-    $cierreModel = new CierreModel();
-    $limit = 5; // Número de filas por página
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
-    $start = ($page - 1) * $limit; // Calcula el índice de inicio
-
-    // Obtiene el total de registros
-    $totalCierres = $cierreModel->contarIncidenciasCerradas();
-    $totalPages = ceil($totalCierres / $limit);
-
-    // Obtiene las incidencias para la página actual
-    $cierres = $cierreModel->obtenerIncidenciasCerradas($start, $limit);
-    ?>
-
-    <div>
-      <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
-        <table id="tablaIncidenciasCerradas" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
-          <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
-            <tr>
-              <th scope="col" class="px-6 py-2 hidden">num Cierre</th>
-              <th scope="col" class="px-6 py-2">Incidencia</th>
-              <th scope="col" class="px-6 py-2">Fecha Incidencia</th>
-              <th scope="col" class="px-6 py-2">&Aacute;rea</th>
-              <th scope="col" class="px-6 py-2">C&oacute;digo patrimonial</th>
-              <th scope="col" class="px-6 py-2">Fecha Cierre</th>
-              <th scope="col" class="px-6 py-2">Asunto Cierre</th>
-              <th scope="col" class="px-6 py-2">Documento Cierre</th>
-              <th scope="col" class="px-6 py-2">Condici&oacute;n</th>
-              <th scope="col" class="px-6 py-2">Usuario</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($cierres as $incidencia) : ?>
-              <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
-                <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['CIE_numero']; ?></th>
-                <td class='px-6 py-3'><?= $incidencia['INC_numero_formato']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['fechaCierreFormateada']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['CIE_asunto']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['CIE_documento']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['CON_descripcion']; ?></td>
-                <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
-              </tr>
-            <?php endforeach; ?>
-            <?php if (empty($cierres)) : ?>
-              <tr>
-                <td colspan="9" class="text-center py-3">No hay incidencias cerradas.</td>
-              </tr>
-            <?php endif; ?>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Paginación -->
-      <div class="flex justify-center items-center mt-4">
-        <?php if ($page > 1) : ?>
-          <a href="#" class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" onclick="changePage(<?php echo $page - 1; ?>)">&lt;</a>
-        <?php endif; ?>
-        <span class="mx-2">P&aacute;gina <?php echo $page; ?> de <?php echo $totalPages; ?></span>
-        <?php if ($page < $totalPages) : ?>
-          <a href="#" class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" onclick="changePage(<?php echo $page + 1; ?>)">&gt;</a>
+    <!-- Titulo y paginacion de tabla de recepciones -->
+    <div class="flex justify-between items-center mb-2">
+      <h1 class="text-xl text-gray-400">Lista de incidencias cerradas</h1>
+      <div id="paginadorCierres" class="flex justify-end items-center mt-1">
+        <?php if ($totalPagesCierres > 1) : ?>
+          <?php if ($pageCierres > 1) : ?>
+            <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-l-md" onclick="changePageCierres(<?php echo $pageCierres - 1; ?>)"><i class="feather mr-2 icon-chevrons-left"></i> Anterior</a>
+          <?php endif; ?>
+          <span class="px-2 py-1 bg-gray-400 text-gray-200"><?php echo $pageCierres; ?> de <?php echo $totalPagesCierres; ?></span>
+          <?php if ($pageCierres < $totalPagesCierres) : ?>
+            <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-r-md" onclick="changePageCierres(<?php echo $pageCierres + 1; ?>)"> Siguiente <i class="feather ml-2 icon-chevrons-right"></i></a>
+          <?php endif; ?>
         <?php endif; ?>
       </div>
     </div>
 
+    <!-- Tabla de incidencias cerradas -->
+    <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
+      <table id="tablaIncidenciasCerradas" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
+        <!-- Encabezado de la tabla -->
+        <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
+          <tr>
+            <th scope="col" class="px-6 py-2 hidden">num Cierre</th>
+            <th scope="col" class="px-6 py-2">Incidencia</th>
+            <th scope="col" class="px-6 py-2">Fecha Incidencia</th>
+            <th scope="col" class="px-6 py-2">&Aacute;rea</th>
+            <th scope="col" class="px-6 py-2">C&oacute;digo patrimonial</th>
+            <th scope="col" class="px-6 py-2">Fecha Cierre</th>
+            <th scope="col" class="px-6 py-2">Asunto Cierre</th>
+            <th scope="col" class="px-6 py-2">Documento Cierre</th>
+            <th scope="col" class="px-6 py-2">Condici&oacute;n</th>
+            <th scope="col" class="px-6 py-2">Usuario</th>
+          </tr>
+        </thead>
+        <!-- Fin de encabezado -->
+
+        <!-- Cuerpo de la tabla -->
+        <tbody>
+          <?php foreach ($cierres as $incidencia) : ?>
+            <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+              <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['CIE_numero']; ?></th>
+              <td class='px-6 py-3'><?= $incidencia['INC_numero_formato']; ?></td>
+              <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
+              <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
+              <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
+              <td class='px-6 py-3'><?= $incidencia['fechaCierreFormateada']; ?></td>
+              <td class='px-6 py-3'><?= $incidencia['CIE_asunto']; ?></td>
+              <td class='px-6 py-3'><?= $incidencia['CIE_documento']; ?></td>
+              <td class='px-6 py-3'><?= $incidencia['CON_descripcion']; ?></td>
+              <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
+            </tr>
+          <?php endforeach; ?>
+          <?php if (empty($cierres)) : ?>
+            <tr>
+              <td colspan="9" class="text-center py-3">No hay incidencias cerradas.</td>
+            </tr>
+          <?php endif; ?>
+        </tbody>
+        <!-- Fin del cuerpo de la tabla -->
+      </table>
+    </div>
+    <!-- Fin de la tabla -->
   </div>
 </div>
-<!-- <script src="./app/View/func/func_cierre.js"></script> -->
-<script src="./app/View/func/func_cierre_admin.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>

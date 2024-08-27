@@ -195,13 +195,43 @@ function changePageTablaSinRecepcionar(page) {
       const parser = new DOMParser();
       const newDocument = parser.parseFromString(data, 'text/html');
       const newTable = newDocument.querySelector('#tablaIncidenciasSinRecepcionar');
-      const newPagination = newDocument.querySelector('.flex.justify-end.items-center.mt-1');
+      const newPagination = newDocument.querySelector('#paginadorNuevasIncidencias');
 
       // Reemplazar la tabla actual con la nueva tabla obtenida
-      document.querySelector('#tablaIncidenciasSinRecepcionar').parentNode.replaceChild(newTable, document.querySelector('#tablaIncidenciasSinRecepcionar'));
+      const currentTable = document.querySelector('#tablaIncidenciasSinRecepcionar');
+      if (currentTable && newTable) {
+        currentTable.parentNode.replaceChild(newTable, currentTable);
+      }
 
       // Reemplazar la paginación actual con la nueva paginación obtenida
-      const currentPagination = document.querySelector('.flex.justify-end.items-center.mt-1');
+      const currentPagination = document.querySelector('#tablaIncidenciasSinRecepcionar');
+      if (currentPagination && newPagination) {
+        currentPagination.parentNode.replaceChild(newPagination, currentPagination);
+      }
+    })
+    .catch(error => {
+      console.error('Error al cambiar de página:', error);
+    });
+}
+
+// TODO: FUNCION PARA CAMBIAR PAGINAS DE LA TABLA DE RECEPCIONES 
+function changePageTablaRecepciones(page) {
+  fetch(`?pageRecepciones=${page}`)
+    .then(response => response.text())
+    .then(data => {
+      const parser = new DOMParser();
+      const newDocument = parser.parseFromString(data, 'text/html');
+      const newTable = newDocument.querySelector('#tablaIncidenciasRecepcionadas');
+      const newPagination = newDocument.querySelector('#paginadorRecepciones');
+
+      // Reemplazar la tabla actual con la nueva tabla obtenida
+      const currentTable = document.querySelector('#tablaIncidenciasRecepcionadas');
+      if (currentTable && newTable) {
+        currentTable.parentNode.replaceChild(newTable, currentTable);
+      }
+
+      // Reemplazar la paginación actual con la nueva paginación obtenida
+      const currentPagination = document.querySelector('#paginadorRecepciones');
       if (currentPagination && newPagination) {
         currentPagination.parentNode.replaceChild(newPagination, currentPagination);
       }

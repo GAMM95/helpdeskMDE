@@ -16,22 +16,26 @@ require_once 'app/Model/incidenciaModel.php';
 $recepcionController = new RecepcionController();
 $recepcionModel = new RecepcionModel();
 $incidenciaModel = new IncidenciaModel();
-$resultado = NULL;
 
-// Paginacion de la tabla
+// Paginacion de la tabla de incidencias sin recepcionar
 $limit = 2; // Número de filas por página
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
 $start = ($page - 1) * $limit; // Calcula el índice de inicio
 // Obtener el total de registros
 $totalIncidenciasSinRecepcionar = $incidenciaModel->contarIncidenciasSinRecepcionar();
 $totalPages = ceil($totalIncidenciasSinRecepcionar / $limit);
-
 // Listar las incidencias para la pagina actual
-// $incidencias = $incidenciaModel->obtenerIncidenciasSinRecepcionar($start, $limit);
 $resultadoIncidencias = $incidenciaModel->listarIncidenciasRegistroAdmin($start, $limit);
 
+// Paginacion para la tabla de incidencias recepcionadas
+$limite = 5; // Numero de filas para la tabla de recepciones
+$pageRecepciones =  isset($_GET['pageRecepciones']) ? (int)$_GET['pageRecepciones'] : 1; // pagina de la tabla actual
+$inicio = ($pageRecepciones - 1) * $limite;
+// Obtener el total de registros
+$totalRecepciones = $recepcionModel->contarRecepcionesSinCerrar();
+$totalPagesRecepciones = ceil($totalRecepciones / $limite);
 // Listar incidencias recepcionadas
-$resultado = $recepcionModel->listarRecepciones();
+$resultadoRecepciones = $recepcionModel->listarRecepciones($inicio, $limite);
 
 if ($REC_numero != '') {
   global $recepcionRegistrada;
@@ -93,7 +97,6 @@ switch ($action) {
 
   <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
-
   <script src="./app/View/func/func_recepcion_admin.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>

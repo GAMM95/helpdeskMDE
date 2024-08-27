@@ -26,18 +26,20 @@
     <!-- Titulo de incidencias y paginador -->
     <div id="noIncidencias" class="flex justify-between items-center mb-2">
       <h1 class="text-xl text-gray-400">Nuevas incidencias</h1>
-      <?php if ($totalPages > 1) : // Mostrar el contenedor solo si hay más de una página
-      ?>
-        <div class="flex justify-end items-center mt-1">
-          <?php if ($page > 1) : ?>
-            <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-l-md" onclick="changePageTablaSinRecepcionar(<?php echo $page - 1; ?>)"><i class="feather mr-2 icon-chevrons-left"></i> Anterior</a>
-          <?php endif; ?>
-          <span class="px-2 py-1 bg-gray-400 text-gray-200"><?php echo $page; ?> de <?php echo $totalPages; ?></span>
-          <?php if ($page < $totalPages) : ?>
-            <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-r-md" onclick="changePageTablaSinRecepcionar(<?php echo $page + 1; ?>)"> Siguiente <i class="feather ml-2 icon-chevrons-right"></i></a>
-          <?php endif; ?>
-        </div>
-      <?php endif; ?>
+      <div id="paginadorNuevasIncidencias" class="flex justify-end items-center mt-1">
+        <?php if ($totalPages > 1) : // Mostrar el contenedor solo si hay más de una página
+        ?>
+          <div class="flex justify-end items-center mt-1">
+            <?php if ($page > 1) : ?>
+              <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-l-md" onclick="changePageTablaSinRecepcionar(<?php echo $page - 1; ?>)"><i class="feather mr-2 icon-chevrons-left"></i> Anterior</a>
+            <?php endif; ?>
+            <span class="px-2 py-1 bg-gray-400 text-gray-200"><?php echo $page; ?> de <?php echo $totalPages; ?></span>
+            <?php if ($page < $totalPages) : ?>
+              <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-r-md" onclick="changePageTablaSinRecepcionar(<?php echo $page + 1; ?>)"> Siguiente <i class="feather ml-2 icon-chevrons-right"></i></a>
+            <?php endif; ?>
+          </div>
+        <?php endif; ?>
+      </div>
     </div>
     <!-- Fin de titulo y paginador -->
 
@@ -172,21 +174,37 @@
           document.getElementById('impacto').value = '<?php echo $recepcionRegistrada ? $recepcionRegistrada['IMP_codigo'] : ''; ?>';
         </script>
 
-        <!-- BOTONES DE FORMULARIO -->
+        <!-- Botones de formulario -->
         <div class="flex justify-center items-center space-x-4 mt-3 ml-5">
           <button type="submit" id="guardar-recepcion" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
           <button type="button" id="editar-recepcion" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
           <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
         </div>
+        <!-- Fin de botones -->
       </div>
     </form>
     <!-- Fin de formulario -->
 
-    <!-- Tabla de incidencias recepcionadas -->
+    <!-- Segundo apartado -->
     <div class="w-full">
-      <div>
-        <h1 class="text-xl text-gray-400 mb-2">Lista de incidencias recepcionadas</h1>
+      <!-- Titulo y paginacion de tabla de recepciones -->
+      <div class="flex justify-between items-center mb-2">
+        <h1 class="text-xl text-gray-400">Lista de incidencias recepcionadas</h1>
+        <div id="paginadorRecepciones" class="flex justify-end items-center mt-1">
+          <?php if ($totalPagesRecepciones > 1) : ?>
+            <?php if ($pageRecepciones > 1) : ?>
+              <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-l-md" onclick="changePageTablaRecepciones(<?php echo $pageRecepciones - 1; ?>)"><i class="feather mr-2 icon-chevrons-left"></i> Anterior</a>
+            <?php endif; ?>
+            <span class="px-2 py-1 bg-gray-400 text-gray-200"><?php echo $pageRecepciones; ?> de <?php echo $totalPagesRecepciones; ?></span>
+            <?php if ($pageRecepciones < $totalPagesRecepciones) : ?>
+              <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-r-md" onclick="changePageTablaRecepciones(<?php echo $pageRecepciones + 1; ?>)"> Siguiente <i class="feather ml-2 icon-chevrons-right"></i></a>
+            <?php endif; ?>
+          <?php endif; ?>
+        </div>
       </div>
+      <!-- Fin de titulo y paginacion -->
+
+      <!-- Tabla de incidencias recepcionadas -->
       <div class="relative max-h-[500px] overflow-x-hidden shadow-md sm:rounded-lg">
         <table id="tablaIncidenciasRecepcionadas" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
           <!-- Encabezado de la tabla -->
@@ -207,8 +225,8 @@
 
           <!-- Cuerpo de la tabla -->
           <tbody>
-            <?php if (!empty($resultado)) : ?>
-              <?php foreach ($resultado as $recepcion) : ?>
+            <?php if (!empty($resultadoRecepciones)) : ?>
+              <?php foreach ($resultadoRecepciones as $recepcion) : ?>
                 <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
                   <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $recepcion['REC_numero']; ?></th>
                   <td class='px-6 py-3'><?= $recepcion['INC_numero_formato']; ?></td>
@@ -233,8 +251,6 @@
     </div>
     <!-- Fin de la tabla -->
   </div>
-
-</div>
 </div>
 
 <script src="https://cdn.tailwindcss.com"></script>

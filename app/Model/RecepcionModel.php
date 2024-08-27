@@ -210,7 +210,7 @@ class RecepcionModel extends Conexion
   //     return null;
   //   }
   // }
-  public function listarRecepciones()
+  public function listarRecepciones($start, $limit)
   {
     $conector = parent::getConexion();
     if ($conector != null) {
@@ -218,8 +218,12 @@ class RecepcionModel extends Conexion
         $sql = "SELECT * FROM vista_recepciones
           ORDER BY 
             SUBSTRING(INC_numero_formato, CHARINDEX('-', INC_numero_formato) + 1, 4) DESC,
-            INC_numero_formato DESC;";
+            INC_numero_formato DESC
+            OFFSET :start ROWS
+            FETCH NEXT :limit ROWS ONLY";
         $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':start', $start, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $registros;

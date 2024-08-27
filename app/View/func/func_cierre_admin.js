@@ -23,7 +23,6 @@ $(document).ready(function () {
     }
   });
 
-
   // BUSCADOR PARA EL COMBO CATEGORIA Y AREA
   $('#cbo_operatividad').select2({
     allowClear: true,
@@ -35,7 +34,7 @@ $(document).ready(function () {
       }
     }
   });
-  
+
   //Evento de clic en las filas de la tabla de recepciones sin cerrar
   $(document).on('click', '#tablaRecepcionesSinCerrar tbody tr', function () {
     // seteo del numero de recepcion
@@ -51,7 +50,7 @@ $(document).ready(function () {
     $('#num_incidencia').val(numIncidencia);
 
     // Seteo del numero formateado de la incidencia
-    var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
+    var incidenciaSeleccionada = $(this).find('td').eq(0).html().trim(); // Cambia el índice eq(0) dependiendo de la posición de la columna
     $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
 
     // Bloquear la tabla de cierres
@@ -87,14 +86,6 @@ $(document).ready(function () {
     $('#tablaRecepcionesSinCerrar tbody tr').removeClass('pointer-events-none opacity-50');
     $('#tablaIncidenciasCerradas tbody tr').removeClass('pointer-events-none opacity-50');
     location.reload();
-  });
-
-
-  // Manejo de la paginacion
-
-  // Buscar en la tabla de recepciones sin cerrar
-  $('#searchInput').on('input', function () {
-    filtrarTablaRecepcionesSinCerrar();
   });
 
   // Cargar las opciones de condicion
@@ -165,7 +156,7 @@ $(document).ready(function () {
 
     // Validar campo de número de incidencia
     if ($('#recepcion').val() === '') {
-      mensajeError = 'Debe seleccionar una incidencia. ';
+      mensajeError = 'Debe seleccionar una incidencia pendiente para cierre. ';
       valido = false;
     }
 
@@ -201,37 +192,12 @@ $(document).ready(function () {
   // Función para limpiar los campos del formulario
   function nuevoRegistro() {
     document.getElementById('formCierre').reset();
+    // document.reload();
   }
 });
 
 
-
-
-
-
-
-// TODO: FILTRADO DE TABLA DE INCIDENCIAS SIN RECEPCIONAR
-function filtrarTablaRecepcionesSinCerrar() {
-  var input, filter, table, rows, cells, i, j, match;
-  input = document.getElementById('searchInput');
-  filter = input.value.toUpperCase();
-  table = document.getElementById('tablaRecepcionesSinCerrar');
-  rows = table.getElementsByTagName('tr');
-
-  for (i = 1; i < rows.length; i++) {
-    cells = rows[i].getElementsByTagName('td');
-    match = false;
-    for (j = 0; j < cells.length; j++) {
-      if (cells[j].innerText.toUpperCase().indexOf(filter) > -1) {
-        match = true;
-        break;
-      }
-    }
-    rows[i].style.display = match ? '' : 'none';
-  }
-}
-
-// TODO: FUNCION PARA CAMBIAR PAGINAS DE LA TABLA DE RECEPCIONES SIN CERRAR
+// Función para cambiar páginas de la tabla de recepciones sin cerrar
 function changePageTablaSinCerrar(page) {
   fetch(`?page=${page}`)
     .then(response => response.text())
@@ -239,13 +205,43 @@ function changePageTablaSinCerrar(page) {
       const parser = new DOMParser();
       const newDocument = parser.parseFromString(data, 'text/html');
       const newTable = newDocument.querySelector('#tablaRecepcionesSinCerrar');
-      const newPagination = newDocument.querySelector('.flex.justify-end.items-center.mt-1');
+      const newPagination = newDocument.querySelector('#paginadorRecepcionesSinCerrar');
 
       // Reemplazar la tabla actual con la nueva tabla obtenida
-      document.querySelector('#tablaRecepcionesSinCerrar').parentNode.replaceChild(newTable, document.querySelector('#tablaRecepcionesSinCerrar'));
+      const currentTable = document.querySelector('#tablaRecepcionesSinCerrar');
+      if (currentTable && newTable) {
+        currentTable.parentNode.replaceChild(newTable, currentTable);
+      }
 
       // Reemplazar la paginación actual con la nueva paginación obtenida
-      const currentPagination = document.querySelector('.flex.justify-end.items-center.mt-1');
+      const currentPagination = document.querySelector('#paginadorRecepcionesSinCerrar');
+      if (currentPagination && newPagination) {
+        currentPagination.parentNode.replaceChild(newPagination, currentPagination);
+      }
+    })
+    .catch(error => {
+      console.error('Error al cambiar de página:', error);
+    });
+}
+
+// Función para cambiar páginas de la tabla de cierres
+function changePageCierres(page) {
+  fetch(`?pageCierres=${page}`)
+    .then(response => response.text())
+    .then(data => {
+      const parser = new DOMParser();
+      const newDocument = parser.parseFromString(data, 'text/html');
+      const newTable = newDocument.querySelector('#tablaIncidenciasCerradas');
+      const newPagination = newDocument.querySelector('#paginadorCierres');
+
+      // Reemplazar la tabla actual con la nueva tabla obtenida
+      const currentTable = document.querySelector('#tablaIncidenciasCerradas');
+      if (currentTable && newTable) {
+        currentTable.parentNode.replaceChild(newTable, currentTable);
+      }
+
+      // Reemplazar la paginación actual con la nueva paginación obtenida
+      const currentPagination = document.querySelector('#paginadorCierres');
       if (currentPagination && newPagination) {
         currentPagination.parentNode.replaceChild(newPagination, currentPagination);
       }
