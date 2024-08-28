@@ -20,10 +20,9 @@ $limit = 2; // Número de filas por página
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
 $start = ($page - 1) * $limit; // Calcula el índice de inicio
 
-// Obtiene el total de registros
+// Obtiene el total de registros de incidencias
 $totalIncidencias = $incidenciaModel->contarIncidenciasAdministrador();
 $totalPages = ceil($totalIncidencias / $limit);
-
 // Obtiene las incidencias para la página actual
 $resultado = $incidenciaModel->listarIncidenciasRegistroAdmin($start, $limit);
 

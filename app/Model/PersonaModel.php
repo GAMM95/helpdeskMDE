@@ -33,7 +33,7 @@ class PersonaModel extends Conexion
 
 
 
-  // TODO: Método para validar la existencia de un DNI
+  // Método para validar la existencia de un DNI
   public function validarDniExistente($dni)
   {
     $conector = parent::getConexion();

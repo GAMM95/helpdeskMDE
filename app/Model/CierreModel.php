@@ -246,10 +246,7 @@ class CierreModel extends Conexion
         $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial);
         $stmt->bindParam(':fechaInicio', $fechaInicio);
         $stmt->bindParam(':fechaFin', $fechaFin);
-        // Ejecutar el procedimiento almacenado
-        $stmt->execute();
-
-        // Obtener los resultados
+        $stmt->execute(); // Ejecuta el query
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
       } else {

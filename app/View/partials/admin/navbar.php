@@ -107,6 +107,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <li><a href="modulo-persona.php">Personas</a></li>
             <li><a href="modulo-usuario.php">Usuarios</a></li>
             <li><a href="modulo-area.php">&Aacute;reas</a></li>
+            <li><a href="modulo-categoria.php">Bienes</a></li>
             <li><a href="modulo-categoria.php">Categor&iacute;as</a></li>
           </ul>
         </li>

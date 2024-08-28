@@ -33,13 +33,7 @@ class RecepcionModel extends Conexion
   {
     $conector = parent::getConexion();
     try {
-      $sql = "EXEC sp_InsertarRecepcionActualizarIncidencia 
-        @REC_fecha = :fecha, 
-        @REC_hora = :hora, 
-        @INC_numero = :incidencia, 
-        @PRI_codigo = :prioridad, 
-        @IMP_codigo = :impacto, 
-        @USU_codigo = :usuario";
+      $sql = "EXEC sp_InsertarRecepcionActualizarIncidencia :fecha, :hora, :incidencia, :prioridad, :impacto, :usuario";
       $stmt = $conector->prepare($sql);
       $stmt->bindParam(':fecha', $fecha);
       $stmt->bindParam(':hora', $hora);
@@ -55,6 +49,7 @@ class RecepcionModel extends Conexion
     }
   }
 
+  // Metodo para obtener el estado de la recepcion
   public function obtenerEstadoRecepcion($numeroRecepcion)
   {
     $conector = parent::getConexion();
@@ -62,36 +57,24 @@ class RecepcionModel extends Conexion
       if ($conector != null) {
         $sql = "SELECT EST_codigo FROM RECEPCION WHERE REC_numero = :numeroRecepcion";
         $stmt = $conector->prepare($sql);
-
-        // Bindear el parámetro
         $stmt->bindParam(':numeroRecepcion', $numeroRecepcion, PDO::PARAM_INT);
-
-        // Ejecutar la consulta
-        $stmt->execute();
-
-        // Obtener el resultado
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        $stmt->execute(); // Ejecutar la consulta
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); // Obtener el resultado
         return $result ? $result['EST_codigo'] : null;
       } else {
         throw new Exception("Error de conexión con la base de datos.");
       }
     } catch (PDOException $e) {
-      // Manejar el error lanzando una excepción
       throw new Exception("Error al obtener el estado de la incidencia: " . $e->getMessage());
     }
   }
 
-
-  // TODO: Metodo para editar recepcion
+  // Metodo para editar recepcion
   public function editarRecepcion($prioridad, $impacto, $recepcion)
   {
     $conector = parent::getConexion();
     try {
-      $sql = "EXEC sp_ActualizarRecepcion 
-          @REC_numero = :num_recepcion, 
-          @PRI_codigo = :prioridad, 
-          @IMP_codigo = :impacto";
+      $sql = "EXEC sp_ActualizarRecepcion :num_recepcion, :prioridad, :impacto";
       $stmt = $conector->prepare($sql);
       $stmt->bindParam(':num_recepcion', $recepcion);
       $stmt->bindParam(':prioridad', $prioridad);

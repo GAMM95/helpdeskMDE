@@ -27,7 +27,7 @@ if ($action === 'consultar') {
   error_log("Fecha Fin: " . $fechaFin);
 
   // Obtener los resultados de la búsqueda
-  $resultadoBusqueda = $incidenciaController->consultarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin);
+  $resultadoBusqueda = $incidenciaController->consultarIncidenciasPendientesAdministrador($area, $estado, $fechaInicio, $fechaFin);
 
   // Imprime el resultado para depuración
   error_log("Resultado de la consulta: " . print_r($resultadoBusqueda, true));
@@ -75,7 +75,7 @@ if ($action === 'consultar') {
   exit;
 } else {
   // Si no hay acción, obtener la lista de incidencias
-  $resultadoBusqueda = $incidenciaModel->listarIncidenciasAdministrador();
+  $resultadoBusqueda = $incidenciaModel->listarIncidenciasPendientesAdministrador();
 }
 ?>
 

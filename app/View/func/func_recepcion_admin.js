@@ -4,6 +4,55 @@ $(document).ready(function () {
     "progressBar": true,
     "timeOut": "2000"
   };
+
+  // Cargar opciones de prioridad
+  $.ajax({
+    url: 'ajax/getPrioridadData.php',
+    type: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      var select = $('#prioridad');
+      select.empty();
+      select.append('<option value="" selected disabled>Seleccione una prioridad</option>');
+      $.each(data, function (index, value) {
+        select.append('<option value="' + value.PRI_codigo + '">' + value.PRI_nombre + '</option>');
+      });
+    },
+    error: function (error) {
+      console.error(error);
+    }
+  });
+
+  // Cargar opciones de impacto
+  $.ajax({
+    url: 'ajax/getImpactoData.php',
+    type: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      var select = $('#impacto');
+      select.empty();
+      select.append('<option value="" selected disabled>Seleccione un impacto</option>');
+      $.each(data, function (index, value) {
+        select.append('<option value="' + value.IMP_codigo + '">' + value.IMP_descripcion + '</option>');
+      });
+    },
+    error: function (error) {
+      console.error(error);
+    }
+  });
+
+  // Buscador para el combo prioridad e impacto
+  $('#prioridad, #impacto').select2({
+    allowClear: true,
+    width: '100%',
+    dropdownCssClass: 'text-xs',
+    language: {
+      noResults: function () {
+        return "No se encontraron resultados";
+      }
+    }
+  });
+
   // Evento de clic en las filas de la tabla de incidencias sin recepcionar
   $(document).on('click', '#tablaIncidenciasSinRecepcionar tbody tr', function () {
     var id = $(this).find('th').html();
@@ -13,7 +62,6 @@ $(document).ready(function () {
 
     var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
     $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
-
 
     // Bloquear la tabla de incidencias recepcionadas
     $('#tablaIncidenciasRecepcionadas tbody tr').addClass('pointer-events-none opacity-50');
@@ -58,41 +106,7 @@ $(document).ready(function () {
     changePageTablaSinRecepcionar(page);
   });
 
-  // Cargar opciones de prioridad
-  $.ajax({
-    url: 'ajax/getPrioridadData.php',
-    type: 'GET',
-    dataType: 'json',
-    success: function (data) {
-      var select = $('#prioridad');
-      select.empty();
-      select.append('<option value="" selected disabled>Seleccione una prioridad</option>');
-      $.each(data, function (index, value) {
-        select.append('<option value="' + value.PRI_codigo + '">' + value.PRI_nombre + '</option>');
-      });
-    },
-    error: function (error) {
-      console.error(error);
-    }
-  });
 
-  // Cargar opciones de impacto
-  $.ajax({
-    url: 'ajax/getImpactoData.php',
-    type: 'GET',
-    dataType: 'json',
-    success: function (data) {
-      var select = $('#impacto');
-      select.empty();
-      select.append('<option value="" selected disabled>Seleccione un impacto</option>');
-      $.each(data, function (index, value) {
-        select.append('<option value="' + value.IMP_codigo + '">' + value.IMP_descripcion + '</option>');
-      });
-    },
-    error: function (error) {
-      console.error(error);
-    }
-  });
 
   // Guardar la recepción
   $('#guardar-recepcion').click(function (event) {
@@ -204,7 +218,7 @@ function changePageTablaSinRecepcionar(page) {
       }
 
       // Reemplazar la paginación actual con la nueva paginación obtenida
-      const currentPagination = document.querySelector('#tablaIncidenciasSinRecepcionar');
+      const currentPagination = document.querySelector('#paginadorNuevasIncidencias');
       if (currentPagination && newPagination) {
         currentPagination.parentNode.replaceChild(newPagination, currentPagination);
       }

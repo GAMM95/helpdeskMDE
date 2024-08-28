@@ -201,7 +201,7 @@
           $fecha = isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d'); // Por defecto, usa la fecha actual si no se especifica ninguna
 
           $incidenciaModel = new IncidenciaModel();
-          $incidencias = $incidenciaModel->listarIncidenciasAdminFecha($fecha);
+          $incidencias = $incidenciaModel->listarIncidenciasFechaAdmin($fecha);
           ?>
 
           <div id="tabla-incidencias" class="card-body p-0">

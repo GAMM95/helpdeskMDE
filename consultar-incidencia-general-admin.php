@@ -73,7 +73,7 @@ if ($action === 'consultar') {
   exit;
 } else {
   // Si no hay accion, obtener la lista de las incidencias
-  $resultadoBusqueda = $incidenciaModel->listarIncidenciasAdministradorGeneral();
+  $resultadoBusqueda = $incidenciaModel->listarIncidenciasTotalesAdministrador();
 }
 ?>
 

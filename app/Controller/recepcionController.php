@@ -15,7 +15,6 @@ class RecepcionController
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Obtener los datos del formulario
-
       $fecha = $_POST['fecha_recepcion'] ?? null;
       $hora = $_POST['hora'] ?? null;
       $incidencia = $_POST['incidencia'] ?? null;
@@ -23,29 +22,29 @@ class RecepcionController
       $impacto  = $_POST['impacto'] ?? null;
       $usuario = $_POST['usuario'] ?? null;
 
-      // Verificar que la fecha no es nula
-      if ($fecha === null || $fecha === '') {
-        echo "Error: La fecha es un campo obligatorio.";
-        return;
-      }
+      try {
+        // Llamar al método del modelo para insertar la incidencia en la base de datos
+        $insertSuccessId = $this->recepcionModel->insertarRecepcion($fecha, $hora, $incidencia, $prioridad, $impacto, $usuario);
 
-      // Llamar al método del modelo para insertar la incidencia en la base de datos
-      $insertSuccessId = $this->recepcionModel->insertarRecepcion(
-        $fecha,
-        $hora,
-        $incidencia,
-        $prioridad,
-        $impacto,
-        $usuario,
-      );
-
-      if ($insertSuccessId) {
-        header('Location: registro-recepcion.php?REC_numero=' . $insertSuccessId);
-      } else {
-        echo "Error al registrar la recepcion.";
+        if ($insertSuccessId) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Recepcion registrada.',
+            'INC_numero' => $insertSuccessId
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'Error al registrar la recepcion.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
       }
-    } else {
-      echo "Error: Método no permitido.";
+      exit();
     }
   }
 
@@ -58,12 +57,9 @@ class RecepcionController
       $prioridad = $_POST['prioridad'] ?? null;
       $impacto = $_POST['impacto'] ?? null;
 
-      header('Content-Type: application/json');
       try {
-
         // Verificar el estado de la incidencia
         $estado = $this->recepcionModel->obtenerEstadoRecepcion($numeroRecepcion);
-
         if ($estado === 4) {
           // Estado permitido para actualización
           echo json_encode([
@@ -93,8 +89,7 @@ class RecepcionController
           'message' => 'Error: ' . $e->getMessage()
         ]);
       }
-    } else {
-      echo "Error: Metodo no permitido";
+      exit();
     }
   }
 }

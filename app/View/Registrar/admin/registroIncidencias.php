@@ -132,7 +132,7 @@
         document.getElementById('descripcion').value = '<?php echo $incidenciaRegistrada ? $incidenciaRegistrada['INC_descripcion'] : ''; ?>';
       </script>
 
-      <!-- TODO: BOTONES -->
+      <!-- Botones del formulario -->
       <div class="flex justify-center space-x-4">
         <button type="submit" id="guardar-incidencia" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
         <button type="button" id="editar-incidencia" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
@@ -143,9 +143,9 @@
     <!-- Fin de Formulario -->
 
     <!-- Paginacion de la tabla -->
-    <div class="mt-3 mb-2">
-      <div id="paginadorIncidencias" class="flex justify-end items-center mt-1">
-
+    <div id="noIncidencias" class="flex justify-between items-center mb-2">
+      <h1 class="text-xl text-gray-400">Nuevas incidencias</h1>
+      <div id="paginadorIncidencias" class="flex justify-end items-center ">
         <?php if ($totalPages > 1) : // Mostrar el contenedor solo si hay más de una página 
         ?>
           <div class="flex justify-end items-center mt-1">

@@ -37,12 +37,11 @@ class IncidenciaController
       $usuario = $_POST['usuario'] ?? null;
 
       try {
-
         // Validar existencia del bien
         if (!$this->bienModel->validarBienExistente($codigoPatrimonial)) {
           echo json_encode([
             'success' => false,
-            'message' => 'El equipo no existe'
+            'message' => 'Verificar codigo patrimonial ingresado'
           ]);
           exit();
         }
@@ -163,7 +162,7 @@ class IncidenciaController
           // Estado permitido para actualización
           echo json_encode([
             'success' => false,
-            'message' => 'La incidencia no está Abierta y no puede ser actualizada.'
+            'message' => 'La incidencia no está estado ABIERTO y no puede ser actualizada.'
           ]);
           exit();
         }
@@ -202,7 +201,7 @@ class IncidenciaController
    * Retorno:
    * - Array con los resultados de la consulta o `false` si no se encontraron resultados.
    */
-  public function consultarIncidenciaAdministrador($area = NULL, $estado = null, $fechaInicio = null, $fechaFin = null)
+  public function consultarIncidenciasPendientesAdministrador($area = NULL, $estado = null, $fechaInicio = null, $fechaFin = null)
   {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
       // Obtener los valores de los parámetros GET o asignar null si no existen
@@ -212,7 +211,7 @@ class IncidenciaController
       $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : null;
       error_log("Área: $area, Estado: $estado, Fecha Inicio: $fechaInicio, Fecha Fin: $fechaFin");
       // Llamar al método para consultar incidencias por área, estado y fecha
-      $consultaIncidencia = $this->incidenciaModel->buscarIncidenciaAdministrador($area, $estado, $fechaInicio, $fechaFin);
+      $consultaIncidencia = $this->incidenciaModel->buscarIncidenciasPendientesAdministrador($area, $estado, $fechaInicio, $fechaFin);
       // Retornar el resultado de la consulta
       return $consultaIncidencia;
     }

@@ -36,6 +36,8 @@ class BienModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
+        $sql = "";
+        
       }
     } catch (PDOException $e) {
       throw new Exception("Error al insertar tipo de bien: " . $e->getMessage());
