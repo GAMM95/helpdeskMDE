@@ -465,12 +465,13 @@ class IncidenciaModel extends Conexion
   public function contarIncidenciasAdministrador()
   {
     $conector = $this->getConexion();
-    $sql = "SELECT COUNT(*) as total FROM INCIDENCIA";
+    $sql = "SELECT COUNT(*) as total FROM vista_incidencias_administrador";
     $stmt = $conector->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result['total'];
   }
+  
   //  TODO: Contar el total de incidencias para empaginar tabla - USUARIO
   public function contarIncidenciasUsuario($ARE_codigo)
   {

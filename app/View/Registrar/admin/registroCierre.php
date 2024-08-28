@@ -39,6 +39,7 @@
         <?php endif; ?>
       </div>
     </div>
+    <!-- final de paginador -->
 
     <!-- Tabla de recepciones sin cerrar -->
     <input type="hidden" id="recepcionCount" value="<?php echo count($recepciones); ?>">

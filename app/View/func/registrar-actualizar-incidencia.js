@@ -19,43 +19,37 @@ function enviarFormulario(action) {
     url: url,
     method: 'POST',
     data: data,
-    dataType: 'json',
-    success: function (xhr, response, error, status) {
-      console.log('Error response:', data);
-      console.log('Status:', status);
-      console.log('Error:', error);
-      console.log(response.success); // Verifica la respuesta aquí
-      if (response.success) {
-        if (action === 'registrar') {
-          toastr.success('Incidencia registrada');
-        } else if (action === 'editar') {
-          toastr.success('Incidencia actualizada');
+    dataType: 'text',
+    success: function (response) {
+      console.log('Raw response:', response);
+      try {
+        // Convertir la respuesta en un objeto JSON
+        var jsonResponse = JSON.parse(response);
+        console.log('Parsed JSON:', jsonResponse);
+
+        if (jsonResponse.success) {
+          if (action === 'registrar') {
+            toastr.success('Incidencia registrada.');
+          } else if (action === 'editar') {
+            toastr.success('Incidencia actualizada.');
+          }
+          // Recarga la página después de 1.5 segundos
+          setTimeout(function () {
+            location.reload();
+          }, 1500);
+        } else {
+          toastr.warning(jsonResponse.message);
         }
-        setTimeout(function () {
-          location.reload();
-        }, 1500);
-      } else {
-        toastr.warning(response.message);
+      } catch (e) {
+        console.error('JSON parsing error:', e);
+        toastr.error('Error al procesar la respuesta.');
       }
     },
-    error: function (xhr, response, status, error) {
-      console.log(xhr.responseText); // Esto te mostrará la respuesta completa del servidor
-      console.log('Error response:', data);
-      console.log('Status:', status);
-      console.log('Error:', error);
-      console.log(response.error); // Verifica la respuesta aquí
-
-      if (action === 'registrar') {
-        toastr.success('Incidencia registrada');
-      } else if (action === 'editar') {
-        toastr.success('Incidencia actualizada');
-      }
-      setTimeout(function () {
-        location.reload();
-      }, 1500);
+    error: function (xhr, status, error) {
+      console.error('AJAX Error:', error);
+      toastr.error('Error en la solicitud AJAX.');
     }
   });
-
 }
 
 // Validación de campos del formulario

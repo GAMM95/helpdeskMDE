@@ -22,8 +22,6 @@ class PersonaController
       $celular = $_POST['celular'] ?? null;
       $email = $_POST['email'] ?? null;
 
-      header('Content-Type: application/json'); // Establecer el tipo de contenido como JSON
-
       try {
         // Validar si el DNI ya está registrado
         if ($this->personaModel->validarDniExistente($dni)) {

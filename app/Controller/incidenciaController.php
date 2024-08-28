@@ -1,13 +1,17 @@
 <?php
 // Importar el modelo IncidenciaModel.php
 require 'app/Model/IncidenciaModel.php';
+require 'app/Model/BienModel.php';
 
 class IncidenciaController
 {
   private $incidenciaModel;
+  private $bienModel;
+
   public function __construct()
   {
     $this->incidenciaModel = new IncidenciaModel();
+    $this->bienModel = new BienModel();
   }
 
   /**
@@ -32,24 +36,39 @@ class IncidenciaController
       $area = $_POST['area'] ?? null;
       $usuario = $_POST['usuario'] ?? null;
 
-      // Llamar al método del modelo para insertar la incidencia en la base de datos
-      $insertSuccessId = $this->incidenciaModel->insertarIncidencia($fecha, $hora, $asunto, $descripcion, $documento, $codigoPatrimonial, $categoria, $area, $usuario);
+      try {
 
-      if ($insertSuccessId) {
-        // Respuesta JSON de éxito
-        echo json_encode([
-          'success' => true,
-          'message' => 'Incidencia registrada exitosamente.',
-          'INC_numero' => $insertSuccessId
-        ]);
-      } else {
-        // Respuesta JSON de error
+        // Validar existencia del bien
+        if (!$this->bienModel->validarBienExistente($codigoPatrimonial)) {
+          echo json_encode([
+            'success' => false,
+            'message' => 'El equipo no existe'
+          ]);
+          exit();
+        }
+
+        // Llamar al método del modelo para insertar la incidencia en la base de datos
+        $insertSuccessId = $this->incidenciaModel->insertarIncidencia($fecha, $hora, $asunto, $descripcion, $documento, $codigoPatrimonial, $categoria, $area, $usuario);
+
+        if ($insertSuccessId) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Incidencia registrada exitosamente.',
+            'INC_numero' => $insertSuccessId
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'Error al registrar la incidencia.'
+          ]);
+        }
+      } catch (Exception $e) {
         echo json_encode([
           'success' => false,
-          'message' => 'Error al registrar la incidencia.'
+          'message' => 'Error: ' . $e->getMessage()
         ]);
       }
-      exit(); // Terminar el script para evitar cualquier salida adicional
+      exit(); // Asegúrate de que no haya más salida después
     }
   }
 
@@ -75,24 +94,39 @@ class IncidenciaController
       $area = $_POST['codigoArea'] ?? null;
       $usuario = $_POST['codigoUsuario'] ?? null;
 
-      // Llamar al método del modelo para insertar la incidencia en la base de datos
-      $insertSuccessId = $this->incidenciaModel->insertarIncidencia($fecha, $hora, $asunto, $descripcion, $documento, $codigoPatrimonial, $categoria, $area, $usuario);
+      try {
 
-      if ($insertSuccessId) {
-        // Respuesta JSON de éxito
-        echo json_encode([
-          'success' => true,
-          'message' => 'Incidencia registrada exitosamente.',
-          'INC_numero' => $insertSuccessId
-        ]);
-      } else {
-        // Respuesta JSON de error
+        // Validar existencia del bien
+        if (!$this->bienModel->validarBienExistente($codigoPatrimonial)) {
+          echo json_encode([
+            'success' => false,
+            'message' => 'El equipo no existe'
+          ]);
+          exit();
+        }
+
+        // Llamar al método del modelo para insertar la incidencia en la base de datos
+        $insertSuccessId = $this->incidenciaModel->insertarIncidencia($fecha, $hora, $asunto, $descripcion, $documento, $codigoPatrimonial, $categoria, $area, $usuario);
+
+        if ($insertSuccessId) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Incidencia registrada exitosamente.',
+            'INC_numero' => $insertSuccessId
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'Error al registrar la incidencia.'
+          ]);
+        }
+      } catch (Exception $e) {
         echo json_encode([
           'success' => false,
-          'message' => 'Error al registrar la incidencia.'
+          'message' => 'Error: ' . $e->getMessage()
         ]);
       }
-      exit(); // Terminar el script para evitar cualquier salida adicional
+      exit();
     }
   }
 
@@ -116,7 +150,7 @@ class IncidenciaController
         if (is_null($asunto) || is_null($documento)) {
           // Respuesta en caso de parámetros faltantes
           echo json_encode([
-            'success' => false,
+            'success' => true,
             'message' => 'Faltan parámetros requeridos.'
           ]);
           exit();
@@ -154,6 +188,7 @@ class IncidenciaController
           'message' => 'Error: ' . $e->getMessage()
         ]);
       }
+      exit();
     }
   }
 
