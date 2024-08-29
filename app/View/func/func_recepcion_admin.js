@@ -1,11 +1,12 @@
 $(document).ready(function () {
+  // Configuracion de toastr
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
     "timeOut": "2000"
   };
 
-  // Cargar opciones de prioridad
+  // Seteo del combo Prioridad
   $.ajax({
     url: 'ajax/getPrioridadData.php',
     type: 'GET',
@@ -41,10 +42,10 @@ $(document).ready(function () {
     }
   });
 
-  // Buscador para el combo prioridad e impacto
+  // Buscador para el combo prioridad e impacto con ancho fijo
   $('#prioridad, #impacto').select2({
     allowClear: true,
-    width: '100%',
+    width: '200px', // Cambia de '100%' a 'resolve' para que coincida con el ancho del elemento base
     dropdownCssClass: 'text-xs',
     language: {
       noResults: function () {
@@ -53,152 +54,203 @@ $(document).ready(function () {
     }
   });
 
-  // Evento de clic en las filas de la tabla de incidencias sin recepcionar
-  $(document).on('click', '#tablaIncidenciasSinRecepcionar tbody tr', function () {
-    var id = $(this).find('th').html();
-    $('#tablaIncidenciasSinRecepcionar tbody tr').removeClass('bg-blue-200 font-semibold');
-    $(this).addClass('bg-blue-200 font-semibold');
-    $('#incidencia').val(id);
-
-    var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
-    $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
-
-    // Bloquear la tabla de incidencias recepcionadas
-    $('#tablaIncidenciasRecepcionadas tbody tr').addClass('pointer-events-none opacity-50');
-    document.getElementById('guardar-recepcion').disabled = false;
-    document.getElementById('nuevo-registro').disabled = false;
-
-    // Reactivar el botón "Nuevo"
-    $('#nuevo-registro').prop('disabled', false);
+  // Evento para guardar la recepcion
+  $('#guardar-recepcion').on('click', function (e) {
+    e.preventDefault();
+    enviarFormulario($('#form-action').val());
   });
 
-  // Evento de clic en las filas de la tabla de incidencias recepcionadas
-  $(document).on('click', '#tablaIncidenciasRecepcionadas tbody tr', function () {
-    var numRecepcion = $(this).data('id');
-    $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('bg-blue-200 font-semibold');
-    $(this).addClass('bg-blue-200 font-semibold');
-    $('#num_recepcion').val(numRecepcion);
-
-    var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
-    $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
-
-    // Bloquear la tabla de incidencias sin recepcionar
-    $('#tablaIncidenciasSinRecepcionar tbody tr').addClass('pointer-events-none opacity-50');
-
-    // Reactivar el botón "Nuevo"
-    $('#nuevo-registro').prop('disabled', false);
+  // Evento para editar la recepcion
+  $('#editar-recepcion').on('click', function (e) {
+    e.preventDefault();
+    enviarFormulario('editar');
   });
 
   // Evento para nuevo registro
-  $('#nuevo-registro').on('click', function () {
-    nuevoRegistro();
-    // Reactivar ambas tablas
-    $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('pointer-events-none opacity-50');
-    $('#tablaIncidenciasSinRecepcionar tbody tr').removeClass('pointer-events-none opacity-50');
-    location.reload();
-  });
+  $('#nuevo-registro').on('click', nuevoRegistro);
+});
 
-
-  // TODO: Manejo de la paginacion de la tabla de incidencias sin recepcionar
-  $(document).on('click', '.pagination-link', function (e) {
-    e.preventDefault();
-    var page = $(this).attr('href').split('page=')[1];
-    changePageTablaSinRecepcionar(page);
-  });
-
-
-
-  // Guardar la recepción
-  $('#guardar-recepcion').click(function (event) {
-    event.preventDefault(); // Prevenir el comportamiento predeterminado del botón
-
-    // Validar campos antes de enviar
-    if (!validarCampos()) {
-      return; // Si hay campos inválidos, detener el envío del formulario
+// Funcion para las validaciones de campos vacios y registro - actualizacion de recepcion
+function enviarFormulario(action) {
+  if (action === 'registrar') {
+    if (!validarCamposRegistro()) {
+      return; // Si la validación de registro falla, salimos
     }
+  } else if (action === 'editar') {
+    if (!validarCamposActualizacion()) {
+      return; // Si la validación de actualización falla, salimos
+    }
+  }
 
-    var form = $('#formRecepcion'); // Asegúrate de que el ID del formulario es 'formRecepcion'
-    var data = form.serialize();
-    console.log(data); // Para verificar cuántas veces se envía el formulario
+  var url = 'registro-recepcion.php?action=' + action;
+  var data = $('#formRecepcion').serialize();
 
-    var action = form.attr('action');
-    $.ajax({
-      url: action,
-      type: 'POST',
-      data: data,
-      success: function (response) {
-        // Manejo de éxito de la solicitud AJAX
-        if (action.includes('registrar')) {
-          toastr.success('Incidencia recepcionada');
-        } else if (action.includes('editar')) {
-          toastr.success('Recepción de incidencia actualizada');
+  $.ajax({
+    url: url,
+    method: 'POST',
+    data: data,
+    dataType: 'text',
+    success: function (response) {
+      console.log('Raw response:', response);
+      try {
+        // Convertir la respuesta en un objeto JSON
+        var jsonResponse = JSON.parse(response);
+        console.log('Parsed JSON:', jsonResponse);
+
+        if (jsonResponse.success) {
+          if (action === 'registrar') {
+            toastr.success('Incidencia recepcionada.');
+          } else if (action === 'editar') {
+            toastr.success('Incidencia recepcionada actualizada.');
+          }
+          setTimeout(function () {
+            location.reload();
+          }, 1500);
+        } else {
+          toastr.warning(jsonResponse.message);
         }
-        setTimeout(function () {
-          location.reload(); // Recargar la página después de un tiempo
-        }, 1500);
-      },
-      error: function (xhr, status, error) {
-        // Manejo de error de la solicitud AJAX
-        console.error(xhr.responseText);
-        toastr.error('Error al registrar recepci&oacute;n');
+      } catch (e) {
+        console.error('JSON parsing error:', e);
+        toastr.error('Error al procesar la respuesta.');
       }
-    });
+    },
+    error: function (xhr, status, error) {
+      console.error('AJAX Error:', error);
+      toastr.error('Error en la solicitud AJAX.');
+    }
   });
+}
 
-  // Validar campos antes de enviar el formulario
-  function validarCampos() {
-    var valido = true;
-    var mensajeError = ''; // Inicializamos una variable para los mensajes de error
 
-    // Validar campo de número de incidencia
-    if ($('#incidencia').val() === '') {
-      mensajeError += 'Debe seleccionar una incidencia. ';
+// Validar campos de registro de recepcion antes de enviar el formulario
+function validarCamposRegistro() {
+  var valido = true;
+  var mensajeError = ''; // Inicializamos una variable para los mensajes de error
+
+  // Validar campo de número de incidencia
+  if ($('#incidencia').val() === '') {
+    mensajeError += 'Debe seleccionar una incidencia. ';
+    valido = false;
+  }
+
+  // Solo validamos los otros campos si la incidencia es valida
+  if (valido) {
+    // Validar campo de prioridad e impacto
+    var faltaPrioridad = ($('#prioridad').val() === null || $('#prioridad').val() === '');
+    var faltaImpacto = ($('#impacto').val() === null || $('#impacto').val() === '');
+
+    if (faltaPrioridad && faltaImpacto) {
+      mensajeError += 'Debe seleccionar una prioridad y un impacto.';
+      valido = false;
+    } else if (faltaPrioridad) {
+      mensajeError += 'Debe seleccionar una prioridad.';
+      valido = false;
+    } else if (faltaImpacto) {
+      mensajeError += 'Debe seleccionar un impacto.';
       valido = false;
     }
-
-    // Solo validamos los otros campos si la incidencia es valida
-    if (valido) {
-      // Validar campo de prioridad e impacto
-      var faltaPrioridad = ($('#prioridad').val() === null || $('#prioridad').val() === '');
-      var faltaImpacto = ($('#impacto').val() === null || $('#impacto').val() === '');
-
-      if (faltaPrioridad && faltaImpacto) {
-        mensajeError += 'Debe seleccionar una prioridad y un impacto.';
-        valido = false;
-      } else if (faltaPrioridad) {
-        mensajeError += 'Debe seleccionar una prioridad.';
-        valido = false;
-      } else if (faltaImpacto) {
-        mensajeError += 'Debe seleccionar un impacto.';
-        valido = false;
-      }
-    }
-
-    // Mostrar el mensaje de error si hay
-    if (!valido) {
-      toastr.warning(mensajeError.trim());
-    }
-    return valido;
   }
 
-  // Función para limpiar los campos del formulario
-  function nuevoRegistro() {
-    document.getElementById('formRecepcion').reset();
+  // Mostrar el mensaje de error si hay
+  if (!valido) {
+    toastr.warning(mensajeError.trim());
+  }
+  return valido;
+}
+
+// Validar campos antes de enviar el formulario
+function validarCamposActualizacion() {
+  var valido = true;
+  var mensajeError = ''; // Inicializamos una variable para los mensajes de error
+
+  // Validar campo de número de incidencia recepcionada
+  if ($('#num_recepcion').val().trim() === '') {  // Asegúrate de validar con .trim() para evitar espacios en blanco
+    mensajeError += 'Debe seleccionar una incidencia recepcionada. ';
+    valido = false;
   }
 
-  // Ocultar tabla y buscador superior si no hay registros
-  document.addEventListener("DOMContentLoaded", function () {
-    const tablaContainer = document.getElementById("tablaContainer");
-    const noIncidencias = document.getElementById("noIncidencias");
+  // Validar otros campos solo si el número de recepción es válido
+  if (valido) {
+    // Validar campo de prioridad e impacto
+    var faltaPrioridad = ($('#prioridad').val() === null || $('#prioridad').val() === '');
+    var faltaImpacto = ($('#impacto').val() === null || $('#impacto').val() === '');
 
-    if (parseInt(document.getElementById("incidenciaCount").value) === 0) {
-      tablaContainer.classList.add("hidden");
-      noIncidencias.classList.add("hidden");
-    } else {
-      tablaContainer.classList.remove("hidden");
-      noIncidencias.classList.remove("hidden");
+    if (faltaPrioridad && faltaImpacto) {
+      mensajeError += 'Debe seleccionar una prioridad y un impacto.';
+      valido = false;
+    } else if (faltaPrioridad) {
+      mensajeError += 'Debe seleccionar una prioridad.';
+      valido = false;
+    } else if (faltaImpacto) {
+      mensajeError += 'Debe seleccionar un impacto.';
+      valido = false;
     }
-  });
+  }
+
+  // Mostrar el mensaje de error si hay
+  if (!valido) {
+    toastr.warning(mensajeError.trim());
+  }
+  return valido;
+}
+
+// Evento de clic en las filas de la tabla de incidencias sin recepcionar
+$(document).on('click', '#tablaIncidenciasSinRecepcionar tbody tr', function () {
+  var id = $(this).find('th').html();
+  $('#tablaIncidenciasSinRecepcionar tbody tr').removeClass('bg-blue-200 font-semibold');
+  $(this).addClass('bg-blue-200 font-semibold');
+  $('#incidencia').val(id);
+
+  var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
+  $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
+
+  // Bloquear la tabla de incidencias recepcionadas
+  $('#tablaIncidenciasRecepcionadas tbody tr').addClass('pointer-events-none opacity-50');
+  document.getElementById('guardar-recepcion').disabled = false;
+  document.getElementById('nuevo-registro').disabled = false;
+
+  // Reactivar el botón "Nuevo"
+  $('#nuevo-registro').prop('disabled', false);
+});
+
+// Evento de clic en las filas de la tabla de incidencias recepcionadas
+$(document).on('click', '#tablaIncidenciasRecepcionadas tbody tr', function () {
+  var numRecepcion = $(this).attr('data-id');
+  $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('bg-blue-200 font-semibold');
+  $(this).addClass('bg-blue-200 font-semibold');
+  $('#num_recepcion').val(numRecepcion);
+  // console.log('Número de Recepción:', $('#num_recepcion').val());
+
+  var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
+  $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
+
+  // Bloquear la tabla de incidencias sin recepcionar
+  $('#tablaIncidenciasSinRecepcionar tbody tr').addClass('pointer-events-none opacity-50');
+
+  // Reactivar el botón "Nuevo"
+  $('#nuevo-registro').prop('disabled', false);
+});
+
+
+// TODO: Manejo de la paginacion de la tabla de incidencias sin recepcionar
+$(document).on('click', '.pagination-link', function (e) {
+  e.preventDefault();
+  var page = $(this).attr('href').split('page=')[1];
+  changePageTablaSinRecepcionar(page);
+});
+
+// Ocultar tabla y buscador superior si no hay registros
+document.addEventListener("DOMContentLoaded", function () {
+  const tablaContainer = document.getElementById("tablaContainer");
+  const noIncidencias = document.getElementById("noIncidencias");
+
+  if (parseInt(document.getElementById("incidenciaCount").value) === 0) {
+    tablaContainer.classList.add("hidden");
+    noIncidencias.classList.add("hidden");
+  } else {
+    tablaContainer.classList.remove("hidden");
+    noIncidencias.classList.remove("hidden");
+  }
 });
 
 // Función para cambiar de página en la tabla de incidencias sin recepcionar
@@ -310,8 +362,6 @@ function setComboValue(comboId, value) {
   const select = document.getElementById(comboId);
   const options = select.options;
 
-  console.log("Seteo de los valores para: ", comboId, "Valor: ", value);
-
   // Verificar si el valor esta en el combo
   let valueFound = false;
   for (let i = 0; i < options.length; i++) {
@@ -329,3 +379,27 @@ function setComboValue(comboId, value) {
   // Forzar actualización del select2 para mostrar el valor seleccionado
   $(select).trigger('change');
 };
+
+// Función para limpiar los campos del formulario
+function nuevoRegistro() {
+  const form = document.getElementById('formRecepcion').reset();
+  form.reset();
+  $('#rec_numero').val('');
+  $('#incidencia').val('');
+  $('#incidenciaSeleccionada').val('');
+  $('tr').removeClass('bg-blue-200 font-semibold');
+
+  $('#form-action').val('registrar'); // Cambiar la acción a registrar
+
+  // Vaciar y resetear los valores de los selects de categoría y área
+  $('#prioridad').val('').trigger('change');
+  $('#impacto').val('').trigger('change');
+
+  $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('pointer-events-none opacity-50');
+  $('#tablaIncidenciasSinRecepcionar tbody tr').removeClass('pointer-events-none opacity-50');
+
+  // Deshabilitar el botón de editar
+  $('#guardar-recepcion').prop('disabled', false);
+  $('#editar-recepcion').prop('disabled', true);
+  $('#nuevo-registro').prop('disabled', false);
+}

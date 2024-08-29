@@ -59,7 +59,7 @@
               <th scope="col" class="px-6 py-2">Documento</th>
               <th scope="col" class="px-6 py-2">Prioridad</th>
               <!-- <th scope="col" class="px-6 py-2">Impacto</th> -->
-              <th scope="col" class="px-6 py-2">Usuario</th>
+              <th scope="col" class="px-6 py-2">Usuario receptor</th>
             </tr>
           </thead>
           <!-- Fin de encabezado -->
@@ -249,7 +249,7 @@
             <th scope="col" class="px-6 py-2">Asunto Cierre</th>
             <th scope="col" class="px-6 py-2">Documento Cierre</th>
             <th scope="col" class="px-6 py-2">Condici&oacute;n</th>
-            <th scope="col" class="px-6 py-2">Usuario</th>
+            <th scope="col" class="px-6 py-2">Usuario cierre</th>
           </tr>
         </thead>
         <!-- Fin de encabezado -->

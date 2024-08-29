@@ -93,6 +93,8 @@
 
     <!-- Formulario de registro de recepción de incidencias -->
     <form id="formRecepcion" action="registro-recepcion.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-4 w-full text-xs mb-3">
+      <input type="hidden" id="form-action" name="action" value="registrar">
+
       <div class="flex flex-wrap -mx-2 justify-center">
         <!-- NUMERO DE INCIDENCIA -->
         <div class="flex justify-center mx-2 mb-2 hidden">
@@ -110,7 +112,7 @@
           </div>
         </div>
 
-        <!-- INPUT ESCONDIDO PARA EL NUMERO DE RECEPCION -->
+        <!-- Numero de recepcion -->
         <div class="flex justify-center mx-2 mb-2 hidden">
           <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
             <label for="num_recepcion" class="block font-bold mb-1 mr-3 text-lime-500">Número de Recepción:</label>
@@ -149,7 +151,7 @@
 
         <!-- SELECT PRIORIDAD -->
         <div class="flex flex-wrap -mx-2 ml-5 mr-4">
-          <div class="w-full px-2 ">
+          <div class="w-full px-2">
             <label for="prioridad" class="block font-bold mb-1">Prioridad:</label>
             <select id="prioridad" name="prioridad" class="border p-2 w-full text-xs cursor-pointer rounded-md">
             </select>
@@ -168,6 +170,7 @@
         <!-- RECOPILACION DE VALORES DE CADA INPUT Y COMBOBOX -->
         <script>
           document.getElementById('incidencia').value = '<?php echo $recepcionRegistrada ? $recepcionRegistrada['INC_numero'] : ''; ?>';
+          document.getElementById('num_recepcion').value = '<?php echo $recepcionRegistrada ? $recepcionRegistrada['REC_numero'] : ''; ?>';
           document.getElementById('hora').value = '<?php echo $recepcionRegistrada ? $recepcionRegistrada['REC_hora'] : $hora_actual; ?>';
           document.getElementById('fecha').value = '<?php echo $recepcionRegistrada ? $recepcionRegistrada['REC_fecha'] : $fecha_actual; ?>';
           document.getElementById('prioridad').value = '<?php echo $recepcionRegistrada ? $recepcionRegistrada['PRI_codigo'] : ''; ?>';
@@ -227,8 +230,8 @@
           <tbody>
             <?php if (!empty($resultadoRecepciones)) : ?>
               <?php foreach ($resultadoRecepciones as $recepcion) : ?>
-                <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
-                  <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $recepcion['REC_numero']; ?></th>
+                <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id="<?= $recepcion['REC_numero']; ?>">
+                  <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'><?= $recepcion['REC_numero']; ?></th>
                   <td class='px-6 py-3'><?= $recepcion['INC_numero_formato']; ?></td>
                   <td class='px-6 py-3'><?= $recepcion['fechaRecepcionFormateada']; ?></td>
                   <td class='px-6 py-3'><?= $recepcion['ARE_nombre']; ?></td>

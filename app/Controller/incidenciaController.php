@@ -67,7 +67,7 @@ class IncidenciaController
           'message' => 'Error: ' . $e->getMessage()
         ]);
       }
-      exit(); // Asegúrate de que no haya más salida después
+      exit(); 
     }
   }
 

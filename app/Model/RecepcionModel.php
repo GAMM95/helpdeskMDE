@@ -74,18 +74,21 @@ class RecepcionModel extends Conexion
   {
     $conector = parent::getConexion();
     try {
-      $sql = "EXEC sp_ActualizarRecepcion :num_recepcion, :prioridad, :impacto";
-      $stmt = $conector->prepare($sql);
-      $stmt->bindParam(':num_recepcion', $recepcion);
-      $stmt->bindParam(':prioridad', $prioridad);
-      $stmt->bindParam(':impacto', $impacto);
-      $stmt->execute();
-
-      // Confirmar que se ha actualizado al menos una fila
-      if ($stmt->rowCount() > 0) {
-        return true;
+      if ($conector != null) {
+        $sql = "EXEC sp_ActualizarRecepcion :num_recepcion, :prioridad, :impacto";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':num_recepcion', $recepcion);
+        $stmt->bindParam(':prioridad', $prioridad);
+        $stmt->bindParam(':impacto', $impacto);
+        $stmt->execute(); // Ejecutar el procedimiento almacenado
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
-        return false;
+        throw new Exception("Error de conexión con la base de datos.");
       }
     } catch (PDOException $e) {
       echo "Error al editar recepcion para el administrador: " . $e->getMessage();

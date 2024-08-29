@@ -53,29 +53,39 @@ class RecepcionController
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Obtener y validar los parámetros
-      $numeroRecepcion = $_POST['numero_incidencia'] ?? null;
+      $numeroRecepcion = $_POST['num_recepcion'] ?? null;
       $prioridad = $_POST['prioridad'] ?? null;
       $impacto = $_POST['impacto'] ?? null;
+
+      if (empty($numeroRecepcion) || empty($prioridad) || empty($impacto)) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Todos los campos son obligatorios.'
+        ]);
+        exit();
+      }
 
       try {
         // Verificar el estado de la incidencia
         $estado = $this->recepcionModel->obtenerEstadoRecepcion($numeroRecepcion);
+
+        // Suponiendo que el estado "4" permite la actualización
         if ($estado === 4) {
-          // Estado permitido para actualización
+          // Estado no permitido para actualización
           echo json_encode([
             'success' => false,
-            'message' => 'La recepcion no está Recepcionada y no puede ser actualizada.'
+            'message' => 'La recepción no está en un estado que permita actualización.'
           ]);
           exit();
         }
 
         // Llamar al modelo para actualizar la incidencia
-        $updateSuccess = $this->recepcionModel->editarRecepcion($numeroRecepcion, $prioridad, $impacto);
+        $updateSuccess = $this->recepcionModel->editarRecepcion($prioridad, $impacto, $numeroRecepcion);
 
         if ($updateSuccess) {
           echo json_encode([
             'success' => true,
-            'message' => 'Recepcion actualizada.'
+            'message' => 'Recepción actualizada.'
           ]);
         } else {
           echo json_encode([
