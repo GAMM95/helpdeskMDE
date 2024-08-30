@@ -1,9 +1,9 @@
 <?php
-// Importamos las credenciales y la clase de conexión
 require_once 'config/conexion.php';
 
 class PersonaModel extends Conexion
 {
+  // Atributos de la clase
   protected $codigoPersona;
   protected $dni;
   protected $nombres;
@@ -31,24 +31,30 @@ class PersonaModel extends Conexion
     $this->celular = $celular;
   }
 
-
-
   // Método para validar la existencia de un DNI
-  public function validarDniExistente($dni)
+  public function validarDniExistente()
   {
     $conector = parent::getConexion();
     try {
-      $sql = "SELECT COUNT(*) FROM PERSONA WHERE PER_dni = ?";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute([$dni]);
-      $count = $stmt->fetchColumn();
-      return $count > 0;
+      if ($conector != null) {
+        $sql = "SELECT COUNT(*) FROM PERSONA WHERE PER_dni = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([
+          $this->dni
+        ]);
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
     } catch (PDOException $e) {
-      throw new Exception("Error al verificar el DNI: " . $e->getMessage());
+      throw new PDOException("Error al verificar el DNI: " . $e->getMessage());
+      return null;
     }
   }
 
-  // TODO: Método para registrar nueva persona
+  // Método para registrar nueva persona
   public function registrarPersona($dni, $nombres, $apellidoPaterno, $apellidoMaterno, $celular, $email)
   {
     $conector = parent::getConexion();
@@ -76,45 +82,57 @@ class PersonaModel extends Conexion
     }
   }
 
-  // TODO: Método para obtener una persona por ID
+  // Método para obtener una persona por ID
   public function obtenerPersonaPorId($codigoPersona)
   {
     $conector = parent::getConexion();
     try {
-      $sql = "SELECT * FROM PERSONA WHERE PER_codigo = ?";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute([$codigoPersona]);
-      $registros = $stmt->fetch(PDO::FETCH_ASSOC);
-      return $registros;
+      if ($conector != null) {
+        $sql = "SELECT * FROM PERSONA WHERE PER_codigo = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([$codigoPersona]);
+        $registros = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $registros;
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
     } catch (PDOException $e) {
-      throw new Exception("Error al obtener la persona: " . $e->getMessage());
+      throw new PDOException("Error al obtener la persona: " . $e->getMessage());
+      return null;
     }
   }
 
-  // TODO: Método para actualizar datos de la persona
+  // Método para actualizar datos de la persona
   public function actualizarPersona($dni, $nombres, $apellidoPaterno, $apellidoMaterno, $celular, $email, $codigoPersona)
   {
     $conector = parent::getConexion();
     try {
-      $sql = "UPDATE PERSONA SET PER_dni = ?, PER_nombres = ?, PER_apellidoPaterno = ?, 
-              PER_apellidoMaterno = ?, PER_celular = ?, PER_email = ? WHERE PER_codigo = ?";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute([
-        $dni,
-        $nombres,
-        $apellidoPaterno,
-        $apellidoMaterno,
-        $celular,
-        $email,
-        $codigoPersona
-      ]);
-      return $stmt->rowCount();
+      if ($conector != null) {
+        $sql = "UPDATE PERSONA SET PER_dni = ?, PER_nombres = ?, PER_apellidoPaterno = ?, 
+        PER_apellidoMaterno = ?, PER_celular = ?, PER_email = ? WHERE PER_codigo = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([
+          $dni,
+          $nombres,
+          $apellidoPaterno,
+          $apellidoMaterno,
+          $celular,
+          $email,
+          $codigoPersona
+        ]);
+        return $stmt->rowCount();
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
     } catch (PDOException $e) {
-      throw new Exception("Error al actualizar la persona: " . $e->getMessage());
+      throw new PDOException("Error al actualizar la persona: " . $e->getMessage());
+      return null;
     }
   }
 
-  // TODO: Metodo para obtener la lista de personas
+  // Metodo para obtener la lista de personas
   public function listarTrabajadores($start, $limit)
   {
     $conector = parent::getConexion();
@@ -134,16 +152,16 @@ class PersonaModel extends Conexion
         $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $registros;
       } else {
-        echo "Error de conexion a la base de datos";
+        throw new Exception("Error de conexion a la base de datos");
         return null;
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al obtener las personas: " . $e->getMessage());
+      throw new PDOException("Error al obtener las personas: " . $e->getMessage());
       return null;
     }
   }
 
-  // TODO: contar personas para filtrar tabla
+  // Metodo para contar personas para filtrar tabla
   public function contarTrabajadores()
   {
     $conector = parent::getConexion();
@@ -155,16 +173,16 @@ class PersonaModel extends Conexion
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'];
       } else {
-        echo "Error de conexion con la base de datos";
+        throw new Exception("Error de conexion con la base de datos");
         return null;
       }
     } catch (PDOException $e) {
-      echo "Error al contar trabajadores: " . $e->getMessage();
+      throw new PDOException("Error al contar trabajadores: " . $e->getMessage());
       return null;
     }
   }
 
-  // TODO: Método para filtrar personas por término de búsqueda
+  // Método para filtrar personas por término de búsqueda
   public function filtrarPersonas($terminoBusqueda)
   {
     $conector = parent::getConexion();
@@ -185,11 +203,11 @@ class PersonaModel extends Conexion
         $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $registros;
       } else {
-        echo "Error de conexion a la base de datos";
+        throw new Exception("Error de conexion a la base de datos");
         return null;
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al filtrar personas: " . $e->getMessage());
+      throw new PDOException("Error al filtrar personas: " . $e->getMessage());
       return null;
     }
   }

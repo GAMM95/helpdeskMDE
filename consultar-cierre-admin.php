@@ -46,7 +46,7 @@ if ($action === 'consultar') {
       $estadoDescripcion = htmlspecialchars($cierre['Estado']);
       $badgeClass = '';
       switch ($estadoDescripcion) {
-        case 'Cerrado':
+        case 'CERRADO':
           $badgeClass = 'badge-light-primary';
           break;
         default:
@@ -65,7 +65,7 @@ if ($action === 'consultar') {
   exit;
 } else {
   // Si no hay acción, obtener la lista de incidencias
-  $resultadoBusqueda = $cierreModel->listarCierresAdministrador();
+  $resultadoBusqueda = $cierreModel->listarCierresConsulta();
 }
 ?>
 

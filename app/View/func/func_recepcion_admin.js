@@ -45,7 +45,7 @@ $(document).ready(function () {
   // Buscador para el combo prioridad e impacto con ancho fijo
   $('#prioridad, #impacto').select2({
     allowClear: true,
-    width: '200px', // Cambia de '100%' a 'resolve' para que coincida con el ancho del elemento base
+    width: '200px',
     dropdownCssClass: 'text-xs',
     language: {
       noResults: function () {
@@ -125,11 +125,11 @@ function enviarFormulario(action) {
 // Validar campos de registro de recepcion antes de enviar el formulario
 function validarCamposRegistro() {
   var valido = true;
-  var mensajeError = ''; // Inicializamos una variable para los mensajes de error
+  var mensajeError = '';
 
   // Validar campo de número de incidencia
   if ($('#incidencia').val() === '') {
-    mensajeError += 'Debe seleccionar una incidencia. ';
+    mensajeError += 'Debe seleccionar una incidencia.';
     valido = false;
   }
 
@@ -161,10 +161,10 @@ function validarCamposRegistro() {
 // Validar campos antes de enviar el formulario
 function validarCamposActualizacion() {
   var valido = true;
-  var mensajeError = ''; // Inicializamos una variable para los mensajes de error
+  var mensajeError = '';
 
   // Validar campo de número de incidencia recepcionada
-  if ($('#num_recepcion').val().trim() === '') {  // Asegúrate de validar con .trim() para evitar espacios en blanco
+  if ($('#num_recepcion').val().trim() === '') {
     mensajeError += 'Debe seleccionar una incidencia recepcionada. ';
     valido = false;
   }
@@ -201,8 +201,8 @@ $(document).on('click', '#tablaIncidenciasSinRecepcionar tbody tr', function () 
   $(this).addClass('bg-blue-200 font-semibold');
   $('#incidencia').val(id);
 
-  var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
-  $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
+  var incidenciaSeleccionada = $(this).find('td').eq(0).html();
+  $('#incidenciaSeleccionada').val(incidenciaSeleccionada);
 
   // Bloquear la tabla de incidencias recepcionadas
   $('#tablaIncidenciasRecepcionadas tbody tr').addClass('pointer-events-none opacity-50');
@@ -219,10 +219,9 @@ $(document).on('click', '#tablaIncidenciasRecepcionadas tbody tr', function () {
   $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('bg-blue-200 font-semibold');
   $(this).addClass('bg-blue-200 font-semibold');
   $('#num_recepcion').val(numRecepcion);
-  // console.log('Número de Recepción:', $('#num_recepcion').val());
 
-  var incidenciaSeleccionada = $(this).find('td').eq(0).html(); // Cambia el índice eq(0) dependiendo de la posición de la columna
-  $('#incidenciaSeleccionada').val(incidenciaSeleccionada); // Asegúrate de que el input con ID 'descripcion' exista en tu HTML
+  var incidenciaSeleccionada = $(this).find('td').eq(0).html();
+  $('#incidenciaSeleccionada').val(incidenciaSeleccionada);
 
   // Bloquear la tabla de incidencias sin recepcionar
   $('#tablaIncidenciasSinRecepcionar tbody tr').addClass('pointer-events-none opacity-50');
@@ -336,11 +335,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
       const celdas = fila.querySelectorAll('td');
 
       // Mapeo de los valores de las celdas a los inputs del formulario
-
       const codRecepcion = fila.querySelector('th').innerText.trim();
       const prioridadValue = celdas[5].innerText.trim();
       const impactoValue = celdas[6].innerText.trim();
-
 
       // Seteo de valores en los inputs
       document.getElementById('num_recepcion').value = codRecepcion;
@@ -371,35 +368,38 @@ function setComboValue(comboId, value) {
       break;
     }
   }
-  // Si no se encontró el valor, seleccionar el primer elemento
   if (!valueFound) {
-    select.value = ''; // O establece un valor predeterminado si lo deseas
+    select.value = '';
   }
 
   // Forzar actualización del select2 para mostrar el valor seleccionado
   $(select).trigger('change');
 };
 
-// Función para limpiar los campos del formulario
+
+// Función para limpiar los campos del formulario y reactivar tablas
 function nuevoRegistro() {
-  const form = document.getElementById('formRecepcion').reset();
-  form.reset();
+  document.getElementById('formRecepcion').reset(); // Resetear el formulario completo
+
+  // Limpiar los valores específicos de inputs y combos
   $('#rec_numero').val('');
   $('#incidencia').val('');
   $('#incidenciaSeleccionada').val('');
+
+  // Limpiar los combos y forzar la actualización con Select2
+  $('#prioridad').val('').trigger('change');  // Limpiar y actualizar combo de prioridad
+  $('#impacto').val('').trigger('change');    // Limpiar y actualizar combo de impacto
+
+  // Remover clases de selección y estilos de todas las filas de ambas tablas
   $('tr').removeClass('bg-blue-200 font-semibold');
 
-  $('#form-action').val('registrar'); // Cambiar la acción a registrar
-
-  // Vaciar y resetear los valores de los selects de categoría y área
-  $('#prioridad').val('').trigger('change');
-  $('#impacto').val('').trigger('change');
-
+  // Reactivar ambas tablas
   $('#tablaIncidenciasRecepcionadas tbody tr').removeClass('pointer-events-none opacity-50');
   $('#tablaIncidenciasSinRecepcionar tbody tr').removeClass('pointer-events-none opacity-50');
 
-  // Deshabilitar el botón de editar
-  $('#guardar-recepcion').prop('disabled', false);
-  $('#editar-recepcion').prop('disabled', true);
-  $('#nuevo-registro').prop('disabled', false);
+  // Configurar los botones en su estado inicial
+  $('#form-action').val('registrar');  // Cambiar la acción a registrar
+  $('#guardar-recepcion').prop('disabled', false);  // Activar el botón de guardar
+  $('#editar-recepcion').prop('disabled', true);    // Desactivar el botón de editar
+  $('#nuevo-registro').prop('disabled', false);     // Asegurarse que el botón de nuevo registro está activo
 }

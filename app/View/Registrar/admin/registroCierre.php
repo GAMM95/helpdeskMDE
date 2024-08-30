@@ -78,7 +78,7 @@
                 <td class='px-6 py-2'><?= $recepcion['INC_documento']; ?></th>
                 <td class='px-6 py-2'><?= $recepcion['PRI_nombre']; ?></th>
                   <!-- <td class='px-6 py-2'><?= $recepcion['IMP_descripcion']; ?></th> -->
-                <td class='px-6 py-2'><?= $recepcion['Usuario']; ?></th>
+                <td class='px-6 py-2'><?= $recepcion['UsuarioRecepcion']; ?></th>
               </tr>
             <?php endforeach; ?>
 
@@ -96,9 +96,11 @@
 
     <!-- Formulario de registro de cierres -->
     <form id="formCierre" action="registro-cierre.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
+      <input type="hidden" id="form-action" name="action" value="registrar">
+
       <!-- NUMERO DE RECEPCION -->
       <div class="flex justify-center mx-2 mb-4">
-        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden ">
+        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden">
           <label for="num_incidencia" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero de Incidencia:</label>
           <input type="text" id="num_incidencia" name="num_incidencia" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
         </div>
@@ -118,7 +120,7 @@
         </div>
 
         <!-- INPUT ESCONDIDO PARA EL NUMERO DE CIERRE -->
-        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden">
+        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center ">
           <label for="num_cierre" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero Cierre:</label>
           <input type="text" id="num_cierre" name="num_cierre" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" disabled>
         </div>
@@ -170,7 +172,7 @@
         <!-- OPERATIVIDAD -->
         <div class="w-full md:w-1/5 px-2 mb-2">
           <label for="operatividad" class="block font-bold mb-1 text-xs">Condici&oacute;n: *</label>
-          <select id="cbo_operatividad" name="operatividad" class="border p-2 w-full text-xs cursor-pointer rounded-md">
+          <select id="operatividad" name="operatividad" class="border p-2 w-full text-xs cursor-pointer rounded-md">
           </select>
         </div>
 
@@ -249,6 +251,8 @@
             <th scope="col" class="px-6 py-2">Asunto Cierre</th>
             <th scope="col" class="px-6 py-2">Documento Cierre</th>
             <th scope="col" class="px-6 py-2">Condici&oacute;n</th>
+            <th scope="col" class="px-6 py-2 hidden">Diagn&oacute;stico</th>
+            <th scope="col" class="px-6 py-2 hidden">Recomendaciones</th>
             <th scope="col" class="px-6 py-2">Usuario cierre</th>
           </tr>
         </thead>
@@ -267,6 +271,8 @@
               <td class='px-6 py-3'><?= $incidencia['CIE_asunto']; ?></td>
               <td class='px-6 py-3'><?= $incidencia['CIE_documento']; ?></td>
               <td class='px-6 py-3'><?= $incidencia['CON_descripcion']; ?></td>
+              <td class='px-6 py-3 hidden'><?= $incidencia['CIE_diagnostico']; ?></td>
+              <td class='px-6 py-3 hidden'><?= $incidencia['CIE_recomendaciones']; ?></td>
               <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
             </tr>
           <?php endforeach; ?>

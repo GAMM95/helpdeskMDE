@@ -21,9 +21,9 @@ $recepcionModel = new RecepcionModel();
 $limit = 2; //Numero de filas por pagina
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
 $start = ($page - 1) * $limit; // Calcula el índice de inicio
-$totalRecepcionesSinCerrar = $recepcionModel->contarRecepcionesSinCerrar();
+$totalRecepcionesSinCerrar = $recepcionModel->contarRecepciones();
 $totalPages = ceil($totalRecepcionesSinCerrar / $limit);
-$recepciones = $recepcionModel->obtenerRecepcionesSinCerrar($start, $limit);
+$recepciones = $recepcionModel->listarRecepciones($start, $limit);
 
 
 // Paginacion de la tabla de incidencias cerradas
@@ -34,7 +34,7 @@ $inicio = ($pageCierres - 1) * $limite; // Calcula el índice de inicio
 // Obtiene el total de registros
 $totalCierres = $cierreModel->contarIncidenciasCerradas();
 $totalPagesCierres  = ceil($totalCierres / $limite);
-$cierres = $cierreModel->obtenerIncidenciasCerradas($inicio, $limite);
+$cierres = $cierreModel->listarCierres($inicio, $limite);
 
 if ($CIE_numero != '') {
   global $cierreRegistrado;
@@ -46,6 +46,11 @@ if ($CIE_numero != '') {
 switch ($action) {
   case 'registrar':
     $cierreController->registrarCierre();
+    break;
+  case 'editar':
+    $cierreController->actualizarCierre();
+    break;
+  default:
     break;
 }
 ?>
@@ -97,14 +102,15 @@ switch ($action) {
   <script src="./app/View/func/func_cierre_admin.js"></script>
   <script src="./app/View/func/Reports/reporteCierre.js"></script>
 
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <!-- Framework CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Mensajes toastr -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  <!-- <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script> -->
+  <!-- Buscador de opciones en combos -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+  <!-- Creacion de PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
 </body>

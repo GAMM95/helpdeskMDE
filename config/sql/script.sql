@@ -578,6 +578,28 @@ BEGIN
 END;
 GO 
 
+-- PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR CIERRES
+CREATE PROCEDURE sp_ActualizarCierre
+	@CIE_numero SMALLINT,
+	@CIE_asunto VARCHAR(500),
+	@CIE_documento VARCHAR(500),
+	@CON_codigo SMALLINT,
+	@CIE_diagnostico VARCHAR(200),
+	@CIE_recomendaciones VARCHAR(500)
+AS
+BEGIN
+	-- Actualizar el registro de la tala CIERRE
+	UPDATE CIERRE
+	SET
+		CIE_asunto = @CIE_asunto,
+		CIE_documento  = @CIE_documento,
+		CON_codigo =  @CON_codigo,
+		CIE_diagnostico = @CIE_diagnostico,
+		CIE_recomendaciones = @CIE_recomendaciones
+	WHERE CIE_numero = @CIE_numero;
+END;
+GO
+
 -- PROCEDIMIENTO ALMAENADO PARA INSERTAR CIERRES Y ACTUALIZAR ESTADO DE RECEPCION
 CREATE PROCEDURE sp_InsertarCierreActualizarRecepcion
   @CIE_fecha DATE,
@@ -1010,7 +1032,7 @@ GROUP BY
     EC.EST_descripcion,
     E.EST_descripcion,
     p.PER_nombres,
-    p.PER_apellidoPaterno;
+    p.PER_apellidoPaterno
 GO
 
 --Vista para listar las nuevas incidencias para el usuario
@@ -1036,6 +1058,7 @@ INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
 LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
 INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
 WHERE I.EST_codigo IN (3);
+GO
 
 --Vista para listar las incidencias totales para el usuario en la consulta
 CREATE VIEW vista_incidencias_totales_usuario AS
@@ -1111,7 +1134,7 @@ LEFT JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
 LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
 INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
 WHERE I.EST_codigo IN (3, 4, 5) OR C.EST_codigo IN (3, 4, 5);
-
+GO
 
 -- Vista para listar incidencias por fecha para el usuario
 CREATE VIEW vista_incidencias_fecha_user AS
@@ -1150,5 +1173,43 @@ LEFT JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
 LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
 INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
 WHERE (I.EST_codigo IN (3, 4, 5) OR C.EST_codigo IN (3, 4, 5));
+GO
 
-
+-- Vista para listar cierres
+CREATE VIEW vista_cierres AS
+SELECT
+    I.INC_numero,
+    I.INC_numero_formato,
+    (CONVERT(VARCHAR(10),INC_fecha,103)) AS fechaIncidenciaFormateada,
+    A.ARE_nombre,
+	CAT.CAT_nombre,
+    I.INC_asunto,
+    I.INC_documento,
+    I.INC_codigoPatrimonial,
+	PRI_nombre,
+    (CONVERT(VARCHAR(10),CIE_fecha,103)) AS fechaCierreFormateada,
+    CIE_asunto,
+    CIE_numero,
+    C.CIE_diagnostico, 
+    C.CIE_recomendaciones,
+    C.CIE_documento,
+	O.CON_descripcion,
+	u.USU_nombre,
+    CASE
+		WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
+        ELSE E.EST_descripcion
+    END AS Estado,
+    PER_nombres + ' ' + PER_apellidoPaterno AS Usuario
+FROM RECEPCION R
+INNER JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
+RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
+INNER JOIN  AREA A ON I.ARE_codigo = A.ARE_codigo
+INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
+LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
+INNER JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
+INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
+INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
+WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5;
+GO

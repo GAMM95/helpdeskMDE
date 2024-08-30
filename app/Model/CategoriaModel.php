@@ -3,6 +3,7 @@ require_once 'config/conexion.php';
 
 class CategoriaModel extends Conexion
 {
+  // Atributos de la clase
   protected $codigoCategoria;
   protected $nombreCategoria;
 
@@ -15,97 +16,119 @@ class CategoriaModel extends Conexion
     $this->nombreCategoria = $nombreCategoria;
   }
 
-  // Method to register a new category
-  public function registrarCategoria()
+  // Metodo para insertar una nueva categoria
+  public function insertarCategoria()
   {
-    if ($this->nombreCategoria === null || trim($this->nombreCategoria) === '') {
-      throw new Exception("El nombre de la categoría no puede estar vacío.");
-    }
     $conector = parent::getConexion();
     try {
-      $sql = "INSERT INTO CATEGORIA (CAT_nombre) VALUES (?)";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute([$this->nombreCategoria]);
-      return $conector->lastInsertId();
+      if ($conector != null) {
+        $sql = "INSERT INTO CATEGORIA (CAT_nombre) VALUES (?)";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([
+          $this->nombreCategoria
+        ]);
+        return $conector->lastInsertId();
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
     } catch (PDOException $e) {
-      throw new Exception("Error al insertar la categoría: " . $e->getMessage());
+      throw new PDOException("Error al insertar la categoría: " . $e->getMessage());
+      return null;
     }
   }
 
-  // Method to list all categories
+  // Metodo para listar categorias
   public function listarCategorias()
   {
     $conector = parent::getConexion();
     try {
-      $sql = "SELECT CAT_codigo, CAT_nombre FROM CATEGORIA ORDER BY CAT_codigo ASC";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute();
-      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      if ($conector != null) {
+        $sql = "SELECT CAT_codigo, CAT_nombre FROM CATEGORIA 
+                ORDER BY CAT_codigo ASC";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
     } catch (PDOException $e) {
-      throw new Exception("Error al obtener las categorías: " . $e->getMessage());
+      throw new PDOException("Error al obtener las categorías: " . $e->getMessage());
+      return null;
     }
   }
 
-  // Method to get a category by its ID
-  public function obtenerCategoriaPorId($codigoCategoria)
+  // Metodo para obtener la categoria por el ID
+  public function obtenerCategoriaPorId()
   {
-    if ($codigoCategoria === null) {
-      throw new Exception("El código de la categoría no puede ser nulo.");
-    }
-
     $conector = parent::getConexion();
     try {
-      $sql = "SELECT * FROM CATEGORIA WHERE CAT_codigo = ?";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute([$codigoCategoria]);
-      return $stmt->fetch(PDO::FETCH_ASSOC);
+      if ($conector != null) {
+        $sql = "SELECT * FROM CATEGORIA 
+                WHERE CAT_codigo = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([
+          $this->codigoCategoria
+        ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
     } catch (PDOException $e) {
-      throw new Exception("Error al obtener la categoría: " . $e->getMessage());
+      throw new PDOException("Error al obtener la categoría: " . $e->getMessage());
+      return null;
     }
   }
 
-  // Method to edit a category
+  // Metodo para editar categoria
   public function editarCategoria()
   {
-    if ($this->codigoCategoria === null) {
-      throw new Exception("El código de la categoría no puede ser nulo.");
-    }
-
-    if ($this->nombreCategoria === null || trim($this->nombreCategoria) === '') {
-      throw new Exception("El nombre de la categoría no puede estar vacío.");
-    }
-
     $conector = parent::getConexion();
     try {
-      $sql = "UPDATE CATEGORIA SET CAT_nombre = ? WHERE CAT_codigo = ?";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute([$this->nombreCategoria, $this->codigoCategoria]);
-      return $stmt->rowCount();
+      if ($conector != null) {
+        $sql = "UPDATE CATEGORIA SET CAT_nombre = ? WHERE CAT_codigo = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([
+          $this->nombreCategoria,
+          $this->codigoCategoria
+        ]);
+        return $stmt->rowCount();
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
     } catch (PDOException $e) {
-      throw new Exception("Error al actualizar la categoría: " . $e->getMessage());
+      throw new PDOException("Error al actualizar la categoría: " . $e->getMessage());
+      return null;
     }
   }
 
-  // Method to delete a category
-  public function eliminarCategoria($codigoCategoria)
+  // Metodo para eliminar categoria
+  public function eliminarCategoria()
   {
-    if ($codigoCategoria === null) {
-      throw new Exception("El código de la categoría no puede ser nulo.");
-    }
 
     $conector = parent::getConexion();
     try {
-      $conector = $this->getConexion();
-      $sql = "DELETE FROM CATEGORIA WHERE CAT_codigo = ?";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute([$codigoCategoria]);
-      return $stmt->rowCount();
+      if ($conector != null) {
+        $sql = "DELETE FROM CATEGORIA WHERE CAT_codigo = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([
+          $this->codigoCategoria
+        ]);
+        return $stmt->rowCount();
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
     } catch (PDOException $e) {
-      throw new Exception("Error al eliminar la categoría: " . $e->getMessage());
+      throw new PDOException("Error al eliminar la categoría: " . $e->getMessage());
+      return null;
     }
   }
 
-  // Method to filter categories by a search term
+  // Metodo para filtrar categoria por termino de busqueda
   public function filtrarBusqueda($termino)
   {
     if ($termino === null || trim($termino) === '') {
@@ -114,16 +137,22 @@ class CategoriaModel extends Conexion
 
     $conector = parent::getConexion();
     try {
-      $sql = "SELECT * FROM CATEGORIA WHERE CAT_nombre LIKE ?";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute(['%' . $termino . '%']);
-      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      if ($conector != null) {
+        $sql = "SELECT * FROM CATEGORIA WHERE CAT_nombre LIKE ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute(['%' . $termino . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
     } catch (PDOException $e) {
-      throw new Exception("Error al buscar categorías: " . $e->getMessage());
+      throw new PDOException("Error al buscar categorías: " . $e->getMessage());
+      return null;
     }
   }
 
-  // TODO: METODO PARA CONTAR LA CANTIDAD DE AREAS
+  // Metodo para contar la cantidad de categorias registradas
   public function contarCategorias()
   {
     $conector = parent::getConexion();
@@ -135,11 +164,11 @@ class CategoriaModel extends Conexion
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['cantidadCategorias'];
       } else {
-        echo "Error de conexión con la base de datos.";
+        throw new Exception("Error de conexión con la base de datos");
         return null;
       }
     } catch (PDOException $e) {
-      echo "Error al contar categorias: " . $e->getMessage();
+      throw new PDOException("Error al contar categorias: " . $e->getMessage());
       return null;
     }
   }
