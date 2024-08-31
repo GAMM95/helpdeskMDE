@@ -67,7 +67,7 @@ class IncidenciaController
           'message' => 'Error: ' . $e->getMessage()
         ]);
       }
-      exit(); 
+      exit();
     }
   }
 
@@ -129,7 +129,7 @@ class IncidenciaController
     }
   }
 
-
+  // Metodo para actualizar indicencias - ADMINISTRADOR
   public function actualizarIncidenciaAdministrador()
   {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -2,14 +2,6 @@
   <div class="pcoded-content">
     <?php
     global $personaRegistrada;
-    require_once './app/Model/PersonaModel.php';
-    $personaModel = new PersonaModel();
-    $limit = 7; // Número de filas por página
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
-    $start = ($page - 1) * $limit; // Calcula el índice de inicio
-    $totalTrabajadores = $personaModel->contarTrabajadores();
-    $totalPages = ceil($totalTrabajadores / $limit);
-    $personas = $personaModel->listarTrabajadores($start, $limit);
     ?>
 
     <!-- Miga de pan -->
@@ -121,23 +113,9 @@
       <div class="w-2/3">
         <!-- Buscador de personas -->
         <div class="flex justify-between items-center mt-2">
-          <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300 text-xs" placeholder="Buscar trabajador..." oninput="filtrarTablaPersonas()" />
-          <!-- Paginacion  -->
-          <?php if ($totalPages > 0) : ?>
-            <div class="flex justify-end items-center mt-1">
-              <?php if ($page > 1) : ?>
-                <a href="#" class="pagination-link px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" data-page="<?php echo $page - 1; ?>">&lt;</a>
-              <?php endif; ?>
-              <span class="mx-2">P&aacute;gina <?php echo $page; ?> de <?php echo $totalPages; ?></span>
-              <?php if ($page < $totalPages) : ?>
-                <a href="#" class="pagination-link px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" data-page="<?php echo $page + 1; ?>">&gt;</a>
-              <?php endif; ?>
-            </div>
-          <?php endif; ?>
-          <!-- Fin de paginacion -->
+          <input type="text" id="termino" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300 text-xs" placeholder="Buscar trabajador..." oninput="filtrarTablaPersonas()" />
         </div>
         <!-- Fin de buscador de personas -->
-
 
         <!-- Tabla de personas -->
         <input type="hidden" id="personasCount" value="<?php echo count($personas) ?>">
@@ -160,13 +138,12 @@
               <?php foreach ($personas as $persona) : ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b" data-cod="<?= $persona['PER_codigo']; ?>" data-dni="<?= $persona['PER_dni']; ?>" data-nombre="<?= $persona['persona']; ?>" data-celular="<?= $persona['PER_celular']; ?>" data-email="<?= $persona['PER_email']; ?>">
                   <th scope="row" class=" hidden px-6 py-3 font-medium text-gray-900 whitespace-nowrap"> <?= $persona['PER_codigo']; ?></th>
-                  <td class="px-6 py-3"> <?= $persona['PER_dni']; ?></td>
-                  <td class="px-6 py-3"> <?= $persona['persona']; ?></td>
-                  <td class="px-6 py-3"> <?= $persona['PER_celular']; ?></td>
-                  <td class="px-6 py-3"> <?= $persona['PER_email']; ?></td>
+                  <td class="px-6 py-3 w-1/6"> <?= $persona['PER_dni']; ?></td>
+                  <td class="px-6 py-3 w-1/2"> <?= $persona['persona']; ?></td>
+                  <td class="px-6 py-3 w-1/6"> <?= $persona['PER_celular']; ?></td>
+                  <td class="px-6 py-3 w-1/3"> <?= $persona['PER_email']; ?></td>
                 </tr>
               <?php endforeach; ?>
-
               <?php if (empty($personas)) : ?>
                 <tr>
                   <td colspan="5" class="text-center py-4">No hay trabajdores registrados.</td>
@@ -178,10 +155,6 @@
         </div>
       </div>
       <!-- Fin de tabla -->
-
-
-
-
     </div>
   </div>
 </div>

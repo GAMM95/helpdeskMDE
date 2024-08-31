@@ -19,14 +19,13 @@
     </div>
     <!-- Fin de miga de pan -->
 
-    <!-- Conteneder principal para el forumalrio y la tabla -->
+    <!-- Conteneder principal para el formulario y la tabla -->
     <div class="flex space-x-4">
-
-      <!-- TODO: FORMULARIO -->
+      <!-- Formulario de registro de categoria -->
       <div class="flex flex-col w-1/3">
         <form id="formcategoria" action="modulo-categoria.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
           <input type="hidden" id="form-action" name="action" value="registrar">
-          <!-- PRIMERA FILA -->
+          <!-- Codigo de categoria -->
           <div class="flex justify-center -mx-2 mb-5 hidden">
             <div class="flex items-center mb-4">
               <div class="flex items-center">
@@ -36,7 +35,7 @@
             </div>
           </div>
 
-          <!-- SEGUNDA FILA -->
+          <!-- Nombre de categoria -->
           <div class="flex flex-wrap -mx-2">
             <div class="w-full px-2 mb-3">
               <label for="NombreCategoria" class="block mb-1 font-bold text-xs">Nombre de categor&iacute;a:</label>
@@ -44,29 +43,31 @@
             </div>
           </div>
 
-          <!-- BOTONES -->
+          <!-- Botones del fomulario -->
           <div class="flex justify-center space-x-4">
             <button type="submit" id="guardar-categoria" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
             <button type="button" id="editar-categoria" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
             <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
           </div>
-
-
+          <!-- Fin de botones del formulario -->
         </form>
       </div>
+      <!-- Fin de formulario de registro -->
 
-      <!-- TODO: TABLA DE CATEGORIAS -->
+      <!-- Tabla de categorias -->
       <div class="w-2/3">
         <div class="relative max-h-[800px] overflow-x-hidden shadow-md sm:rounded-lg">
           <table id="tablaCategorias" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
-            <!-- ENCABEZADO DE LA TABLA -->
+            <!-- Encabezado de la tabla -->
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
                 <th scope="col" class="px-10 py-2 w-1/6 hidden">N&deg;</th>
                 <th scope="col" class="px-6 py-2 w-5/6">Categor&iacute;a</th>
               </tr>
             </thead>
-            <!-- CUERPO DE LA TABLA -->
+            <!-- Fin de encabezado -->
+
+            <!-- Encabezado de la tabla -->
             <tbody>
               <?php
               require_once './app/Model/CategoriaModel.php'; // Asegúrate de que este nombre coincide con el de la clase
@@ -84,9 +85,11 @@
               }
               ?>
             </tbody>
+            <!-- Fin del cuerpo de la tabla -->
           </table>
         </div>
       </div>
+      <!-- Fin de la tabla de categorias -->
     </div>
   </div>
 </div>

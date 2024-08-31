@@ -103,7 +103,6 @@
             <!-- Cuerpo de la tabla -->
             <tbody>
               <?php
-              // $areas = $areaModel->listarArea();
               foreach ($areas as $area) {
                 echo "<tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>";
                 echo "<th scope='col' class='px-10 py-2 font-medium text-gray-900 whitespace-nowrap hidden' data-codarea='" . htmlspecialchars($area['ARE_codigo']) . "'>";

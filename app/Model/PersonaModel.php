@@ -3,45 +3,21 @@ require_once 'config/conexion.php';
 
 class PersonaModel extends Conexion
 {
-  // Atributos de la clase
-  protected $codigoPersona;
-  protected $dni;
-  protected $nombres;
-  protected $apellidoPaterno;
-  protected $apellidoMaterno;
-  protected $email;
-  protected $celular;
 
-  public function __construct(
-    $codigoPersona = null,
-    $dni = null,
-    $nombres = null,
-    $apellidoPaterno = null,
-    $apellidoMaterno = null,
-    $email = null,
-    $celular = null
-  ) {
+  public function __construct()
+  {
     parent::__construct();
-    $this->codigoPersona = $codigoPersona;
-    $this->dni = $dni;
-    $this->nombres = $nombres;
-    $this->apellidoPaterno = $apellidoPaterno;
-    $this->apellidoMaterno = $apellidoMaterno;
-    $this->email = $email;
-    $this->celular = $celular;
   }
 
   // Método para validar la existencia de un DNI
-  public function validarDniExistente()
+  public function validarDniExistente($dni)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
         $sql = "SELECT COUNT(*) FROM PERSONA WHERE PER_dni = ?";
         $stmt = $conector->prepare($sql);
-        $stmt->execute([
-          $this->dni
-        ]);
+        $stmt->execute([$dni]);
         $count = $stmt->fetchColumn();
         return $count > 0;
       } else {
@@ -104,7 +80,7 @@ class PersonaModel extends Conexion
   }
 
   // Método para actualizar datos de la persona
-  public function actualizarPersona($dni, $nombres, $apellidoPaterno, $apellidoMaterno, $celular, $email, $codigoPersona)
+  public function editarPersona($dni, $nombres, $apellidoPaterno, $apellidoMaterno, $celular, $email, $codigoPersona)
   {
     $conector = parent::getConexion();
     try {
@@ -133,7 +109,7 @@ class PersonaModel extends Conexion
   }
 
   // Metodo para obtener la lista de personas
-  public function listarTrabajadores($start, $limit)
+  public function listarTrabajadores()
   {
     $conector = parent::getConexion();
     try {
@@ -142,12 +118,12 @@ class PersonaModel extends Conexion
                 (PER_nombres + ' ' + PER_apellidoPaterno + ' ' + PER_apellidoMaterno) AS persona,
                 PER_celular, PER_email
                 FROM PERSONA
-                ORDER BY PER_codigo DESC
-                OFFSET ? ROWS
-                FETCH NEXT ? ROWS ONLY";
+                ORDER BY PER_codigo DESC";
+        // -- OFFSET ? ROWS
+        // -- FETCH NEXT ? ROWS ONLY";
         $stmt = $conector->prepare($sql);
-        $stmt->bindParam(1, $start, PDO::PARAM_INT);
-        $stmt->bindParam(2, $limit, PDO::PARAM_INT);
+        // $stmt->bindParam(1, $start, PDO::PARAM_INT);
+        // $stmt->bindParam(2, $limit, PDO::PARAM_INT);
         $stmt->execute();
         $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $registros;

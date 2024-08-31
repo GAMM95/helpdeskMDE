@@ -5,11 +5,8 @@ $(document).ready(function () {
     "progressBar": true,
     "timeOut": "2000"
   };
-});
 
-// Cargar opciones de personas
-$(document).ready(function () {
-  // console.log("FETCHING")
+  // Carga de datos en el combo persona
   $.ajax({
     url: 'ajax/getPersona.php',
     type: 'GET',
@@ -19,24 +16,15 @@ $(document).ready(function () {
       select.empty();
       select.append('<option value="" selected disabled>Seleccione una persona</option>');
       $.each(data, function (index, value) {
-        // console.log("Codigo: " + index + ", Area: ", value); // Mostrar índice y valor en la consola
         select.append('<option value="' + value.PER_codigo + '">' + value.persona + '</option>');
       });
-      // if (typeof personaRegistrada !== 'undefined' && personaRegistrada !== '') {
-      //   select.val(personaRegistrada);
-      // } else {
-      //   select.val('');
-      // }
     },
     error: function (error) {
       console.error("Error fetching personas:", error);
     }
   });
-});
 
-// Cargar opciones de áreas
-$(document).ready(function () {
-  // console.log("FETCHING");
+  // Carga de datos en el combo area
   $.ajax({
     url: 'ajax/getAreaData.php',
     type: 'GET',
@@ -46,7 +34,6 @@ $(document).ready(function () {
       select.empty();
       select.append('<option value="" selected disabled>Seleccione un area</option>');
       $.each(data, function (index, value) {
-        // console.log("Codigo: " + index + ", Area: ", value); // Mostrar índice y valor en la consola
         select.append('<option value="' + value.ARE_codigo + '">' + value.ARE_nombre + '</option>');
       });
     },
@@ -54,11 +41,8 @@ $(document).ready(function () {
       console.error("Error fetching areas:", error);
     }
   });
-});
 
-// Cargar opciones de roles
-$(document).ready(function () {
-  // console.log("FETCHING");
+  // Carga de datos en el combo rol
   $.ajax({
     url: 'ajax/getRol.php',
     type: 'GET',
@@ -75,15 +59,12 @@ $(document).ready(function () {
       console.error("Error fetching roles:", error);
     }
   });
-});
 
-// TODO: BUSCADOR PARA EL COMBO PERSONA AREA Y ROL
-$(document).ready(function () {
-  $('#cbo_persona').select2({
-    placeholder: "Seleccione un trabajador",
+  // Buscador para los combos persona, area y rol
+  $('#cbo_persona, #cbo_area, #cbo_rol').select2({
     allowClear: true,
     width: '100%',
-    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
+    dropdownCssClass: 'text-xs',
     language: {
       noResults: function () {
         return "No se encontraron resultados";
@@ -91,57 +72,25 @@ $(document).ready(function () {
     }
   });
 
-  $('#cbo_area').select2({
-    placeholder: "Seleccione un area",
-    allowClear: true,
-    width: '100%',
-    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
-    language: {
-      noResults: function () {
-        return "No se encontraron resultados";
-      }
-    }
+  // Evento para guardar al usuario
+  $('#guardar-usuario').on('click', function (e) {
+    e.preventDefault();
+    enviarFormulario($('#form-action').val());
   });
 
-  $('#cbo_rol').select2({
-    placeholder: "Seleccione un rol",
-    allowClear: true,
-    width: '100%',
-    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
-    language: {
-      noResults: function () {
-        return "No se encontraron resultados";
-      }
-    }
+  // Evento para editar usuario
+  $('#editar-usuario').on('click', function (e) {
+    e.preventDefault();
+    enviarFormulario($('#form-action').val());
   });
+
+  // Evento para nuevo registro
+  $('#nuevo-registro').on('click', nuevoRegistro);
+
 });
 
 
-// TODO: CAMBIAR LAS PAGINAS DE LA TABLA USUARIOS
-function changePageTablaUsuarios(page) {
-  fetch(`?page=${page}`)
-    .then(response => response.text())
-    .then(data => {
-      const parser = new DOMParser();
-      const newDocument = parser.parseFromString(data, 'text/html');
-      const newTable = newDocument.querySelector('#tablaListarUsuarios');
-      const newPagination = newDocument.querySelector('.flex.justify-end.items-center.mt-1');
-
-      // Reemplazar la tabla actual con la nueva tabla obtenida
-      document.querySelector('#tablaListarUsuarios').parentNode.replaceChild(newTable, document.querySelector('#tablaListarUsuarios'));
-
-      // Reemplazar la paginación actual con la nueva paginación obtenida
-      const currentPagination = document.querySelector('.flex.justify-end.items-center.mt-1');
-      if (currentPagination && newPagination) {
-        currentPagination.parentNode.replaceChild(newPagination, currentPagination);
-      }
-    })
-    .catch(error => {
-      console.error('Error al cambiar de página:', error);
-    });
-}
-
-// TODO: Metodo para enviar formulario
+// Metodo para enviar formulario
 function enviarFormulario(action) {
   if (!validarCampos()) {
     return; // si hay campos inválidos, detener el envío
@@ -154,98 +103,77 @@ function enviarFormulario(action) {
     url: url,
     method: 'POST',
     data: data,
-    success: function (response, error, status) {
-      console.log('Status:', status);
-      console.log('Error de success:', error);
-      console.log(response); // Verifica la respuesta aquí
-      if (response.success) {
-        if (action === 'registrar') {
-          toastr.success('Usuario registrada 1');
-        } else if (action === 'editar') {
-          toastr.success('Usuario actualizado 1');
+    dataType: 'text',
+    success: function (response) {
+      try {
+        // Convertir la respuesta en un objeto JSON
+        var jsonResponse = JSON.parse(response);
+        console.log('Parsed JSON:', jsonResponse);
+
+        if (jsonResponse.success) {
+          if (action === 'registrar') {
+            toastr.success('Usuario registrado.');
+          } else if (action === 'editar') {
+            toastr.success('Datos del usuario actualizados.');
+          }
+          setTimeout(function () {
+            location.reload();
+          }, 1500);
+        } else {
+          toastr.warning(jsonResponse.message);
         }
-        // setTimeout(function () {
-        //   location.reload();
-        // }, 1500);
+      } catch (e) {
+        console.error('JSON parsing error:', e);
+        toastr.error('Error al procesar la respuesta.');
       }
-      else if (action === 'editar') {
-        toastr.success('Usuario registrado');
-      } else if (action === 'editar') {
-        toastr.success('Usuario actualizados');
-      }
-      // setTimeout(function () {
-      //   location.reload();
-      // }, 1500);
-
     },
-    error: function (response, status, error) {
-      console.log('Status:', status);
-      console.log('Error de error:', error);
-      console.log(response.error); // Verifica la respuesta aquí
-
-      if (action === 'registrar') {
-        toastr.success('xxx registrada');
-      } else if (action === 'editar') {
-        toastr.success('Datos actualizados');
-      }
-      setTimeout(function () {
-        location.reload();
-      }, 1500);
+    error: function (xhr, status, error) {
+      console.error('AJAX Error:', error);
+      toastr.error('Error en la solicitud AJAX.');
     }
   });
-}
-$('#guardar-usuario').on('click', function (e) {
-  e.preventDefault();
-  enviarFormulario($('#form-action').val());
-});
 
-$('#editar-usuario').on('click', function (e) {
-  e.preventDefault();
-  enviarFormulario($('#form-action').val());
-});
+  // Función para validar campos antes de enviar
+  function validarCampos() {
+    var valido = true;
+    var mensajeError = '';
 
-// Función para validar campos antes de enviar
-function validarCampos() {
-  var valido = true;
-  var mensajeError = '';
+    // Validar campos
+    var faltaPersona = ($('#cbo_persona').val() === null || $('#cbo_persona').val() === '');
+    var faltaArea = ($('#cbo_area').val() === null || $('#cbo_area').val() === '');
+    var faltaRol = ($('#cbo_rol').val() === null || $('#cbo_rol').val() === '');
+    var faltaUsername = ($('#username').val() === null || $('#username').val() === '');
+    var faltaPassword = ($('#password').val() === null || $('#password').val() === '');
 
-  // Validar campos
-  var faltaPersona = ($('#cbo_persona').val() === null || $('#cbo_persona').val() === '');
-  var faltaArea = ($('#cbo_area').val() === null || $('#cbo_area').val() === '');
-  var faltaRol = ($('#cbo_rol').val() === null || $('#cbo_rol').val() === '');
-  var faltaUsername = ($('#username').val() === null || $('#username').val() === '');
-  var faltaPassword = ($('#password').val() === null || $('#password').val() === '');
+    if (faltaPersona && faltaArea && faltaRol && faltaUsername && faltaPassword) {
+      mensajeError += 'Debe completar todos los campos.';
+      valido = false;
+    } else if (faltaPersona) {
+      mensajeError += 'Debe seleccionar un trabajador.';
+      valido = false;
+    } else if (faltaArea) {
+      mensajeError += 'Debe seleccionar un area.';
+      valido = false;
+    } else if (faltaRol) {
+      mensajeError += 'Debe seleccionar un rol.';
+      valido = false;
+    } else if (faltaUsername) {
+      mensajeError += 'Debe ingresar un nombre de usuario.';
+      valido = false;
+    } else if (faltaPassword) {
+      mensajeError += 'Debe ingresar una contrase&ntilde;a.';
+      valido = false;
+    }
 
-  if (faltaPersona || faltaArea || faltaRol || faltaUsername || faltaPassword) {
-    mensajeError += 'Debe completar todos los campos requeridos.';
-    valido = false;
-  } else if (faltaPersona) {
-    mensajeError += 'Debe seleccionar un trabajador.';
-    valido = false;
-  } else if (faltaArea) {
-    mensajeError += 'Debe seleccionar un area.';
-    valido = false;
-  } else if (faltaRol) {
-    mensajeError += 'Debe seleccionar un rol.';
-    valido = false;
-  } else if (faltaUsername) {
-    mensajeError += 'Debe ingresar un nombre de usuario.';
-    valido = false;
-  } else if (faltaPassword) {
-    mensajeError += 'Debe ingresar una contrase&ntilde;a.';
-    valido = false;
+    // Mostrar mensaje de error si hay
+    if (!valido) {
+      toastr.warning(mensajeError.trim());
+    }
+    return valido;
   }
-
-  // Mostrar mensaje de error si hay
-  if (!valido) {
-    toastr.warning(mensajeError.trim());
-  }
-  return valido;
 }
 
-
-// TODO: Seteo de valores en los inputs y combos
-// Resaltar fila seleccionada en la tabla de usuarios
+// Seteo de valores en los inputs y combos
 $(document).on('click', '#tablaListarUsuarios tbody tr', function () {
   $('#tablaListarUsuarios tbody tr').removeClass('bg-blue-200 font-semibold');
   $(this).addClass('bg-blue-200 font-semibold');
@@ -285,10 +213,35 @@ function setComboValue(comboId, value) {
       break;
     }
   }
-
   if (!valueFound) {
     select.value = '';
   }
-
   $(select).trigger('change');
+}
+
+// Función para limpiar los campos del formulario y reactivar tablas
+function nuevoRegistro() {
+  document.getElementById('formUsuario').reset(); // Resetear el formulario completo
+
+  // Limpiar los valores específicos de inputs y combos
+  $('#CodUsuario').val('');
+  $('#username').val('');
+  $('#password').val('');
+
+  // Limpiar los combos y forzar la actualización con Select2
+  $('#cbo_persona').val('').trigger('change');
+  $('#cbo_area').val('').trigger('change');
+  $('#cbo_rol').val('').trigger('change');
+
+  // Remover clases de selección y estilos de todas las filas de ambas tablas
+  $('tr').removeClass('bg-blue-200 font-semibold');
+
+  // Reactivar ambas tablas
+  $('#tablaListarUsuarios tbody tr').removeClass('pointer-events-none opacity-50');
+
+  // Configurar los botones en su estado inicial
+  $('#form-action').val('registrar');  // Cambiar la acción a registrar
+  $('#guardar-usuario').prop('disabled', false);  // Activar el botón de guardar
+  $('#editar-usuario').prop('disabled', true);    // Desactivar el botón de editar
+  $('#nuevo-registro').prop('disabled', false);     // Asegurarse que el botón de nuevo registro está activo
 }

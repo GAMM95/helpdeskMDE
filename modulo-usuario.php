@@ -12,9 +12,19 @@ $USU_codigo = $_GET['USU_codigo'] ?? '';
 require_once 'app/Controller/UsuarioController.php';
 require_once 'app/Model/UsuarioModel.php';
 
-// Crear una instancia del controlador PersonaController
 $usuarioController = new UsuarioController();
 $usuarioModel = new UsuarioModel();
+
+// Paginacion de la tabla de usuarios
+$limit = 5; // Número de filas por página
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
+$start = ($page - 1) * $limit; // Calcula el índice de inicio
+// Obtener el total de registros
+$totalUsuarios = $usuarioModel->contarUsuarios();
+$totalPages = ceil($totalUsuarios / $limit);
+// Listar las incidencias para la pagina actual
+$resultado = $usuarioModel->listarUsuarios();
+
 
 if ($USU_codigo != '') {
   global $usuarioRegistrado;

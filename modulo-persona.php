@@ -16,6 +16,9 @@ require_once 'app/Model/PersonaModel.php';
 $personaController = new PersonaController();
 $personaModel = new PersonaModel();
 
+// listar personas registradas
+$personas = $personaModel->listarTrabajadores();
+
 if ($PER_codigo != '') {
   global $personaRegistrada;
   $personaRegistrada = $personaModel->obtenerPersonaPorId($PER_codigo);
@@ -71,6 +74,10 @@ switch ($action) {
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
   <script src="./app/View/func/func_persona.js"></script>
+
+  <!-- Framework CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Mensajes toastr -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>

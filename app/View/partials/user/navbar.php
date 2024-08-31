@@ -12,7 +12,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
       <div class="">
         <div class="main-menu-header">
-          <!-- <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image"> -->
+          <!-- <img class="img-radius" src="dist/assets/images/user/avatar.png" alt="User-Profile-Image"> -->
           <img class="img-radius" src="public/assets/logo.ico">
           <div class="user-details">
             <?php

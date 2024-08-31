@@ -6,7 +6,7 @@ if (isset($_SESSION['codigoUsuario'])) {
   $usuario = new UsuarioModel();
   $perfil = $usuario->setearDatosUsuario($user_id);
 } else {
-  $perfil = null; // O maneja el caso en que el usuario no está logueado
+  $perfil = null; 
 }
 ?>
 <header class="navbar pcoded-header navbar-expand-lg navbar-light header-dark fixed top-0 left-0 right-0 z-50">
@@ -68,7 +68,7 @@ if (isset($_SESSION['codigoUsuario'])) {
                 <?php foreach (array_slice($incidencias, 0, 5) as $incidencia) : ?>
                   <li class="notification">
                     <div class="media">
-                      <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
+                      <img class="img-radius" src="dist/assets/images/user/avatar.png" alt="User-Profile-Image">
                       <div class="media-body">
                         <p>
                           <strong><?= htmlspecialchars($incidencia['Usuario']); ?></strong>
@@ -98,7 +98,7 @@ if (isset($_SESSION['codigoUsuario'])) {
           </a>
           <div class="dropdown-menu dropdown-menu-right profile-notification">
             <div class="pro-head fixed flex items-center">
-              <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
+              <img class="img-radius" src="dist/assets/images/user/avatar.png" alt="User-Profile-Image">
               <span>
                 <?php
                 if (isset($_SESSION['nombreDePersona'])) {

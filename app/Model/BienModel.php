@@ -3,27 +3,20 @@ require_once 'config/conexion.php';
 
 class BienModel extends Conexion
 {
-  // Atributos
-  protected $codigoIdentificador;
-  protected $nombreTipoBien;
 
-  public function __construct(
-    $codigoIdentificador = null,
-    $nombreTipoBien = null
-  ) {
+  public function __construct()
+  {
     parent::__construct();
-    $this->codigoIdentificador = $codigoIdentificador;
-    $this->nombreTipoBien = $nombreTipoBien;
   }
 
   // Metodo para validar existencia de codigo de bien
-  public function validarBienExistente()
+  public function validarBienExistente($codigoIdentificador)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
         // Extraer los primeros 8 dígitos del código patrimonial
-        $codigoParcial = substr($this->codigoIdentificador, 0, 8);
+        $codigoParcial = substr($codigoIdentificador, 0, 8);
         $sql = "SELECT COUNT(*) FROM BIEN WHERE BIE_codigoPatrimonial = ?";
         $stmt = $conector->prepare($sql);
         $stmt->execute([$codigoParcial]);
@@ -40,32 +33,64 @@ class BienModel extends Conexion
   }
 
   // Metodo para insertar el tipo de bien
-  public function insertarTipoBien()
+  public function insertarTipoBien($codigoIdentificador, $nombreTipoBien)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "";
+        $sql = "INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES (?, ?)";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([$codigoIdentificador, $nombreTipoBien]);
+        return $conector->lastInsertId();
       } else {
         throw new Exception("Error de conexion a la base de datos");
+        return null;
       }
     } catch (PDOException $e) {
       throw new PDOException("Error al insertar tipo de bien: " . $e->getMessage());
+      return null;
     }
   }
 
   // Metodo para editar el tipo de bien
-  public function editarTipoBien()
+  public function editarTipoBien($codigoIdentificador, $nombreTipoBien, $codigoBien)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "";
+        $sql = "UPDATE BIEN SET BIE_codigoPatrimonial = ? , BIE_nombre = ?
+                WHERE BIE_codigo = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute($codigoIdentificador, $nombreTipoBien, $codigoBien);
+        return $stmt->rowCount();
       } else {
         throw new Exception("Error de conexion a la base de datos");
+        return null;
       }
     } catch (PDOException $e) {
       throw new PDOException("Error al editar el tipo de bien: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  // Metodo para listar los bienes
+  public function listarBienes()
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT * FROM BIEN
+                WHERE BIE_codigo <> 1";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al listar bienes: " . $e->getMessage());
+      return null;
     }
   }
 }

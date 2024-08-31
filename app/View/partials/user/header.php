@@ -69,7 +69,7 @@ if (isset($_SESSION['codigoUsuario'])) {
                 <?php foreach (array_slice($incidencias, 0, 5) as $incidencia) : ?>
                   <li class="notification">
                     <div class="media">
-                      <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
+                      <img class="img-radius" src="dist/assets/images/user/avatar.png" alt="User-Profile-Image">
                       <div class="media-body">
                         <p>
                           <strong><?= htmlspecialchars($incidencia['INC_asunto']); ?></strong>
@@ -97,7 +97,7 @@ if (isset($_SESSION['codigoUsuario'])) {
           </a>
           <div class="dropdown-menu dropdown-menu-right profile-notification">
             <div class="pro-head fixed flex items-center">
-              <img class="img-radius" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
+              <img class="img-radius" src="dist/assets/images/user/avatar.png" alt="User-Profile-Image">
               <span>
                 <?php
                 if (isset($_SESSION['nombreDePersona'])) {

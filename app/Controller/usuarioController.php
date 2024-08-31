@@ -1,97 +1,71 @@
 <?php
-
 require_once 'app/Model/UsuarioModel.php';
 
 class UsuarioController
 {
   private $usuarioModel;
+
   public function __construct()
   {
     $this->usuarioModel = new UsuarioModel();
   }
 
-  // TODO: Metodo de controlador para registrar usuarios
+  // Metodo para registrar usuarios
   public function registrarUsuario()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Obtener los datos del formulario
       $username = $_POST['username'] ?? null;
       $password = $_POST['password'] ?? null;
-      $per_codigo = $_POST['persona'] ?? null;
-      $rol_codigo = $_POST['rol'] ?? null;
-      $are_codigo = $_POST['area'] ?? null;
+      $persona = $_POST['persona'] ?? null;
+      $rol = $_POST['rol'] ?? null;
+      $area = $_POST['area'] ?? null;
 
-      // Validar campos
-      if (empty($username) || empty($password) || empty($per_codigo) || empty($rol_codigo) || empty($are_codigo)) {
-        echo json_encode([
-          'success' => true,
-          'message' => 'Todos los campos son obligatorios.'
-        ]);
-        return;
-      } else if (empty($per_codigo)) {
-        echo json_encode([
-          'success' => true,
-          'message' => 'Debe seleccionar una persona.'
-        ]);
-        return;
-      } else if (empty($rol_codigo)) {
-        echo json_encode([
-          'success' => true,
-          'message' => 'Debe seleccionar un rol.'
-        ]);
-        return;
-      } else if (empty($are_codigo)) {
-        echo json_encode([
-          'success' => true,
-          'message' => 'Debe seleccionar un area.'
-        ]);
-        return;
-      } else if (empty($username)) {
-        echo json_encode([
-          'success' => true,
-          'message' => 'Debe ingresar un nombre de usuario.'
-        ]);
-        return;
-      } else if (empty($password)) {
-        echo json_encode([
-          'success' => true,
-          'message' => 'Debe ingresar una contraseña.'
-        ]);
-        return;
-      }
-
-      // Llamar al método del modelo para registrar el usuario en la base de datos
       try {
-        $insertSuccess = $this->usuarioModel->guardarUsuario(
-          $username,
-          $password,
-          $per_codigo,
-          $rol_codigo,
-          $are_codigo
-        );
+        // Validar si la persona tiene un usuario
+        if ($this->usuarioModel->validarPersonaConUsuario($persona)) {
+          echo json_encode([
+            'success' => false,
+            'message' => 'La persona ya tiene un usuario registrado.'
+          ]);
+          exit();
+        }
+
+        // Validar si el nombre de usuario ya existe
+        if ($this->usuarioModel->validarUsuarioExistente($username)) {
+          echo json_encode([
+            'success' => false,
+            'message' => 'El nombre de usuario ya existe.'
+          ]);
+          exit();
+        }
+
+        // Insertar el usuario
+        $insertSuccess = $this->usuarioModel->guardarUsuario($username, $password, $persona, $rol, $area);
 
         if ($insertSuccess) {
-          // header('Location: modulo-usuario.php?USU_codigo=' . $insertSuccess);
           echo json_encode([
             'success' => true,
             'message' => 'Usuario registrado.'
           ]);
         } else {
-          // echo "Error al registrar el usuario eje.";
           echo json_encode([
             'success' => false,
             'message' => 'Error al registrar usuario.'
           ]);
         }
       } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
         echo json_encode([
           'success' => false,
-          'message' => 'Error de controlador: ' . $e->getMessage()
+          'message' => 'Error: ' . $e->getMessage()
         ]);
       }
+      exit();
     } else {
-      echo "Error: Método no permitido.";
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
     }
   }
 
@@ -99,25 +73,41 @@ class UsuarioController
   public function editarUsuario()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      header('Content-Type: application/json');
+      // Obtener los datos de formulario
+      $codigoUsuario = $_POST['CodUsuario'] ?? null;
+      $username = $_POST['username'] ?? null;
+      $password = $_POST['password'] ?? null;
+      $persona = $_POST['persona'] ?? null;
+      $rol = $_POST['rol'] ?? null;
+      $area = $_POST['area'] ?? null;
 
       try {
-        // Obtener los datos de formulario
-        $codigoUsuario = $_POST['CodUsuario'] ?? null;
-        $username = $_POST['username'] ?? null;
-        $password = $_POST['password'] ?? null;
-        $persona = $_POST['persona'] ?? null;
-        $rol = $_POST['rol'] ?? null;
-        $area = $_POST['area'] ?? null;
         // Actualizar usuario
-        $this->usuarioModel->actualizarUsuario($username, $password, $persona, $rol, $area, $codigoUsuario);
-        header("Location: modulo-usuario.php");
+        $updateSuccess = $this->usuarioModel->editarUsuario($username, $password, $persona, $rol, $area, $codigoUsuario);
+
+        if ($updateSuccess) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Datos actualizados.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se realizaron cambios.'
+          ]);
+        }
       } catch (Exception $e) {
         echo json_encode([
           'success' => false,
           'message' => 'Error: ' . $e->getMessage()
         ]);
       }
+      exit();
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
     }
   }
 

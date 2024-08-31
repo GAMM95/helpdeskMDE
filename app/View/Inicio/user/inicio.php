@@ -149,7 +149,7 @@
                       <!-- Usuario y área -->
                       <td>
                         <div class="flex items-center">
-                          <img class="rounded-full w-10 h-10 mr-4" src="dist/assets/images/user/avatar.jpg" alt="User-Profile-Image">
+                          <img class="rounded-full w-10 h-10 mr-4" src="dist/assets/images/user/avatar.png" alt="User-Profile-Image">
                           <div>
                             <h6 class="text-xs"><?= htmlspecialchars($incidencia['Usuario']); ?></h6>
                             <p class="text-muted text-xs"><?= htmlspecialchars($incidencia['ARE_nombre']); ?></p>

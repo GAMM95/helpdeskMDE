@@ -1213,3 +1213,15 @@ INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
 INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
 WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5;
 GO
+
+-- Vista para listar usuarios
+CREATE VIEW vista_usuarios AS
+SELECT USU_codigo, (p.PER_nombres + ' ' + p.PER_apellidoPaterno + ' '+ p.PER_apellidoMaterno) as persona, 
+a.ARE_nombre , USU_nombre, USU_password, r.ROL_nombre, e.EST_descripcion 
+FROM USUARIO u
+INNER JOIN PERSONA p on p.PER_codigo = u.PER_codigo
+INNER JOIN AREA a on a.ARE_codigo = u.ARE_codigo
+INNER JOIN ESTADO e on e.EST_codigo = u.EST_codigo
+INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo;
+GO
+

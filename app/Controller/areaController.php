@@ -2,7 +2,7 @@
 
 require_once 'app/Model/AreaModel.php';
 
-class AreaController  
+class AreaController
 {
   private $areaModel;
 
@@ -22,8 +22,7 @@ class AreaController
       }
 
       try {
-        $areaModel = new AreaModel(null, $nombre);
-        $insertSuccessId = $areaModel->registrarArea();
+        $insertSuccessId = $this->areaModel->insertarArea($nombre);
         if ($insertSuccessId) {
           header('Location: modulo-area.php?CodArea=' . $insertSuccessId);
           exit();

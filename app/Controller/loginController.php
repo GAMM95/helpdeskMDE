@@ -29,7 +29,7 @@ class LoginController
       $usuario = new UsuarioModel($username, $password);
 
       // Intenta iniciar sesión con los datos proporcionados
-      if ($usuario->iniciarSesion()) {
+      if ($usuario->iniciarSesion($username, $password)) {
         // Si el inicio de sesión es exitoso, inicia la sesión y redirige al menú
         session_start();
         $_SESSION['username'] = $username;

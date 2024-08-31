@@ -17,16 +17,14 @@ class AreaModel extends Conexion
   }
 
   // Metodo para registrar areas
-  public function insertarArea()
+  public function insertarArea($nombreArea)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
         $sql = "INSERT INTO AREA (ARE_nombre) VALUES (?)";
         $stmt = $conector->prepare($sql);
-        $stmt->execute([
-          $this->nombreArea
-        ]);
+        $stmt->execute([$nombreArea]);
         return $conector->lastInsertId();
       } else {
         throw new Exception("Error de conexion a la base de datos");

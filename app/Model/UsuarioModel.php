@@ -3,26 +3,22 @@ require_once 'config/conexion.php';
 
 class UsuarioModel extends Conexion
 {
-  protected $username;
-  protected $password;
 
-  public function __construct($username = null, $password = null)
+  public function __construct()
   {
     parent::__construct();
-    $this->username = $username;
-    $this->password = $password;
   }
 
-  // TODO: Metodo para iniciar sesion
-  public function iniciarSesion()
+  // Metodo para iniciar sesion
+  public function iniciarSesion($username, $password)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
         $query = "EXEC SP_Usuario_login :username, :password";
         $stmt = $conector->prepare($query);
-        $stmt->bindParam(':username', $this->username);
-        $stmt->bindParam(':password', $this->password);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
         $stmt->execute();
 
         $resultado = $stmt->fetch();
@@ -33,12 +29,12 @@ class UsuarioModel extends Conexion
             $_SESSION['nombreDePersona'] = $resultado['PER_nombres'] . ' ' . $resultado['PER_apellidoPaterno'];
             $_SESSION['area'] = $resultado['ARE_nombre'];
             $_SESSION['codigoArea'] = $resultado['ARE_codigo'];
-            $informacionUsuario = $this->obtenerInformacionUsuario($this->username, $this->password);
+            $informacionUsuario = $this->obtenerInformacionUsuario($username, $password);
             $codigo = $informacionUsuario['codigo'];
             $usuario = $informacionUsuario['usuario'];
             $_SESSION['codigoUsuario'] = $codigo;
             $_SESSION['usuario'] = $usuario;
-            $_SESSION['rol'] = $this->obtenerRolPorId($this->username); // Guardar rol en la sesión
+            $_SESSION['rol'] = $this->obtenerRolPorId($username); // Guardar rol en la sesión
 
             // Log de inicio de sesión
             $logData = "------- START LOGIN LOGS ---------" . PHP_EOL;
@@ -63,7 +59,7 @@ class UsuarioModel extends Conexion
         throw new Exception("Error de conexión a la base de datos.");
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al iniciar sesión: " . $e->getMessage());
+      throw new PDOException("Error al iniciar sesión: " . $e->getMessage());
     }
   }
 
@@ -90,9 +86,11 @@ class UsuarioModel extends Conexion
         }
       } else {
         throw new Exception("Error de conexión a la base de datos.");
+        return null;
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al obtener información del usuario: " . $e->getMessage());
+      throw new PDOException("Error al obtener información del usuario: " . $e->getMessage());
+      return null;
     }
   }
 
@@ -125,103 +123,130 @@ class UsuarioModel extends Conexion
     }
   }
 
-  // TODO: Método para registrar un nuevo usuario
-  // public function guardarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo)
-  // {
-  //   $conector = parent::getConexion();
-  //   try {
-  //     if ($conector != null) {
-  //       $query = "EXEC SP_Registrar_Usuario :USU_nombre, :USU_password, :PER_codigo, :ROL_codigo, :ARE_codigo";
-  //       $stmt = $conector->prepare($query);
-  //       $stmt->bindParam(':USU_nombre', $username);
-  //       $stmt->bindParam(':USU_password', $password);
-  //       $stmt->bindParam(':PER_codigo', $per_codigo);
-  //       $stmt->bindParam(':ROL_codigo', $rol_codigo);
-  //       $stmt->bindParam(':ARE_codigo', $are_codigo);
-  //       $stmt->execute();
-  //       return true; // Registro exitoso
-  //     } else {
-  //       throw new Exception("Error de conexión a la base de datos.");
-  //     }
-  //   } catch (PDOException $e) {
-  //     throw new Exception("Error al guardar usuario: " . $e->getMessage());
-  //   }
-  // }
-  // Método para registrar un nuevo usuario
-  public function guardarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo)
+  // Método para validar la existencia de un usuario
+  public function validarUsuarioExistente($username)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        // Verificar si la persona ya tiene un usuario registrado
-        $verificarPersona = "SELECT 1 FROM USUARIO WHERE PER_codigo = :PER_codigo";
-        $stmtPersona = $conector->prepare($verificarPersona);
-        $stmtPersona->bindParam(':PER_codigo', $per_codigo);
-        $stmtPersona->execute();
-        if ($stmtPersona->fetch()) {
-          throw new Exception("La persona ya tiene un usuario registrado.");
-        }
+        $sql = "SELECT COUNT(*) FROM USUARIO WHERE USU_nombre = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([$username]);
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al validar nombre de usuario: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  // Metodo para validar si persona ya tiene un usuario
+  public function validarPersonaConUsuario($persona)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT COUNT(*) FROM USUARIO WHERE PER_codigo = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([$persona]);
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al validar nombre de usuario: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  // Método para registrar un nuevo usuario
+  public function guardarUsuario($username, $password, $persona, $rol, $area)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+
+        // // Validar si existe el nombre de usuario
+        // if ($this->validarUsuarioExistente($username)) {
+        //   throw new Exception("El nombre de usuario ya está registrado...");
+        // }
+
+        // // Verificar si la persona ya tiene un usuario registrado
+        // if ($this->validarPersonaConUsuario($persona)) {
+        //   throw new Exception("La persona ya tiene un usuario registrado...");
+        // }
+        // $verificarPersona = "SELECT 1 FROM USUARIO WHERE PER_codigo = :PER_codigo";
+        // $stmtPersona = $conector->prepare($verificarPersona);
+        // $stmtPersona->bindParam(':PER_codigo', $per_codigo);
+        // $stmtPersona->execute();
+        // if ($stmtPersona->fetch()) {
+        //   throw new Exception("La persona ya tiene un usuario registrado.");
+        // }
 
         // Verificar si el nombre de usuario ya existe
-        $verificarUsuario = "SELECT 1 FROM USUARIO WHERE USU_nombre = :USU_nombre";
-        $stmtUsuario = $conector->prepare($verificarUsuario);
-        $stmtUsuario->bindParam(':USU_nombre', $username);
-        $stmtUsuario->execute();
-        if ($stmtUsuario->fetch()) {
-          throw new Exception("El nombre de usuario ya existe.");
-        }
+        // $verificarUsuario = "SELECT 1 FROM USUARIO WHERE USU_nombre = :USU_nombre";
+        // $stmtUsuario = $conector->prepare($verificarUsuario);
+        // $stmtUsuario->bindParam(':USU_nombre', $username);
+        // $stmtUsuario->execute();
+        // if ($stmtUsuario->fetch()) {
+        //   throw new Exception("El nombre de usuario ya existe.");
+        // }
 
         // Insertar el nuevo usuario
-        $query = "EXEC SP_Registrar_Usuario :USU_nombre, :USU_password, :PER_codigo, :ROL_codigo, :ARE_codigo";
-        $stmt = $conector->prepare($query);
-        $stmt->bindParam(':USU_nombre', $username);
-        $stmt->bindParam(':USU_password', $password);
-        $stmt->bindParam(':PER_codigo', $per_codigo);
-        $stmt->bindParam(':ROL_codigo', $rol_codigo);
-        $stmt->bindParam(':ARE_codigo', $are_codigo);
+        $sql = "EXEC SP_Registrar_Usuario :username, :password, :persona, :rol, :area";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':persona', $persona);
+        $stmt->bindParam(':rol', $rol);
+        $stmt->bindParam(':area', $area);
         $stmt->execute();
         return true; // Registro exitoso
       } else {
         throw new Exception("Error de conexión a la base de datos.");
+        return null;
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al guardar usuario: " . $e->getMessage());
+      throw new PDOException("Error al guardar usuario: " . $e->getMessage());
+      return null;
     }
   }
 
-  // TODO: Metodo para actualizar datos del usuario
-  public function actualizarUsuario($username, $password, $per_codigo, $rol_codigo, $are_codigo, $usu_codigo)
+  // Metodo para editar datos del usuario
+  public function editarUsuario($username, $password, $persona, $rol, $area, $codigoUsuario)
   {
     $conector = parent::getConexion();
     try {
-      $sql = "UPDATE USUARIO SET USU_nombre = ?, USU_password = ?, PER_codigo = ?, ROL_codigo = ?, ARE_codigo = ? WHERE USU_codigo = ?";
-      $stmt = $conector->prepare($sql);
-      $stmt->execute([$username, $password, $per_codigo, $rol_codigo, $are_codigo, $usu_codigo]);
-      return $stmt->rowCount();
+      if ($conector != null) {
+        $sql = "UPDATE USUARIO SET USU_nombre = ?, USU_password = ?, PER_codigo = ?, ROL_codigo = ?, ARE_codigo = ? WHERE USU_codigo = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([$username, $password, $persona, $rol, $area, $codigoUsuario]);
+        return $stmt->rowCount();
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
     } catch (PDOException $e) {
-      throw new Exception("Error al actualizar usuario: " . $e->getMessage());
+      throw new PDOException("Error al actualizar usuario: " . $e->getMessage());
+      return null;
     }
   }
 
-  // TODO: Metodo para listar todos los usuarios registrados
-  public function listarUsuarios($start, $limit)
+  // Metodo para listar todos los usuarios registrados
+  public function listarUsuarios()
   {
     try {
       $conector = parent::getConexion();
       if ($conector != null) {
-        $sql = "SELECT USU_codigo, (p.PER_nombres + ' ' + p.PER_apellidoPaterno + ' '+ p.PER_apellidoMaterno) as persona, 
-        a.ARE_nombre , USU_nombre, USU_password, r.ROL_nombre, e.EST_descripcion 
-        FROM USUARIO u
-        INNER JOIN PERSONA p on p.PER_codigo = u.PER_codigo
-        INNER JOIN AREA a on a.ARE_codigo = u.ARE_codigo
-        INNER JOIN ESTADO e on e.EST_codigo = u.EST_codigo
-        INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo
-        ORDER BY USU_codigo DESC
-        OFFSET :start ROWS
-        FETCH NEXT :limit ROWS ONLY";
+        $sql = "SELECT * FROM vista_usuarios
+        ORDER BY USU_codigo DESC";
         $stmt = $conector->prepare($sql);
-        $stmt->bindParam(':start', $start, PDO::PARAM_INT);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
@@ -233,7 +258,7 @@ class UsuarioModel extends Conexion
     }
   }
 
-  // TODO: Contar cantidad de usuarios para la pantalla de inicio del administrador y empaginar tabla Usuarios
+  // Contar cantidad de usuarios para la pantalla de inicio del administrador 
   public function contarUsuarios()
   {
     $conector = parent::getConexion();
@@ -250,26 +275,29 @@ class UsuarioModel extends Conexion
         return null;
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al listar usuarios: " . $e->getMessage());
+      throw new PDOException("Error al contar usuarios: " . $e->getMessage());
+      return null;
     }
   }
 
-  // TODO: Metodo para setear datos personales del usuario logueado
+  // Metodo para setear datos personales del usuario logueado
   public function setearDatosUsuario($user_id)
   {
     $conector = parent::getConexion();
-    $sql = "SELECT 
-            USU_nombre, USU_password, PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno,
-            (PER_nombres +' '+ PER_apellidoPaterno +' '+ PER_apellidoMaterno) AS Persona,
-            ROL_nombre, ARE_nombre, PER_celular, PER_email
-            FROM USUARIO u
-            INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
-            INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo
-            INNER JOIN AREA a ON a.ARE_codigo = u.ARE_codigo
-            WHERE u.USU_codigo = :user_id";
-    $stmt = $conector->prepare($sql);
-    $stmt->bindParam(':user_id', $user_id);
     try {
+      if ($conector != null) {
+      }
+      $sql = "SELECT 
+      USU_nombre, USU_password, PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno,
+      (PER_nombres +' '+ PER_apellidoPaterno +' '+ PER_apellidoMaterno) AS Persona,
+      ROL_nombre, ARE_nombre, PER_celular, PER_email
+      FROM USUARIO u
+      INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
+      INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo
+      INNER JOIN AREA a ON a.ARE_codigo = u.ARE_codigo
+      WHERE u.USU_codigo = :user_id";
+      $stmt = $conector->prepare($sql);
+      $stmt->bindParam(':user_id', $user_id);
       $stmt->execute();
       $user = $stmt->fetch(PDO::FETCH_ASSOC);
       return $user;
@@ -279,7 +307,7 @@ class UsuarioModel extends Conexion
     }
   }
 
-  // TODO: Metodo para obtener usuario por ID
+  // Metodo para obtener usuario por ID
   public function obtenerUsuarioPorID($codigoUsuario)
   {
     $conector = parent::getConexion();
@@ -294,45 +322,34 @@ class UsuarioModel extends Conexion
     }
   }
 
-  // TODO: Metodo para editar perfil del usuario
-  public function editarPerfilUsuario($usu_codigo, $usu_nombre, $usu_password, $per_dni, $per_nombres, $per_apellidoPaterno, $per_apellidoMaterno, $per_celular, $per_email)
+  // Metodo para editar perfil del usuario
+  public function editarPerfilUsuario($codigoUsuario, $username, $password, $dni, $nombrePersona, $apellidoPaterno, $apellidoMaterno, $celular, $email)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        // Llamada al procedimiento almacenado para actualizar persona y usuario
-        $query = "EXEC EditarPersonaYUsuario 
-                  @USU_codigo = :usu_codigo,
-                  @USU_nombre = :usu_nombre,
-                  @USU_password = :usu_password,
-                  @PER_dni = :per_dni,
-                  @PER_nombres = :per_nombres,
-                  @PER_apellidoPaterno = :per_apellidoPaterno,
-                  @PER_apellidoMaterno = :per_apellidoMaterno,
-                  @PER_celular = :per_celular,
-                  @PER_email = :per_email";
+        $query = "EXEC EditarPersonaYUsuario :codigoUsuario, :username, :password, :dni, :nombrePersona, :apellidoPaterno, :apellidoMaterno, :celular, :email";
         $stmt = $conector->prepare($query);
-        $stmt->bindParam(':usu_codigo', $usu_codigo);
-        $stmt->bindParam(':usu_nombre', $usu_nombre);
-        $stmt->bindParam(':usu_password', $usu_password);
-        $stmt->bindParam(':per_dni', $per_dni);
-        $stmt->bindParam(':per_nombres', $per_nombres);
-        $stmt->bindParam(':per_apellidoPaterno', $per_apellidoPaterno);
-        $stmt->bindParam(':per_apellidoMaterno', $per_apellidoMaterno);
-        $stmt->bindParam(':per_celular', $per_celular);
-        $stmt->bindParam(':per_email', $per_email);
+        $stmt->bindParam(':codigoUsuario', $codigoUsuario);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':dni', $dni);
+        $stmt->bindParam(':nombrePersona', $nombrePersona);
+        $stmt->bindParam(':apellidoPaterno', $apellidoPaterno);
+        $stmt->bindParam(':apellidoMaterno', $apellidoMaterno);
+        $stmt->bindParam(':celular', $celular);
+        $stmt->bindParam(':email', $email);
         $stmt->execute();
-
-        // Si la actualización fue exitosa
         return true;
       } else {
         throw new Exception("Error de conexión a la base de datos.");
+        return null;
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al actualizar el perfil del usuario: " . $e->getMessage());
+      throw new PDOException("Error al actualizar el perfil del usuario: " . $e->getMessage());
+      return null;
     }
   }
-
 
   // Método para habilitar usuarios
   public function habilitarUsuario($USU_codigo)

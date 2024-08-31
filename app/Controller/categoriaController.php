@@ -23,7 +23,7 @@ class CategoriaController
 
       try {
         $categoriaModel = new CategoriaModel(null, $nombre);
-        $insertSuccessId = $categoriaModel->registrarCategoria();
+        $insertSuccessId = $categoriaModel->insertarCategoria();
         if ($insertSuccessId) {
           header('Location: modulo-categoria.php?CodCategoria=' . $insertSuccessId);
           exit();

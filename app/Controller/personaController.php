@@ -10,11 +10,10 @@ class PersonaController
     $this->personaModel = new PersonaModel();
   }
 
-  // TODO: Método para registrar personas
+  // Metodo para registrar personas
   public function registrarPersona()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      // Obtener los datos del formulario
       $dni = $_POST['dni'] ?? null;
       $nombres = $_POST['nombres'] ?? null;
       $apellidoPaterno = $_POST['apellidoPaterno'] ?? null;
@@ -33,19 +32,12 @@ class PersonaController
         }
 
         // Registrar la persona
-        $insertSuccessId = $this->personaModel->registrarPersona(
-          $dni,
-          $nombres,
-          $apellidoPaterno,
-          $apellidoMaterno,
-          $celular,
-          $email
-        );
+        $insertSuccessId = $this->personaModel->registrarPersona($dni, $nombres, $apellidoPaterno, $apellidoMaterno, $celular,  $email);
 
         if ($insertSuccessId) {
           echo json_encode([
             'success' => true,
-            'message' => 'Persona registrada.'
+            'message' => 'Persona registrada exitosamente.'
           ]);
         } else {
           echo json_encode([
@@ -59,71 +51,93 @@ class PersonaController
           'message' => 'Error: ' . $e->getMessage()
         ]);
       }
+      exit();
     }
   }
 
-  // TODO: Método para editar personas
+  // Método para editar personas
   public function editarPersona()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      header('Content-Type: application/json');
+      $codigoPersona = $_POST['CodPersona'] ?? null;
+      $dni = $_POST['dni'] ?? null;
+      $nombres = $_POST['nombres'] ?? null;
+      $apellidoPaterno = $_POST['apellidoPaterno'] ?? null;
+      $apellidoMaterno = $_POST['apellidoMaterno'] ?? null;
+      $email = $_POST['email'] ?? null;
+      $celular = $_POST['celular'] ?? null;
 
       try {
-        $codigoPersona = $_POST['CodPersona'] ?? null;
-        $dni = $_POST['dni'] ?? null;
-        $nombres = $_POST['nombres'] ?? null;
-        $apellidoPaterno = $_POST['apellidoPaterno'] ?? null;
-        $apellidoMaterno = $_POST['apellidoMaterno'] ?? null;
-        $email = $_POST['email'] ?? null;
-        $celular = $_POST['celular'] ?? null;
 
-        // Normaliza los valores de campos opcionales
-        $email = !empty($email) ? $email : null;
-        $celular = !empty($celular) ? $celular : null;
+        // // Validar si el DNI ya está registrado
+        // if ($this->personaModel->validarDniExistente($dni)) {
+        //   echo json_encode([
+        //     'success' => false,
+        //     'message' => 'El DNI ya esta registrado.'
+        //   ]);
+        //   exit();
+        // }
 
-        if ($codigoPersona && $dni && $nombres && $apellidoPaterno && $apellidoMaterno) {
-          $personaModel = $this->personaModel->actualizarPersona(
-            $dni,
-            $nombres,
-            $apellidoPaterno,
-            $apellidoMaterno,
-            $celular,
-            $email,
-            $codigoPersona
-          );
+        $updateSuccess = $this->personaModel->editarPersona($dni, $nombres, $apellidoPaterno, $apellidoMaterno, $celular, $email, $codigoPersona);
 
-          if ($personaModel > 0) {
-            echo json_encode(['success' => true, 'message' => 'Datos actualizados.']);
-          } else {
-            echo json_encode(['success' => false, 'message' => 'No se realizaron cambios.']);
-          }
+        if ($updateSuccess) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Datos actualizados.'
+          ]);
         } else {
-          echo json_encode(['success' => false, 'message' => 'Todos los campos obligatorios deben completarse.']);
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se realizaron cambios.'
+          ]);
         }
       } catch (Exception $e) {
-        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
       }
+      exit();
     } else {
-      echo json_encode(['success' => false, 'message' => 'Método no permitido.']);
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
     }
   }
 
-
+  // Metodo para filtrar personas por un termino
   public function filtrarPersonas()
   {
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
       $terminoBusqueda = $_GET['termino'] ?? '';
 
-      header('Content-Type: application/json'); // Establecer el tipo de contenido como JSON
-
       try {
         $resultados = $this->personaModel->filtrarPersonas($terminoBusqueda);
         echo json_encode($resultados);
+
+        if ($resultados) {
+          echo json_encode([
+            'success' =>  true,
+            'message' => 'Busqueda exitosa'
+          ]);
+        } else {
+          echo json_encode([
+            'success' =>  false,
+            'message' => 'No se realizo busqueda'
+          ]);
+        }
       } catch (Exception $e) {
-        echo json_encode(['error' => $e->getMessage()]);
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
       }
     } else {
-      echo json_encode(['error' => 'Método no permitido.']);
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
     }
   }
 }
