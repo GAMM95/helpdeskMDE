@@ -77,20 +77,24 @@
           <input type="text" id="usuario" name="usuario" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo $_SESSION['codigoUsuario']; ?>" readonly>
         </div>
 
-        <!-- CODIGO PATROMONIAL -->
-        <div class="w-full sm:w-1/6 px-2 mb-2">
-          <label for="codigoPatrimonial" class="block mb-1 font-bold text-xs">Código Patrimonial:</label>
-          <input type="text" id="codigoPatrimonial" name="codigoPatrimonial"
-            class="border p-2 w-full text-xs rounded-md" maxlength="12"
-            pattern="\d{1,12}" inputmode="numeric"
-            title="Ingrese solo dígitos"
-            placeholder="Ingrese código patrimonial">
-        </div>
+        <div class="mb-2 sm:w-1/3 flex items-center gap-4 pl-2 pr-2">
+          <!-- CODIGO PATROMONIAL -->
+          <div class="flex-grow sm:w-1/3">
+            <!-- <div class="w-full sm:w-1/3 px-2 mb-2"> -->
+            <label for="codigoPatrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
+            <input type="text" id="codigoPatrimonial" name="codigoPatrimonial"
+              class="border p-2 w-full text-xs rounded-md" maxlength="12"
+              pattern="\d{1,12}" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+              title="Ingrese solo dígitos"
+              placeholder="Ingrese código">
+          </div>
 
-        <!-- TIPO DE BIEN -->
-        <div class="w-full sm:w-1/6 px-2 mb-2">
-          <label for="tipoBien" class="block mb-1 font-bold text-center text-xs">Tipo de bien:</label>
-          <input type="text" id="tipoBien" name="tipoBien" class="border p-2 w-full text-center text-xs rounded-md" disabled readonly>
+          <!-- TIPO DE BIEN -->
+          <div class="flex-grow sm:w-2/3">
+            <!-- <div class="w-full sm:w-2/3 px-2 mb-2"> -->
+            <label for="tipoBien" class="block mb-1 font-bold text-center text-xs">Tipo de bien:</label>
+            <input type="text" id="tipoBien" name="tipoBien" class="border p-2 w-full text-center text-xs rounded-md" disabled readonly>
+          </div>
         </div>
       </div>
 
@@ -136,9 +140,49 @@
       <div class="flex justify-center space-x-4">
         <button type="submit" id="guardar-incidencia" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
         <button type="button" id="editar-incidencia" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
-        <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
-        <button type="button" id="imprimir-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-printer"></i>Imprimir</button>
+        <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
+        <button type="button" id="imprimir-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Imprimir </button>
+        <button type="button" data-toggle="modal" data-target="#modalBuscarIncidencia" id="buscar-incidencia" class="bn bg-orange-500 hover:bg-orange-600 text-xs text-white font-bold py-2 px-3 rounded-md">
+          <i class="feather mr-2 icon-search"></i>Buscar incidencia</button>
       </div>
+
+      <!-- Modal Buscar Incidencia -->
+      <div class="modal fade" id="modalBuscarIncidencia" tabindex="-1" role="dialog" aria-labelledby="modalBuscarIncidenciaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <!-- <div class="modal-header">
+              <h5 class="modal-title text-xl font-bold" id="modalBuscarIncidenciaLabel">Buscar Incidencia</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div> -->
+            <div class="modal-body">
+              <form>
+                <div class="justify-center">
+                  <label for="nueroIncidencia" class="block font-bold text-xs text-center text-gray-800 mb-2">N&deg; de Incidencia</label>
+                  <!-- Campo de texto con conversión a mayúsculas -->
+                  <input type="text" id="numeroIncidencia" name="numeroIncidencia"
+                    class="border text-center border-gray-200 p-2 w-64 text-xs rounded-md"
+                    placeholder="Ingrese N&deg; de incidencia"
+                    oninput="uppercaseInput(this)" autofocus>
+                  <script>
+                    function uppercaseInput(element) {
+                      element.value = element.value.toUpperCase();
+                    }
+                  </script>
+
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer justify-center">
+              <button type="button" id="imprimir-numero-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Generar detalle </button>
+              <!-- <button type="button" class="btn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" data-dismiss="modal">Cerrar</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fin Modal Buscar Incidencia -->
+
     </form>
     <!-- Fin de Formulario -->
 
@@ -239,3 +283,4 @@
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.6.0/jspdf.umd.min.js"></script> -->

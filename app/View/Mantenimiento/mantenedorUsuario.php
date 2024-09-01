@@ -26,15 +26,15 @@
     <!-- Inicio de Formulario -->
     <form id="formUsuario" action="modulo-usuario.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6  text-xs  flex flex-col mb-2">
       <input type="hidden" id="form-action" name="action" value="registrar">
-      <!-- Subtitulo -->
-      <h3 class="text-2xl font-plain mb-4 text-xs text-gray-400">Informaci&oacute;n del usuario</h3>
+      <!-- Subtitulo
+      <h3 class="text-2xl font-plain mb-4 text-xs text-gray-400">Informaci&oacute;n del usuario</h3> -->
 
       <!-- Inicio de Card de formulario -->
       <div class="card-body">
         <!-- CAMPO ESCONDIDO -->
         <div class="flex justify-center -mx-2 ">
           <!-- CODIGO DE USUARIO -->
-          <div class="w-full sm:w-1/4 px-2 mb-2">
+          <div class="w-full sm:w-1/4 px-2 mb-2 hidden">
             <div class="flex items-center">
               <label for="CodUsuario" class="block font-bold mb-1 mr-3 text-lime-500">C&oacute;digo de Usuario:</label>
               <input type="text" id="CodUsuario" name="CodUsuario" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center">

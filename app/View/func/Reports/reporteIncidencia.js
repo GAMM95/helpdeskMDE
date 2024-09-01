@@ -172,7 +172,3 @@ $('#imprimir-incidencia').click(function () {
     }
   });
 });
-
-$('#tablaListarIncidencias').on('click', 'tr', function () {
-  $(this).toggleClass('selected').siblings().removeClass('selected');
-});

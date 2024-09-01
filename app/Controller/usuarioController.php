@@ -184,8 +184,5 @@ class UsuarioController
         'message' => 'Método no permitido.'
       ]);
     }
-  }
-
-  // TODO: Metodo para habilitar usuario
-  
+  } 
 }

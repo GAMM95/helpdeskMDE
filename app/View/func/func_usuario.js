@@ -287,5 +287,42 @@ function filtrarTablaUsuario() {
 }
 
 
+// Habilitar y desahbilitar usuario
+$(document).ready(function () {
+  // Manejar el cambio en los switches
+  $('input[type="checkbox"]').change(function () {
+    const checkbox = $(this);
+    const usuarioCodigo = checkbox.attr('id').replace('customswitch', '');
+    const nuevoEstado = checkbox.is(':checked') ? 'ACTIVO' : 'INACTIVO';
+    const url = checkbox.is(':checked') ? 'ajax/habilitarUsuario.php' : 'ajax/deshabilitarUsuario.php';
+
+    $.ajax({
+      url: url, // Cambia esto a la ruta correcta dependiendo del estado
+      type: 'POST',
+      data: {
+        codigoUsuario: usuarioCodigo
+      },
+      success: function (response) {
+        if (response.success) {
+          toastr.success('Estado del usuario actualizado.');
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        } else {
+          toastr.error('No se pudo actualizar el estado del usuario.');
+          // Restaura el estado del switch en caso de error
+          checkbox.prop('checked', !checkbox.is(':checked'));
+        }
+      },
+      error: function (xhr, status, error) {
+        toastr.error('Ocurrió un error al actualizar el estado del usuario.');
+        // Restaura el estado del switch en caso de error
+        checkbox.prop('checked', !checkbox.is(':checked'));
+      }
+    });
+  });
+});
+
+
 
 

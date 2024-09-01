@@ -75,6 +75,7 @@ switch ($action) {
   <?php include('app/View/partials/admin/navbar.php'); ?>
   <?php include('app/View/partials/admin/header.php'); ?>
   <?php include('app/View/Registrar/admin/registroIncidencias.php'); ?>
+  
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>
@@ -84,6 +85,8 @@ switch ($action) {
 
   <script src="./app/View/func/func_incidencia_admin.js"></script>
   <script src="./app/View/func/Reports/reporteIncidencia.js"></script>
+  <script src="./app/View/func/Reports/reporteNumeroIncidencia.js"></script>
+
   <script src="./app/View/func/tipoBien.js"></script>
 
   <!-- Framework CSS -->
