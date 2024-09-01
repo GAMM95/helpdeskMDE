@@ -24,6 +24,12 @@ $(document).ready(function () {
     }
   });
 
+  // Evento para capturar el cambio de selección en el combo de persona
+  $('#persona').on('change', function () {
+    var selectedCodigo = $(this).val(); // Obtener el valor del option seleccionado (PER_codigo)
+    $('#codigoPersona').val(selectedCodigo); // Establecer el valor en el input hidden
+  });
+
   // Carga de datos en el combo area
   $.ajax({
     url: 'ajax/getAreaData.php',
@@ -206,6 +212,9 @@ $(document).on('click', '#tablaListarUsuarios tbody tr', function () {
   $('#guardar-usuario').prop('disabled', true);
   $('#editar-usuario').prop('disabled', false);
   $('#nuevo-registro').prop('disabled', false);
+
+  // Cambiar la acción a editar
+  $('#form-action').val('editar');
 });
 
 function setComboValue(comboId, value) {
@@ -248,7 +257,7 @@ function nuevoRegistro() {
 
   // Desbloquear el combo de persona
   $('#persona').prop('disabled', false);
-  
+
   // Configurar los botones en su estado inicial
   $('#form-action').val('registrar');  // Cambiar la acción a registrar
   $('#guardar-usuario').prop('disabled', false);  // Activar el botón de guardar
@@ -276,3 +285,7 @@ function filtrarTablaUsuario() {
     filas[i].style.display = match ? '' : 'none';
   }
 }
+
+
+
+

@@ -381,36 +381,53 @@ class UsuarioModel extends Conexion
   }
 
   // Método para habilitar usuarios
-  public function habilitarUsuario($USU_codigo)
+  public function habilitarUsuario($codigoUsuario)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "UPDATE USUARIO SET EST_codigo = 2 
-        WHERE USU_codigo = :USU_codigo AND EST_codigo = 1";
+        $sql = "EXEC sp_habilitarUsuario :codigoUsuario";
         $stmt = $conector->prepare($sql);
-        $stmt->bindParam(':USU_codigo', $USU_codigo, PDO::PARAM_INT);
+        $stmt->bindParam(':codigoUsuario', $codigoUsuario, PDO::PARAM_INT);
         $stmt->execute();
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al habilitar usuario: " . $e->getMessage());
+      throw new PDOException("Error al habilitar usuario: " . $e->getMessage());
+      return null;
     }
   }
 
   // METODO PARA DESHABILITAR USUARIO
-  public function deshabilitarUsuario($USU_codigo)
+  public function deshabilitarUsuario($codigoUsuario)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "UPDATE USUARIO SET EST_codigo = 1
-        WHERE USU_codigo = :USU_codigo AND EST_codigo = 2";
+        $sql = "EXEC sp_deshabilitarUsuario :codigoUsuario";
         $stmt = $conector->prepare($sql);
-        $stmt->bindParam(':USU_codigo', $USU_codigo, PDO::PARAM_INT);
+        $stmt->bindParam(':codigoUsuario', $codigoUsuario, PDO::PARAM_INT);
         $stmt->execute();
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
       }
     } catch (PDOException $e) {
-      throw new Exception("Error al habilitar usuario: " . $e->getMessage());
+      throw new PDOException("Error al deshabilitar usuario: " . $e->getMessage());
     }
   }
 }

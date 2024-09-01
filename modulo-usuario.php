@@ -35,12 +35,12 @@ switch ($action) {
   case 'filtrar':
     $usuarioController->filtrarUsuarios();
     break;
-  case 'habilitar':
-    $usuarioController->habilitarUsuario($USU_codigo);
-    break;
-  case 'deshabilitar':
-    $usuarioController->deshabilitarUsuario($USU_codigo);
-    break;
+    // case 'habilitar':
+    //   $usuarioController->habilitarUsuario($USU_codigo);
+    //   break;
+    // case 'deshabilitar':
+    //   $usuarioController->deshabilitarUsuario($USU_codigo);
+    //   break;
   default:
     break;
 }
@@ -80,7 +80,7 @@ switch ($action) {
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
 
   <script src="./app/View/func/func_usuario.js"></script>
-  
+
   <!-- Framework CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Mensajes toastr -->

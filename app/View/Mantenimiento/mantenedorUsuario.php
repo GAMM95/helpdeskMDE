@@ -32,7 +32,7 @@
       <!-- Inicio de Card de formulario -->
       <div class="card-body">
         <!-- CAMPO ESCONDIDO -->
-        <div class="flex justify-center -mx-2 hidden">
+        <div class="flex justify-center -mx-2 ">
           <!-- CODIGO DE USUARIO -->
           <div class="w-full sm:w-1/4 px-2 mb-2">
             <div class="flex items-center">
@@ -42,12 +42,16 @@
           </div>
         </div>
 
-        <!-- SELECCION DE PERSONA -->
+        <!-- Primera fila -->
         <div class="mb-4 flex items-center gap-4">
+          <!-- Selecciona de persona -->
           <div class="flex-grow w-1/4">
             <label for="persona" class="block text-gray-700 font-bold mb-2">Trabajador:</label>
             <select id="persona" name="persona" class="border p-2 w-full text-xs cursor-pointer rounded-md"></select>
+            <input type="hidden" id="codigoPersona" name="codigoPersona">
           </div>
+
+          <!-- Boton agregar persona -->
           <a href="modulo-persona.php" class="bn btn-warning text-xs text-white font-bold py-2 px-3 mt-4 rounded-md" disabled> <i class="feather icon-user-plus"></i></a>
 
           <!-- Seleccion de area -->
@@ -137,7 +141,7 @@
               <?php foreach ($resultado as $usuario) : ?>
                 <?php
                 $estado = htmlspecialchars($usuario['EST_descripcion']);
-                $isActive = ($estado === 'Activo');
+                $isActive = ($estado === 'ACTIVO');
                 ?>
                 <tr class=" hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b">
                   <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap hidden"><?= htmlspecialchars($usuario['USU_codigo']); ?></th>
@@ -165,8 +169,6 @@
       </div>
     </div>
     <!-- Fin de la Tabla de usuarios -->
-
-
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>

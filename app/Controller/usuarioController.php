@@ -77,12 +77,12 @@ class UsuarioController
       $codigoUsuario = $_POST['CodUsuario'] ?? null;
       $username = $_POST['username'] ?? null;
       $password = $_POST['password'] ?? null;
-      $persona = $_POST['persona'] ?? null;
+      $persona = $_POST['codigoPersona'] ?? null;
       $rol = $_POST['rol'] ?? null;
       $area = $_POST['area'] ?? null;
 
       try {
-        // Validar si el usuario ya está registrado
+        // TODO: Validar si el usuario ya está registrado
         if (!$this->usuarioModel->validarUsuarioExistente($username)) {
           echo json_encode([
             'success' => true,
@@ -95,7 +95,6 @@ class UsuarioController
         $updateSuccess = $this->usuarioModel->editarUsuario($codigoUsuario, $username, $password, $persona, $rol, $area);
 
         if ($updateSuccess) {
-
           echo json_encode([
             'success' => true,
             'message' => 'Datos actualizados.'
@@ -188,69 +187,5 @@ class UsuarioController
   }
 
   // TODO: Metodo para habilitar usuario
-  public function habilitarUsuario()
-  {
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $USU_codigo = isset($_POST['USU_codigo']) ? intval($_POST['USU_codigo']) : 0;
-
-      try {
-        $this->usuarioModel->habilitarUsuario($USU_codigo);
-        echo json_encode(['success' => true]);
-      } catch (Exception $e) {
-        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
-      }
-    } else {
-      echo json_encode(['success' => false, 'error' => 'Método no permitido']);
-    }
-  }
-
-  public function deshabilitarUsuario()
-  {
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $USU_codigo = isset($_POST['USU_codigo']) ? intval($_POST['USU_codigo']) : 0;
-
-      try {
-        $this->usuarioModel->deshabilitarUsuario($USU_codigo);
-        echo json_encode(['success' => true]);
-      } catch (Exception $e) {
-        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
-      }
-    } else {
-      echo json_encode(['success' => false, 'error' => 'Método no permitido']);
-    }
-  }
-
-
-  //   public function habilitarUsuario($USU_codigo)
-  //   {
-  //     try {
-  //       $this->usuarioModel->habilitarUsuario($USU_codigo);
-  //       echo json_encode(['status' => 'success', 'message' => 'Usuario habilitado exitosamente']);
-  //     } catch (Exception $e) {
-  //       echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
-  //     }
-  //   }
-
-  //   public function deshabilitarUsuario($USU_codigo)
-  //   {
-  //     try {
-  //       $this->usuarioModel->deshabilitarUsuario($USU_codigo);
-  //       echo json_encode(['status' => 'success', 'message' => 'Usuario deshabilitado exitosamente']);
-  //     } catch (Exception $e) {
-  //       echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
-  //     }
-  //   }
-  // }
-
-  // // Manejar solicitudes AJAX
-  // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  //   $controller = new UsuarioController();
-  //   $action = $_POST['action'];
-  //   $USU_codigo = $_POST['USU_codigo'];
-
-  //   if ($action === 'habilitar') {
-  //     $controller->habilitarUsuario($USU_codigo);
-  //   } elseif ($action === 'deshabilitar') {
-  //     $controller->deshabilitarUsuario($USU_codigo);
-  //   }
+  
 }

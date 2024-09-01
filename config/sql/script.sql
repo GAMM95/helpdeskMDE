@@ -483,28 +483,6 @@ END;
 GO
 
 --PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR DATOS DE USUARIO
---CREATE PROCEDURE sp_editarUsuario
---    @USU_codigo SMALLINT,
---    @USU_nombre VARCHAR(20),
---    @USU_password VARCHAR(10),
---    @PER_codigo SMALLINT,
---    @ROL_codigo SMALLINT,
---    @ARE_codigo SMALLINT
---AS
---BEGIN
---	-- Actualizar los datos del usuario
---	UPDATE USUARIO
---	SET 
---		USU_nombre = @USU_nombre,
---		USU_password = @USU_password,
---		PER_codigo = @PER_codigo,
---		ROL_codigo = @ROL_codigo,
---		ARE_codigo = @ARE_codigo
---	WHERE 
---		USU_codigo = @USU_codigo;
---END;
---GO
-
 CREATE PROCEDURE sp_editarUsuario
     @USU_codigo SMALLINT,
     @USU_nombre VARCHAR(20),
@@ -550,6 +528,26 @@ BEGIN
         ROLLBACK TRANSACTION;
         PRINT 'Error al actualizar usuario: ' + ERROR_MESSAGE();
     END CATCH
+END;
+GO
+
+-- PROCEDIMIENTO ALMACENADO PARA DESHABILITAR USUARIO
+CREATE PROCEDURE sp_deshabilitarUsuario
+	@codigoUsuario SMALLINT
+AS
+BEGIN
+	UPDATE USUARIO SET EST_codigo = 2 
+    WHERE EST_codigo = 1 AND  USU_codigo = @codigoUsuario;
+END;
+GO
+
+-- PROCEDIMIENTO ALMACENADO PARA HABILITAR USUARIO
+CREATE PROCEDURE sp_habilitarUsuario
+	@codigoUsuario SMALLINT
+AS
+BEGIN
+	UPDATE USUARIO SET EST_codigo = 1
+    WHERE EST_codigo = 2 AND  USU_codigo = @codigoUsuario;
 END;
 GO
 
