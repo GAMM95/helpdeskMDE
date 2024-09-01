@@ -168,7 +168,7 @@ class PersonaModel extends Conexion
                 (PER_nombres + ' ' + PER_apellidoPaterno + ' ' + PER_apellidoMaterno) AS persona,
                 PER_celular, PER_email
                 FROM PERSONA
-                WHERE (PER_nombres + ' ' + PER_apellidoPaterno + ' ' + PER_apellidoMaterno) LIKE :terminoBusqueda
+                WHERE persona LIKE :terminoBusqueda
                 OR PER_dni LIKE :terminoBusqueda
                 OR PER_celular LIKE :terminoBusqueda
                 OR PER_email LIKE :terminoBusqueda";

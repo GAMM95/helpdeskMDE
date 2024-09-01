@@ -46,26 +46,20 @@
         <div class="mb-4 flex items-center gap-4">
           <div class="flex-grow w-1/4">
             <label for="persona" class="block text-gray-700 font-bold mb-2">Trabajador:</label>
-            <select id="cbo_persona" name="persona" class="border p-2 w-full text-xs cursor-pointer rounded-md">
-              <option value="" selected disabled>Seleccione una persona</option>
-            </select>
+            <select id="persona" name="persona" class="border p-2 w-full text-xs cursor-pointer rounded-md"></select>
           </div>
           <a href="modulo-persona.php" class="bn btn-warning text-xs text-white font-bold py-2 px-3 mt-4 rounded-md" disabled> <i class="feather icon-user-plus"></i></a>
 
           <!-- Seleccion de area -->
           <div class="flex-grow w-1/2">
             <label for="area" class="block text-gray-700 font-bold mb-2">&Aacute;rea:</label>
-            <select id="cbo_area" name="area" class="border p-2 w-full text-xs cursor-pointer rounded-md">
-              <option value="" selected disabled>Seleccione un &aacute;rea</option>
-            </select>
+            <select id="area" name="area" class="border p-2 w-full text-xs cursor-pointer rounded-md"></select>
           </div>
 
           <!-- Seleccion de rol -->
           <div class="flex-grow w-1/4">
             <label for="rol" class="block text-gray-700 font-bold mb-2">Rol:</label>
-            <select id="cbo_rol" name="rol" class="border p-2 w-full text-xs cursor-pointer rounded-md">
-              <option value="" selected disabled>Seleccione un rol</option>
-            </select>
+            <select id="rol" name="rol" class="border p-2 w-full text-xs cursor-pointer rounded-md"></select>
           </div>
         </div>
 
@@ -101,25 +95,22 @@
         <!-- Funciones -->
         <script>
           document.getElementById('CodUsuario').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['USU_codigo'] : ''; ?>';
-          document.getElementById('cbo_persona').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['PER_codigo'] : ''; ?>';
-          document.getElementById('cbo_area').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['ARE_codigo'] : ''; ?>';
-          document.getElementById('cbo_rol').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['ROL_codigo'] : ''; ?>';
+          document.getElementById('persona').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['PER_codigo'] : ''; ?>';
+          document.getElementById('area').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['ARE_codigo'] : ''; ?>';
+          document.getElementById('rol').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['ROL_codigo'] : ''; ?>';
           document.getElementById('username').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['USU_nombre'] : ''; ?>';
           document.getElementById('password').value = '<?php echo $usuarioRegistrado ? $usuarioRegistrado['USU_password'] : ''; ?>';
         </script>
       </div>
       <!-- Fin de Card de formulario -->
     </form>
-
-
-
     <!-- Fin de formulario -->
 
     <!-- Tabla de usuarios -->
     <div class="w-full">
       <!-- Busqueda de termino -->
       <div class="flex justify-between items-center mt-3">
-        <input type="text" id="termino" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300 text-xs" placeholder="Buscar trabajador..." oninput="filtrarTablaPersonas()" />
+        <input type="text" id="termino" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300 text-xs" placeholder="Buscar usuario..." oninput="filtrarTablaUsuario()" />
       </div>
       <!-- Fin de busqueda -->
 
@@ -179,33 +170,3 @@
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>
-
-
-<script>
-  function toggleUsuario(USU_codigo, checkbox) {
-    var action = checkbox.checked ? 'habilitar' : 'deshabilitar';
-
-    $.ajax({
-      url: 'app/Controller/usuarioController.php',
-      type: 'POST',
-      data: {
-        action: action,
-        USU_codigo: USU_codigo
-      },
-      success: function(response) {
-        var result = JSON.parse(response);
-        if (result.status === 'success') {
-          toastr.success(result.message);
-          checkbox.nextElementSibling.textContent = checkbox.checked ? 'Activo' : 'Inactivo';
-        } else {
-          toastr.error(result.message);
-          checkbox.checked = !checkbox.checked; // Revert the checkbox state
-        }
-      },
-      error: function(xhr, status, error) {
-        toastr.error('Error en la solicitud: ' + error);
-        checkbox.checked = !checkbox.checked; // Revert the checkbox state
-      }
-    });
-  }
-</script>

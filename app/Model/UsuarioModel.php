@@ -171,41 +171,13 @@ class UsuarioModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-
-        // // Validar si existe el nombre de usuario
-        // if ($this->validarUsuarioExistente($username)) {
-        //   throw new Exception("El nombre de usuario ya está registrado...");
-        // }
-
-        // // Verificar si la persona ya tiene un usuario registrado
-        // if ($this->validarPersonaConUsuario($persona)) {
-        //   throw new Exception("La persona ya tiene un usuario registrado...");
-        // }
-        // $verificarPersona = "SELECT 1 FROM USUARIO WHERE PER_codigo = :PER_codigo";
-        // $stmtPersona = $conector->prepare($verificarPersona);
-        // $stmtPersona->bindParam(':PER_codigo', $per_codigo);
-        // $stmtPersona->execute();
-        // if ($stmtPersona->fetch()) {
-        //   throw new Exception("La persona ya tiene un usuario registrado.");
-        // }
-
-        // Verificar si el nombre de usuario ya existe
-        // $verificarUsuario = "SELECT 1 FROM USUARIO WHERE USU_nombre = :USU_nombre";
-        // $stmtUsuario = $conector->prepare($verificarUsuario);
-        // $stmtUsuario->bindParam(':USU_nombre', $username);
-        // $stmtUsuario->execute();
-        // if ($stmtUsuario->fetch()) {
-        //   throw new Exception("El nombre de usuario ya existe.");
-        // }
-
-        // Insertar el nuevo usuario
         $sql = "EXEC SP_Registrar_Usuario :username, :password, :persona, :rol, :area";
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':persona', $persona);
-        $stmt->bindParam(':rol', $rol);
-        $stmt->bindParam(':area', $area);
+        $stmt->bindParam(':persona', $persona, PDO::PARAM_INT);
+        $stmt->bindParam(':rol', $rol, PDO::PARAM_INT);
+        $stmt->bindParam(':area', $area, PDO::PARAM_INT);
         $stmt->execute();
         return true; // Registro exitoso
       } else {
@@ -218,23 +190,53 @@ class UsuarioModel extends Conexion
     }
   }
 
-  // Metodo para editar datos del usuario
-  public function editarUsuario($username, $password, $persona, $rol, $area, $codigoUsuario)
+  // // Metodo para editar datos del usuario
+  // public function editarUsuario($username, $password, $persona, $rol, $area, $codigoUsuario)
+  // {
+  //   $conector = parent::getConexion();
+  //   try {
+  //     if ($conector != null) {
+  //       $sql = "UPDATE USUARIO SET USU_nombre = ?, USU_password = ?, PER_codigo = ?, ROL_codigo = ?, ARE_codigo = ? WHERE USU_codigo = ?";
+  //       $stmt = $conector->prepare($sql);
+  //       $stmt->execute([$username, $password, $persona, $rol, $area, $codigoUsuario]);
+  //       return $stmt->rowCount();
+  //     } else {
+  //       throw new Exception("Error de conexion a la base de datos");
+  //       return null;
+  //     }
+  //   } catch (PDOException $e) {
+  //     throw new PDOException("Error al actualizar usuario: " . $e->getMessage());
+  //     return null;
+  //   }
+  // }
+
+  // Metodo para editar datos del usuario utilizando un procedimiento almacenado
+  public function editarUsuario($codigoUsuario, $username, $password, $persona, $rol, $area)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "UPDATE USUARIO SET USU_nombre = ?, USU_password = ?, PER_codigo = ?, ROL_codigo = ?, ARE_codigo = ? WHERE USU_codigo = ?";
+        $sql = "EXEC sp_editarUsuario :codigoUsuario, :username, :password, :persona, :rol, :area";
         $stmt = $conector->prepare($sql);
-        $stmt->execute([$username, $password, $persona, $rol, $area, $codigoUsuario]);
-        return $stmt->rowCount();
+        $stmt->bindParam(':codigoUsuario', $codigoUsuario, PDO::PARAM_INT);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':persona', $persona, PDO::PARAM_INT);
+        $stmt->bindParam(':rol', $rol, PDO::PARAM_INT);
+        $stmt->bindParam(':area', $area, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
-        throw new Exception("Error de conexion a la base de datos");
-        return null;
+        throw new Exception("Error de conexión a la base de datos");
       }
     } catch (PDOException $e) {
       throw new PDOException("Error al actualizar usuario: " . $e->getMessage());
-      return null;
     }
   }
 
@@ -347,6 +349,33 @@ class UsuarioModel extends Conexion
       }
     } catch (PDOException $e) {
       throw new PDOException("Error al actualizar el perfil del usuario: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  // Metodo para filtrar usuarios por termino de busqueda
+  public function filtrarUsuarios($terminoBusqueda)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT * FROM vista_usuarios
+        WHERE persona LIKE :terminoBusqueda
+        OR ARE_nombre LIKE :terminoBusqueda
+        OR USU_nombre LIKE :terminoBusqueda
+        OR ROL_nombre LIKE :terminoBusqueda";
+        $stmt = $conector->prepare($sql);
+        $terminoBusqueda = "%$terminoBusqueda%";
+        $stmt->bindParam(':terminoBusqueda', $terminoBusqueda, PDO::PARAM_STR);
+        $stmt->execute();
+        $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $registros;
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al filtrar usuarios: " . $e->getMessage());
       return null;
     }
   }

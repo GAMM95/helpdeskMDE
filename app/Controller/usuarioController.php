@@ -70,7 +70,7 @@ class UsuarioController
   }
 
   // Metodo para editar usuarios
-  public function editarUsuario()
+  public function actualizarUsuario()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Obtener los datos de formulario
@@ -82,10 +82,20 @@ class UsuarioController
       $area = $_POST['area'] ?? null;
 
       try {
+        // Validar si el usuario ya está registrado
+        if (!$this->usuarioModel->validarUsuarioExistente($username)) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'El nombre de usuario ya existe.'
+          ]);
+          exit();
+        }
+
         // Actualizar usuario
-        $updateSuccess = $this->usuarioModel->editarUsuario($username, $password, $persona, $rol, $area, $codigoUsuario);
+        $updateSuccess = $this->usuarioModel->editarUsuario($codigoUsuario, $username, $password, $persona, $rol, $area);
 
         if ($updateSuccess) {
+
           echo json_encode([
             'success' => true,
             'message' => 'Datos actualizados.'
@@ -111,10 +121,9 @@ class UsuarioController
     }
   }
 
+  //  Metodo para editar perfil de usuario
   public function editarPerfil()
   {
-    // header('Content-Type: application/json');
-
     try {
       // Obtener los datos del formulario
       $usu_nombre = $_POST['username'] ?? null;
@@ -131,19 +140,54 @@ class UsuarioController
       // Actualizar usuario
       $this->usuarioModel->editarPerfilUsuario($usu_codigo, $usu_nombre, $usu_password, $per_dni, $per_nombres, $per_apellidoPaterno, $per_apellidoMaterno, $per_celular, $per_email);
 
-      // echo json_encode([
-      //   'success' => true,
-      //   'message' => 'Perfil actualizado correctamente'
-      // ]);
+      echo json_encode([
+        'success' => true,
+        'message' => 'Perfil actualizado correctamente'
+      ]);
     } catch (Exception $e) {
-      // echo json_encode([
-      //   'success' => false,
-      //   'message' => 'Error: ' . $e->getMessage()
-      // ]);
+      echo json_encode([
+        'success' => false,
+        'message' => 'Error: ' . $e->getMessage()
+      ]);
     }
   }
 
+  // Metodo para filtrar usuarios por un termino
+  public function filtrarUsuarios()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+      $terminoBusqueda = $_GET['termino'] ?? '';
 
+      try {
+        $resultados = $this->usuarioModel->filtrarUsuarios($terminoBusqueda);
+        echo json_encode($resultados);
+
+        if ($resultados) {
+          echo json_encode([
+            'success' =>  true,
+            'message' => 'Búsqueda exitosa'
+          ]);
+        } else {
+          echo json_encode([
+            'success' =>  false,
+            'message' => 'No se realizó búsqueda'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
+    }
+  }
+
+  // TODO: Metodo para habilitar usuario
   public function habilitarUsuario()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

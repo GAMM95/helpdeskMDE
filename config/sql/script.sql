@@ -482,6 +482,76 @@ BEGIN
 END;
 GO
 
+--PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR DATOS DE USUARIO
+--CREATE PROCEDURE sp_editarUsuario
+--    @USU_codigo SMALLINT,
+--    @USU_nombre VARCHAR(20),
+--    @USU_password VARCHAR(10),
+--    @PER_codigo SMALLINT,
+--    @ROL_codigo SMALLINT,
+--    @ARE_codigo SMALLINT
+--AS
+--BEGIN
+--	-- Actualizar los datos del usuario
+--	UPDATE USUARIO
+--	SET 
+--		USU_nombre = @USU_nombre,
+--		USU_password = @USU_password,
+--		PER_codigo = @PER_codigo,
+--		ROL_codigo = @ROL_codigo,
+--		ARE_codigo = @ARE_codigo
+--	WHERE 
+--		USU_codigo = @USU_codigo;
+--END;
+--GO
+
+CREATE PROCEDURE sp_editarUsuario
+    @USU_codigo SMALLINT,
+    @USU_nombre VARCHAR(20),
+    @USU_password VARCHAR(10),
+    @PER_codigo SMALLINT,
+    @ROL_codigo SMALLINT,
+    @ARE_codigo SMALLINT
+AS
+BEGIN
+    -- Iniciar una transacción para asegurar que la operación sea atómica
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Verificar si el nombre de usuario ya existe excluyendo el usuario actual
+        IF EXISTS (
+            SELECT 1 FROM USUARIO 
+            WHERE USU_nombre = @USU_nombre AND USU_codigo != @USU_codigo
+        )
+        BEGIN
+            -- En caso de que el nombre ya exista, devolver un error
+            RAISERROR('El nombre de usuario ya está en uso.', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+
+        -- Actualizar los datos del usuario
+        UPDATE USUARIO
+        SET 
+            USU_nombre = @USU_nombre,
+            USU_password = @USU_password,
+            PER_codigo = @PER_codigo,
+            ROL_codigo = @ROL_codigo,
+            ARE_codigo = @ARE_codigo
+        WHERE 
+            USU_codigo = @USU_codigo;
+
+        -- Confirmar la transacción si todo es correcto
+        COMMIT TRANSACTION;
+        PRINT 'Usuario actualizado correctamente.';
+    END TRY
+    BEGIN CATCH
+        -- Manejo de errores
+        ROLLBACK TRANSACTION;
+        PRINT 'Error al actualizar usuario: ' + ERROR_MESSAGE();
+    END CATCH
+END;
+GO
 
 -- PROCEDIMIENTO ALMACENADO PARA REGISTRAR INCIDENCIA - ADMINISTRADOR / USUARIO
 CREATE PROCEDURE SP_Registrar_Incidencia

@@ -12,7 +12,7 @@ $(document).ready(function () {
     type: 'GET',
     dataType: 'json',
     success: function (data) {
-      var select = $('#cbo_persona');
+      var select = $('#persona');
       select.empty();
       select.append('<option value="" selected disabled>Seleccione una persona</option>');
       $.each(data, function (index, value) {
@@ -30,7 +30,7 @@ $(document).ready(function () {
     type: 'GET',
     dataType: 'json',
     success: function (data) {
-      var select = $('#cbo_area');
+      var select = $('#area');
       select.empty();
       select.append('<option value="" selected disabled>Seleccione un area</option>');
       $.each(data, function (index, value) {
@@ -48,7 +48,7 @@ $(document).ready(function () {
     type: 'GET',
     dataType: 'json',
     success: function (data) {
-      var select = $('#cbo_rol');
+      var select = $('#rol');
       select.empty();
       select.append('<option value="" selected disabled>Seleccione un rol</option>');
       $.each(data, function (index, value) {
@@ -61,7 +61,7 @@ $(document).ready(function () {
   });
 
   // Buscador para los combos persona, area y rol
-  $('#cbo_persona, #cbo_area, #cbo_rol').select2({
+  $('#persona, #area, #rol').select2({
     allowClear: true,
     width: '100%',
     dropdownCssClass: 'text-xs',
@@ -81,7 +81,8 @@ $(document).ready(function () {
   // Evento para editar usuario
   $('#editar-usuario').on('click', function (e) {
     e.preventDefault();
-    enviarFormulario($('#form-action').val());
+    console.log('Botón editar clickeado');
+    enviarFormulario('editar');
   });
 
   // Evento para nuevo registro
@@ -92,12 +93,15 @@ $(document).ready(function () {
 
 // Metodo para enviar formulario
 function enviarFormulario(action) {
-  if (!validarCampos()) {
-    return; // si hay campos inválidos, detener el envío
+  if (action === 'registrar') {
+    if (!validarCamposRegistroUsuario()) {
+      return;
+    }
   }
 
   var url = 'modulo-usuario.php?action=' + action;
   var data = $('#formUsuario').serialize();
+  console.log('Datos enviados:', data); // Añadir esta línea para depuración
 
   $.ajax({
     url: url,
@@ -106,7 +110,6 @@ function enviarFormulario(action) {
     dataType: 'text',
     success: function (response) {
       try {
-        // Convertir la respuesta en un objeto JSON
         var jsonResponse = JSON.parse(response);
         console.log('Parsed JSON:', jsonResponse);
 
@@ -114,7 +117,7 @@ function enviarFormulario(action) {
           if (action === 'registrar') {
             toastr.success('Usuario registrado.');
           } else if (action === 'editar') {
-            toastr.success('Datos del usuario actualizados.');
+            toastr.success('Datos actualizados.');
           }
           setTimeout(function () {
             location.reload();
@@ -132,45 +135,46 @@ function enviarFormulario(action) {
       toastr.error('Error en la solicitud AJAX.');
     }
   });
+}
 
-  // Función para validar campos antes de enviar
-  function validarCampos() {
-    var valido = true;
-    var mensajeError = '';
 
-    // Validar campos
-    var faltaPersona = ($('#cbo_persona').val() === null || $('#cbo_persona').val() === '');
-    var faltaArea = ($('#cbo_area').val() === null || $('#cbo_area').val() === '');
-    var faltaRol = ($('#cbo_rol').val() === null || $('#cbo_rol').val() === '');
-    var faltaUsername = ($('#username').val() === null || $('#username').val() === '');
-    var faltaPassword = ($('#password').val() === null || $('#password').val() === '');
+// Función para validar campos antes de enviar
+function validarCamposRegistroUsuario() {
+  var valido = true;
+  var mensajeError = '';
 
-    if (faltaPersona && faltaArea && faltaRol && faltaUsername && faltaPassword) {
-      mensajeError += 'Debe completar todos los campos.';
-      valido = false;
-    } else if (faltaPersona) {
-      mensajeError += 'Debe seleccionar un trabajador.';
-      valido = false;
-    } else if (faltaArea) {
-      mensajeError += 'Debe seleccionar un area.';
-      valido = false;
-    } else if (faltaRol) {
-      mensajeError += 'Debe seleccionar un rol.';
-      valido = false;
-    } else if (faltaUsername) {
-      mensajeError += 'Debe ingresar un nombre de usuario.';
-      valido = false;
-    } else if (faltaPassword) {
-      mensajeError += 'Debe ingresar una contrase&ntilde;a.';
-      valido = false;
-    }
+  // Validar campos
+  var faltaPersona = ($('#persona').val() === null || $('#persona').val() === '');
+  var faltaArea = ($('#area').val() === null || $('#area').val() === '');
+  var faltaRol = ($('#rol').val() === null || $('#rol').val() === '');
+  var faltaUsername = ($('#username').val() === null || $('#username').val() === '');
+  var faltaPassword = ($('#password').val() === null || $('#password').val() === '');
 
-    // Mostrar mensaje de error si hay
-    if (!valido) {
-      toastr.warning(mensajeError.trim());
-    }
-    return valido;
+  if (faltaPersona && faltaArea && faltaRol && faltaUsername && faltaPassword) {
+    mensajeError += 'Debe completar todos los campos.';
+    valido = false;
+  } else if (faltaPersona) {
+    mensajeError += 'Debe seleccionar un trabajador.';
+    valido = false;
+  } else if (faltaArea) {
+    mensajeError += 'Debe seleccionar un area.';
+    valido = false;
+  } else if (faltaRol) {
+    mensajeError += 'Debe seleccionar un rol.';
+    valido = false;
+  } else if (faltaUsername) {
+    mensajeError += 'Debe ingresar un nombre de usuario.';
+    valido = false;
+  } else if (faltaPassword) {
+    mensajeError += 'Debe ingresar una contrase&ntilde;a.';
+    valido = false;
   }
+
+  // Mostrar mensaje de error si hay
+  if (!valido) {
+    toastr.warning(mensajeError.trim());
+  }
+  return valido;
 }
 
 // Seteo de valores en los inputs y combos
@@ -191,9 +195,12 @@ $(document).on('click', '#tablaListarUsuarios tbody tr', function () {
   $('#username').val(usernameValue);
   $('#password').val(passwordValue);
 
-  setComboValue('cbo_persona', personaValue);
-  setComboValue('cbo_area', areaValue);
-  setComboValue('cbo_rol', rolValue);
+  setComboValue('persona', personaValue);
+  setComboValue('area', areaValue);
+  setComboValue('rol', rolValue);
+
+  // Bloquear el combo de persona
+  $('#persona').prop('disabled', true);
 
   // Cambiar estado de los botones
   $('#guardar-usuario').prop('disabled', true);
@@ -229,9 +236,9 @@ function nuevoRegistro() {
   $('#password').val('');
 
   // Limpiar los combos y forzar la actualización con Select2
-  $('#cbo_persona').val('').trigger('change');
-  $('#cbo_area').val('').trigger('change');
-  $('#cbo_rol').val('').trigger('change');
+  $('#persona').val('').trigger('change');
+  $('#area').val('').trigger('change');
+  $('#rol').val('').trigger('change');
 
   // Remover clases de selección y estilos de todas las filas de ambas tablas
   $('tr').removeClass('bg-blue-200 font-semibold');
@@ -239,9 +246,33 @@ function nuevoRegistro() {
   // Reactivar ambas tablas
   $('#tablaListarUsuarios tbody tr').removeClass('pointer-events-none opacity-50');
 
+  // Desbloquear el combo de persona
+  $('#persona').prop('disabled', false);
+  
   // Configurar los botones en su estado inicial
   $('#form-action').val('registrar');  // Cambiar la acción a registrar
   $('#guardar-usuario').prop('disabled', false);  // Activar el botón de guardar
   $('#editar-usuario').prop('disabled', true);    // Desactivar el botón de editar
   $('#nuevo-registro').prop('disabled', false);     // Asegurarse que el botón de nuevo registro está activo
+}
+
+// función para filtrar la tabla de trabajadores
+function filtrarTablaUsuario() {
+  var input, filtro, tabla, filas, celdas, i, j, match;
+  input = document.getElementById('termino');
+  filtro = input.value.toUpperCase();
+  tabla = document.getElementById('tablaListarUsuarios');
+  filas = tabla.getElementsByTagName('tr');
+
+  for (i = 1; i < filas.length; i++) {
+    celdas = filas[i].getElementsByTagName('td');
+    match = false;
+    for (j = 0; j < celdas.length; j++) {
+      if (celdas[j].innerText.toUpperCase().indexOf(filtro) > -1) {
+        match = true;
+        break;
+      }
+    }
+    filas[i].style.display = match ? '' : 'none';
+  }
 }

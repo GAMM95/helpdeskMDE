@@ -82,8 +82,6 @@ switch ($action) {
   <script src="dist/assets/js/pcoded.min.js"></script>
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
 
-  <!-- <script src="dist/assets/js/pages/dashboard-main.js"></script> -->
-
   <script src="./app/View/func/func_incidencia_admin.js"></script>
   <script src="./app/View/func/Reports/reporteIncidencia.js"></script>
   <script src="./app/View/func/tipoBien.js"></script>

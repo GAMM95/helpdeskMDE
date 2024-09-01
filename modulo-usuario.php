@@ -15,16 +15,8 @@ require_once 'app/Model/UsuarioModel.php';
 $usuarioController = new UsuarioController();
 $usuarioModel = new UsuarioModel();
 
-// Paginacion de la tabla de usuarios
-$limit = 5; // Número de filas por página
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
-$start = ($page - 1) * $limit; // Calcula el índice de inicio
-// Obtener el total de registros
-$totalUsuarios = $usuarioModel->contarUsuarios();
-$totalPages = ceil($totalUsuarios / $limit);
 // Listar las incidencias para la pagina actual
 $resultado = $usuarioModel->listarUsuarios();
-
 
 if ($USU_codigo != '') {
   global $usuarioRegistrado;
@@ -38,7 +30,10 @@ switch ($action) {
     $usuarioController->registrarUsuario();
     break;
   case 'editar':
-    $usuarioController->editarUsuario();
+    $usuarioController->actualizarUsuario();
+    break;
+  case 'filtrar':
+    $usuarioController->filtrarUsuarios();
     break;
   case 'habilitar':
     $usuarioController->habilitarUsuario($USU_codigo);
@@ -83,12 +78,20 @@ switch ($action) {
   <script src="dist/assets/js/plugins/bootstrap.min.js"></script>
   <script src="dist/assets/js/pcoded.min.js"></script>
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
-  <script src="dist/assets/js/pages/dashboard-main.js"></script>
+
   <script src="./app/View/func/func_usuario.js"></script>
+  
+  <!-- Framework CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Mensajes toastr -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <!-- Buscador de opciones en combos -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- Creacion de PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
 </body>
 
 </html>
