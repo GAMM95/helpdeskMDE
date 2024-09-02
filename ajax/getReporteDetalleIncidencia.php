@@ -46,7 +46,6 @@ class ReporteIncidencia extends Conexion
 }
 
 // Obtención del parámetro 'numeroIncidencia' desde la solicitud
-// $numeroIncidencia = isset($_GET['numeroIncidencia']) ? intval($_GET['numeroIncidencia']) : '';
 $numeroIncidencia = isset($_GET['numeroIncidencia']) ? $_GET['numeroIncidencia'] : '';
 
 

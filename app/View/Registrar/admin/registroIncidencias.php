@@ -175,7 +175,7 @@
               </form>
             </div>
             <div class="modal-footer justify-center">
-              <button type="button" id="imprimir-numero-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Generar detalle </button>
+              <button type="button" id="imprimir-detalle-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Generar detalle </button>
               <!-- <button type="button" class="btn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" data-dismiss="modal">Cerrar</button> -->
             </div>
           </div>

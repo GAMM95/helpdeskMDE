@@ -35,13 +35,18 @@
           <div class="flex justify-center items-center space-x-4 mt-4">
             <div class="text-center w-1/2">
               <label for="numeroIncidencia" class="block mb-1 text-center font-bold text-xs">N&deg; de Incidencia:</label>
-              <input type="text" id="numeroIncidencia" name="numeroIncidencia" class="border p-2 w-full text-md text-center rounded-md" maxlength="13" pattern="\d{1,13}" placeholder="Ingrese N&deg; de incidencia">
+              <input type="text" id="numeroIncidencia" name="numeroIncidencia" class="border p-2 w-full text-md text-center rounded-md" maxlength="13" pattern="\d{1,13}" placeholder="Ingrese N&deg; de incidencia" oninput="uppercaseInput(this)" autofocus>
+              <script>
+                function uppercaseInput(element) {
+                  element.value = element.value.toUpperCase();
+                }
+              </script>
             </div>
             <div class="flex justify-center space-x-2 w-1/2">
               <div class="flex justify-center items-center space-x-4 mt-3 ml-5">
-                <button type="button" id="reporte-incidencias-totales" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md">
+                <button type="button" id="imprimir-detalle-incidencia" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md">
                   <i class="feather mr-2 icon-file"></i>Detalle de incidencia </button>
-                <button type="button" id="reporte-pendientes-cierre" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md">
+                <button type="button" id="imprimir-detalle-cierre" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md">
                   <i class="feather mr-2 icon-file"></i>Detalle de cierre </button>
               </div>
             </div>

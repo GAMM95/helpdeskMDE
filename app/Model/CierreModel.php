@@ -54,7 +54,7 @@ class CierreModel extends Conexion
   }
 
   // Metodo para editar cierres
-  public function editarCierre($asunto, $documento, $condicion, $diagnostico, $recomendaciones, $cierre)
+  public function editarCierre($cierre, $asunto, $documento, $condicion, $diagnostico, $recomendaciones)
   {
     $conector = parent::getConexion();
     if ($conector != null) {
@@ -74,10 +74,12 @@ class CierreModel extends Conexion
       }
     } else {
       throw new Exception("Error de conexion a la base de datos");
+      return null;
     }
     try {
     } catch (PDOException $e) {
       throw new PDOException("Error al editar el cierre: " . $e->getMessage());
+      return null;
     }
   }
 

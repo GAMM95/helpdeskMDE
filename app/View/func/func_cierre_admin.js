@@ -73,8 +73,10 @@ function enviarFormulario(action) {
     data: data,
     dataType: 'text',
     success: function (response) {
+
       try {
         // Convertir la respuesta en json
+        console.log('DATA: ', data);
         var jsonResponse = JSON.parse(response);
         console.log('Parsed JSON:', jsonResponse);
 
@@ -224,6 +226,9 @@ $(document).on('click', '#tablaIncidenciasCerradas tbody tr', function () {
   $('#tablaRecepcionesSinCerrar tbody tr').addClass('pointer-events-none opacity-50');
   // Reactivar el botón "Nuevo"
   $('#nuevo-registro').prop('disabled', false);
+  // Cambiar la acción a editar
+  $('#form-action').val('editar');
+  
 });
 
 // Función para cambiar páginas de la tabla de recepciones sin cerrar

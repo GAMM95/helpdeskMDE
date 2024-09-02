@@ -5,7 +5,7 @@ $(document).ready(function () {
     "timeOut": "1500"
   };
 
-  $('#imprimir-detalle-incidencia').click(function () {
+  $('#imprimir-detalle-cierre').click(function () {
     const numeroIncidencia = $('#numeroIncidencia').val().trim();
 
     if (!numeroIncidencia) {
@@ -14,15 +14,15 @@ $(document).ready(function () {
     }
 
     $.ajax({
-      url: 'ajax/getReporteDetalleIncidencia.php',
+      url: 'ajax/getReporteDetalleCierre.php',
       method: 'GET',
       data: { numeroIncidencia: numeroIncidencia },
       dataType: 'json',
       success: function (data) {
         console.log("Datos recibidos:", data);
-        const incidencia = data.find(inc => inc.INC_numero_formato === numeroIncidencia);
+        const cierre = data.find(inc => inc.INC_numero_formato === numeroIncidencia);
 
-        if (incidencia) {
+        if (cierre) {
           try {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -32,9 +32,11 @@ $(document).ready(function () {
             function addHeader(doc) {
               doc.setFontSize(9);
               doc.setFont('helvetica', 'normal');
+
               const fechaImpresion = new Date().toLocaleDateString();
               const headerText2 = 'Subgerencia de Informática y Sistemas';
-              const reportTitle = 'REPORTE DE INCIDENCIA';
+              const reportTitle = 'REPORTE DE CIERRE';
+
               const pageWidth = doc.internal.pageSize.width;
               const marginX = 10;
               const marginY = 10;
@@ -42,6 +44,7 @@ $(document).ready(function () {
               const logoHeight = 25;
 
               doc.addImage(logoUrl, 'PNG', marginX, marginY, logoWidth, logoHeight);
+
               doc.setFont('helvetica', 'bold');
               doc.setFontSize(16);
               const titleWidth = doc.getTextWidth(reportTitle);
@@ -66,28 +69,34 @@ $(document).ready(function () {
               doc.text(fechaText, fechaTextX, fechaTextY);
             }
 
+
             addHeader(doc);
 
+            // Detalle del cierre
             const titleY = 45;
             doc.setFont('helvetica', 'bold');
             doc.setFontSize(12);
-            doc.text('Detalle de la Incidencia:', 20, titleY);
+            doc.text('Detalle del cierre:', 20, titleY);
+
+            doc.setFontSize(10);
+            doc.text(`Número de incidencia: ${cierre.INC_numero_formato}`, 120, titleY);  // Ajusta la coordenada x para colocar el número de incidencia
+            // [{ content: 'Número de incidencia:', styles: { fontStyle: 'bold' } }, cierre.INC_numero_formato],
 
             doc.autoTable({
               startY: 48,
               margin: { left: 20 },
               head: [['Campo', 'Descripción']],
               body: [
-                [{ content: 'Número de incidencia:', styles: { fontStyle: 'bold' } }, incidencia.INC_numero_formato],
-                [{ content: 'Fecha:', styles: { fontStyle: 'bold' } }, incidencia.fechaIncidenciaFormateada],
-                [{ content: 'Categoría:', styles: { fontStyle: 'bold' } }, incidencia.CAT_nombre],
-                [{ content: 'Asunto:', styles: { fontStyle: 'bold' } }, incidencia.INC_asunto],
-                [{ content: 'Documento:', styles: { fontStyle: 'bold' } }, incidencia.INC_documento],
-                [{ content: 'Código Patrimonial:', styles: { fontStyle: 'bold' } }, incidencia.INC_codigoPatrimonial],
-                [{ content: 'Área solicitante:', styles: { fontStyle: 'bold' } }, incidencia.ARE_nombre],
-                [{ content: 'Descripción:', styles: { fontStyle: 'bold' } }, incidencia.INC_descripcion],
-                [{ content: 'Estado:', styles: { fontStyle: 'bold' } }, incidencia.ESTADO],
-                [{ content: 'Usuario:', styles: { fontStyle: 'bold' } }, incidencia.Usuario]
+                [{ content: 'Cierre:', styles: { fontStyle: 'bold' } }, cierre.CIE_numero],
+                [{ content: 'Fecha de cierre:', styles: { fontStyle: 'bold' } }, cierre.fechaCierreFormateada],
+                [{ content: 'Prioridad:', styles: { fontStyle: 'bold' } }, cierre.PRI_nombre],
+                [{ content: 'Asunto:', styles: { fontStyle: 'bold' } }, cierre.CIE_asunto],
+                [{ content: 'Documento:', styles: { fontStyle: 'bold' } }, cierre.CIE_documento],
+                [{ content: 'Condición:', styles: { fontStyle: 'bold' } }, cierre.CON_descripcion],
+                [{ content: 'Diagnóstico:', styles: { fontStyle: 'bold' } }, cierre.CIE_diagnostico],
+                [{ content: 'Recomendaciones:', styles: { fontStyle: 'bold' } }, cierre.CIE_recomendaciones],
+                [{ content: 'Estado:', styles: { fontStyle: 'bold' } }, cierre.ESTADO]
+
               ],
               styles: {
                 fontSize: 10,
@@ -99,21 +108,18 @@ $(document).ready(function () {
                 fontStyle: 'bold',
               },
               columnStyles: {
-                0: { cellWidth: 50 },
-                1: { cellWidth: 120 }
+                0: { cellWidth: 50 }, // Ancho para la columna Campo
+                1: { cellWidth: 120 } // Ancho para la columna Descripcion
               }
             });
 
             const titleFirma = 200;
-            const titleResponsable = titleFirma + 5;
             doc.setFont('times', 'normal');
             doc.setFontSize(11);
 
             const textFirmaSello = 'Firma y Sello';
-            const textResponsable = 'Responsable del Área Usuaria';
             const textWidthFirmaSello = doc.getTextWidth(textFirmaSello);
-            const textWidthResponsable = doc.getTextWidth(textResponsable);
-            const maxTextWidth = Math.max(textWidthFirmaSello, textWidthResponsable);
+            const maxTextWidth = Math.max(textWidthFirmaSello);
             const lineExtraWidth = 20;
             const lineWidth = maxTextWidth + lineExtraWidth;
             const pageWidth = doc.internal.pageSize.width;
@@ -122,7 +128,6 @@ $(document).ready(function () {
             doc.setLineWidth(0.5);
             doc.line(centerX, titleFirma - 5, centerX + lineWidth, titleFirma - 5);
             doc.text(textFirmaSello, centerX + (lineWidth - textWidthFirmaSello) / 2, titleFirma);
-            doc.text(textResponsable, centerX + (lineWidth - textWidthResponsable) / 2, titleResponsable);
 
             function addFooter(doc, pageNumber, totalPages) {
               doc.setFontSize(8);
@@ -144,6 +149,7 @@ $(document).ready(function () {
               doc.setPage(i);
               addFooter(doc, i, totalPages);
             }
+
 
             // Mostrar mensaje de exito de pdf generado
             toastr.success('Archivo PDF generado.');

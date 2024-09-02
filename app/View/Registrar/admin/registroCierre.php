@@ -120,9 +120,9 @@
         </div>
 
         <!-- INPUT ESCONDIDO PARA EL NUMERO DE CIERRE -->
-        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center ">
+        <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden">
           <label for="num_cierre" class="block font-bold mb-1 mr-3 text-lime-500">N&uacute;mero Cierre:</label>
-          <input type="text" id="num_cierre" name="num_cierre" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" disabled>
+          <input type="text" id="num_cierre" name="num_cierre" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
         </div>
       </div>
 
