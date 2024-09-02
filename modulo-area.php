@@ -21,6 +21,9 @@ if ($CodArea != '') {
   $AreaRegistrada = null;
 }
 
+// Metodo para listar areas
+$resultado = $areaModel->listarArea();
+
 switch ($action) {
   case 'registrar':
     $areaController->registrarArea();

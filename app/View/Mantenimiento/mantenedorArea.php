@@ -3,14 +3,6 @@
 
     <?php
     global $AreaRegistrada;
-    require_once './app/Model/AreaModel.php';
-    $areaModel = new AreaModel();
-    $limit = 13;
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $start = ($page - 1) * $limit;
-    $totalAreas = $areaModel->contarAreas();
-    $totalPages = ceil($totalAreas / $limit);
-    $areas = $areaModel->listarArea($start, $limit);
     ?>
     <!-- Miga de pan -->
     <div class="page-header">
@@ -72,19 +64,6 @@
         <!-- Inicio de Buscador -->
         <div class="flex justify-between items-center mt-2">
           <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar &aacute;rea..." oninput="filtrarTablaPersonas()" />
-          <!-- Paginacion  -->
-          <?php if ($totalPages > 0) : ?>
-            <div class="flex justify-end items-center mt-1">
-              <?php if ($page > 1) : ?>
-                <a href="#" class="pagination-link px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" data-page="<?php echo $page - 1; ?>">&lt;</a>
-              <?php endif; ?>
-              <span class="mx-2">P&aacute;gina <?php echo $page; ?> de <?php echo $totalPages; ?></span>
-              <?php if ($page < $totalPages) : ?>
-                <a href="#" class="pagination-link px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300" data-page="<?php echo $page + 1; ?>">&gt;</a>
-              <?php endif; ?>
-            </div>
-          <?php endif; ?>
-          <!-- Fin de paginacion -->
         </div>
         <!-- Fin de Buscador -->
 
@@ -95,25 +74,25 @@
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
                 <th scope="col" class="px-10 py-2 w-1/6 hidden">N&deg;</th>
-                <th scope="col" class="px-6 py-2 w-5/6">&Aacute;rea</th>
+                <th scope="col" class="px-6 py-2 w-5/6 text-center">&Aacute;rea</th>
               </tr>
             </thead>
-            <!-- Fin de encabezado
-              -->
+            <!-- Fin de encabezado -->
+
             <!-- Cuerpo de la tabla -->
             <tbody>
-              <?php
-              foreach ($areas as $area) {
-                echo "<tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>";
-                echo "<th scope='col' class='px-10 py-2 font-medium text-gray-900 whitespace-nowrap hidden' data-codarea='" . htmlspecialchars($area['ARE_codigo']) . "'>";
-                echo htmlspecialchars($area['ARE_codigo']);
-                echo "</th>";
-                echo "<th scope='row' class='px-6 py-2 font-medium text-gray-900 whitespace-nowrap' data-area='" . htmlspecialchars($area['ARE_nombre']) . "'>";
-                echo htmlspecialchars($area['ARE_nombre']);
-                echo "</th>";
-                echo "</tr>";
-              }
-              ?>
+              <?php if (!empty($resultado)) : ?>
+                <?php foreach ($resultado as $area) : ?>
+                  <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+                    <th scope='col' class='px-10 py-2 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $area['ARE_codigo']; ?></th>
+                    <td class="px-6 py-2"> <?= $area['ARE_nombre']; ?></td>
+                  </tr>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <tr>
+                  <td colspan="1" class="text-center py-3">No se han registrado nuevas &aacute;reas</td>
+                </tr>
+              <?php endif; ?>
             </tbody>
             <!-- Fin del cuerpo de la tabla -->
           </table>

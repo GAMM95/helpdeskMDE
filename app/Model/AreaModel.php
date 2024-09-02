@@ -36,17 +36,17 @@ class AreaModel extends Conexion
   }
 
   // Metodo para listar areas
-  public function listarArea($start, $limit)
+  public function listarArea()
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "SELECT ARE_codigo, ARE_nombre FROM AREA ORDER BY ARE_codigo ASC
-        OFFSET ? ROWS
-        FETCH NEXT ? ROWS ONLY";
+        $sql = "SELECT ARE_codigo, ARE_nombre FROM AREA ORDER BY ARE_codigo ASC";
+        // OFFSET ? ROWS
+        // FETCH NEXT ? ROWS ONLY";
         $stmt = $conector->prepare($sql);
-        $stmt->bindParam(1, $start, PDO::PARAM_INT);
-        $stmt->bindParam(2, $limit, PDO::PARAM_INT);
+        // $stmt->bindParam(1, $start, PDO::PARAM_INT);
+        // $stmt->bindParam(2, $limit, PDO::PARAM_INT);
         $stmt->execute();
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultados;

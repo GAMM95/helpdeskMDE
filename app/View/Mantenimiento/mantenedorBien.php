@@ -70,8 +70,8 @@
             <thead class="text-xs text-gray-700 uppercase bg-lime-300">
               <tr>
                 <th scope="col" class="px-10 py-2 w-1/6 hidden">N&deg;</th>
-                <th scope="col" class="px-6 py-2 w-1/6">C&oacute;digo identificador</th>
-                <th scope="col" class="px-6 py-2 w-5/6">Tipo de bien</th>
+                <th scope="col" class="px-6 py-2 w-1/6 text-center">C&oacute;digo identificador</th>
+                <th scope="col" class="px-6 py-2 w-4/6">Tipo de bien</th>
               </tr>
             </thead>
             <!-- Fin de enxabezado -->
@@ -82,8 +82,8 @@
                 <?php foreach ($resultado as $bien) : ?>
                   <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
                     <th scope='col' class='px-10 py-2 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $bien['BIE_codigo']; ?></th>
-                    <td class="px-6 py-3"> <?= $bien['BIE_codigoPatrimonial']; ?></td>
-                    <td class="px-6 py-3"> <?= $bien['BIE_nombre']; ?></td>
+                    <td class="px-6 py-2 text-center"> <?= $bien['BIE_codigoPatrimonial']; ?></td>
+                    <td class="px-6 py-2"> <?= $bien['BIE_nombre']; ?></td>
                   </tr>
                 <?php endforeach; ?>
               <?php else: ?>
