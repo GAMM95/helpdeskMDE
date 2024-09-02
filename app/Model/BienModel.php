@@ -9,6 +9,27 @@ class BienModel extends Conexion
     parent::__construct();
   }
 
+  // Metodo para obtener areas por el ID
+  public function obtenerTipoBienPorID($codigoBien)
+  {
+    try {
+      $conector = $this->getConexion();
+      if ($conector != null) {
+        $sql = "SELECT * FROM BIEN WHERE BIE_codigo = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([$codigoBien]);
+        $registros = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $registros;
+      } else {
+        throw new Exception("Error de conexión con la base de datos.");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new Exception("Error al obtener el tipo de bien: " . $e->getMessage());
+      return null;
+    }
+  }
+
   // Metodo para validar existencia de codigo de bien
   public function validarBienExistente($codigoIdentificador)
   {

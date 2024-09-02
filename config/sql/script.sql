@@ -305,10 +305,20 @@ GO
 -- VOLCADO DE DATOS PARA LA TABLA BIEN
 INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('','SIN CODIGO');
 INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74089950','CPU');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74088187','MONITOR');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74088187','MONITOR PLANO');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74087700','MONITOR A COLOR');
 INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74089500','TECLADO');
 INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74088600','MOUSE');
 INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('46225215','ESTABILIZADOR');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74083650','IMPRESORA A INYECCION DE TINTA');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74083875','IMPRESORA DE CODIGO DE BARRAS');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74084550','IMPRESORA MATRIZ DE PUNTO');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74085000','IMPRESORA PARA PLANOS - PLOTTERS');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74084100','IMPRESORA LASER');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74222358','EQUIPO MULTIFUNCIONAL COPIADORA IMPRESORA SCANNER');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74084100','IMPRESORA LASER');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('95228117','SWITCH PARA RED');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74087250','MODEM EXTERNO');
 GO
 
 -- VOLCADO DE DATOS PARA LA TABLA CONDICION
@@ -379,7 +389,6 @@ BEGIN
     WHERE i.INC_numero_formato IS NULL; -- Solo actualiza si el formato es NULL
 END;
 GO
-
 
 
 -------------------------------------------------------------------------------------------------------

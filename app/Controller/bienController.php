@@ -18,6 +18,16 @@ class BienController
       $nombreBien = $_POST['nombreTipoBien'] ?? null;
 
       try {
+        // Validar si la persona tiene un usuario
+        if ($this->bienModel->validarBienExistente($codigoIdentificador)) {
+          echo json_encode([
+            'success' => false,
+            'message' => 'El codigo identificador ingresado ya está registrado.'
+          ]);
+          exit();
+        }
+
+        // Insertar tipo de bien
         $insertSuccess = $this->bienModel->insertarTipoBien($codigoIdentificador, $nombreBien);
 
         if ($insertSuccess) {
@@ -38,12 +48,19 @@ class BienController
           'message' => 'Error: ' . $e->getMessage()
         ]);
       }
+      exit();
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
     }
   }
 
   // Metodo para actualizar el tipo de bien
   public function actualizarTipoBien()
   {
+    header('Content-Type: application/json'); // Asegúrate de tener este encabezado
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $codigoIdentificador = $_POST['codigoIdentificador'] ?? null;
       $nombreBien = $_POST['nombreTipoBien'] ?? null;
@@ -70,6 +87,12 @@ class BienController
         ]);
       }
       exit();
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
     }
+    exit();
   }
 }

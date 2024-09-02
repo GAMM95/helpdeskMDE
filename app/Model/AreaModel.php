@@ -3,17 +3,31 @@ require_once 'config/conexion.php';
 
 class AreaModel extends Conexion
 {
-  // Atributos de la clase
-  protected $codigoArea;
-  protected $nombreArea;
 
-  public function __construct(
-    $codigoArea = null,
-    $nombreArea = null
-  ) {
+  public function __construct()
+  {
     parent::__construct();
-    $this->codigoArea = $codigoArea;
-    $this->nombreArea = $nombreArea;
+  }
+
+  // Método para validar la existencia de una area
+  public function validarAreaExistente($nombreArea)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT COUNT(*) FROM AREA WHERE ARE_nombre = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([$nombreArea]);
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al verificar el nombre de la area: " . $e->getMessage());
+      return null;
+    }
   }
 
   // Metodo para registrar areas
@@ -42,11 +56,7 @@ class AreaModel extends Conexion
     try {
       if ($conector != null) {
         $sql = "SELECT ARE_codigo, ARE_nombre FROM AREA ORDER BY ARE_codigo ASC";
-        // OFFSET ? ROWS
-        // FETCH NEXT ? ROWS ONLY";
         $stmt = $conector->prepare($sql);
-        // $stmt->bindParam(1, $start, PDO::PARAM_INT);
-        // $stmt->bindParam(2, $limit, PDO::PARAM_INT);
         $stmt->execute();
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultados;
@@ -61,14 +71,14 @@ class AreaModel extends Conexion
   }
 
   // Metodo para obtener areas por el ID
-  public function obtenerAreaPorId()
+  public function obtenerAreaPorId($codigoArea)
   {
     try {
       $conector = $this->getConexion();
       if ($conector != null) {
         $sql = "SELECT * FROM AREA WHERE ARE_codigo = ?";
         $stmt = $conector->prepare($sql);
-        $stmt->execute([$this->codigoArea]);
+        $stmt->execute([$codigoArea]);
         $registros = $stmt->fetch(PDO::FETCH_ASSOC);
         return $registros;
       } else {
@@ -82,7 +92,7 @@ class AreaModel extends Conexion
   }
 
   // Metodo para editar areas
-  public function editarArea()
+  public function editarArea($nombreArea, $codigoArea)
   {
     $conector = parent::getConexion();
     try {
@@ -90,8 +100,8 @@ class AreaModel extends Conexion
         $sql = "UPDATE AREA SET ARE_nombre = ? WHERE ARE_codigo = ?";
         $stmt = $conector->prepare($sql);
         $stmt->execute([
-          $this->nombreArea,
-          $this->codigoArea
+          $nombreArea,
+          $codigoArea
         ]);
         return $stmt->rowCount();
       } else {
@@ -121,6 +131,30 @@ class AreaModel extends Conexion
       }
     } catch (PDOException $e) {
       throw new PDOException("Error al contar areas: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  // Método para filtrar areas por término de búsqueda
+  public function filtrarAreas($terminoBusqueda)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT * FROM AREA
+                 WHERE ARE_nombre LIKE :terminoBusqueda";
+        $stmt = $conector->prepare($sql);
+        $terminoBusqueda = "%$terminoBusqueda%";
+        $stmt->bindParam(':terminoBusqueda', $terminoBusqueda, PDO::PARAM_STR);
+        $stmt->execute();
+        $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $registros;
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al filtrar areas: " . $e->getMessage());
       return null;
     }
   }

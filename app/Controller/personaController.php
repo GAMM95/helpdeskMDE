@@ -26,7 +26,7 @@ class PersonaController
         if ($this->personaModel->validarDniExistente($dni)) {
           echo json_encode([
             'success' => false,
-            'message' => 'El DNI ya esta registrado.'
+            'message' => 'El DNI ingresado ya esta registrado.'
           ]);
           exit();
         }
@@ -37,7 +37,7 @@ class PersonaController
         if ($insertSuccessId) {
           echo json_encode([
             'success' => true,
-            'message' => 'Persona registrada exitosamente.'
+            'message' => 'Persona registrada.'
           ]);
         } else {
           echo json_encode([

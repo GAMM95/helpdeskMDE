@@ -19,15 +19,15 @@ $(document).ready(function () {
 
   // Buscar en la tabla de trabajadores
   $('#termino').on('input', function () {
-    filtrarTablaAreas();
+    filtrarTablaBienes();
   });
 
-  $('#guardar-area').on('click', function (e) {
+  $('#guardar-bien').on('click', function (e) {
     e.preventDefault();
     enviarFormulario($('#form-action').val());
   });
 
-  $('#editar-area').on('click', function (e) {
+  $('#editar-bien').on('click', function (e) {
     e.preventDefault();
     enviarFormulario('editar');
   });
@@ -36,14 +36,14 @@ $(document).ready(function () {
   $('#nuevo-registro').on('click', nuevoRegistro);
 });
 
-// Funcion para las validaciones de campos vacios y registro - actualizacion de areas
+// Funcion para las validaciones de campos vacios y registro - actualizacion de bienes
 function enviarFormulario(action) {
   if (!validarCampos()) {
     return;
   }
 
-  var url = 'modulo-area.php?action=' + action;
-  var data = $('#formArea').serialize();
+  var url = 'modulo-bien.php?action=' + action;
+  var data = $('#formBienes').serialize();
 
   // Verificar los datos antes de enviarlos
   console.log('Datos enviados:', data);
@@ -59,9 +59,9 @@ function enviarFormulario(action) {
         console.log('Parsed JSON: ', jsonResponse);
         if (jsonResponse.success) {
           if (action === 'registrar') {
-            toastr.success('Área registrada');
+            toastr.success('Tipo de bien registrado.');
           } else if (action === 'editar') {
-            toastr.success('Datos actualizados');
+            toastr.success('Datos actualizados.');
           }
           setTimeout(function () {
             location.reload();
@@ -81,17 +81,23 @@ function enviarFormulario(action) {
   });
 }
 
-
 // Función para validar campos antes de enviar
 function validarCampos() {
   var valido = true;
   var mensajeError = '';
 
   // Validar campos
-  var faltaArea = ($('#nombreArea').val() === null || $('#nombreArea').val() === '');
+  var faltaCodigoIdentificador = ($('#codigoIdentificador').val() === null || $('#codigoIdentificador').val() === '');
+  var faltaNombreTipoBien = ($('#nombreTipoBien').val() === null || $('#nombreTipoBien').val() === '');
 
-  if (faltaArea) {
-    mensajeError += 'Debe ingresar nombre de area.';
+  if (faltaCodigoIdentificador && faltaNombreTipoBien) {
+    mensajeError += 'Debe completar todos los campos.';
+    valido = false;
+  } else if (faltaCodigoIdentificador) {
+    mensajeError += 'Debe ingresar un codigo identificador.';
+    valido = false;
+  } else if (faltaNombreTipoBien) {
+    mensajeError += 'Debe ingresar un nombre para el tipo de bien.';
     valido = false;
   }
 
@@ -103,27 +109,29 @@ function validarCampos() {
 }
 
 // Seteo de los valores de los inputs y combos cuando se hace clic en una fila de la tabla
-$(document).on('click', '#tablaAreas tbody tr', function () {
+$(document).on('click', '#tablaListarBienes tbody tr', function () {
   // Desmarcar las filas anteriores
-  $('#tablaAreas tbody tr').removeClass('bg-blue-200 font-semibold');
+  $('#tablaListarBienes tbody tr').removeClass('bg-blue-200 font-semibold');
   // Marcar la fila actual
   $(this).addClass('bg-blue-200 font-semibold');
 
   // Obtener las celdas de la fila seleccionada
   const celdas = $(this).find('td');
 
-  // Asegúrate de que 'codArea' esté correctamente asignado
-  const codArea = $(this).find('th').text().trim(); // Verifica que esta selección es correcta
-  const nombreArea = celdas[0].innerText.trim();
+  // Asegúrate de que 'codBien' esté correctamente asignado
+  const codBien = $(this).find('th').text().trim();
+  const codigoIdentificador = celdas[0].innerText.trim();
+  const nombreTipoBien = celdas[1].innerText.trim();
 
   // Establecer valores en los inputs
-  $('#codArea').val(codArea);
-  $('#nombreArea').val(nombreArea);
+  $('#codBien').val(codBien);
+  $('#codigoIdentificador').val(codigoIdentificador);
+  $('#nombreTipoBien').val(nombreTipoBien);
 
   // Cambiar el estado de los botones
   $('#form-action').val('editar'); // Cambiar la acción a editar
-  $('#guardar-area').prop('disabled', true);
-  $('#editar-area').prop('disabled', false);
+  $('#guardar-bien').prop('disabled', true);
+  $('#editar-bien').prop('disabled', false);
   $('#nuevo-registro').prop('disabled', false);
 
   // Cambiar la acción a editar
@@ -134,31 +142,31 @@ $(document).on('click', '#tablaAreas tbody tr', function () {
 
 // Funcionaliad boton nuevo
 function nuevoRegistro() {
-  const form = document.getElementById('formArea');
+  const form = document.getElementById('formBienes');
   form.reset();
-  $('#codArea').val('');
+  $('#codBien').val('');
   $('tr').removeClass('bg-blue-200 font-semibold');
 
   // Cambiar la acción del formulario a registrar
   $('#form-action').val('registrar');
 
   // Deshabilitar el botón de editar
-  $('#guardar-area').prop('disabled', false);
-  $('#editar-area').prop('disabled', true);
-  $('#nuevo-registro').prop('disabled', false);
+  $('#guardar-bien').prop('disabled', false);
+  $('#editar-bien').prop('disabled', true);
+  $('#nuevo-registro').prop('disabled', true);
 
   // Limpiar el campo de búsqueda y actualizar la tabla
   document.getElementById('termino').value = '';
-  filtrarTablaAreas();
+  filtrarTablaBienes();
 }
 
 
-// función para filtrar la tabla de areas
-function filtrarTablaAreas() {
+// función para filtrar la tabla de bienes
+function filtrarTablaBienes() {
   var input, filtro, tabla, filas, celdas, i, j, match;
   input = document.getElementById('termino');
   filtro = input.value.toUpperCase();
-  tabla = document.getElementById('tablaAreas');
+  tabla = document.getElementById('tablaListarBienes');
   filas = tabla.getElementsByTagName('tr');
 
   for (i = 1; i < filas.length; i++) {

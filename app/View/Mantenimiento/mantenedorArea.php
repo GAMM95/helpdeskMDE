@@ -28,15 +28,15 @@
 
       <!-- Inicio de formulario  -->
       <div class="flex flex-col w-1/3">
-        <form id="formarea" action="modulo-area.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
+        <form id="formArea" action="modulo-area.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
           <input type="hidden" id="form-action" name="action" value="registrar">
 
           <!-- PRIMERA FILA  -->
           <div class="flex justify-center -mx-2 mb-5 hidden">
             <div class="flex items-center mb-4">
               <div class="flex items-center">
-                <label for="CodArea" class="block font-bold mb-1 mr-3 text-lime-500">C&oacute;digo de &aacute;rea:</label>
-                <input type="text" id="txt_codigoArea" name="CodArea" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly disabled>
+                <label for="codArea" class="block font-bold mb-1 mr-3 text-lime-500">C&oacute;digo de &aacute;rea:</label>
+                <input type="text" id="codArea" name="codArea" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
               </div>
             </div>
           </div>
@@ -44,8 +44,8 @@
           <!-- SEGUNDA FILA -->
           <div class="flex flex-wrap -mx-2">
             <div class="w-full px-2 mb-3">
-              <label for="NombreArea" class="block mb-1 font-bold text-xs">Nombre &aacute;rea:</label>
-              <input type="text" id="txt_nombreArea" name="NombreArea" class="border p-2 w-full text-xs rounded-md" pattern="[A-Za-z]+" placeholder="Ingrese nueva &aacute;rea" required>
+              <label for="nombreArea" class="block mb-1 font-bold text-xs">Nombre &aacute;rea:</label>
+              <input type="text" id="nombreArea" name="nombreArea" class="border p-2 w-full text-xs rounded-md" pattern="[A-Za-z]+" placeholder="Ingrese nueva &aacute;rea">
             </div>
           </div>
 
@@ -53,7 +53,7 @@
           <div class="flex justify-center space-x-4">
             <button type="submit" id="guardar-area" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
             <button type="button" id="editar-area" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
-            <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" disabled> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
+            <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
           </div>
         </form>
       </div>
@@ -63,7 +63,7 @@
       <div class="w-2/3">
         <!-- Inicio de Buscador -->
         <div class="flex justify-between items-center mt-2">
-          <input type="text" id="searchInput" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300" placeholder="Buscar &aacute;rea..." oninput="filtrarTablaPersonas()" />
+          <input type="text" id="termino" class="px-4 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300 text-xs" placeholder="Buscar &aacute;rea..." oninput="filtrarTablaAreas()" />
         </div>
         <!-- Fin de Buscador -->
 

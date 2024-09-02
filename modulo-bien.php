@@ -15,7 +15,7 @@ $bienController = new BienController();
 $bienModel = new BienModel();
 
 if ($BIE_codigo != '') {
-  // $bienRegistrado = $bienModel->obtener($CodCategoria);
+  $bienRegistrado = $bienModel->obtenerTipoBienPorID($BIE_codigo);
 } else {
   $bienRegistrado = null;
 }
@@ -65,7 +65,7 @@ switch ($action) {
   <script src="dist/assets/js/pcoded.min.js"></script>
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
-  <script src="./app/View/func/func_categoria.js"></script>
+  <script src="./app/View/func/func_tipoBien.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>

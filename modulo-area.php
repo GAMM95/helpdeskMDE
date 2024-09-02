@@ -29,10 +29,12 @@ switch ($action) {
     $areaController->registrarArea();
     break;
   case 'editar':
-    $areaController->editarArea();
+    $areaController->actualizarArea();
+    break;
+  case 'filtrar':
+    $areaController->filtrarAreas();
     break;
   default:
-    // Código por defecto o mostrar alguna vista por defecto
     break;
 }
 ?>
