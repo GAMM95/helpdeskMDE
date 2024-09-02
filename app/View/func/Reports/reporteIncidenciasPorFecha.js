@@ -99,7 +99,7 @@ $('#reporte-incidencias-fechas').click(function () {
 
           // Configuracion de fuentes
           doc.setFont('helvetica', 'bold');
-          doc.setFontSize(12);
+          doc.setFontSize(11);
 
           // Calcular el ancho de los textos
           const fechaInicioAncho = doc.getTextWidth(fechaInicioText);
@@ -131,17 +131,14 @@ $('#reporte-incidencias-fechas').click(function () {
           doc.setFont('helvetica', 'normal');
           doc.text(fechaFinValue, startX + fechaInicioAncho + fechaInicioValueAncho + spacing + fechaFinAncho, titleY);
 
-
-
-
           // Inicializar el contador
           let item = 1;
 
           // Lista de incidencias por codigo patrimonial
           doc.autoTable({
             startY: 35, // Altura de la tabla respecto a la parte superior
-            margin: { left: 8 },
-            head: [['Ítem', 'Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Área', 'Prioridad', 'Estado']],
+            margin: { left: 4 },
+            head: [['N°', 'INCIDENCIA', 'FECHA', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'ESTADO']],
             body: data.map(reporte => [
               item++,
               reporte.INC_numero_formato,
@@ -154,16 +151,19 @@ $('#reporte-incidencias-fechas').click(function () {
               reporte.ESTADO
             ]),
             styles: {
-              fontSize: 8,
+              fontSize: 7.5,
               cellPadding: 2,
+              halign: 'center',
+              valign: 'middle'
             },
             headStyles: {
-              fillColor: [44, 62, 80],
+              fillColor: [9, 4, 6],
               textColor: [255, 255, 255],
               fontStyle: 'bold',
+              halign: 'center'
             },
             columnStyles: {
-              0: { cellWidth: 10 },
+              0: { cellWidth: 10 }, // Ancho para la columna item
               1: { cellWidth: 25 }, // Ancho para la columna Incidencia
               2: { cellWidth: 20 }, // Ancho para la columna fecha
               3: { cellWidth: 45 }, // Ancho para la columna categoria
@@ -171,7 +171,7 @@ $('#reporte-incidencias-fechas').click(function () {
               5: { cellWidth: 40 }, // Ancho para la columna Documento
               6: { cellWidth: 50 }, // Ancho para la columna area
               7: { cellWidth: 20 }, // Ancho para la columna prioridad
-              8: { cellWidth: 22 } // Ancho para la columna estado
+              8: { cellWidth: 30 } // Ancho para la columna estado
             }
           });
 
@@ -179,15 +179,15 @@ $('#reporte-incidencias-fechas').click(function () {
             doc.setFontSize(8);
             doc.setFont('helvetica', 'italic');
             const footerY = 200;
-            doc.setLineWidth(0.05);
-            doc.line(20, footerY - 5, doc.internal.pageSize.width - 20, footerY - 5);
+            doc.setLineWidth(0.5);
+            doc.line(10, footerY - 5, doc.internal.pageSize.width - 10, footerY - 5);
 
             const footerText = 'Sistema de Gestión de Incidencias';
             const pageInfo = `Página ${pageNumber} de ${totalPages}`;
             const pageWidth = doc.internal.pageSize.width;
 
-            doc.text(footerText, 20, footerY);
-            doc.text(pageInfo, pageWidth - 20 - doc.getTextWidth(pageInfo), footerY);
+            doc.text(footerText, 10, footerY);
+            doc.text(pageInfo, pageWidth - 10 - doc.getTextWidth(pageInfo), footerY);
           }
 
           const totalPages = doc.internal.getNumberOfPages();

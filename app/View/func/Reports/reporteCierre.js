@@ -173,7 +173,3 @@ $('#imprimir-cierre').click(function () {
     }
   });
 });
-
-$('#tablaIncidenciasCerradas').on('click', 'tr', function () {
-  $(this).toggleClass('selected').siblings().removeClass('selected');
-});

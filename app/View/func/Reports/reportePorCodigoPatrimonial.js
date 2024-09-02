@@ -52,7 +52,7 @@ function generarPDFControlPatrimonial(data) {
   // Detalle del título respecto al código patrimonial
   const titleY = 23;
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(12);
+  doc.setFontSize(11);
 
   const codigoText = 'Código Patrimonial:';
   const codigoWidth = doc.getTextWidth(codigoText);
@@ -73,9 +73,9 @@ function generarPDFControlPatrimonial(data) {
   // Detalle del título respecto al tipo de bien
   const titleU = 30;
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(12);
+  doc.setFontSize(11);
 
-  const bienText = 'Tipo de bien:';
+  const bienText = 'Nombre de bien:';
   const bienTextWidth = doc.getTextWidth(bienText);
   const bienValue = ` ${$('#tipoBien').val()}`;
   const bienValueWidth = doc.getTextWidth(bienValue);
@@ -96,8 +96,8 @@ function generarPDFControlPatrimonial(data) {
   // Lista de incidencias por codigo patrimonial
   doc.autoTable({
     startY: 35, // Altura de la tabla respecto a la parte superior
-    margin: { left: 10 },
-    head: [['Ítem', 'Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Área', 'Prioridad', 'Estado']],
+    margin: { left: 4 },
+    head: [['N°', 'INCIDENCIA', 'FECHA', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'ESTADO']],
     body: data.map(reporte => [
       item++,
       reporte.INC_numero_formato,
@@ -110,13 +110,16 @@ function generarPDFControlPatrimonial(data) {
       reporte.ESTADO
     ]),
     styles: {
-      fontSize: 8,
+      fontSize: 7.5,
       cellPadding: 2,
+      halign: 'center',
+      valign: 'middle'
     },
     headStyles: {
-      fillColor: [44, 62, 80],
+      fillColor: [9, 4, 6],
       textColor: [255, 255, 255],
       fontStyle: 'bold',
+      halign: 'center'
     },
     columnStyles: {
       0: { cellWidth: 10 },
@@ -127,7 +130,7 @@ function generarPDFControlPatrimonial(data) {
       5: { cellWidth: 40 }, // Ancho para la columna Documento
       6: { cellWidth: 50 }, // Ancho para la columna area
       7: { cellWidth: 20 }, // Ancho para la columna prioridad
-      8: { cellWidth: 20 } // Ancho para la columna estado
+      8: { cellWidth: 30 } // Ancho para la columna estado
     }
   });
 
@@ -143,7 +146,8 @@ function generarPDFControlPatrimonial(data) {
   // Retrasar la apertura del PDF y limpiar el campo de entrada
   setTimeout(() => {
     window.open(doc.output('bloburl'));
-    $('#codigoPatrimonial').val('');
+    $('#codigoPatrimonial').val(''); // Limpiar caja de texto de codigo patrimonial
+    $('#tipoBien').val(''); // Limpiar caja de texto nombre de bien
   }, 1500);
 }
 
@@ -193,13 +197,13 @@ function addFooter(doc, pageNumber, totalPages) {
   doc.setFont('helvetica', 'italic');
   const footerY = 200;
   doc.setLineWidth(0.05);
-  doc.line(20, footerY - 5, doc.internal.pageSize.width - 20, footerY - 5);
+  doc.line(10, footerY - 5, doc.internal.pageSize.width - 10, footerY - 5);
 
   const footerText = 'Sistema de Gestión de Incidencias';
   const pageInfo = `Página ${pageNumber} de ${totalPages}`;
   const pageWidth = doc.internal.pageSize.width;
 
-  doc.text(footerText, 20, footerY);
-  doc.text(pageInfo, pageWidth - 20 - doc.getTextWidth(pageInfo), footerY);
+  doc.text(footerText, 10, footerY);
+  doc.text(pageInfo, pageWidth - 10 - doc.getTextWidth(pageInfo), footerY);
 }
 // Fin de pie de pagina

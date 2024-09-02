@@ -49,7 +49,7 @@
           <!-- Encabezado de la tabla -->
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-6 py-2 hidden">N&deg; recepcion</th>
+              <th scope="col" class="px-6 py-2 hidden">N&deg; recepci&oacute;n</th>
               <th scope="col" class="px-6 py-2 hidden">N&deg; inc</th>
               <th scope="col" class="px-6 py-2">INCIDENCIA</th>
               <th scope="col" class="px-6 py-2">Fecha recepci&oacute;n</th>

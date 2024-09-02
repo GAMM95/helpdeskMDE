@@ -178,7 +178,7 @@
               <th scope="col" class="px-6 py-2">Documento</th>
               <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
               <th scope="col" class="px-6 py-2 hidden">Area</th>
-              <th scope="col" class="px-6 py-2 hidden">descripcion</th>
+              <th scope="col" class="px-6 py-2 hidden">descripci&oacute;n</th>
               <th scope="col" class="px-6 py-2 text-center hidden">Estado</th>
               <th scope="col" class="px-6 py-2 text-center">Estado</th>
               <th scope="col" class="px-6 py-2">Usuario</th>

@@ -16,7 +16,7 @@ $incidenciaController = new IncidenciaController();
 $incidenciaModel = new IncidenciaModel();
 
 // Paginacion de la tabla
-$limit = 2; // Número de filas por página
+$limit = 3; // Número de filas por página
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
 $start = ($page - 1) * $limit; // Calcula el índice de inicio
 

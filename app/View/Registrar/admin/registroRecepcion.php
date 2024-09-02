@@ -99,7 +99,7 @@
         <!-- NUMERO DE INCIDENCIA -->
         <div class="flex justify-center mx-2 mb-2 hidden">
           <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
-            <label for="incidencia" class="block font-bold mb-1 mr-3 text-[#32cfad]">Código de incidencia:</label>
+            <label for="incidencia" class="block font-bold mb-1 mr-3 text-[#32cfad]">C&oacute;digo de incidencia:</label>
             <input type="text" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" id="incidencia" name="incidencia" readonly required>
           </div>
         </div>
@@ -122,7 +122,7 @@
 
         <!-- FECHA DE RECEPCION -->
         <div class="w-full md:w-1/5 px-2 mb-2 hidden">
-          <label for="fecha_recepcion" class="block font-bold mb-1">Fecha de Recepción:</label>
+          <label for="fecha_recepcion" class="block font-bold mb-1">Fecha de Recepci&oacute;n:</label>
           <input type="date" id="fecha_recepcion" name="fecha_recepcion" class="border border-gray-200 bg-gray-100 p-2 w-full text-xs" value="<?php echo date('Y-m-d'); ?>" readonly>
         </div>
 

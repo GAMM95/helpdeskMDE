@@ -121,7 +121,7 @@ $('#reporte-incidencias-totales').click(function () {
           doc.setFontSize(8);
           doc.setFont('helvetica', 'italic');
           const footerY = 200; // Ajuste la posición del pie de página en la orientación horizontal
-          doc.setLineWidth(0.05);
+          doc.setLineWidth(0.5);
           doc.line(10, footerY - 5, doc.internal.pageSize.width - 10, footerY - 5);
 
           const footerText = 'Sistema de Gestión de Incidencias';

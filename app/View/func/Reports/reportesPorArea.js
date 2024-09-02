@@ -10,7 +10,7 @@ $('#reportes-areas').click(function () {
   const codigoArea = $('#area').val();
 
   if (!codigoArea) {
-    toastr.warning('Seleccione un área para generar el reporte.');
+    toastr.warning('Seleccione una &aacute;rea para generar el reporte.');
     return;
   }
 
@@ -28,7 +28,7 @@ $('#reportes-areas').click(function () {
       generarPDF(data);
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos del área.');
+      toastr.error('Hubo un error al obtener los datos del &aacute;rea.');
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });
@@ -36,7 +36,7 @@ $('#reportes-areas').click(function () {
 
 function generarPDF(data) {
   if (!data || data.length === 0) {
-    toastr.warning('No se encontró información para el &aacute;rea seleccionada.');
+    toastr.warning('No se encontr&oacute; informaci&oacute;n para el &aacute;rea seleccionada.');
     return;
   }
 
@@ -49,9 +49,9 @@ function generarPDF(data) {
 
   const titleY = 25;
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(12);
+  doc.setFontSize(11);
 
-  const areaText = 'Área:';
+  const areaText = 'ÁREA:';
   const codigoWidth = doc.getTextWidth(areaText);
   const codigoValue = ` ${$('#nombreArea').val()}`;
   const codigoValueWidth = doc.getTextWidth(codigoValue);
@@ -67,13 +67,12 @@ function generarPDF(data) {
   doc.setFont('helvetica', 'normal');
   doc.text(codigoValue, startX + codigoWidth, titleY);
 
-
   // Añadir tabla de datos
   let item = 1;
   doc.autoTable({
     startY: 35,
-    margin: { left: 8, right: 10 },
-    head: [['Ítem', 'Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Código Patrimonial', 'Prioridad', 'Estado']],
+    margin: { left: 4 },
+    head: [['N°', 'INCIDENCIA', 'FECHA', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'CÓD PATRIMONIAL', 'PRIORIDAD', 'ESTADO']],
     body: data.map(reporte => [
       item++,
       reporte.INC_numero_formato,
@@ -86,14 +85,17 @@ function generarPDF(data) {
       reporte.ESTADO
     ]),
     styles: {
-      fontSize: 8,
+      fontSize: 7.5,
       cellPadding: 2,
+      halign: 'center',
+      valign: 'middle'
     },
     headStyles: {
       // fillColor: [44, 62, 80],
-      fillColor: [0, 0, 0],
+      fillColor: [9, 4, 6],
       textColor: [255, 255, 255],
       fontStyle: 'bold',
+      halign: 'center'
     },
     columnStyles: {
       0: { cellWidth: 10 }, // ancho para la columna item
@@ -104,7 +106,7 @@ function generarPDF(data) {
       5: { cellWidth: 45 }, // ancho para la columna documento
       6: { cellWidth: 35 }, // ancho para la columna codigo patrimonial
       7: { cellWidth: 20 }, // ancho para la columna prioridad
-      8: { cellWidth: 22 } // ancho para la columna estado
+      8: { cellWidth: 30 } // ancho para la columna estado
     }
   });
 
@@ -113,6 +115,23 @@ function generarPDF(data) {
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i);
     addFooter(doc, i, totalPages);
+
+    // Pie de pagina
+    function addFooter(doc, pageNumber, totalPages) {
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'italic');
+      const footerY = 200;
+      doc.setLineWidth(0.5);
+      doc.line(10, footerY - 5, doc.internal.pageSize.width - 10, footerY - 5);
+
+      const footerText = 'Sistema de Gestión de Incidencias';
+      const pageInfo = `Página ${pageNumber} de ${totalPages}`;
+      const pageWidth = doc.internal.pageSize.width;
+
+      doc.text(footerText, 10, footerY);
+      doc.text(pageInfo, pageWidth - 10 - doc.getTextWidth(pageInfo), footerY);
+    }
+    // Fin de pie de pagina
   }
 
   // Mostrar mensaje de exito de pdf generado
@@ -120,7 +139,7 @@ function generarPDF(data) {
   // Retrasar la apertura del PDF y limpiar el campo de entrada
   setTimeout(() => {
     window.open(doc.output('bloburl'));
-    $('#area').val('');
+    $('#area').val(''); // limpiar combo area
   }, 1500);
 }
 
@@ -164,19 +183,3 @@ function addHeader(doc, logoUrl) {
 }
 // Fin de encabezado
 
-// Pie de pagina
-function addFooter(doc, pageNumber, totalPages) {
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'italic');
-  const footerY = 200;
-  doc.setLineWidth(0.05);
-  doc.line(20, footerY - 5, doc.internal.pageSize.width - 20, footerY - 5);
-
-  const footerText = 'Sistema de Gestión de Incidencias';
-  const pageInfo = `Página ${pageNumber} de ${totalPages}`;
-  const pageWidth = doc.internal.pageSize.width;
-
-  doc.text(footerText, 20, footerY);
-  doc.text(pageInfo, pageWidth - 20 - doc.getTextWidth(pageInfo), footerY);
-}
-// Fin de pie de pagina

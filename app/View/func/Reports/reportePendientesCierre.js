@@ -78,7 +78,7 @@ $('#reporte-pendientes-cierre').click(function () {
         doc.autoTable({
           startY: 35,
           margin: { left: 4, right: 10 },
-          head: [['Item', 'Incidencia', 'Fecha', 'Categoría', 'Asunto', 'Documento', 'Código patrimonial', 'Área solicitante', 'Prioridad', 'Estado']],
+          head: [['N°', 'INCIDENCIA', 'FECHA', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'CÓD. PATRIMONIAL', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'ESTADO']],
           body: data.map(reporte => [
             item++,
             reporte.INC_numero_formato,
@@ -92,13 +92,16 @@ $('#reporte-pendientes-cierre').click(function () {
             reporte.ESTADO
           ]),
           styles: {
-            fontSize: 8,
+            fontSize: 7.5,
             cellPadding: 2,
+            halign: 'center',
+            valign: 'middle'
           },
           headStyles: {
             fillColor: [44, 62, 80],
             textColor: [255, 255, 255],
             fontStyle: 'bold',
+            halign: 'center'
           },
           columnStyles: {
             0: { cellWidth: 10 }, // Ancho para la columna item
@@ -107,10 +110,10 @@ $('#reporte-pendientes-cierre').click(function () {
             3: { cellWidth: 40 }, // Ancho para la columna Categoría
             4: { cellWidth: 40 }, // Ancho para la columna Asunto
             5: { cellWidth: 35 }, // Ancho para la columna Documento
-            6: { cellWidth: 35 }, // Ancho para la columna codigo patrimonial
+            6: { cellWidth: 30 }, // Ancho para la columna codigo patrimonial
             7: { cellWidth: 40 }, // Ancho para la columna Área solicitante
             8: { cellWidth: 20 }, // Ancho para la columna prioridad
-            9: { cellWidth: 22 }  // Ancho para la columna Estado
+            9: { cellWidth: 30 }  // Ancho para la columna Estado
           }
         });
 
@@ -118,15 +121,15 @@ $('#reporte-pendientes-cierre').click(function () {
           doc.setFontSize(8);
           doc.setFont('helvetica', 'italic');
           const footerY = 200; // Ajuste la posición del pie de página en la orientación horizontal
-          doc.setLineWidth(0.05);
-          doc.line(20, footerY - 5, doc.internal.pageSize.width - 20, footerY - 5);
+          doc.setLineWidth(0.5);
+          doc.line(10, footerY - 5, doc.internal.pageSize.width - 10, footerY - 5);
 
           const footerText = 'Sistema de Gestión de Incidencias';
           const pageInfo = `Página ${pageNumber} de ${totalPages}`;
           const pageWidth = doc.internal.pageSize.width;
 
-          doc.text(footerText, 20, footerY);
-          doc.text(pageInfo, pageWidth - 20 - doc.getTextWidth(pageInfo), footerY);
+          doc.text(footerText, 10, footerY);
+          doc.text(pageInfo, pageWidth - 10 - doc.getTextWidth(pageInfo), footerY);
         }
 
         // Pie de pagina

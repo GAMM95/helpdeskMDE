@@ -29,7 +29,7 @@
 
       <!-- Fila oculta del numero de incidencia -->
       <div class="flex items-center mb-4 hidden">
-        <label for="numero_incidencia" class="block font-bold mb-1 mr-1 text-lime-500">Nro Incidencia:</label>
+        <label for="numero_incidencia" class="block font-bold mb-1 mr-1 text-lime-500">N&deg; Incidencia:</label>
         <input type="text" id="numero_incidencia" name="numero_incidencia" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs" readonly>
       </div>
 
@@ -81,7 +81,7 @@
           <!-- CODIGO PATROMONIAL -->
           <div class="flex-grow sm:w-1/3">
             <!-- <div class="w-full sm:w-1/3 px-2 mb-2"> -->
-            <label for="codigoPatrimonial" class="block mb-1 font-bold text-xs">C&oacute;digo Patrimonial:</label>
+            <label for="codigoPatrimonial" class="block mb-1 font-bold text-xs">C&oacute;d. Patrimonial:</label>
             <input type="text" id="codigoPatrimonial" name="codigoPatrimonial"
               class="border p-2 w-full text-xs rounded-md" maxlength="12"
               pattern="\d{1,12}" oninput="this.value = this.value.replace(/[^0-9]/g, '');"

@@ -43,7 +43,7 @@
               </script>
             </div>
             <div class="flex justify-center space-x-2 w-1/2">
-              <div class="flex justify-center items-center space-x-4 mt-3 ml-5">
+              <div class="flex justify-center items-center space-x-4 mt-3 ml-2">
                 <button type="button" id="imprimir-detalle-incidencia" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md">
                   <i class="feather mr-2 icon-file"></i>Detalle de incidencia </button>
                 <button type="button" id="imprimir-detalle-cierre" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md">
