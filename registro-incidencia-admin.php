@@ -85,6 +85,7 @@ switch ($action) {
 
   <script src="./app/View/func/func_incidencia_admin.js"></script>
   <script src="./app/View/func/Reports/reporteIncidencia.js"></script>
+  <script src="./app/View/func/Reports/reporteDetalleIncidencia.js"></script>
   <script src="./app/View/func/Reports/reporteNumeroIncidencia.js"></script>
 
   <script src="./app/View/func/tipoBien.js"></script>

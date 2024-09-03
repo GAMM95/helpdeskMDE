@@ -92,7 +92,7 @@
           <!-- TIPO DE BIEN -->
           <div class="flex-grow sm:w-2/3">
             <!-- <div class="w-full sm:w-2/3 px-2 mb-2"> -->
-            <label for="tipoBien" class="block mb-1 font-bold text-center text-xs">Tipo de bien:</label>
+            <label for="tipoBien" class="block mb-1 font-bold text-center text-xs">Nombre del bien:</label>
             <input type="text" id="tipoBien" name="tipoBien" class="border p-2 w-full text-center text-xs rounded-md" disabled readonly>
           </div>
         </div>
@@ -176,7 +176,6 @@
             </div>
             <div class="modal-footer justify-center">
               <button type="button" id="imprimir-detalle-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Generar detalle </button>
-              <!-- <button type="button" class="btn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md" data-dismiss="modal">Cerrar</button> -->
             </div>
           </div>
         </div>
@@ -214,17 +213,18 @@
           <thead class="text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
               <th scope="col" class="px-6 py-2 hidden">N&deg;</th>
-              <th scope="col" class="px-6 py-2">N&deg; Incidencia</th>
-              <th scope="col" class="px-4 py-2">Fecha de entrada</th>
-              <th scope="col" class="px-1 py-2">C&oacute;digo Patrimonial</th> <!-- Ajuste aquí -->
-              <th scope="col" class="px-10 py-2">Asunto</th>
-              <th scope="col" class="px-3 py-2">Documento</th>
-              <th scope="col" class="px-6 py-2">Categor&iacute;a</th>
-              <th scope="col" class="px-6 py-2">&Aacute;rea</th>
+              <th scope="col" class="px-6 py-2 text-center">N&deg; Incidencia</th>
+              <th scope="col" class="px-4 py-2 text-center">Fecha de entrada</th>
+              <th scope="col" class="px-1 py-2 text-center">C&oacute;d. Patrimonial</th> <!-- Ajuste aquí -->
+              <th scope="col" class="px-10 py-2 text-center">Asunto</th>
+              <th scope="col" class="px-3 py-2 text-center">Documento</th>
+              <th scope="col" class="px-6 py-2 text-center">Categor&iacute;a</th>
+              <th scope="col" class="px-6 py-2 text-center">&Aacute;rea</th>
               <th scope="col" class="px-6 py-2 hidden">descripcion</th>
               <th scope="col" class="px-6 py-2 hidden">Estado</th>
-              <th scope="col" class="px-6 py-2 ">Estado</th>
+              <th scope="col" class="px-6 py-2 hidden">Estado</th>
               <th scope="col" class="px-6 py-2 hidden">Usuario</th>
+              <th scope="col" class="px-6 py-2 text-center">Acci&oacute;n</th>
             </tr>
           </thead>
           <!-- Fin de ecabezado de la tabla -->
@@ -235,16 +235,16 @@
               <?php foreach ($resultado as $incidencia) : ?>
                 <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
                   <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['INC_numero']; ?></th>
-                  <td class='px-6 py-3'><?= $incidencia['INC_numero_formato']; ?></td>
-                  <td class='px-4 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
-                  <td class='px-1 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td> <!-- Ajuste aquí -->
-                  <td class='px-10 py-3'><?= $incidencia['INC_asunto']; ?></td>
-                  <td class='px-3 py-3'><?= $incidencia['INC_documento']; ?></td>
-                  <td class='px-6 py-3'><?= $incidencia['CAT_nombre']; ?></td>
-                  <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
+                  <td class='px-6 py-3 text-center'><?= $incidencia['INC_numero_formato']; ?></td>
+                  <td class='px-4 py-3 text-center'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
+                  <td class='px-1 py-3 text-center'><?= $incidencia['INC_codigoPatrimonial']; ?></td> <!-- Ajuste aquí -->
+                  <td class='px-10 py-3 text-center'><?= $incidencia['INC_asunto']; ?></td>
+                  <td class='px-3 py-3 text-center'><?= $incidencia['INC_documento']; ?></td>
+                  <td class='px-6 py-3 text-center'><?= $incidencia['CAT_nombre']; ?></td>
+                  <td class='px-6 py-3 text-center'><?= $incidencia['ARE_nombre']; ?></td>
                   <td class='px-6 py-3 hidden'><?= $incidencia['INC_descripcion']; ?></td>
                   <td class='px-6 py-3 text-center hidden'><?= $incidencia['ESTADO']; ?></td>
-                  <td class="px-3 py-3 text-center">
+                  <td class="px-3 py-3 text-center hidden">
                     <?php
                     $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
                     $badgeClass = '';
@@ -266,6 +266,18 @@
                     <label class="badge <?= $badgeClass ?>"><?= $estadoDescripcion ?></label>
                   </td>
                   <td class='px-6 py-3 hidden'><?= $incidencia['Usuario']; ?></td>
+                  <td class="px-6 py-3 text-center flex space-x-2"> <!-- Columna de Acción con botones -->
+                    <!-- Botón de Imprimir detalla de incidencia -->
+                    <button type="button" id="imprimir-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center" title="Imprimir detalle de incidencia">
+                      <i class="feather icon-printer"></i>
+                    </button>
+
+                    <!-- Botón de Eliminar -->
+                    <button type="button" id="eliminar-incidencia" class="bn btn-danger text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center">
+                      <i class="feather icon-trash-2"></i>
+                    </button>
+
+                  </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>

@@ -6,6 +6,14 @@ $(document).ready(function () {
     "timeOut": "2000"
   };
 
+  // Manejador de eventos para la tecla Escape
+  $(document).keydown(function (event) {
+    // Verificar si la tecla presionada es ESC
+    if (event.key === 'Escape') {
+      nuevoRegistro();
+    }
+  });
+
   // SETEO DE COMBO AREA
   $.ajax({
     url: 'ajax/getAreaData.php',

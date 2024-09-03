@@ -4,6 +4,14 @@ $(document).ready(function () {
     "progressBar": true,
     "timeOut": "2000"
   };
+
+  // Manejador de eventos para la tecla Escape
+  $(document).keydown(function (event) {
+    // Verificar si la tecla presionada es ESC
+    if (event.key === 'Escape') {
+      nuevoRegistro();
+    }
+  });
 });
 
 // TODO: SETEO DEL COMBO CATEGORIA

@@ -51,6 +51,9 @@ switch ($action) {
   case 'editar':
     $recepcionController->actualizarRecepcion();
     break;
+  case 'eliminar':
+    $recepcionController->eliminarRecepcion();
+    break;
   default:
     break;
 }

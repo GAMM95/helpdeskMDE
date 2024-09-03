@@ -6,6 +6,14 @@ $(document).ready(function () {
     "timeOut": "2000"
   };
 
+  // Manejador de eventos para la tecla Escape
+  $(document).keydown(function (event) {
+    // Verificar si la tecla presionada es ESC
+    if (event.key === 'Escape') {
+      nuevoRegistro();
+    }
+  });
+  
   // Seteo del combo condicion
   $.ajax({
     url: 'ajax/getOperatividad.php',
@@ -228,7 +236,7 @@ $(document).on('click', '#tablaIncidenciasCerradas tbody tr', function () {
   $('#nuevo-registro').prop('disabled', false);
   // Cambiar la acción a editar
   $('#form-action').val('editar');
-  
+
 });
 
 // Función para cambiar páginas de la tabla de recepciones sin cerrar

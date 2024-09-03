@@ -87,7 +87,6 @@ class IncidenciaModel extends Conexion
     }
   }
 
-
   // Metodo para actualizar incidencia - Administrador
   public function editarIncidenciaAdmin($num_incidencia, $categoria, $area, $codigoPatrimonial, $asunto, $documento, $descripcion)
   {
@@ -105,17 +104,34 @@ class IncidenciaModel extends Conexion
         $stmt->bindParam(':descripcion', $descripcion);
         $stmt->execute(); // Ejecutar el procedimiento almacenado
         // Confirmar que se ha actualizado al menos una fila
-        if ($stmt->rowCount() > 0) {
-          return true;
-        } else {
-          return false;
-        }
+        return $stmt->rowCount() > 0 ? true : false;
       } else {
         throw new Exception("Error de conexión con la base de datos.");
       }
     } catch (PDOException $e) {
       echo "Error al editar incidencia para el administrador: " . $e->getMessage();
       return false;
+    }
+  }
+
+  // TODO: Metodo para eliminar incidencia
+  public function eliminarIncidencia($codigoIncidencia)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "EXEC sp_eliminarIncidencia :codigoIncidencia";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':codigoIncidencia', $codigoIncidencia);
+        $stmt->execute();
+        return $stmt->rowCount() > 0 ? true : false;
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al eliminar la incidencia: " . $e->getMessage());
+      return null;
     }
   }
 

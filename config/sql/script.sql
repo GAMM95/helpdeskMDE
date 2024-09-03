@@ -140,7 +140,7 @@ GO
 
 -- CREACION DE TABLA RECEPCION
 CREATE TABLE RECEPCION (
-	REC_numero SMALLINT IDENTITY(1, 1),
+	REC_numero SMALLINT NOT NULL,
 	REC_fecha DATE NOT NULL,
 	REC_hora TIME(7) NOT NULL,
 	INC_numero SMALLINT NOT NULL,
@@ -303,7 +303,7 @@ INSERT INTO IMPACTO (IMP_descripcion) VALUES ('ALTO');
 GO
 
 -- VOLCADO DE DATOS PARA LA TABLA BIEN
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('','SIN CODIGO');
+INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('','');
 INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74089950','CPU');
 INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74088187','MONITOR PLANO');
 INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74087700','MONITOR A COLOR');
@@ -386,6 +386,24 @@ BEGIN
     INNER JOIN inserted ins
     ON i.INC_numero = ins.INC_numero
     WHERE i.INC_numero_formato IS NULL; -- Solo actualiza si el formato es NULL
+END;
+GO
+
+-- TRIGGER PARA GENERAR EL NUMERO DE RECEPCION AUMENTADO EN 1
+CREATE TRIGGER trg_incrementar_rec_numero
+ON RECEPCION
+INSTEAD OF INSERT
+AS
+BEGIN
+    DECLARE @ultimo_numero SMALLINT;
+
+    -- Obtener el último número de recepción
+    SELECT @ultimo_numero = ISNULL(MAX(REC_numero), 0) FROM RECEPCION;
+
+    -- Insertar el nuevo registro con REC_numero incrementado en 1
+    INSERT INTO RECEPCION (REC_numero, REC_fecha, REC_hora, INC_numero, PRI_codigo, IMP_codigo, USU_codigo, EST_codigo)
+    SELECT @ultimo_numero + 1, REC_fecha, REC_hora, INC_numero, PRI_codigo, IMP_codigo, USU_codigo, EST_codigo
+    FROM inserted;
 END;
 GO
 
@@ -572,15 +590,37 @@ CREATE PROCEDURE SP_Registrar_Incidencia
   @USU_codigo SMALLINT
 AS 
 BEGIN 
-  -- Variables para el número de incidencia
+  -- Número de incidencia
   DECLARE @numero_formato VARCHAR(20);
 
-  -- Generar el número de incidencia formateado
-  SET @numero_formato = dbo.GenerarNumeroIncidencia();
+  -- Verificar si ya existe una incidencia similar
+  IF NOT EXISTS (
+      SELECT 1 
+      FROM INCIDENCIA 
+      WHERE 
+          INC_fecha = @INC_fecha 
+          AND INC_hora = @INC_hora 
+          AND INC_asunto = @INC_asunto 
+          AND INC_descripcion = @INC_descripcion 
+          AND INC_documento = @INC_documento
+          AND (INC_codigoPatrimonial = @INC_codigoPatrimonial OR (@INC_codigoPatrimonial IS NULL AND INC_codigoPatrimonial IS NULL))
+          AND CAT_codigo = @CAT_codigo 
+          AND ARE_codigo = @ARE_codigo 
+          AND USU_codigo = @USU_codigo
+  )
+  BEGIN
+      -- Generar el número de incidencia formateado
+      SET @numero_formato = dbo.GenerarNumeroIncidencia();
 
-  -- Insertar la nueva incidencia
-  INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo,  USU_codigo, INC_numero_formato)
-  VALUES (@INC_fecha, @INC_hora, @INC_asunto, @INC_descripcion, @INC_documento, @INC_codigoPatrimonial, 3, @CAT_codigo, @ARE_codigo, @USU_codigo, @numero_formato);
+      -- Insertar la nueva incidencia
+      INSERT INTO INCIDENCIA (INC_fecha, INC_hora, INC_asunto, INC_descripcion, INC_documento, INC_codigoPatrimonial, EST_codigo, CAT_codigo, ARE_codigo,  USU_codigo, INC_numero_formato)
+      VALUES (@INC_fecha, @INC_hora, @INC_asunto, @INC_descripcion, @INC_documento, @INC_codigoPatrimonial, 3, @CAT_codigo, @ARE_codigo, @USU_codigo, @numero_formato);
+  END
+  ELSE
+  BEGIN
+      -- RETORNAR MENSAJE QUE LA INCIDENCIA YA EXISTE
+      PRINT 'La incidencia ya existe y no se puede registrar nuevamente.';
+  END
 END;
 GO
 
@@ -608,35 +648,59 @@ BEGIN
 END;
 GO 
 
-
 -- PROCEDIMIENTO ALMACENADO PARA INSERTAR LA RECEPCION Y ACTUALIZAR ESTADO DE INCIDENCIA
 CREATE PROCEDURE sp_InsertarRecepcionActualizarIncidencia(
-	@REC_fecha DATE,
-	@REC_hora TIME,
-	@INC_numero INT,
-	@PRI_codigo INT,
-	@IMP_codigo INT,
-	@USU_codigo INT
+    @REC_fecha DATE,
+    @REC_hora TIME,
+    @INC_numero INT,
+    @PRI_codigo INT,
+    @IMP_codigo INT,
+    @USU_codigo INT
 )
-AS BEGIN
-SET
-	NOCOUNT ON;
-	BEGIN TRY BEGIN TRANSACTION;
+AS 
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY 
+        BEGIN TRANSACTION;
 
-	-- Insertar la nueva recepción
-	INSERT INTO RECEPCION (REC_fecha, REC_hora, INC_numero, PRI_codigo, IMP_codigo, USU_codigo, EST_codigo )
-	VALUES (@REC_fecha, @REC_hora, @INC_numero, @PRI_codigo, @IMP_codigo, @USU_codigo, 4);
-	
-	-- Actualizar el estado de la incidencia
-	UPDATE INCIDENCIA SET EST_codigo = 4
-	WHERE INC_numero = @INC_numero;
+        -- Verificar si ya existe una recepción con los mismos valores
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM RECEPCION 
+            WHERE 
+                REC_fecha = @REC_fecha 
+                AND REC_hora = @REC_hora 
+                AND INC_numero = @INC_numero 
+                AND PRI_codigo = @PRI_codigo 
+                AND IMP_codigo = @IMP_codigo 
+                AND USU_codigo = @USU_codigo
+        )
+        BEGIN
+            -- Insertar la nueva recepción
+            INSERT INTO RECEPCION (REC_fecha, REC_hora, INC_numero, PRI_codigo, IMP_codigo, USU_codigo, EST_codigo)
+            VALUES (@REC_fecha, @REC_hora, @INC_numero, @PRI_codigo, @IMP_codigo, @USU_codigo, 4);
+            
+            -- Actualizar el estado de la incidencia
+            UPDATE INCIDENCIA 
+            SET EST_codigo = 4
+            WHERE INC_numero = @INC_numero;
+        END
+        ELSE
+        BEGIN
+            -- Mensaje que la recepción ya existe
+            PRINT 'La recepción ya existe y no se puede registrar nuevamente.';
+        END
 
-	COMMIT TRANSACTION;
-	END TRY BEGIN CATCH ROLLBACK TRANSACTION;
-	THROW;
-	END CATCH
+        COMMIT TRANSACTION;
+    END TRY 
+    BEGIN CATCH 
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
 END;
 GO
+
 
 -- PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR RECEPCION
 CREATE PROCEDURE sp_ActualizarRecepcion
@@ -1300,4 +1364,59 @@ INNER JOIN AREA a on a.ARE_codigo = u.ARE_codigo
 INNER JOIN ESTADO e on e.EST_codigo = u.EST_codigo
 INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo;
 GO
+
+
+
+---- PROCEDIMIENTO ALMACENADO PARA ELIMINAR INCIDENCIA
+CREATE PROCEDURE sp_eliminarIncidencia
+    @NumeroIncidencia INT
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        -- Eliminar la incidencia basada en el número de incidencia
+        DELETE FROM INCIDENCIA
+        WHERE INC_numero = @NumeroIncidencia;
+
+        -- Confirmar la transacción
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+
+---- PROCEDIMIENTO ALMACENADO PARA ELIMINAR RECEPCION
+CREATE PROCEDURE sp_eliminarRecepcion
+    @IdRecepcion INT
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        -- Declarar una variable para almacenar el número de incidencia
+        DECLARE @NumeroIncidencia INT;
+
+        -- Obtener el número de incidencia basado en el ID de recepción
+        SELECT @NumeroIncidencia = INC_numero
+        FROM RECEPCION
+        WHERE REC_numero = @IdRecepcion;
+
+        -- Actualizar el estado de la incidencia a 3
+        UPDATE INCIDENCIA
+        SET EST_codigo = 3
+        WHERE INC_numero = @NumeroIncidencia;
+
+        -- Eliminar la recepción basada en el ID de recepción
+        DELETE FROM RECEPCION
+        WHERE REC_numero = @IdRecepcion;
+
+        -- Confirmar la transacción
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
 

@@ -6,6 +6,14 @@ $(document).ready(function () {
     "timeOut": "2000"
   };
 
+  // Manejador de eventos para la tecla Escape
+  $(document).keydown(function (event) {
+    // Verificar si la tecla presionada es ESC
+    if (event.key === 'Escape') {
+      nuevoRegistro();
+    }
+  });
+
   // Seteo del combo Prioridad
   $.ajax({
     url: 'ajax/getPrioridadData.php',
@@ -91,18 +99,19 @@ function enviarFormulario(action) {
     data: data,
     dataType: 'text',
     success: function (response) {
-      console.log('Raw response:', response);
       try {
-        // Convertir la respuesta en un objeto JSON
         var jsonResponse = JSON.parse(response);
         console.log('Parsed JSON:', jsonResponse);
 
         if (jsonResponse.success) {
-          if (action === 'registrar') {
-            toastr.success('Incidencia recepcionada.');
-          } else if (action === 'editar') {
-            toastr.success('Incidencia recepcionada actualizada.');
-          }
+          // if (action === 'registrar') {
+          //   toastr.success('Incidencia recepcionada.');
+          // } else if (action === 'editar') {
+          //   toastr.success('Incidencia recepcionada actualizada.');
+          // } else if (acction === 'eliminar') {
+          //   toastr.success('Incidencia recepcionada actualizada.');
+          // }
+          toastr.success(action === 'registrar' ? 'Incidencia recepcionada.' : 'Incidencia recepcionada actualizada.');
           setTimeout(function () {
             location.reload();
           }, 1500);
