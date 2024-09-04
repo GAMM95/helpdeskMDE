@@ -374,7 +374,7 @@ BEGIN
 END;
 GO
 
--- Trigger para actualizar el número del formato
+-- TRIGGER PARA ACTUALIZAR EL NUMERO DE INCIDENCIA FORMATEADA
 CREATE TRIGGER trg_UpdateNumeroFormato
 ON INCIDENCIA
 AFTER INSERT
@@ -385,7 +385,7 @@ BEGIN
     FROM INCIDENCIA i
     INNER JOIN inserted ins
     ON i.INC_numero = ins.INC_numero
-    WHERE i.INC_numero_formato IS NULL; -- Solo actualiza si el formato es NULL
+    WHERE i.INC_numero_formato IS NULL; 
 END;
 GO
 
@@ -482,11 +482,10 @@ BEGIN
           FROM USUARIO 
           WHERE USU_codigo = @USU_codigo
       );
-    COMMIT TRANSACTION; -- Confirma la transacción si todo está correcto
+    COMMIT TRANSACTION; 
   END TRY
   BEGIN CATCH   
-    ROLLBACK TRANSACTION; -- Si hay un error, deshace la transacción
-    -- Manejo de errores: muestra el error en la salida
+    ROLLBACK TRANSACTION; 
     DECLARE @ErrorMessage NVARCHAR(4000);
     DECLARE @ErrorSeverity INT;
     DECLARE @ErrorState INT;
@@ -534,7 +533,6 @@ CREATE PROCEDURE sp_editarUsuario
     @ARE_codigo SMALLINT
 AS
 BEGIN
-    -- Iniciar una transacción para asegurar que la operación sea atómica
     BEGIN TRY
         BEGIN TRANSACTION;
 
@@ -549,7 +547,6 @@ BEGIN
             ROLLBACK TRANSACTION;
             RETURN;
         END
-
         -- Actualizar los datos del usuario
         UPDATE USUARIO
         SET 
@@ -561,12 +558,10 @@ BEGIN
         WHERE 
             USU_codigo = @USU_codigo;
 
-        -- Confirmar la transacción si todo es correcto
         COMMIT TRANSACTION;
         PRINT 'Usuario actualizado correctamente.';
     END TRY
     BEGIN CATCH
-        -- Manejo de errores
         ROLLBACK TRANSACTION;
         PRINT 'Error al actualizar usuario: ' + ERROR_MESSAGE();
     END CATCH
@@ -606,8 +601,7 @@ CREATE PROCEDURE SP_Registrar_Incidencia
   @USU_codigo SMALLINT
 AS 
 BEGIN 
-  -- Número de incidencia
-  DECLARE @numero_formato VARCHAR(20);
+  DECLARE @numero_formato VARCHAR(20);  -- Número de incidencia
 
   -- Verificar si ya existe una incidencia similar
   IF NOT EXISTS (
@@ -846,22 +840,21 @@ BEGIN
   LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
   INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
   WHERE 
-    I.EST_codigo IN (3, 4) -- Solo incluir incidencias con estado 3 o 4
-    AND NOT EXISTS (  -- Excluir incidencias que hayan pasado al estado 5 en la tabla CIERRE
+    I.EST_codigo IN (3, 4)
+    AND NOT EXISTS (  
         SELECT 1 
         FROM CIERRE C2
         WHERE C2.REC_numero = R.REC_numero
         AND C2.EST_codigo = 5
     )
   AND 
-    (@estado IS NULL OR e.EST_codigo = @estado) AND  -- Solo filtra por estado si @estado no es NULL
-    (@fechaInicio IS NULL OR INC_fecha >= @fechaInicio) AND  -- Filtra por fecha de inicio si @fechaInicio no es NULL
-    (@fechaFin IS NULL OR INC_fecha <= @fechaFin) AND        -- Filtra por fecha de fin si @fechaFin no es NULL
-    (@area IS NULL OR a.ARE_codigo = @area)     -- Solo filtra por área si @areaCodigo no es NULL
+    (@estado IS NULL OR e.EST_codigo = @estado) AND  
+    (@fechaInicio IS NULL OR INC_fecha >= @fechaInicio) AND  
+    (@fechaFin IS NULL OR INC_fecha <= @fechaFin) AND     
+    (@area IS NULL OR a.ARE_codigo = @area)     
   ORDER BY 
     -- Extraer el año de INC_numero_formato y ordenar por año de forma descendente
     SUBSTRING(INC_numero_formato, CHARINDEX('-', INC_numero_formato) + 1, 4) DESC,
-    -- Ordenar por el número de incidencia también en orden descendente
     I.INC_numero_formato DESC;
 END
 GO
@@ -1029,14 +1022,77 @@ BEGIN
   INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
   INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
   WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5 AND
-    (@codigoPatrimonial IS NULL OR I.INC_codigoPatrimonial = @codigoPatrimonial) AND  -- Solo filtra por estado si @estado no es NULL
-    (@fechaInicio IS NULL OR CIE_fecha >= @fechaInicio) AND  -- Filtra por fecha de inicio si @fechaInicio no es NULL
-    (@fechaFin IS NULL OR CIE_fecha <= @fechaFin) AND        -- Filtra por fecha de fin si @fechaFin no es NULL
-    (@area IS NULL OR a.ARE_codigo = @area)     -- Solo filtra por área si @areaCodigo no es NULL
+    (@codigoPatrimonial IS NULL OR I.INC_codigoPatrimonial = @codigoPatrimonial) AND 
+    (@fechaInicio IS NULL OR CIE_fecha >= @fechaInicio) AND  
+    (@fechaFin IS NULL OR CIE_fecha <= @fechaFin) AND        
+    (@area IS NULL OR a.ARE_codigo = @area)    
   ORDER BY C.CIE_numero DESC
 END
 GO
 
+---- PROCEDIMIENTO ALMACENADO PARA ELIMINAR RECEPCION
+CREATE PROCEDURE sp_eliminarRecepcion
+    @IdRecepcion INT
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        DECLARE @NumeroIncidencia INT;
+
+        -- Obtener el número de incidencia basado en el ID de recepción
+        SELECT @NumeroIncidencia = INC_numero
+        FROM RECEPCION
+        WHERE REC_numero = @IdRecepcion;
+
+        -- Actualizar el estado de la incidencia a 3
+        UPDATE INCIDENCIA
+        SET EST_codigo = 3
+        WHERE INC_numero = @NumeroIncidencia;
+
+        -- Eliminar la recepción basada en el ID de recepción
+        DELETE FROM RECEPCION
+        WHERE REC_numero = @IdRecepcion;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+GO
+
+---- PROCEDIMIENTO ALMACENADO PARA ELIMINAR CIERRE
+CREATE PROCEDURE sp_eliminarCierre
+    @IdCierre INT
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        DECLARE @NumeroRecepcion INT;
+
+        -- Obtener el número de incidencia basado en el ID de recepción
+        SELECT @NumeroRecepcion = REC_numero
+        FROM CIERRE
+        WHERE CIE_numero = @IdCierre;
+
+        -- Actualizar el estado de la incidencia a 3
+        UPDATE RECEPCION
+        SET EST_codigo = 4
+        WHERE REC_numero = @NumeroRecepcion;
+
+        -- Eliminar la recepción basada en el ID de cierre
+        DELETE FROM CIERRE
+        WHERE CIE_numero = @IdCierre;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+GO
 
 -------------------------------------------------------------------------------------------------------
   -- VISTAS
@@ -1103,8 +1159,8 @@ INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
 INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
 INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
 LEFT JOIN RECEPCION R ON R.INC_numero = I.INC_numero
-LEFT JOIN USUARIO uR ON uR.USU_codigo = R.USU_codigo -- Relación para obtener el usuario de la recepción
-LEFT JOIN PERSONA pR ON pR.PER_codigo = uR.PER_codigo -- Relación para obtener la persona del usuario de la recepción
+LEFT JOIN USUARIO uR ON uR.USU_codigo = R.USU_codigo 
+LEFT JOIN PERSONA pR ON pR.PER_codigo = uR.PER_codigo 
 LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
 LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
 LEFT JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
@@ -1186,8 +1242,8 @@ LEFT JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
 LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
 INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
 WHERE 
-    I.EST_codigo IN (3, 4) -- Solo incluir incidencias con estado 3 o 4
-    AND NOT EXISTS (  -- Excluir incidencias que hayan pasado al estado 5 en la tabla CIERRE
+    I.EST_codigo IN (3, 4) 
+    AND NOT EXISTS (  
         SELECT 1 
         FROM CIERRE C2
         WHERE C2.REC_numero = R.REC_numero
@@ -1442,8 +1498,8 @@ LEFT JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
 LEFT JOIN IMPACTO IMP ON IMP.IMP_codigo = R.IMP_codigo
 LEFT JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
 LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
-LEFT JOIN USUARIO U2 ON U2.USU_codigo = C.USU_codigo -- Relacionamos el usuario del cierre
-LEFT JOIN AREA A2 ON U2.ARE_codigo = A2.ARE_codigo -- Relacionamos el área del usuario del cierre
+LEFT JOIN USUARIO U2 ON U2.USU_codigo = C.USU_codigo 
+LEFT JOIN AREA A2 ON U2.ARE_codigo = A2.ARE_codigo 
 INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
 WHERE (I.EST_codigo NOT IN (3, 4) OR C.EST_codigo NOT IN (3, 4))
 AND CONVERT(DATE, C.CIE_fecha) = CONVERT(DATE, GETDATE());
@@ -1493,74 +1549,6 @@ BEGIN
         -- Eliminar la incidencia basada en el número de incidencia
         DELETE FROM INCIDENCIA
         WHERE INC_numero = @NumeroIncidencia;
-
-        -- Confirmar la transacción
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH;
-END;
-GO
-
----- PROCEDIMIENTO ALMACENADO PARA ELIMINAR RECEPCION
-CREATE PROCEDURE sp_eliminarRecepcion
-    @IdRecepcion INT
-AS
-BEGIN
-    BEGIN TRANSACTION;
-    BEGIN TRY
-        -- Declarar una variable para almacenar el número de incidencia
-        DECLARE @NumeroIncidencia INT;
-
-        -- Obtener el número de incidencia basado en el ID de recepción
-        SELECT @NumeroIncidencia = INC_numero
-        FROM RECEPCION
-        WHERE REC_numero = @IdRecepcion;
-
-        -- Actualizar el estado de la incidencia a 3
-        UPDATE INCIDENCIA
-        SET EST_codigo = 3
-        WHERE INC_numero = @NumeroIncidencia;
-
-        -- Eliminar la recepción basada en el ID de recepción
-        DELETE FROM RECEPCION
-        WHERE REC_numero = @IdRecepcion;
-
-        -- Confirmar la transacción
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH;
-END;
-GO
-
----- PROCEDIMIENTO ALMACENADO PARA ELIMINAR CIERRE
-CREATE PROCEDURE sp_eliminarCierre
-    @IdCierre INT
-AS
-BEGIN
-    BEGIN TRANSACTION;
-    BEGIN TRY
-        -- Declarar una variable para almacenar el número de recepcion
-        DECLARE @NumeroRecepcion INT;
-
-        -- Obtener el número de incidencia basado en el ID de recepción
-        SELECT @NumeroRecepcion = REC_numero
-        FROM CIERRE
-        WHERE CIE_numero = @IdCierre;
-
-        -- Actualizar el estado de la incidencia a 3
-        UPDATE RECEPCION
-        SET EST_codigo = 4
-        WHERE REC_numero = @NumeroRecepcion;
-
-        -- Eliminar la recepción basada en el ID de cierre
-        DELETE FROM CIERRE
-        WHERE CIE_numero = @IdCierre;
 
         -- Confirmar la transacción
         COMMIT TRANSACTION;

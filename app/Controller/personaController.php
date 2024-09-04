@@ -101,7 +101,7 @@ class PersonaController
     } else {
       echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido.'
+        'message' => 'M&eacute;todo no permitido.'
       ]);
     }
   }
@@ -119,12 +119,12 @@ class PersonaController
         if ($resultados) {
           echo json_encode([
             'success' =>  true,
-            'message' => 'Busqueda exitosa'
+            'message' => 'B&uacute;squeda exitosa'
           ]);
         } else {
           echo json_encode([
             'success' =>  false,
-            'message' => 'No se realizo busqueda'
+            'message' => 'No se realiz&oacute; b&uacute;squeda'
           ]);
         }
       } catch (Exception $e) {
@@ -136,7 +136,7 @@ class PersonaController
     } else {
       echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido.'
+        'message' => 'M&eacute;todo no permitido.'
       ]);
     }
   }

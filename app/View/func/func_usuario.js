@@ -128,9 +128,9 @@ function enviarFormulario(action) {
 
         if (jsonResponse.success) {
           if (action === 'registrar') {
-            toastr.success('Usuario registrado.', 'Mensaje');
+            toastr.success(jsonResponse.message, 'Mensaje');
           } else if (action === 'editar') {
-            toastr.success('Datos actualizados.', 'Mensaje');
+            toastr.success(jsonResponse.message, 'Mensaje');
           }
           setTimeout(function () {
             location.reload();
@@ -170,7 +170,7 @@ function validarCamposRegistroUsuario() {
     mensajeError += 'Debe seleccionar un trabajador.';
     valido = false;
   } else if (faltaArea) {
-    mensajeError += 'Debe seleccionar un area.';
+    mensajeError += 'Debe seleccionar un &aacute;rea.';
     valido = false;
   } else if (faltaRol) {
     mensajeError += 'Debe seleccionar un rol.';
@@ -185,7 +185,7 @@ function validarCamposRegistroUsuario() {
 
   // Mostrar mensaje de error si hay
   if (!valido) {
-    toastr.warning(mensajeError.trim());
+    toastr.warning(mensajeError.trim(), 'Advertencia');
   }
   return valido;
 }
@@ -293,7 +293,6 @@ function filtrarTablaUsuario() {
   }
 }
 
-
 // Habilitar y desahbilitar usuario
 $(document).ready(function () {
   // Manejar el cambio en los switches
@@ -311,18 +310,18 @@ $(document).ready(function () {
       },
       success: function (response) {
         if (response.success) {
-          toastr.success('Estado del usuario actualizado.');
+          toastr.success('Estado del usuario actualizado.', 'Mensaje');
           setTimeout(function () {
             location.reload();
           }, 1000);
         } else {
-          toastr.error('No se pudo actualizar el estado del usuario.');
+          toastr.error('No se pudo actualizar el estado del usuario.', 'Mensaje de error');
           // Restaura el estado del switch en caso de error
           checkbox.prop('checked', !checkbox.is(':checked'));
         }
       },
       error: function (xhr, status, error) {
-        toastr.error('Ocurrió un error al actualizar el estado del usuario.');
+        toastr.error('Ocurrió un error al actualizar el estado del usuario.', 'Mensaje de error');
         // Restaura el estado del switch en caso de error
         checkbox.prop('checked', !checkbox.is(':checked'));
       }

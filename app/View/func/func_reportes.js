@@ -27,16 +27,13 @@ $(document).ready(function () {
     }
   });
 
-  // Setear el código del área seleccionada
+  // Setear campos del área seleccionada
   $('#area').change(function () {
     var selectedOption = $(this).find('option:selected');
-    var areaCodigo = selectedOption.val(); // Obtén el valor (código) del área seleccionada
-    var areaNombre = selectedOption.text(); // Obtén el texto (nombre) del área seleccionada
-
-
-    // Aquí puedes setear este valor en otro campo si es necesario
-    $('#codigoArea').val(areaCodigo); // Ejemplo: campo oculto o visible
-    $('#nombreArea').val(areaNombre); // Setear el nombre del área en el input oculto
+    var areaCodigo = selectedOption.val();
+    var areaNombre = selectedOption.text();
+    $('#codigoArea').val(areaCodigo);
+    $('#nombreArea').val(areaNombre);
   });
 });
 
@@ -46,7 +43,7 @@ $(document).ready(function () {
   $('#area').select2({
     allowClear: true,
     width: '100%',
-    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
+    dropdownCssClass: 'text-xs',
     language: {
       noResults: function () {
         return "No se encontraron resultados";

@@ -71,9 +71,9 @@ function enviarFormulario(action) {
         console.log('Parsed JSON: ', jsonResponse);
         if (jsonResponse.success) {
           if (action === 'registrar') {
-            toastr.success('Persona registrada', 'Mensaje');
+            toastr.success(jsonResponse.message, 'Mensaje');
           } else if (action === 'editar') {
-            toastr.success('Datos actualizados', 'Mensaje');
+            toastr.success(jsonResponse.message, 'Mensaje');
           }
           setTimeout(function () {
             location.reload();

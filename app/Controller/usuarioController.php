@@ -141,7 +141,7 @@ class UsuarioController
 
       echo json_encode([
         'success' => true,
-        'message' => 'Perfil actualizado correctamente'
+        'message' => 'Perfil actualizado.'
       ]);
     } catch (Exception $e) {
       echo json_encode([
@@ -164,12 +164,12 @@ class UsuarioController
         if ($resultados) {
           echo json_encode([
             'success' =>  true,
-            'message' => 'Búsqueda exitosa'
+            'message' => 'B&uacute;squeda exitosa.'
           ]);
         } else {
           echo json_encode([
             'success' =>  false,
-            'message' => 'No se realizó búsqueda'
+            'message' => 'No se realiz&oacute; b&uacute;squeda.'
           ]);
         }
       } catch (Exception $e) {
