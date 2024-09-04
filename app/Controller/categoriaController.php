@@ -11,6 +11,7 @@ class CategoriaController
     $this->categoriaModel = new CategoriaModel();
   }
 
+  // Metodo para registrar la categoria
   public function registrarCategoria()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -93,10 +94,6 @@ class CategoriaController
   {
     try {
       $categorias = $this->categoriaModel->listarCategorias();
-      // Aquí deberías retornar o incluir una vista que muestre la tabla de categorías
-      // Dependiendo de cómo manejes las vistas, podrías pasar $categorias a la vista
-      // Ejemplo:
-      // include 'views/categoriaTabla.php';
     } catch (Exception $e) {
       echo "Error: " . $e->getMessage();
     }
@@ -114,10 +111,6 @@ class CategoriaController
 
       try {
         $categorias = $this->categoriaModel->filtrarBusqueda($termino);
-        // Aquí deberías retornar o incluir una vista que muestre la tabla de categorías filtradas
-        // Dependiendo de cómo manejes las vistas, podrías pasar $categorias a la vista
-        // Ejemplo:
-        // include 'views/categoriaTabla.php';
       } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
       }

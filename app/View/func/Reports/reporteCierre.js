@@ -11,7 +11,7 @@ $('#imprimir-cierre').click(function () {
   const numeroCierre = $('#num_cierre').val().trim();
 
   if (!numeroCierre) {
-    toastr.warning('Seleccione una incidencia cerrada para generar PDF.');
+    toastr.warning('Seleccione una incidencia cerrada para generar PDF.', 'Advertencia');
     return;
   }
 
@@ -158,7 +158,7 @@ $('#imprimir-cierre').click(function () {
           setTimeout(() => {
             window.open(doc.output('bloburl'));
             $('#codigoPatrimonial').val('');
-          }, 1500);
+          }, 2000);
         } catch (error) {
           toastr.error('Hubo un error al generar el reporte de cierre de incidencia.', 'Mensaje de error');
           console.error('Error al generar el PDF:', error.message);

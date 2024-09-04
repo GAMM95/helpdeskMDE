@@ -2,7 +2,7 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "1500"
+    "timeOut": "2000"
   };
 });
 
@@ -11,7 +11,7 @@ $('#imprimir-incidencia').click(function () {
   const numeroIncidencia = $('#numero_incidencia').val().trim();
 
   if (!numeroIncidencia) {
-    toastr.warning('Seleccione una incidencia para generar PDF.');
+    toastr.warning('Seleccione una incidencia para generar reporte.', 'Advertencia');
     return;
   }
 
@@ -152,14 +152,14 @@ $('#imprimir-incidencia').click(function () {
           }
 
           // Mostrar mensaje de exito de pdf generado
-          toastr.success(response.message, 'Archivo PDF generado.');
+          toastr.success(response.message, 'Mensaje');
           // Retrasar la apertura del PDF y limpiar el campo de entrada
           setTimeout(() => {
             window.open(doc.output('bloburl'));
             $('#codigoPatrimonial').val('');
-          }, 1500);
+          }, 2000);
         } catch (error) {
-          toastr.error('Hubo un error al generar PDF.');
+          toastr.error('Hubo un error al generar reporte de cierre.', 'Mensaje de error');
           console.error('Error al generar el PDF:', error.message);
         }
         // } else {
@@ -167,7 +167,7 @@ $('#imprimir-incidencia').click(function () {
       }
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos de la incidencia.');
+      toastr.error('Hubo un error al obtener los datos de la incidencia.', 'Mensaje de error');
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });

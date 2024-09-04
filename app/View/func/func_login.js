@@ -48,9 +48,9 @@ $(document).ready(function () {
   // Verificar si hay un parámetro de estado en la URL
   var state = new URLSearchParams(window.location.search).get('state');
   if (state === 'failed') {
-    toastr.error('Credenciales incorrectas.', 'Inicio de sesión fallido.');
+    toastr.error('Credenciales incorrectas.', 'Inicio de sesi&oacute;n fallido.');
   } else if (state === 'inactive') {
-    toastr.error('Usuario inactivo. Por favor, contacte al administrador.', 'Inicio de sesión fallido.');
+    toastr.error('Usuario inactivo. Por favor, contacte al administrador.', 'Inicio de sesi&oacute;n fallido.');
   }
 
   // Manejar la presentación del formulario
@@ -74,7 +74,7 @@ $(document).ready(function () {
 
     // Mostrar mensaje de error si hay
     if (!valido) {
-      toastr.warning(mensajeError);
+      toastr.warning(mensajeError, 'Advertencia');
     }
     return valido;
   });

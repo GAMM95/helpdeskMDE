@@ -2,7 +2,7 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "1500"
+    "timeOut": "2000"
   };
 });
 
@@ -77,7 +77,6 @@ $('#reporte-incidencias-fechas').click(function () {
           }
 
           addHeader(doc);
-
 
           // Subtitulos de fechas
           const fechaInicioText = 'Fecha de Inicio:';
@@ -203,17 +202,17 @@ $('#reporte-incidencias-fechas').click(function () {
             window.open(doc.output('bloburl'));
             $('#fechaInicio').val('');
             $('#fechaFin').val('');
-          }, 1500);
+          }, 2000);
         } else {
-          toastr.warning('No se ha encontrado incidencia para las fechas seleccionadas.');
+          toastr.warning('No se ha encontrado incidencia para las fechas seleccionadas.', 'Advertencia');
         }
       } catch (error) {
-        toastr.error('Hubo un error al generar reporte.');
+        toastr.error('Hubo un error al generar reporte.', 'Mensaje de error');
         console.error('Error al generar el PDF:', error.message);
       }
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos de la incidencia.');
+      toastr.error('Hubo un error al obtener los datos de la incidencia.', 'Mensaje de error');
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });
@@ -234,7 +233,7 @@ $('#reporte-incidencias-fechas').click(function () {
     }
 
     if (!valido) {
-      toastr.warning(mensajeError.trim());
+      toastr.warning(mensajeError.trim(), 'Advertencia');
     }
 
     return valido;
@@ -272,7 +271,7 @@ $('#reporte-incidencias-fechas').click(function () {
 
     // Mostrar mensaje de error con Toastr si la validación falla
     if (!valido) {
-      toastr.warning(mensajeError.trim());
+      toastr.warning(mensajeError.trim(), 'Advertencia');
     }
 
     return valido;

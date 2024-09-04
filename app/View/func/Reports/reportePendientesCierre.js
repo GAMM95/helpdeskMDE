@@ -2,7 +2,7 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "1500"
+    "timeOut": "2000"
   };
 });
 
@@ -17,7 +17,7 @@ $('#reporte-pendientes-cierre').click(function () {
     success: function (data) {
       console.log(data);
       if (data.length === 0) {
-        toastr.warning('No se encontraron datos para generar el reporte.');
+        toastr.warning('No se encontraron datos para generar el reporte.', 'Advertencia');
         return;
       }
 
@@ -140,18 +140,18 @@ $('#reporte-pendientes-cierre').click(function () {
         }
 
         // Mostrar mensaje de exito de pdf generado
-        toastr.success('Archivo PDF generado.');
+        toastr.success('Reporte de incidencias pendientes de cierre generado.', 'Mensaje');
         // Retrasar la apertura del PDF y limpiar el campo de entrada
         setTimeout(() => {
           window.open(doc.output('bloburl'));
-        }, 1500);
+        }, 2000);
       } catch (error) {
-        toastr.error('Hubo un error al generar PDF.');
+        toastr.error('Hubo un error al generar PDF.', 'Mensaje de error');
         console.error('Error al generar el PDF:', error.message);
       }
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos de la incidencia.');
+      toastr.error('Hubo un error al obtener los datos de las incidencias pendientes de cierre.', 'Mensaje de error');
       console.error('Error en AJAX:', xhr.responseText, 'Status:', status, 'Error:', error);
     }
   });

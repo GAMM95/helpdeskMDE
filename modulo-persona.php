@@ -46,7 +46,7 @@ switch ($action) {
 <html lang="es">
 
 <head>
-  <title>Sistema HelpDesk MDE</title>
+  <title>Sistema de Gestión de Incidencias</title>
   <link rel="icon" href="public/assets/logo.ico">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">

@@ -22,7 +22,7 @@ class BienController
         if ($this->bienModel->validarBienExistente($codigoIdentificador)) {
           echo json_encode([
             'success' => false,
-            'message' => 'El codigo identificador ingresado ya está registrado.'
+            'message' => 'El &oacute;digo identificador ingresado ya est&aacute; registrado.'
           ]);
           exit();
         }
@@ -33,13 +33,13 @@ class BienController
         if ($insertSuccess) {
           echo json_encode([
             'success' => true,
-            'message' => 'Tipo de bien registrado exitosamente.',
+            'message' => 'Nombre de bien registrado.',
             'BIE_codigo' => $insertSuccess
           ]);
         } else {
           echo json_encode([
             'success' => false,
-            'message' => 'Error al registrar el tipo de bien'
+            'message' => 'Error al registrar el nombre de bien.'
           ]);
         }
       } catch (Exception $e) {
@@ -52,7 +52,7 @@ class BienController
     } else {
       echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido.'
+        'message' => 'M&eacute;todo no permitido.'
       ]);
     }
   }
@@ -72,12 +72,12 @@ class BienController
         if ($updateSuccess) {
           echo json_encode([
             'success' => true,
-            'message' => 'Tipo de bien actualizado.'
+            'message' => 'Nombre de bien actualizado.'
           ]);
         } else {
           echo json_encode([
             'success' => false,
-            'message' => 'No se realizó ninguna actualización.'
+            'message' => 'No se realiz&oacute; ninguna actualizaci&oacute;n.'
           ]);
         }
       } catch (Exception $e) {
@@ -90,7 +90,7 @@ class BienController
     } else {
       echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido.'
+        'message' => 'M&eacute;todo no permitido.'
       ]);
     }
     exit();

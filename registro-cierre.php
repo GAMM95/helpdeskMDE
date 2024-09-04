@@ -62,7 +62,7 @@ switch ($action) {
 <html lang="es">
 
 <head>
-  <title>Sistema HelpDesk MDE</title>
+  <title>Sistema de Gestión de Incidencias</title>
   <link rel="icon" href="public/assets/logo.ico">
   <!-- Meta -->
   <meta charset="utf-8">
@@ -103,7 +103,8 @@ switch ($action) {
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
 
   <script src="./app/View/func/func_cierre_admin.js"></script>
-  <script src="./app/View/func/Reports/reporteCierre.js"></script>
+  <!-- <script src="./app/View/func/Reports/reporteCierre.js"></script> -->
+  <script src="./app/View/func/Reports/reporteDetalleCierre.js"></script>
 
   <!-- Framework CSS -->
   <script src="https://cdn.tailwindcss.com"></script>

@@ -237,10 +237,7 @@
       </div>
     </div>
     <!-- Fin de tabla de incidencias registradas -->
-
   </div>
 </div>
 
 <script src="https://cdn.tailwindcss.com"></script>
-
-<script src="./app/View/func/func_incidencia_user.js"></script>

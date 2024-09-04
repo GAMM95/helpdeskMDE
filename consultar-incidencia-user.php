@@ -41,18 +41,18 @@ if ($action === 'consultar') {
   if (!empty($resultadoBusqueda)) {
     foreach ($resultadoBusqueda as $incidencia) {
       $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
-      $html .= '<td class="px-3 py-2 hidden">' . htmlspecialchars($incidencia['INC_numero']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_numero_formato']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['CAT_nombre']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_asunto']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_documento']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . '</td>';
-      $html .= '<td class="px-3 py-2 hidden">' . htmlspecialchars($incidencia['fechaRecepcionFormateada']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['PRI_nombre']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($incidencia['fechaCierreFormateada']) . '</td>';
-      $html .= '<td class="px-3 py-2 hidden">' . htmlspecialchars($incidencia['CON_descripcion']) . '</td>';
-      $html .= '<td class="px-3 py-2 hidden">' . htmlspecialchars($incidencia['Usuario']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center hidden">' . htmlspecialchars($incidencia['INC_numero']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($incidencia['INC_numero_formato']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($incidencia['CAT_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($incidencia['INC_asunto']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($incidencia['INC_documento']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($incidencia['INC_codigoPatrimonial']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center hidden">' . htmlspecialchars($incidencia['fechaRecepcionFormateada']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($incidencia['PRI_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($incidencia['fechaCierreFormateada']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center hidden">' . htmlspecialchars($incidencia['CON_descripcion']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center hidden">' . htmlspecialchars($incidencia['Usuario']) . '</td>';
       $html .= '<td class="px-3 py-2 text-center text-xs align-middle">';
 
       $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
@@ -92,7 +92,7 @@ if ($action === 'consultar') {
 <html lang="es">
 
 <head>
-  <title>Sistema HelpDesk MDE</title>
+  <title>Sistema de Gestión de Incidencias</title>
   <link rel="icon" href="public/assets/logo.ico">
   <!-- Meta -->
   <meta charset="utf-8">

@@ -39,7 +39,7 @@ $(document).ready(function () {
     document.getElementById('nuevo-registro').disabled = false;
 
     // Mostrar el mensaje de Toastr
-    toastr.info('Campos habilitados para edición');
+    toastr.info('Campos habilitados para edición', 'Mensaje');
   });
 
   document.getElementById('nuevo-registro').addEventListener('click', function () {
@@ -51,7 +51,7 @@ $(document).ready(function () {
     this.disabled = true;
 
     // Mostrar el mensaje de Toastr
-    toastr.info('Campos deshabilitados');
+    toastr.info('Campos deshabilitados', 'Mensaje');
   });
 
   function enviarFormulario(action) {
@@ -64,14 +64,14 @@ $(document).ready(function () {
       data: data,
       success: function () {
         if (action === 'editar') {
-          toastr.success('Datos actualizados');
+          toastr.success('Datos actualizados', 'Mensaje');
         }
         setTimeout(function () {
           location.reload();
         }, 1500);
       },
       error: function () {
-        toastr.success('Datos actualizados.');
+        toastr.success('Datos actualizados.', 'Mensaje');
         setTimeout(function () {
           location.reload();
         }, 1500);

@@ -7,13 +7,21 @@ $(document).ready(function () {
 
   // Evento para manejar la tecla Enter cuando una fila está seleccionada
   $(document).on('keydown', function (e) {
-    // Verificar si la tecla presionada es Enter (keyCode 13)
+    // Verificar si la tecla presionada es Enter
     if (e.key === 'Enter') {
       // Si la fila está seleccionada, proceder a actualizar
       if ($('.bg-blue-200.font-semibold').length > 0) {
         e.preventDefault();
         enviarFormulario('editar');
       }
+    }
+  });
+
+  // Evento de tecla ESC
+  $(document).keydown(function (event) {
+    // Verificar si la tecla presionada es ESC
+    if (event.key === 'Escape') {
+      nuevoRegistro();
     }
   });
 
@@ -59,9 +67,9 @@ function enviarFormulario(action) {
         console.log('Parsed JSON: ', jsonResponse);
         if (jsonResponse.success) {
           if (action === 'registrar') {
-            toastr.success('Tipo de bien registrado.');
+            toastr.success('Tipo de bien registrado.', 'Mensaje');
           } else if (action === 'editar') {
-            toastr.success('Datos actualizados.');
+            toastr.success('Datos actualizados.', 'Mensaje');
           }
           setTimeout(function () {
             location.reload();
@@ -71,12 +79,12 @@ function enviarFormulario(action) {
         }
       } catch (e) {
         console.error('JSON parsing error:', e);
-        toastr.error('Error al procesar la respuesta.');
+        toastr.error('Error al procesar la respuesta.', 'Mensaje de error');
       }
     },
     error: function (xhr, status, error) {
       console.error('AJAX Error:', error);
-      toastr.error('Error en la solicitud AJAX.');
+      toastr.error('Error en la solicitud AJAX.', 'Mensaje de error');
     }
   });
 }
@@ -103,7 +111,7 @@ function validarCampos() {
 
   // Mostrar mensaje de error si hay
   if (!valido) {
-    toastr.warning(mensajeError.trim());
+    toastr.warning(mensajeError.trim(), 'Advertencia');
   }
   return valido;
 }

@@ -38,13 +38,13 @@ class RecepcionController
         if ($insertSuccessId) {
           echo json_encode([
             'success' => false,
-            'message' => 'Error al registrar la recepcion.',
+            'message' => 'Error al registrar la recepci&oacute;n.',
             'REC_numero' => $insertSuccessId
           ]);
         } else {
           echo json_encode([
             'success' => true,
-            'message' => 'Recepción registrada.',
+            'message' => 'Recepci&oacute;n registrada.',
           ]);
         }
       } catch (Exception $e) {
@@ -58,7 +58,7 @@ class RecepcionController
     } else {
       echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido.'
+        'message' => 'M&eacute;todo no permitido.'
       ]);
     }
   }
@@ -76,7 +76,7 @@ class RecepcionController
       if (empty($numeroRecepcion) || empty($prioridad) || empty($impacto)) {
         echo json_encode([
           'success' => false,
-          'message' => 'Todos los campos son obligatorios.'
+          'message' => 'Ingrese campos requeridos (*).'
         ]);
         exit();
       }
@@ -90,7 +90,7 @@ class RecepcionController
           // Estado no permitido para actualización
           echo json_encode([
             'success' => false,
-            'message' => 'La recepción no está en un estado que permita actualización.'
+            'message' => 'La recepci&oacute;n no est&aacute; en un estado que permita actualizaci&oacute;n.'
           ]);
           exit();
         }
@@ -101,12 +101,12 @@ class RecepcionController
         if ($updateSuccess) {
           echo json_encode([
             'success' => true,
-            'message' => 'Recepción actualizada.'
+            'message' => 'Recepci&oacute;n actualizada.'
           ]);
         } else {
           echo json_encode([
             'success' => false,
-            'message' => 'No se realizó ninguna actualización.'
+            'message' => 'No se realiz&oacute; ninguna actualizaci&oacute;n.'
           ]);
         }
       } catch (Exception $e) {
@@ -119,7 +119,7 @@ class RecepcionController
     } else {
       echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido.'
+        'message' => 'M&eacute;todo no permitido.'
       ]);
     }
   }
@@ -146,12 +146,12 @@ class RecepcionController
         if ($updateSuccess) {
           echo json_encode([
             'success' => true,
-            'message' => 'Recepción eliminada.'
+            'message' => 'Recepci&oacute;n eliminada.'
           ]);
         } else {
           echo json_encode([
             'success' => false,
-            'message' => 'No se realizó ninguna eliminación.'
+            'message' => 'No se realiz&oacute; ninguna eliminaci&oacute;n.'
           ]);
         }
       } catch (Exception $e) {
@@ -164,7 +164,7 @@ class RecepcionController
     } else {
       echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido.'
+        'message' => 'M&eacute;todo no permitido.'
       ]);
     }
   }

@@ -40,7 +40,7 @@ $(document).ready(function () {
     success: function (data) {
       var select = $('#cbo_categoria');
       select.empty();
-      select.append('<option value="" selected disabled>Seleccione una categoría</option>');
+      select.append('<option value="" selected disabled>Seleccione una categor&iacute;a</option>');
       $.each(data, function (index, value) {
         select.append('<option value="' + value.CAT_codigo + '">' + value.CAT_nombre + '</option>');
       });
@@ -101,24 +101,24 @@ function enviarFormulario(action) {
 
         if (jsonResponse.success) {
           if (action === 'registrar') {
-            toastr.success('Incidencia registrada.');
+            toastr.success(jsonResponse.message, 'Mensaje');
           } else if (action === 'editar') {
-            toastr.success('Incidencia actualizada.');
+            toastr.success(jsonResponse.message, 'Mensaje');
           }
           setTimeout(function () {
             location.reload();
           }, 1500);
         } else {
-          toastr.warning(jsonResponse.message);
+          toastr.warning(jsonResponse.message, 'Advertencia');
         }
       } catch (e) {
         console.error('JSON parsing error:', e);
-        toastr.error('Error al procesar la respuesta.');
+        toastr.error('Error al procesar la respuesta.', 'Mensaje de error');
       }
     },
     error: function (xhr, status, error) {
       console.error('AJAX Error:', error);
-      toastr.error('Error en la solicitud AJAX.');
+      toastr.error('Error en la solicitud AJAX.', 'Mensaje de error');
     }
   });
 }
@@ -137,7 +137,7 @@ function validarCampos() {
     mensajeError += 'Debe completar los campos requeridos.';
     valido = false;
   } else if (faltaCategoria) {
-    mensajeError += 'Debe seleccionar una categoría.';
+    mensajeError += 'Debe seleccionar una categor&iacute;a.';
     valido = false;
   } else if (faltaArea) {
     mensajeError += 'Debe seleccionar un &aacute;rea.';
@@ -151,7 +151,7 @@ function validarCampos() {
   }
 
   if (!valido) {
-    toastr.warning(mensajeError.trim());
+    toastr.warning(mensajeError.trim(), 'Advertencia');
   }
   return valido;
 }
@@ -182,20 +182,20 @@ $(document).ready(function () {
       success: function (response) {
         try {
           if (response.success) {
-            toastr.success(response.message, 'Eliminaci&oacute;n exitosa');
+            toastr.success(response.message, 'Mensaje');
             setTimeout(function () {
               selectedRow.remove(); // Eliminar la fila seleccionada
               location.reload(); // Recargar la pagina
             }, 1500);
           } else {
-            toastr.warning(jsonResponse.message);
+            toastr.warning(jsonResponse.message, 'Advertencia');
           }
         } catch (e) {
-          toastr.error('Error al procesar la respuesta.');
+          toastr.error('Error al procesar la respuesta.', 'Mensaje de error');
         }
       },
       error: function (xhr, status, error) {
-        toastr.error('Hubo un problema al eliminar la incidencia. Inténtalo de nuevo.', 'Error');
+        toastr.error('Hubo un problema al eliminar la incidencia. Int&eacute;ntalo de nuevo.', 'Mensaje de error');
       }
     });
   });
@@ -290,7 +290,7 @@ $(document).ready(function () {
         }
       });
     } else {
-      $('#tipoBien').val('Código inválido');
+      $('#tipoBien').val('C&oacutedigo inv&aacute;lido');
     }
   }
 });

@@ -124,13 +124,13 @@
           <!-- Encabezado -->
           <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-6 py-2 hidden">N&deg;</th>
-              <th scope="col" class="px-6 py-2">Trabajador</th>
-              <th scope="col" class="px-6 py-2">&Aacute;rea</th>
-              <th scope="col" class="px-6 py-2">Usuario</th>
-              <th scope="col" class="px-6 py-2 hidden">Contrase&ntilde;a</th>
-              <th scope="col" class="px-6 py-2">Rol</th>
-              <th scope="col" class="px-6 py-2">Estado</th>
+              <th scope="col" class="px-6 py-2 text-center hidden">N&deg;</th>
+              <th scope="col" class="px-6 py-2 text-center">Trabajador</th>
+              <th scope="col" class="px-6 py-2 text-center">&Aacute;rea</th>
+              <th scope="col" class="px-6 py-2 text-center">Usuario</th>
+              <th scope="col" class="px-6 py-2 text-center hidden">Contrase&ntilde;a</th>
+              <th scope="col" class="px-6 py-2 text-center">Rol</th>
+              <th scope="col" class="px-6 py-2 text-center">Estado</th>
             </tr>
           </thead>
           <!-- Fin de encabezado -->
@@ -145,12 +145,12 @@
                 ?>
                 <tr class=" hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b">
                   <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap hidden"><?= htmlspecialchars($usuario['USU_codigo']); ?></th>
-                  <td class="px-6 py-2"><?= htmlspecialchars($usuario['persona']); ?></td>
-                  <td class="px-6 py-2"><?= htmlspecialchars($usuario['ARE_nombre']); ?></td>
-                  <td class="px-6 py-2"><?= htmlspecialchars($usuario['USU_nombre']); ?></td>
-                  <td class="px-6 py-2 hidden"><?= htmlspecialchars($usuario['USU_password']); ?></td>
-                  <td class="px-6 py-2"><?= htmlspecialchars($usuario['ROL_nombre']); ?></td>
-                  <td class="px-6 py-2">
+                  <td class="px-6 py-2 text-center"><?= htmlspecialchars($usuario['persona']); ?></td>
+                  <td class="px-6 py-2 text-center"><?= htmlspecialchars($usuario['ARE_nombre']); ?></td>
+                  <td class="px-6 py-2 text-center"><?= htmlspecialchars($usuario['USU_nombre']); ?></td>
+                  <td class="px-6 py-2 text-center hidden"><?= htmlspecialchars($usuario['USU_password']); ?></td>
+                  <td class="px-6 py-2 text-center"><?= htmlspecialchars($usuario['ROL_nombre']); ?></td>
+                  <td class="px-6 py-2 text-center">
                     <div class="custom-control custom-switch cursor-pointer">
                       <input type="checkbox" class="custom-control-input" id="customswitch<?= $usuario['USU_codigo']; ?>" <?= $isActive ? 'checked' : ''; ?>>
                       <label class="custom-control-label" for="customswitch<?= $usuario['USU_codigo']; ?>"><?= $isActive ? 'Activo' : 'Inactivo'; ?></label>
@@ -160,7 +160,7 @@
               <?php endforeach; ?>
             <?php else : ?>
               <tr>
-                <td colspan="5" class="text-center py-4">No hay usuarios</td>
+                <td colspan="5" class="text-center py-3">No se han registrado usuarios</td>
               </tr>
             <?php endif; ?>
           </tbody>

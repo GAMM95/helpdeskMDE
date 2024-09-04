@@ -62,7 +62,7 @@
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
                 <th scope="col" class="px-10 py-2 w-1/6 hidden">N&deg;</th>
-                <th scope="col" class="px-6 py-2 w-5/6">Categor&iacute;a</th>
+                <th scope="col" class="px-6 py-2 w-5/6 text-center">Categor&iacute;a</th>
               </tr>
             </thead>
             <!-- Fin de encabezado -->

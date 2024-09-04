@@ -18,6 +18,14 @@ $(document).ready(function () {
     }
   });
 
+  // Evento de tecla ESC
+  $(document).keydown(function (event) {
+    // Verificar si la tecla presionada es ESC
+    if (event.key === 'Escape') {
+      nuevoRegistro();
+    }
+  });
+
   // Buscar en la tabla de trabajadores
   $('#termino').on('input', function () {
     filtrarTablaTrabajador();
@@ -63,24 +71,24 @@ function enviarFormulario(action) {
         console.log('Parsed JSON: ', jsonResponse);
         if (jsonResponse.success) {
           if (action === 'registrar') {
-            toastr.success('Persona registrada');
+            toastr.success('Persona registrada', 'Mensaje');
           } else if (action === 'editar') {
-            toastr.success('Datos actualizados');
+            toastr.success('Datos actualizados', 'Mensaje');
           }
           setTimeout(function () {
             location.reload();
           }, 1500);
         } else {
-          toastr.warning(jsonResponse.message);
+          toastr.warning(jsonResponse.message, 'Advertencia');
         }
       } catch (e) {
         console.error('JSON parsing error:', e);
-        toastr.error('Error al procesar la respuesta.');
+        toastr.error('Error al procesar la respuesta.', 'Mensaje de error');
       }
     },
     error: function (xhr, status, error) {
       console.error('AJAX Error:', error);
-      toastr.error('Error en la solicitud AJAX.');
+      toastr.error('Error en la solicitud AJAX.', 'Mensaje de error');
     }
   });
 }
@@ -115,7 +123,7 @@ function validarCamposRegistroPersona() {
 
   // Mostrar mensaje de error si hay
   if (!valido) {
-    toastr.warning(mensajeError.trim());
+    toastr.warning(mensajeError.trim(), 'Advertencia');
   }
   return valido;
 }
@@ -167,9 +175,9 @@ $(document).ready(function () {
     // Establecer valores en los inputs según las celdas seleccionadas
     const codPersona = $(this).find('th').text().trim();
     const dni = celdas[0].innerText.trim();
-    const nombreCompleto =  celdas[1].innerText.trim();
+    const nombreCompleto = celdas[1].innerText.trim();
     const celular = celdas[2].innerText.trim();
-    const email =  celdas[3].innerText.trim();
+    const email = celdas[3].innerText.trim();
 
     // Dividir el nombre completo en partes para extraer apellidos y nombre
     const partesNombre = nombreCompleto.split(' ');

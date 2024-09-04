@@ -40,7 +40,7 @@ if ($rol === 'Administrador' || $rol === 'Soporte') {
 <html lang="es">
 
 <head>
-  <title>Sistema HelpDesk MDE</title>
+  <title>Sistema de Gestión de Incidencias</title>
   <link rel="icon" href="public/assets/logo.ico">
   <!-- Meta -->
   <meta charset="utf-8">
@@ -84,8 +84,6 @@ if ($rol === 'Administrador' || $rol === 'Soporte') {
   <!-- Apex Chart -->
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-
-
 
   <!-- custom-chart js -->
   <script src="dist/assets/js/pages/dashboard-main.js"></script>

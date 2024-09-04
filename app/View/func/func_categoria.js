@@ -44,7 +44,7 @@ $(document).ready(function () {
     var nombreCategoria = $('#txt_nombreCategoria').val();
 
     if (!nombreCategoria) {
-      toastr.warning('Debe ingresar el nombre de la categor&iacute;a.');
+      toastr.warning('Debe ingresar el nombre de la categor&iacute;a.', 'Advertencia');
       return; // No enviar el formulario si el campo está vacío
     }
 
@@ -59,9 +59,9 @@ $(document).ready(function () {
       data: formData,
       success: function (response) {
         if (action === 'registrar') {
-          toastr.success('Categoría registrada');
+          toastr.success('Categor&iacute;a registrada', 'Mensaje');
         } else if (action === 'editar') {
-          toastr.success('Categoría actualizada');
+          toastr.success('Categor&iacute;a actualizada', 'Mensaje');
         }
         setTimeout(function () {
           location.reload();
@@ -69,7 +69,7 @@ $(document).ready(function () {
       },
       error: function (xhr, status, error) {
         console.log(xhr.responseText);
-        toastr.error('Error al guardar la categoría');
+        toastr.error('Error al guardar la categor&iacute;a', 'Mensaje de error');
       },
       complete: function () {
         // Volver a deshabilitar el campo después de enviar

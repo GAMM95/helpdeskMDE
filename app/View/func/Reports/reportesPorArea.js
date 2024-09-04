@@ -2,7 +2,7 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "1500"
+    "timeOut": "2000"
   };
 });
 // Manejar la generación de PDF al hacer clic en el botón
@@ -10,7 +10,7 @@ $('#reportes-areas').click(function () {
   const codigoArea = $('#area').val();
 
   if (!codigoArea) {
-    toastr.warning('Seleccione una &aacute;rea para generar el reporte.');
+    toastr.warning('Seleccione un &aacute;rea para generar el reporte.', 'Advertencia');
     return;
   }
 
@@ -28,7 +28,7 @@ $('#reportes-areas').click(function () {
       generarPDF(data);
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos del &aacute;rea.');
+      toastr.error('Hubo un error al obtener los datos del &aacute;rea seleccionada.', 'Mensaje de error');
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });
@@ -36,7 +36,7 @@ $('#reportes-areas').click(function () {
 
 function generarPDF(data) {
   if (!data || data.length === 0) {
-    toastr.warning('No se encontr&oacute; informaci&oacute;n para el &aacute;rea seleccionada.');
+    toastr.warning('No se encontr&oacute; informaci&oacute;n para el &aacute;rea seleccionada.', 'Advertencia');
     return;
   }
 
@@ -135,12 +135,12 @@ function generarPDF(data) {
   }
 
   // Mostrar mensaje de exito de pdf generado
-  toastr.success('Archivo PDF generado.');
+  toastr.success('Reporte de incidencias para el &aacute;rea seleccionada.', 'Mensaje');
   // Retrasar la apertura del PDF y limpiar el campo de entrada
   setTimeout(() => {
     window.open(doc.output('bloburl'));
     $('#area').val(''); // limpiar combo area
-  }, 1500);
+  }, 2000);
 }
 
 // Encabezado

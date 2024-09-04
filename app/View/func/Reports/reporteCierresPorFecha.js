@@ -2,7 +2,7 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "1500"
+    "timeOut": "2000"
   };
 });
 
@@ -197,23 +197,23 @@ $('#reportes-cierres-fechas').click(function () {
           }
 
           // Mostrar mensaje de exito de pdf generado
-          toastr.success('Archivo PDF generado.');
+          toastr.success('Reporte de cierres por fechas ingresadas generado.', 'Mensaje');
           // Retrasar la apertura del PDF y limpiar el campo de entrada
           setTimeout(() => {
             window.open(doc.output('bloburl'));
             $('#fechaInicio').val('');
             $('#fechaFin').val('');
-          }, 1500);
+          }, 2000);
         } else {
-          toastr.warning('No se ha encontrado cierres de incidencias para las fechas seleccionadas.');
+          toastr.warning('No se ha encontrado incidencias cerradas para las fechas seleccionadas.', 'Advertencia');
         }
       } catch (error) {
-        toastr.error('Hubo un error al generar reporte.');
+        toastr.error('Hubo un error al generar reporte.', 'Mensaje de error');
         console.error('Error al generar el PDF:', error.message);
       }
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos de los cierres de incidencia.');
+      toastr.error('Hubo un error al obtener los datos de los cierres de incidencia.', 'Mensaje de error');
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });
@@ -272,7 +272,7 @@ $('#reportes-cierres-fechas').click(function () {
 
     // Mostrar mensaje de error con Toastr si la validación falla
     if (!valido) {
-      toastr.warning(mensajeError.trim());
+      toastr.warning(mensajeError.trim(), 'Advertencia');
     }
 
     return valido;

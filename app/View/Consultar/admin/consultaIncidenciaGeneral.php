@@ -63,20 +63,20 @@
           <!-- Encabezado de la tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-3 py-3">N&deg; Incidencia</th>
-              <th scope="col" class="px-3 py-3">&Aacute;rea</th>
-              <th scope="col" class="px-3 py-3">Fecha incidencia</th>
-              <th scope="col" class="px-3 py-3">Categor&iacute;a</th>
-              <th scope="col" class="px-3 py-3">Asunto</th>
-              <th scope="col" class="px-3 py-3">Documento</th>
-              <th scope="col" class="px-3 py-3">C&oacute;digo Patrimonial</th>
-              <!-- <th scope="col" class="px-3 py-3">Fecha Recepcion</th> -->
-              <th scope="col" class="px-3 py-3">Prioridad</th>
-              <!-- <th scope="col" class="px-3 py-3">Impacto</th> -->
-              <!-- <th scope="col" class="px-3 py-3">Fecha Cierre</th> -->
-              <!-- <th scope="col" class="px-3 py-3">Condic&oacute;n</th> -->
-              <!-- <th scope="col" class="px-3 py-3">Usuario</th> -->
-              <th scope="col" class="px-3 py-3">Estado</th>
+              <th scope="col" class="px-3 py-2 text-center">N&deg; Incidencia</th>
+              <th scope="col" class="px-3 py-2 text-center">&Aacute;rea</th>
+              <th scope="col" class="px-3 py-2 text-center">Fecha incidencia</th>
+              <th scope="col" class="px-3 py-2 text-center">Categor&iacute;a</th>
+              <th scope="col" class="px-3 py-2 text-center">Asunto</th>
+              <th scope="col" class="px-3 py-2 text-center">Documento</th>
+              <th scope="col" class="px-3 py-2 text-center">C&oacute;digo Patrimonial</th>
+              <!-- <th scope="col" class="px-3 py-2 text-center">Fecha Recepcion</th> -->
+              <th scope="col" class="px-3 py-2 text-center">Prioridad</th>
+              <!-- <th scope="col" class="px-3 py-2 text-center">Impacto</th> -->
+              <!-- <th scope="col" class="px-3 py-2 text-center">Fecha Cierre</th> -->
+              <!-- <th scope="col" class="px-3 py-2 text-center">Condic&oacute;n</th> -->
+              <!-- <th scope="col" class="px-3 py-2 text-center">Usuario</th> -->
+              <th scope="col" class="px-3 py-2 text-center ">Estado</th>
             </tr>
           </thead>
           <!-- Fin de encabezado de la tabla -->
@@ -86,14 +86,14 @@
             <?php if (!empty($resultadoBusqueda)): ?>
               <?php foreach ($resultadoBusqueda as $incidencia): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_numero_formato']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['ARE_nombre']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['CAT_nombre']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_asunto']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_documento']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_codigoPatrimonial']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['PRI_nombre']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['INC_numero_formato']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['ARE_nombre']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['CAT_nombre']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['INC_asunto']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['INC_documento']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['INC_codigoPatrimonial']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['PRI_nombre']) ?></td>
                   <td class="px-3 py-2 text-center text-xs align-middle">
                     <?php
                     $estadoDescripcion = htmlspecialchars($incidencia['Estado']);

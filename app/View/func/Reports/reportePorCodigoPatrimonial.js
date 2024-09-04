@@ -2,7 +2,7 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "1500"
+    "timeOut": "2000"
   };
 });
 
@@ -10,7 +10,7 @@ $('#reportes-codigoPatrimonial').click(function () {
   const codigoPatrimonial = $('#codigoPatrimonial').val();
 
   if (!codigoPatrimonial) {
-    toastr.warning('Ingrese c&oacute;digo patrimonial para generar reporte.');
+    toastr.warning('Ingrese c&oacute;digo patrimonial para generar reporte.', 'Advertencia');
     return;
   }
 
@@ -31,7 +31,7 @@ $('#reportes-codigoPatrimonial').click(function () {
 
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos del c&oacute;digo patrimonial.');
+      toastr.error('Hubo un error al obtener los datos del c&oacute;digo patrimonial.', 'Mensaje de error');
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });
@@ -39,7 +39,7 @@ $('#reportes-codigoPatrimonial').click(function () {
 
 function generarPDFControlPatrimonial(data) {
   if (!data || data.length === 0) {
-    toastr.warning('No se encontr&oacute; informaci&oacute;n para el c&oacute;digo patrimonial ingresado.');
+    toastr.warning('No se encontr&oacute; informaci&oacute;n para el c&oacute;digo patrimonial ingresado.', 'Advertencia');
     return;
   }
   const { jsPDF } = window.jspdf;
@@ -142,13 +142,13 @@ function generarPDFControlPatrimonial(data) {
   }
 
   // Mostrar mensaje de exito de pdf generado
-  toastr.success('Archivo PDF generado.');
+  toastr.success('Reporte de incidencia por c&oacute;digo patrimonial ingresado.', 'Mensaje');
   // Retrasar la apertura del PDF y limpiar el campo de entrada
   setTimeout(() => {
     window.open(doc.output('bloburl'));
     $('#codigoPatrimonial').val(''); // Limpiar caja de texto de codigo patrimonial
     $('#tipoBien').val(''); // Limpiar caja de texto nombre de bien
-  }, 1500);
+  }, 2000);
 }
 
 // Encabezado

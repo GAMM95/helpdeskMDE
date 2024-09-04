@@ -34,13 +34,13 @@ if ($action === 'consultar') {
   if (!empty($resultadoBusqueda)) {
     foreach ($resultadoBusqueda as $cierre) {
       $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_numero_formato']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['fechaCierreFormateada']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['ARE_nombre']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_codigoPatrimonial']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['INC_asunto']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['CIE_documento']) . '</td>';
-      $html .= '<td class="px-3 py-2">' . htmlspecialchars($cierre['PRI_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($cierre['INC_numero_formato']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($cierre['fechaCierreFormateada']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($cierre['ARE_nombre']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($cierre['INC_codigoPatrimonial']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($cierre['INC_asunto']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($cierre['CIE_documento']) . '</td>';
+      $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($cierre['PRI_nombre']) . '</td>';
       $html .= '<td class="px-3 py-2 text-center text-xs align-middle">';
 
       $estadoDescripcion = htmlspecialchars($cierre['Estado']);
@@ -73,7 +73,7 @@ if ($action === 'consultar') {
 <html lang="es">
 
 <head>
-  <title>Sistema HelpDesk MDE</title>
+  <title>Sistema de Gestión de Incidencias</title>
   <link rel="icon" href="public/assets/logo.ico">
   <!-- Meta -->
   <meta charset="utf-8">

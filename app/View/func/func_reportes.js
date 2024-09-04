@@ -16,7 +16,7 @@ $(document).ready(function () {
     success: function (data) {
       var select = $('#area');
       select.empty();
-      select.append('<option value="" selected disabled>Seleccione un area</option>');
+      select.append('<option value="" selected disabled>Seleccione un &aacute;rea</option>');
       $.each(data, function (index, value) {
         // console.log("Codigo: " + index + ", Area: ", value); // Mostrar índice y valor en la consola
         select.append('<option value="' + value.ARE_codigo + '">' + value.ARE_nombre + '</option>');
@@ -44,7 +44,6 @@ $(document).ready(function () {
 // TODO: BUSCADOR PARA EL COMBO PERSONA AREA
 $(document).ready(function () {
   $('#area').select2({
-    placeholder: "Seleccione un area",
     allowClear: true,
     width: '100%',
     dropdownCssClass: 'text-xs', // Use Tailwind CSS class

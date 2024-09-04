@@ -6,6 +6,13 @@ $(document).ready(function () {
     "timeOut": "2000"
   };
 
+  $(document).keydown(function (event) {
+    // Verificar si la tecla presionada es ESC
+    if (event.key === 'Escape') {
+      nuevoRegistro();
+    }
+  });
+
   // Carga de datos en el combo persona
   $.ajax({
     url: 'ajax/getPersona.php',
@@ -38,7 +45,7 @@ $(document).ready(function () {
     success: function (data) {
       var select = $('#area');
       select.empty();
-      select.append('<option value="" selected disabled>Seleccione un area</option>');
+      select.append('<option value="" selected disabled>Seleccione un &aacute;rea</option>');
       $.each(data, function (index, value) {
         select.append('<option value="' + value.ARE_codigo + '">' + value.ARE_nombre + '</option>');
       });
@@ -121,24 +128,24 @@ function enviarFormulario(action) {
 
         if (jsonResponse.success) {
           if (action === 'registrar') {
-            toastr.success('Usuario registrado.');
+            toastr.success('Usuario registrado.', 'Mensaje');
           } else if (action === 'editar') {
-            toastr.success('Datos actualizados.');
+            toastr.success('Datos actualizados.', 'Mensaje');
           }
           setTimeout(function () {
             location.reload();
           }, 1500);
         } else {
-          toastr.warning(jsonResponse.message);
+          toastr.warning(jsonResponse.message, 'Advertencia');
         }
       } catch (e) {
         console.error('JSON parsing error:', e);
-        toastr.error('Error al procesar la respuesta.');
+        toastr.error('Error al procesar la respuesta.', 'Mensaje de error');
       }
     },
     error: function (xhr, status, error) {
       console.error('AJAX Error:', error);
-      toastr.error('Error en la solicitud AJAX.');
+      toastr.error('Error en la solicitud AJAX.', 'Mensaje de error');
     }
   });
 }

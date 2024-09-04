@@ -76,7 +76,7 @@
               <tr>
                 <th scope="col" class="px-10 py-2 w-1/6 hidden">N&deg;</th>
                 <th scope="col" class="px-6 py-2 w-1/6 text-center">C&oacute;digo identificador</th>
-                <th scope="col" class="px-6 py-2 w-4/6">Nombre de bien</th>
+                <th scope="col" class="px-6 py-2 w-4/6 text-center">Nombre de bien</th>
               </tr>
             </thead>
             <!-- Fin de enxabezado -->
@@ -93,7 +93,7 @@
                 <?php endforeach; ?>
               <?php else: ?>
                 <tr>
-                  <td colspan="2" class="text-center py-3">No se han registrado nuevos tipos de bienes</td>
+                  <td colspan="2" class="text-center py-3">No se han registrado nuevos bienes</td>
                 </tr>
               <?php endif; ?>
             </tbody>

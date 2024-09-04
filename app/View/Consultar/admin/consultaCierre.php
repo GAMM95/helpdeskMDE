@@ -64,14 +64,14 @@
           <!-- Encabezado de la tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-3 py-2">N&deg; INCIDENCIA</th>
-              <th scope="col" class="px-3 py-2">Fecha de Cierre</th>
-              <th scope="col" class="px-3 py-2">&Aacute;rea</th>
-              <th scope="col" class="px-3 py-2">C&oacute;digo Patrimonial</th>
-              <th scope="col" class="px-3 py-2">Asunto de Cierre</th>
-              <th scope="col" class="px-3 py-2">Documento de Cierre</th>
-              <th scope="col" class="px-3 py-2">Prioridad</th>
-              <th scope="col" class="px-3 py-2">Estado</th>
+              <th scope="col" class="px-3 py-2 text-center">N&deg; INCIDENCIA</th>
+              <th scope="col" class="px-3 py-2 text-center">Fecha de Cierre</th>
+              <th scope="col" class="px-3 py-2 text-center">&Aacute;rea</th>
+              <th scope="col" class="px-3 py-2 text-center">C&oacute;digo Patrimonial</th>
+              <th scope="col" class="px-3 py-2 text-center">Asunto de Cierre</th>
+              <th scope="col" class="px-3 py-2 text-center">Documento de Cierre</th>
+              <th scope="col" class="px-3 py-2 text-center">Prioridad</th>
+              <th scope="col" class="px-3 py-2 text-center">Estado</th>
             </tr>
           </thead>
           <!-- Fin de encabezado -->
@@ -82,13 +82,13 @@
             if (!empty($resultadoBusqueda)): ?>
               <?php foreach ($resultadoBusqueda as $cierre): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
-                  <td class="px-3 py-2"><?= htmlspecialchars($cierre['INC_numero_formato']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($cierre['fechaCierreFormateada']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($cierre['ARE_nombre']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($cierre['INC_codigoPatrimonial']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($cierre['INC_asunto']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($cierre['CIE_documento']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($cierre['PRI_nombre']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($cierre['INC_numero_formato']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($cierre['fechaCierreFormateada']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($cierre['ARE_nombre']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($cierre['INC_codigoPatrimonial']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($cierre['INC_asunto']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($cierre['CIE_documento']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($cierre['PRI_nombre']) ?></td>
                   <td class="px-3 py-2 text-center text-xs align-middle">
                     <?php
                     $estadoDescripcion = htmlspecialchars($cierre['Estado']);

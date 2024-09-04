@@ -23,7 +23,7 @@ $(document).ready(function () {
     success: function (data) {
       var select = $('#cbo_categoria');
       select.empty();
-      select.append('<option value="" selected disabled>Seleccione una categoría</option>');
+      select.append('<option value="" selected disabled>Seleccione una categor&iacute;a</option>');
       $.each(data, function (index, value) {
         select.append('<option value="' + value.CAT_codigo + '">' + value.CAT_nombre + '</option>');
       });
@@ -37,10 +37,9 @@ $(document).ready(function () {
 // TODO: BUSCADOR PARA EL COMBO CATEGORIA 
 $(document).ready(function () {
   $('#cbo_categoria').select2({
-    placeholder: "Seleccione una categoria",
     allowClear: true,
     width: '100%',
-    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
+    dropdownCssClass: 'text-xs',
     language: {
       noResults: function () {
         return "No se encontraron resultados";
@@ -94,9 +93,9 @@ $(document).ready(function () {
       data: data,
       success: function (response) {
         if (action === 'registro-incidencia-user.php?action=registrar') {
-          toastr.success('Incidencia registrada');
+          toastr.success('Incidencia registrada', 'Mensaje');
         } else if (action === 'registro-incidencia-user.php?action=editar') {
-          toastr.success('Incidencia actualizada');
+          toastr.success('Incidencia actualizada', 'Mensaje');
         }
         setTimeout(function () {
           location.reload();
@@ -104,7 +103,7 @@ $(document).ready(function () {
       },
       error: function (xhr, status, error) {
         console.error(xhr.responseText);
-        toastr.error('Error al guardar la incidencia');
+        toastr.error('Error al guardar la incidencia', 'Mensaje de error');
       }
     });
   });
@@ -136,7 +135,7 @@ $(document).ready(function () {
 
     // Mostrar mensaje de error si hay
     if (!valido) {
-      toastr.error(mensajeError.trim());
+      toastr.error(mensajeError.trim(), 'Advertencia');
     }
     return valido;
   }

@@ -59,24 +59,24 @@ function enviarFormulario(action) {
         console.log('Parsed JSON: ', jsonResponse);
         if (jsonResponse.success) {
           if (action === 'registrar') {
-            toastr.success('Área registrada');
+            toastr.success(jsonResponse.message, 'Mensaje');
           } else if (action === 'editar') {
-            toastr.success('Datos actualizados');
+            toastr.success(jsonResponse.message, 'Mensaje');
           }
           setTimeout(function () {
             location.reload();
           }, 1500);
         } else {
-          toastr.warning(jsonResponse.message);
+          toastr.warning(jsonResponse.message, 'Advertencia');
         }
       } catch (e) {
         console.error('JSON parsing error:', e);
-        toastr.error('Error al procesar la respuesta.');
+        toastr.error('Error al procesar la respuesta.', 'Mensaje de error');
       }
     },
     error: function (xhr, status, error) {
       console.error('AJAX Error:', error);
-      toastr.error('Error en la solicitud AJAX.');
+      toastr.error('Error en la solicitud AJAX.', 'Mensaje de error');
     }
   });
 }
@@ -97,7 +97,7 @@ function validarCampos() {
 
   // Mostrar mensaje de error si hay
   if (!valido) {
-    toastr.warning(mensajeError.trim());
+    toastr.warning(mensajeError.trim(), 'Advertencia');
   }
   return valido;
 }
@@ -129,8 +129,6 @@ $(document).on('click', '#tablaAreas tbody tr', function () {
   // Cambiar la acción a editar
   $('#form-action').val('editar');
 });
-
-
 
 // Funcionaliad boton nuevo
 function nuevoRegistro() {

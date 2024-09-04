@@ -2,19 +2,19 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "1500"
+    "timeOut": "2000"
   };
 
   $('#imprimir-detalle-incidencia').click(function () {
     const numeroIncidencia = $('#numeroIncidencia').val().trim();
 
     if (!numeroIncidencia) {
-      toastr.warning('Por favor, ingrese un número de incidencia.');
+      toastr.warning('Por favor, ingrese un n&uacute;mero de incidencia.', 'Advertencia');
       return;
     }
 
     $.ajax({
-      url: 'ajax/getReporteDetalleIncidencia.php',
+      url: 'ajax/getReporteIncidencia.php',
       method: 'GET',
       data: { numeroIncidencia: numeroIncidencia },
       dataType: 'json',
@@ -83,6 +83,7 @@ $(document).ready(function () {
                 [{ content: 'Categoría:', styles: { fontStyle: 'bold' } }, incidencia.CAT_nombre],
                 [{ content: 'Asunto:', styles: { fontStyle: 'bold' } }, incidencia.INC_asunto],
                 [{ content: 'Documento:', styles: { fontStyle: 'bold' } }, incidencia.INC_documento],
+                [{ content: 'Nombre del bien:', styles: { fontStyle: 'bold' } }, incidencia.nombreBien],
                 [{ content: 'Código Patrimonial:', styles: { fontStyle: 'bold' } }, incidencia.INC_codigoPatrimonial],
                 [{ content: 'Área solicitante:', styles: { fontStyle: 'bold' } }, incidencia.ARE_nombre],
                 [{ content: 'Descripción:', styles: { fontStyle: 'bold' } }, incidencia.INC_descripcion],
@@ -152,7 +153,7 @@ $(document).ready(function () {
               window.open(doc.output('bloburl'));
               $('#modalBuscarIncidencia').modal('hide'); // Cerrar el modal
               $('#numeroIncidencia').val(''); // Limpiar el campo de entrada
-            }, 1500);
+            }, 2000);
             // doc.save(`incidencia_${numeroIncidencia}.pdf`);
             // $('#modalBuscarIncidencia').modal('hide');
           } catch (error) {

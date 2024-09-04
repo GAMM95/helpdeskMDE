@@ -5,22 +5,25 @@ $(document).ready(function () {
     "timeOut": "2000"
   };
 
-  $('#imprimir-detalle-cierre').click(function () {
-    const numeroIncidencia = $('#numeroIncidencia').val().trim();
+  // Manejo del clic en el botón de imprimir incidencia
+  $('#tablaIncidenciasCerradas').on('click', '#imprimir-cierre', function () {
+    // Obtener el número de incidencia desde la fila seleccionada
+    const numeroCierre = $(this).closest('tr').find('th').text().trim();
 
-    if (!numeroIncidencia) {
-      toastr.warning('Por favor, ingrese un n&uacute;mero de incidencia.', 'Advertencia');
+    if (!numeroCierre) {
+      toastr.warning('Seleccione una incidencia cerrada para generar reporte de cierre.', 'Advertencia');
       return;
     }
 
+    // Realizar una solicitud AJAX para obtener los datos de la incidencia
     $.ajax({
       url: 'ajax/getReporteDetalleCierre.php',
       method: 'GET',
-      data: { numeroIncidencia: numeroIncidencia },
+      data: { numero: numeroCierre },
       dataType: 'json',
       success: function (data) {
         console.log("Datos recibidos:", data);
-        const cierre = data.find(inc => inc.INC_numero_formato === numeroIncidencia);
+        const cierre = data.find(cie => cie.CIE_numero === numeroCierre);
 
         if (cierre) {
           try {
@@ -78,7 +81,7 @@ $(document).ready(function () {
             doc.text('Detalle del cierre:', 20, titleY);
 
             doc.setFontSize(10);
-            doc.text(`Número de incidencia: ${cierre.INC_numero_formato}`, 120, titleY);  // Ajusta la coordenada x para colocar el número de incidencia
+            doc.text(`Número de incidencia: ${cierre.INC_numero_formato}`, 120, titleY);
             // [{ content: 'Número de incidencia:', styles: { fontStyle: 'bold' } }, cierre.INC_numero_formato],
 
             doc.autoTable({
@@ -151,27 +154,27 @@ $(document).ready(function () {
 
 
             // Mostrar mensaje de exito de pdf generado
-            toastr.success('Reporte de cierre de incidencia generado.', 'Mensaje');
+            toastr.success('Reporte de cierre generado.', 'Mensaje');
             // Retrasar la apertura del PDF y limpiar el campo de entrada
             setTimeout(() => {
               window.open(doc.output('bloburl'));
-              $('#modalBuscarIncidencia').modal('hide'); // Cerrar el modal
               $('#numeroIncidencia').val(''); // Limpiar el campo de entrada
             }, 2000);
             // doc.save(`incidencia_${numeroIncidencia}.pdf`);
             // $('#modalBuscarIncidencia').modal('hide');
           } catch (error) {
-            console.error('Error al generar el PDF:', error);
-            toastr.error('Hubo un error al generar el PDF.');
+            console.error('Error al generar el reporte de cierre:', error);
+            toastr.error('Hubo un error al generar el reporte de cierre.', 'Mensaje de error');
           }
         } else {
-          toastr.error('No se encontraron datos para el n&uacute;mero de incidencia ingresado.', 'Mensaje de error');
+          toastr.warning('No se ha encontrado datos para la incidencia cerrada.', 'Advertencia');
         }
       },
       error: function (xhr, status, error) {
-        console.error('Error en la solicitud AJAX:', error);
-        toastr.error('Hubo un error al consultar la incidencia.', 'Mensaje de error');
+        toastr.error('Hubo un error al obtener los datos de la incidencia.', 'Mensaje de error');
+        console.error('Error al realizar la solicitud AJAX:', error);
       }
     });
   });
 });
+

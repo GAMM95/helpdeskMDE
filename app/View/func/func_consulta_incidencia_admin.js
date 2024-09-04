@@ -48,7 +48,6 @@ $(document).ready(function () {
 
   // TODO: BUSCADOR PARA EL COMBO AREA Y ESTADO
   $('#area').select2({
-    placeholder: "Seleccione un área",
     allowClear: true,
     width: '100%',
     dropdownCssClass: 'text-xs', // Use Tailwind CSS class
@@ -60,7 +59,6 @@ $(document).ready(function () {
   });
 
   $('#estado').select2({
-    placeholder: "Seleccione un estado",
     allowClear: true,
     width: '100%',
     dropdownCssClass: 'text-xs', // Use Tailwind CSS class
@@ -139,7 +137,7 @@ $(document).ready(function () {
       }
 
       if (!valido) {
-        toastr.warning(mensajeError.trim());
+        toastr.warning(mensajeError.trim(), 'Advertencia');
       }
 
       return valido;
@@ -177,7 +175,7 @@ $(document).ready(function () {
 
     // Mostrar mensaje de error con Toastr si la validación falla
     if (!valido) {
-      toastr.warning(mensajeError.trim());
+      toastr.warning(mensajeError.trim(), 'Advertencia');
     }
 
     return valido;

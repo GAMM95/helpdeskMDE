@@ -12,8 +12,6 @@ $(document).ready(function () {
     type: 'POST',
     dataType: 'json',
     success: function (data) {
-      // console.log("Estados recibidos:", data); // Depuración
-
       var select = $('#estado');
       select.empty();
       select.append('<option value="" selected disabled>Seleccione un estado</option>');
@@ -28,10 +26,9 @@ $(document).ready(function () {
 
   // TODO: BUSCADOR PARA EL COMBO AREA Y ESTADO
   $('#estado').select2({
-    placeholder: "Seleccione un estado",
     allowClear: true,
     width: '100%',
-    dropdownCssClass: 'text-xs', // Use Tailwind CSS class
+    dropdownCssClass: 'text-xs',
     language: {
       noResults: function () {
         return "No se encontraron resultados";
@@ -59,7 +56,6 @@ $(document).ready(function () {
     if (!validarCampos() || !validarFechas()) {
       return; // Detiene el envío si los campos o las fechas no son válidos
     }
-
 
     var formData = $(this).serializeArray(); // Recopila los datos del formulario<
     var dataObject = {}; // Crea un objeto para los datos del formulario
@@ -106,7 +102,7 @@ $(document).ready(function () {
       }
 
       if (!valido) {
-        toastr.warning(mensajeError.trim());
+        toastr.warning(mensajeError.trim(), 'Advertencia');
       }
 
       return valido;
@@ -144,7 +140,7 @@ $(document).ready(function () {
 
     // Mostrar mensaje de error con Toastr si la validación falla
     if (!valido) {
-      toastr.warning(mensajeError.trim());
+      toastr.warning(mensajeError.trim(), 'Advertencia');
     }
 
     return valido;

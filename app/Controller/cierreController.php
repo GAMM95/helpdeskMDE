@@ -27,7 +27,7 @@ class cierreController
       if (empty($documento) || empty($asunto) || empty($operatividad)) {
         echo json_encode([
           'success' => false,
-          'message' => 'Todos los campos son obligatorios.'
+          'message' => 'Complete los campos requeridos (*).'
         ]);
         exit();
       }
@@ -39,13 +39,13 @@ class cierreController
         if ($insertSuccess) {
           echo json_encode([
             'success' => false,
-            'message' => 'Error al registrar la recepci&oacute;n.',
+            'message' => 'Error al registrar el cierre.',
             'CIE_numero' => $insertSuccess
           ]);
         } else {
           echo json_encode([
             'success' => true,
-            'message' => 'Cierre de incidencia registrado.',
+            'message' => 'Incidencia cerrada.',
           ]);
         }
       } catch (Exception $e) {

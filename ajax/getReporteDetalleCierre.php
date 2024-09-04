@@ -7,7 +7,7 @@ class ReporteIncidencia extends Conexion
   {
     parent::__construct();
   }
-  public function getReporteNumeroIncidencia($numeroIncidencia)
+  public function getReporteNumeroIncidencia()
   {
     $conector = parent::getConexion();
     $sql = "SELECT
@@ -49,10 +49,10 @@ class ReporteIncidencia extends Conexion
       INNER JOIN USUARIO UR ON UR.USU_codigo = I.USU_codigo
       INNER JOIN PERSONA UP ON UP.PER_codigo = UR.PER_codigo
       LEFT JOIN USUARIO UCIE ON UCIE.USU_codigo = C.USU_codigo
-      LEFT JOIN PERSONA UC ON UC.PER_codigo = UCIE.PER_codigo
-      WHERE INC_numero_formato = :numeroIncidencia";
+      LEFT JOIN PERSONA UC ON UC.PER_codigo = UCIE.PER_codigo";
+      // WHERE INC_numero_formato = :numeroIncidencia";
     $stmt = $conector->prepare($sql);
-    $stmt->bindParam(':numeroIncidencia', $numeroIncidencia);
+    // $stmt->bindParam(':numeroIncidencia', $numeroIncidencia);
     try {
       $stmt->execute();
       $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -64,12 +64,12 @@ class ReporteIncidencia extends Conexion
   }
 }
 
-// Obtención del parámetro 'numeroIncidencia' desde la solicitud
-$numeroIncidencia = isset($_GET['numeroIncidencia']) ? $_GET['numeroIncidencia'] : '';
+// // Obtención del parámetro 'numeroIncidencia' desde la solicitud
+// $numeroIncidencia = isset($_GET['numeroIncidencia']) ? $_GET['numeroIncidencia'] : '';
 
 
 $reporteIncidencia = new ReporteIncidencia();
-$reporte = $reporteIncidencia->getReporteNumeroIncidencia($numeroIncidencia);
+$reporte = $reporteIncidencia->getReporteNumeroIncidencia();
 
 header('Content-Type: application/json');
 echo json_encode($reporte);

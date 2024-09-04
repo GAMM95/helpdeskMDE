@@ -124,11 +124,11 @@
             <!-- Encabezado -->
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
-                <th scope="col" class="px-6 py-1 hidden">N&deg;</th>
-                <th scope="col" class="px-6 py-1">DNI</th>
-                <th scope="col" class="px-6 py-2">Nombre completo</th>
-                <th scope="col" class="px-6 py-2">Celular</th>
-                <th scope="col" class="px-6 py-2">Email</th>
+                <th scope="col" class="px-6 py-1 text-center hidden">N&deg;</th>
+                <th scope="col" class="px-6 py-1 text-center">DNI</th>
+                <th scope="col" class="px-6 py-2 text-center">Nombre completo</th>
+                <th scope="col" class="px-6 py-2 text-center">Celular</th>
+                <th scope="col" class="px-6 py-2 text-center">Email</th>
               </tr>
             </thead>
             <!-- Fin de encabezado -->
@@ -138,15 +138,15 @@
               <?php foreach ($personas as $persona) : ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b" data-cod="<?= $persona['PER_codigo']; ?>" data-dni="<?= $persona['PER_dni']; ?>" data-nombre="<?= $persona['persona']; ?>" data-celular="<?= $persona['PER_celular']; ?>" data-email="<?= $persona['PER_email']; ?>">
                   <th scope="row" class=" hidden px-6 py-3 font-medium text-gray-900 whitespace-nowrap"> <?= $persona['PER_codigo']; ?></th>
-                  <td class="px-6 py-3 w-1/6"> <?= $persona['PER_dni']; ?></td>
-                  <td class="px-6 py-3 w-1/2"> <?= $persona['persona']; ?></td>
-                  <td class="px-6 py-3 w-1/6"> <?= $persona['PER_celular']; ?></td>
-                  <td class="px-6 py-3 w-1/3"> <?= $persona['PER_email']; ?></td>
+                  <td class="px-6 py-2 w-1/6 text-center"> <?= $persona['PER_dni']; ?></td>
+                  <td class="px-6 py-2 w-1/2 text-center"> <?= $persona['persona']; ?></td>
+                  <td class="px-6 py-2 w-1/6 text-center"> <?= $persona['PER_celular']; ?></td>
+                  <td class="px-6 py-2 w-1/3 text-center"> <?= $persona['PER_email']; ?></td>
                 </tr>
               <?php endforeach; ?>
               <?php if (empty($personas)) : ?>
                 <tr>
-                  <td colspan="5" class="text-center py-4">No hay trabajdores registrados.</td>
+                  <td colspan="5" class="text-center py-3">No hay trabajadores registrados.</td>
                 </tr>
               <?php endif; ?>
             </tbody>

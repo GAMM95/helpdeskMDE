@@ -2,7 +2,7 @@ $(document).ready(function () {
   toastr.options = {
     "positionClass": "toast-bottom-right",
     "progressBar": true,
-    "timeOut": "1500"
+    "timeOut": "2000"
   };
 
   // Manejo del clic en el botón de imprimir incidencia
@@ -11,7 +11,7 @@ $(document).ready(function () {
     const numeroIncidencia = $(this).closest('tr').find('th').text().trim();
 
     if (!numeroIncidencia) {
-      toastr.warning('Seleccione una incidencia para generar PDF.');
+      toastr.warning('Seleccione una incidencia para generar reporte.', 'Advertencia');
       return;
     }
 
@@ -158,17 +158,17 @@ $(document).ready(function () {
             // Retrasar la apertura del PDF y limpiar el campo de entrada
             setTimeout(() => {
               window.open(doc.output('bloburl'));
-            }, 1500);
+            }, 2000);
           } catch (error) {
-            toastr.error('Hubo un error al generar PDF.');
+            toastr.error('Hubo un error al generar reporte de incidencia.', 'Mensaje de error');
             console.error('Error al generar el PDF:', error.message);
           }
         } else {
-          toastr.warning('No se ha encontrado la incidencia.');
+          toastr.warning('No se ha encontrado la incidencia.', 'Advertencia');
         }
       },
       error: function (xhr, status, error) {
-        toastr.error('Hubo un error al obtener los datos de la incidencia.');
+        toastr.error('Hubo un error al obtener los datos de la incidencia.', 'Advertencia');
         console.error('Error al realizar la solicitud AJAX:', error);
       }
     });

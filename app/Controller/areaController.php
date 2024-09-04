@@ -22,7 +22,7 @@ class AreaController
         if ($this->areaModel->validarAreaExistente($nombreArea)) {
           echo json_encode([
             'success' => false,
-            'message' => 'El área ingresada ya esta registrado.'
+            'message' => 'El &aacute;rea ingresada ya esta registrada.'
           ]);
           exit();
         }
@@ -33,12 +33,12 @@ class AreaController
         if ($insertSuccessId) {
           echo json_encode([
             'success' => true,
-            'message' => 'Área registrada.'
+            'message' => '&Aacute;rea registrada.'
           ]);
         } else {
           echo json_encode([
             'success' => false,
-            'message' => 'Error al registrar area.'
+            'message' => 'Error al registrar &aacute;rea.'
           ]);
         }
       } catch (Exception $e) {
@@ -51,7 +51,7 @@ class AreaController
     } else {
       echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido.'
+        'message' => 'M&eacute;todo no permitido.'
       ]);
     }
   }
@@ -86,7 +86,7 @@ class AreaController
     } else {
       echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido.'
+        'message' => 'M&eacute;todo no permitido.'
       ]);
     }
   }
@@ -102,12 +102,12 @@ class AreaController
         if ($resultados) {
           echo json_encode([
             'success' =>  true,
-            'message' => 'Busqueda exitosa'
+            'message' => 'B&uacute;squeda exitosa.'
           ]);
         } else {
           echo json_encode([
             'success' =>  false,
-            'message' => 'No se realizo busqueda'
+            'message' => 'No se realiz&oacute; b&uacute;squeda.'
           ]);
         }
       } catch (Exception $e) {
@@ -119,7 +119,7 @@ class AreaController
     } else {
       echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido.'
+        'message' => 'M&eacute;todo no permitido.'
       ]);
     }
   }
