@@ -49,17 +49,17 @@
           <!-- Encabezado de la tabla -->
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-6 py-2 hidden">N&deg; recepci&oacute;n</th>
-              <th scope="col" class="px-6 py-2 hidden">N&deg; inc</th>
-              <th scope="col" class="px-6 py-2">INCIDENCIA</th>
-              <th scope="col" class="px-6 py-2">Fecha recepci&oacute;n</th>
-              <th scope="col" class="px-6 py-2">&Aacute;rea</th>
-              <th scope="col" class="px-6 py-2">C&oacute;digo Patrimonial</th>
-              <th scope="col" class="px-6 py-2">Asunto</th>
-              <th scope="col" class="px-6 py-2">Documento</th>
-              <th scope="col" class="px-6 py-2">Prioridad</th>
+              <th scope="col" class="px-6 py-2 text-center hidden">N&deg; recepci&oacute;n</th>
+              <th scope="col" class="px-6 py-2 text-center hidden">N&deg; inc</th>
+              <th scope="col" class="px-6 py-2 text-center">INCIDENCIA</th>
+              <th scope="col" class="px-6 py-2 text-center">Fecha recepci&oacute;n</th>
+              <th scope="col" class="px-6 py-2 text-center">&Aacute;rea</th>
+              <th scope="col" class="px-6 py-2 text-center">C&oacute;digo Patrimonial</th>
+              <th scope="col" class="px-6 py-2 text-center">Asunto</th>
+              <th scope="col" class="px-6 py-2 text-center">Documento</th>
+              <th scope="col" class="px-6 py-2 text-center">Prioridad</th>
               <!-- <th scope="col" class="px-6 py-2">Impacto</th> -->
-              <th scope="col" class="px-6 py-2">Usuario receptor</th>
+              <th scope="col" class="px-6 py-2 text-center">Usuario receptor</th>
             </tr>
           </thead>
           <!-- Fin de encabezado -->
@@ -70,15 +70,15 @@
               <tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b '>
                 <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'><?= $recepcion['REC_numero']; ?></th>
                 <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'><?= $recepcion['INC_numero']; ?></th>
-                <td class='px-6 py-2'><?= $recepcion['INC_numero_formato']; ?></th>
-                <td class='px-6 py-2'><?= $recepcion['fechaRecepcionFormateada']; ?></th>
-                <td class='px-6 py-2'><?= $recepcion['ARE_nombre']; ?></th>
-                <td class='px-6 py-2'><?= $recepcion['INC_codigoPatrimonial']; ?></th>
-                <td class='px-6 py-2'><?= $recepcion['INC_asunto']; ?></th>
-                <td class='px-6 py-2'><?= $recepcion['INC_documento']; ?></th>
-                <td class='px-6 py-2'><?= $recepcion['PRI_nombre']; ?></th>
-                  <!-- <td class='px-6 py-2'><?= $recepcion['IMP_descripcion']; ?></th> -->
-                <td class='px-6 py-2'><?= $recepcion['UsuarioRecepcion']; ?></th>
+                <td class='px-6 py-2 text-center'><?= $recepcion['INC_numero_formato']; ?></th>
+                <td class='px-6 py-2 text-center'><?= $recepcion['fechaRecepcionFormateada']; ?></th>
+                <td class='px-6 py-2 text-center'><?= $recepcion['ARE_nombre']; ?></th>
+                <td class='px-6 py-2 text-center'><?= $recepcion['INC_codigoPatrimonial']; ?></th>
+                <td class='px-6 py-2 text-center'><?= $recepcion['INC_asunto']; ?></th>
+                <td class='px-6 py-2 text-center'><?= $recepcion['INC_documento']; ?></th>
+                <td class='px-6 py-2 text-center'><?= $recepcion['PRI_nombre']; ?></th>
+                  <!-- <td class='px-6 py-2 text-center'><?= $recepcion['IMP_descripcion']; ?></th> -->
+                <td class='px-6 py-2 text-center'><?= $recepcion['UsuarioRecepcion']; ?></th>
               </tr>
             <?php endforeach; ?>
 
@@ -242,18 +242,19 @@
         <!-- Encabezado de la tabla -->
         <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
           <tr>
-            <th scope="col" class="px-6 py-2 hidden">num Cierre</th>
-            <th scope="col" class="px-6 py-2">Incidencia</th>
-            <th scope="col" class="px-6 py-2">Fecha Incidencia</th>
-            <th scope="col" class="px-6 py-2">&Aacute;rea</th>
-            <th scope="col" class="px-6 py-2">C&oacute;digo patrimonial</th>
-            <th scope="col" class="px-6 py-2">Fecha Cierre</th>
-            <th scope="col" class="px-6 py-2">Asunto Cierre</th>
-            <th scope="col" class="px-6 py-2">Documento Cierre</th>
-            <th scope="col" class="px-6 py-2">Condici&oacute;n</th>
-            <th scope="col" class="px-6 py-2 hidden">Diagn&oacute;stico</th>
-            <th scope="col" class="px-6 py-2 hidden">Recomendaciones</th>
-            <th scope="col" class="px-6 py-2">Usuario cierre</th>
+            <th scope="col" class="px-6 py-2 text-center hidden">num Cierre</th>
+            <th scope="col" class="px-6 py-2 text-center">Incidencia</th>
+            <th scope="col" class="px-6 py-2 text-center">Fecha Incidencia</th>
+            <th scope="col" class="px-6 py-2 text-center">&Aacute;rea</th>
+            <th scope="col" class="px-6 py-2 text-center hidden">C&oacute;digo patrimonial</th>
+            <th scope="col" class="px-6 py-2 text-center">Fecha Cierre</th>
+            <th scope="col" class="px-6 py-2 text-center">Asunto Cierre</th>
+            <th scope="col" class="px-6 py-2 text-center">Documento Cierre</th>
+            <th scope="col" class="px-6 py-2 text-center">Condici&oacute;n</th>
+            <th scope="col" class="px-6 py-2 text-center hidden">Diagn&oacute;stico</th>
+            <th scope="col" class="px-6 py-2 text-center hidden">Recomendaciones</th>
+            <th scope="col" class="px-6 py-2 text-center">Usuario cierre</th>
+            <th scope="col" class="px-6 py-2 text-center">Acci&oacute;n</th>
           </tr>
         </thead>
         <!-- Fin de encabezado -->
@@ -261,19 +262,30 @@
         <!-- Cuerpo de la tabla -->
         <tbody>
           <?php foreach ($cierres as $incidencia) : ?>
-            <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+            <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id="<?= $incidencia['CIE_numero']; ?>">
               <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['CIE_numero']; ?></th>
-              <td class='px-6 py-3'><?= $incidencia['INC_numero_formato']; ?></td>
-              <td class='px-6 py-3'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
-              <td class='px-6 py-3'><?= $incidencia['ARE_nombre']; ?></td>
-              <td class='px-6 py-3'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
-              <td class='px-6 py-3'><?= $incidencia['fechaCierreFormateada']; ?></td>
-              <td class='px-6 py-3'><?= $incidencia['CIE_asunto']; ?></td>
-              <td class='px-6 py-3'><?= $incidencia['CIE_documento']; ?></td>
-              <td class='px-6 py-3'><?= $incidencia['CON_descripcion']; ?></td>
-              <td class='px-6 py-3 hidden'><?= $incidencia['CIE_diagnostico']; ?></td>
-              <td class='px-6 py-3 hidden'><?= $incidencia['CIE_recomendaciones']; ?></td>
-              <td class='px-6 py-3'><?= $incidencia['Usuario']; ?></td>
+              <td class='px-6 py-2 text-center'><?= $incidencia['INC_numero_formato']; ?></td>
+              <td class='px-6 py-2 text-center'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
+              <td class='px-6 py-2 text-center'><?= $incidencia['ARE_nombre']; ?></td>
+              <td class='px-6 py-2 text-center hidden'><?= $incidencia['INC_codigoPatrimonial']; ?></td>
+              <td class='px-6 py-2 text-center'><?= $incidencia['fechaCierreFormateada']; ?></td>
+              <td class='px-6 py-2 text-center'><?= $incidencia['CIE_asunto']; ?></td>
+              <td class='px-6 py-2 text-center'><?= $incidencia['CIE_documento']; ?></td>
+              <td class='px-6 py-2 text-center'><?= $incidencia['CON_descripcion']; ?></td>
+              <td class='px-6 py-2 text-center hidden'><?= $incidencia['CIE_diagnostico']; ?></td>
+              <td class='px-6 py-2 text-center hidden'><?= $incidencia['CIE_recomendaciones']; ?></td>
+              <td class='px-6 py-2 text-center'><?= $incidencia['Usuario']; ?></td>
+              <td class="px-6 py-2 text-center flex space-x-2"> <!-- Columna de Acción con botones -->
+                <!-- Botón de Imprimir detalla de incidencia -->
+                <button type="button" id="imprimir-cierre" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center" title="Imprimir detalle de incidencia">
+                  <i class="feather icon-printer"></i>
+                </button>
+
+                <!-- Botón de Eliminar -->
+                <button type="button" class="eliminar-cierre bn btn-danger text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center">
+                  <i class="feather icon-trash-2"></i>
+                </button>
+              </td>
             </tr>
           <?php endforeach; ?>
           <?php if (empty($cierres)) : ?>

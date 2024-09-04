@@ -50,6 +50,9 @@ switch ($action) {
   case 'editar':
     $cierreController->actualizarCierre();
     break;
+  case 'eliminar':
+    $cierreController->eliminarCierre();
+    break;
   default:
     break;
 }

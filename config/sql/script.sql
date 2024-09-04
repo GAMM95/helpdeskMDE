@@ -167,7 +167,7 @@ GO
 
 -- CREACION DE LA TABLA CIERRE
 CREATE TABLE CIERRE(
-	CIE_numero SMALLINT IDENTITY(1,1) NOT NULL,
+	CIE_numero SMALLINT NOT NULL,
 	CIE_fecha DATE NOT NULL,
 	CIE_hora TIME NOT NULL,
 	CIE_diagnostico VARCHAR(200) NULL,
@@ -407,6 +407,22 @@ BEGIN
 END;
 GO
 
+-- TRIGGER PARA GENERAR EL NUMERO DE CIERRE AUMENTADO EN 1
+CREATE TRIGGER trg_incrementar_cie_numero
+ON CIERRE
+INSTEAD OF INSERT
+AS
+BEGIN
+    DECLARE @ultimo_numero SMALLINT;
+
+    -- Obtener el último número de recepción
+    SELECT @ultimo_numero = ISNULL(MAX(CIE_numero), 0) FROM CIERRE;
+    -- Insertar el nuevo registro con REC_numero incrementado en 1
+    INSERT INTO CIERRE (CIE_numero, CIE_fecha, CIE_hora, CIE_diagnostico, CIE_documento, CIE_asunto, CIE_recomendaciones, CON_codigo, EST_codigo, REC_numero, USU_codigo)
+    SELECT @ultimo_numero + 1, CIE_fecha, CIE_hora, CIE_diagnostico, CIE_documento, CIE_asunto, CIE_recomendaciones, CON_codigo, EST_codigo, REC_numero, USU_codigo
+    FROM inserted;
+END;
+GO
 
 -------------------------------------------------------------------------------------------------------
   -- PROCEDIMIENTOS ALMACENADOS
@@ -660,7 +676,6 @@ CREATE PROCEDURE sp_InsertarRecepcionActualizarIncidencia(
 AS 
 BEGIN
     SET NOCOUNT ON;
-    
     BEGIN TRY 
         BEGIN TRANSACTION;
 
@@ -757,15 +772,36 @@ SET
   BEGIN TRY 
     BEGIN TRANSACTION;
 
-    -- Insertar el nuevo cierre
-    INSERT INTO CIERRE (CIE_fecha, CIE_hora, CIE_diagnostico, CIE_documento, CIE_asunto, CIE_recomendaciones, CON_codigo, REC_numero, USU_codigo, EST_codigo)
-    VALUES (@CIE_fecha, @CIE_hora , @CIE_diagnostico, @CIE_documento, @CIE_asunto, @CIE_recomendaciones, @CON_codigo, @REC_numero, @USU_codigo, 5);
+	  -- VERIFICAR SI YA EXISTE UN CIERRE CON LOS MISMOS VALORES
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM CIERRE 
+            WHERE 
+                CIE_fecha = @CIE_fecha 
+                AND CIE_hora = @CIE_hora 
+                AND CIE_diagnostico = @CIE_diagnostico 
+                AND CIE_documento = @CIE_documento 
+                AND CIE_asunto = @CIE_asunto 
+                AND CIE_recomendaciones = @CIE_recomendaciones
+                AND CON_codigo = @CON_codigo
+                AND REC_numero = @REC_numero
+                AND USU_codigo = @USU_codigo
+        )
+		BEGIN
+			-- Insertar el nuevo cierre
+			INSERT INTO CIERRE (CIE_fecha, CIE_hora, CIE_diagnostico, CIE_documento, CIE_asunto, CIE_recomendaciones, CON_codigo, REC_numero, USU_codigo, EST_codigo)
+			VALUES (@CIE_fecha, @CIE_hora , @CIE_diagnostico, @CIE_documento, @CIE_asunto, @CIE_recomendaciones, @CON_codigo, @REC_numero, @USU_codigo, 5);
     
-    -- Actualizar el estado de la recepcion
-    UPDATE RECEPCION SET EST_codigo = 5
-    WHERE REC_numero = @REC_numero;
-
-    COMMIT TRANSACTION;
+			-- Actualizar el estado de la recepcion
+			UPDATE RECEPCION SET EST_codigo = 5
+			WHERE REC_numero = @REC_numero;
+		END
+        ELSE
+        BEGIN
+		     -- MENSAJE QUE EL CIERRE YA EXISTE
+            PRINT 'El cierre ya existe y no se puede registrar nuevamente.';
+        END
+		COMMIT TRANSACTION;
   END TRY 
   BEGIN CATCH 
     ROLLBACK TRANSACTION;
@@ -1365,6 +1401,86 @@ INNER JOIN ESTADO e on e.EST_codigo = u.EST_codigo
 INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo;
 GO
 
+--VISTA PARA MOSTRAR NOTIFICACIONES PARA LOS USUARIOS
+CREATE VIEW vista_notificaciones_usuario AS
+SELECT 
+I.INC_numero,
+I.INC_numero_formato,
+(CONVERT(VARCHAR(10), I.INC_fecha, 103) + ' - ' + CONVERT(VARCHAR(5), I.INC_hora, 108)) AS fechaIncidenciaFormateada,
+A.ARE_codigo,
+A.ARE_nombre AS NombreAreaIncidencia,
+I.INC_asunto,
+C.USU_codigo,
+U.USU_nombre,
+C.CIE_asunto,
+p.PER_nombres + ' ' + p.PER_apellidoPaterno AS Usuario,
+A2.ARE_nombre AS NombreAreaCierre, 
+(CONVERT(VARCHAR(10), C.CIE_fecha, 103) + ' - ' + CONVERT(VARCHAR(5), C.CIE_hora, 108)) AS fechaCierreFormateada,
+CASE
+    WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion
+    ELSE E.EST_descripcion
+END AS ESTADO,
+CASE
+    WHEN DATEDIFF(MINUTE, CAST(C.CIE_fecha AS DATETIME) + CAST(C.CIE_hora AS DATETIME), GETDATE()) < 60 THEN 
+        CAST(DATEDIFF(MINUTE, CAST(C.CIE_fecha AS DATETIME) + CAST(C.CIE_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' min'
+    WHEN DATEDIFF(DAY, CAST(C.CIE_fecha AS DATETIME) + CAST(C.CIE_hora AS DATETIME), GETDATE()) < 1 THEN 
+        CAST(DATEDIFF(HOUR, CAST(C.CIE_fecha AS DATETIME) + CAST(C.CIE_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' h ' +
+        CAST(DATEDIFF(MINUTE, CAST(C.CIE_fecha AS DATETIME) + CAST(C.CIE_hora AS DATETIME), GETDATE()) % 60 AS VARCHAR) + ' min'
+    ELSE 
+        CAST(DATEDIFF(DAY, CAST(C.CIE_fecha AS DATETIME) + CAST(C.CIE_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' d ' +
+        CAST(DATEDIFF(HOUR, CAST(C.CIE_fecha AS DATETIME) + CAST(C.CIE_hora AS DATETIME), GETDATE()) % 24 AS VARCHAR) + ' h ' +
+        CAST(DATEDIFF(MINUTE, CAST(C.CIE_fecha AS DATETIME) + CAST(C.CIE_hora AS DATETIME), GETDATE()) % 60 AS VARCHAR) + ' min'
+END AS tiempoDesdeCierre
+FROM INCIDENCIA I
+INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
+INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+LEFT JOIN RECEPCION R ON R.INC_numero = I.INC_numero
+LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
+LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
+LEFT JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
+LEFT JOIN IMPACTO IMP ON IMP.IMP_codigo = R.IMP_codigo
+LEFT JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
+LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
+LEFT JOIN USUARIO U2 ON U2.USU_codigo = C.USU_codigo -- Relacionamos el usuario del cierre
+LEFT JOIN AREA A2 ON U2.ARE_codigo = A2.ARE_codigo -- Relacionamos el área del usuario del cierre
+INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
+WHERE (I.EST_codigo NOT IN (3, 4) OR C.EST_codigo NOT IN (3, 4))
+AND CONVERT(DATE, C.CIE_fecha) = CONVERT(DATE, GETDATE());
+GO
+
+--VISTA PARA MOSTRAR NOTIFICACIONES PARA EL ADMINISTRADOR 
+CREATE VIEW vista_notificaciones_administrador AS
+SELECT 
+I.INC_numero,
+(CONVERT(VARCHAR(10), I.INC_fecha, 103) + ' - ' + CONVERT(VARCHAR(5), I.INC_hora, 108)) AS fechaIncidenciaFormateada,
+A.ARE_nombre,
+I.INC_asunto,
+U.USU_nombre,
+p.PER_nombres + ' ' + p.PER_apellidoPaterno AS Usuario,
+I.EST_codigo,
+CASE
+    WHEN DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) < 60 THEN 
+        CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' min'
+    WHEN DATEDIFF(DAY, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) < 1 THEN 
+        CAST(DATEDIFF(HOUR, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' h ' +
+        CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) % 60 AS VARCHAR) + ' min'
+    ELSE 
+        CAST(DATEDIFF(DAY, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) AS VARCHAR) + ' d ' +
+        CAST(DATEDIFF(HOUR, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) % 24 AS VARCHAR) + ' h ' +
+        CAST(DATEDIFF(MINUTE, CAST(I.INC_fecha AS DATETIME) + CAST(I.INC_hora AS DATETIME), GETDATE()) % 60 AS VARCHAR) + ' min'
+END AS tiempoDesdeIncidencia
+FROM INCIDENCIA I
+INNER JOIN AREA A ON I.ARE_codigo = A.ARE_codigo
+INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
+INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
+WHERE I.EST_codigo NOT IN (4, 5) 
+AND A.ARE_codigo <> 1;
+GO
+
+
 
 
 ---- PROCEDIMIENTO ALMACENADO PARA ELIMINAR INCIDENCIA
@@ -1386,6 +1502,7 @@ BEGIN
         THROW;
     END CATCH;
 END;
+GO
 
 ---- PROCEDIMIENTO ALMACENADO PARA ELIMINAR RECEPCION
 CREATE PROCEDURE sp_eliminarRecepcion
@@ -1419,4 +1536,38 @@ BEGIN
         THROW;
     END CATCH;
 END;
+GO
 
+---- PROCEDIMIENTO ALMACENADO PARA ELIMINAR CIERRE
+CREATE PROCEDURE sp_eliminarCierre
+    @IdCierre INT
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        -- Declarar una variable para almacenar el número de recepcion
+        DECLARE @NumeroRecepcion INT;
+
+        -- Obtener el número de incidencia basado en el ID de recepción
+        SELECT @NumeroRecepcion = REC_numero
+        FROM CIERRE
+        WHERE CIE_numero = @IdCierre;
+
+        -- Actualizar el estado de la incidencia a 3
+        UPDATE RECEPCION
+        SET EST_codigo = 4
+        WHERE REC_numero = @NumeroRecepcion;
+
+        -- Eliminar la recepción basada en el ID de cierre
+        DELETE FROM CIERRE
+        WHERE CIE_numero = @IdCierre;
+
+        -- Confirmar la transacción
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+GO

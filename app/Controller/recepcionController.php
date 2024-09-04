@@ -124,8 +124,7 @@ class RecepcionController
     }
   }
 
-  // TODO: Metodo para eliminar recepcion
-  // Metodo para editar la recepcion 
+  // Metodo para eliinar la recepcion 
   public function eliminarRecepcion()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -135,25 +134,12 @@ class RecepcionController
       if (empty($numeroRecepcion)) {
         echo json_encode([
           'success' => false,
-          'message' => 'Todos los campos son obligatorios.'
+          'message' => 'Debe seleccionar una incidencia recepcionada'
         ]);
         exit();
       }
 
       try {
-        // Verificar el estado de la incidencia
-        $estado = $this->recepcionModel->obtenerEstadoRecepcion($numeroRecepcion);
-
-        // Suponiendo que el estado "4" permite la actualización
-        if ($estado === 4) {
-          // Estado no permitido para actualización
-          echo json_encode([
-            'success' => false,
-            'message' => 'La recepción no está en un estado que permita actualización.'
-          ]);
-          exit();
-        }
-
         // Llamar al modelo para actualizar la incidencia
         $updateSuccess = $this->recepcionModel->eliminarRecepcion($numeroRecepcion);
 

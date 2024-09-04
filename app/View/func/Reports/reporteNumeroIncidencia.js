@@ -146,7 +146,7 @@ $(document).ready(function () {
             }
 
             // Mostrar mensaje de exito de pdf generado
-            toastr.success('Archivo PDF generado.');
+            toastr.success('Reporte de incidencia generado.', 'Mensaje');
             // Retrasar la apertura del PDF y limpiar el campo de entrada
             setTimeout(() => {
               window.open(doc.output('bloburl'));
@@ -157,15 +157,15 @@ $(document).ready(function () {
             // $('#modalBuscarIncidencia').modal('hide');
           } catch (error) {
             console.error('Error al generar el PDF:', error);
-            toastr.error('Hubo un error al generar el PDF.');
+            toastr.error('Hubo un error al generar el reporte de incidencia.', 'Mensaje de error');
           }
         } else {
-          toastr.error('No se encontraron datos para el número de incidencia ingresado.');
+          toastr.warning('No se encontraron datos para el n&uacute;mero de incidencia ingresado.', 'Advertencia');
         }
       },
       error: function (xhr, status, error) {
         console.error('Error en la solicitud AJAX:', error);
-        toastr.error('Hubo un error al consultar la incidencia.');
+        toastr.error('Hubo un error al consultar la incidencia.', 'Mensaje de error');
       }
     });
   });

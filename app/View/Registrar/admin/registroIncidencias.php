@@ -141,7 +141,7 @@
         <button type="submit" id="guardar-incidencia" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"><i class="feather mr-2 icon-save"></i>Guardar</button>
         <button type="button" id="editar-incidencia" class="bn btn-info text-xs text-white font-bold py-2 px-3 rounded-md" disabled><i class="feather mr-2 icon-edit"></i>Editar</button>
         <button type="button" id="nuevo-registro" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-plus-square"></i>Nuevo</button>
-        <button type="button" id="imprimir-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Imprimir </button>
+        <!-- <button type="button" id="imprimir-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Imprimir </button> -->
         <button type="button" data-toggle="modal" data-target="#modalBuscarIncidencia" id="buscar-incidencia" class="bn bg-orange-500 hover:bg-orange-600 text-xs text-white font-bold py-2 px-3 rounded-md">
           <i class="feather mr-2 icon-search"></i>Buscar incidencia</button>
       </div>
@@ -233,7 +233,7 @@
           <tbody>
             <?php if (!empty($resultado)) : ?>
               <?php foreach ($resultado as $incidencia) : ?>
-                <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+                <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id="<?= $incidencia['INC_numero']; ?>">
                   <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['INC_numero']; ?></th>
                   <td class='px-6 py-3 text-center'><?= $incidencia['INC_numero_formato']; ?></td>
                   <td class='px-4 py-3 text-center'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>
@@ -273,10 +273,9 @@
                     </button>
 
                     <!-- Botón de Eliminar -->
-                    <button type="button" id="eliminar-incidencia" class="bn btn-danger text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center">
+                    <button type="button" class="eliminar-incidencia bn btn-danger text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center">
                       <i class="feather icon-trash-2"></i>
                     </button>
-
                   </td>
                 </tr>
               <?php endforeach; ?>

@@ -156,6 +156,51 @@ function validarCampos() {
   return valido;
 }
 
+// Funcion para eliminar incidencia
+$(document).ready(function () {
+  // Agregar funcionalidad para seleccionar una fila (al hacer clic)
+  $('#tablaListarIncidencias').on('click', 'tr', function () {
+    $('#tablaListarIncidencias tr').removeClass('selected');
+    $(this).addClass('selected');
+  });
+
+  // Evento para eliminar recepción
+  $('body').on('click', '.eliminar-incidencia', function (e) {
+    e.preventDefault();
+
+    // Obtener el número de recepción de la fila seleccionada
+    const selectedRow = $(this).closest('tr');
+    const numeroIncidencia = selectedRow.data('id');
+    // Confirmar eliminación
+    $.ajax({
+      url: 'registro-incidencia-admin.php?action=eliminar',
+      type: 'POST',
+      data: {
+        numero_incidencia: numeroIncidencia
+      },
+      dataType: 'json',
+      success: function (response) {
+        try {
+          if (response.success) {
+            toastr.success(response.message, 'Eliminaci&oacute;n exitosa');
+            setTimeout(function () {
+              selectedRow.remove(); // Eliminar la fila seleccionada
+              location.reload(); // Recargar la pagina
+            }, 1500);
+          } else {
+            toastr.warning(jsonResponse.message);
+          }
+        } catch (e) {
+          toastr.error('Error al procesar la respuesta.');
+        }
+      },
+      error: function (xhr, status, error) {
+        toastr.error('Hubo un problema al eliminar la incidencia. Inténtalo de nuevo.', 'Error');
+      }
+    });
+  });
+});
+
 // Función para cambiar páginas en la tabla de incidencias
 function changePageTablaListarIncidencias(page) {
   fetch(`?page=${page}`)

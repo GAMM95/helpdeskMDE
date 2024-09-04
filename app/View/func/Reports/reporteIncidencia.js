@@ -152,7 +152,7 @@ $('#imprimir-incidencia').click(function () {
           }
 
           // Mostrar mensaje de exito de pdf generado
-          toastr.success('Archivo PDF generado.');
+          toastr.success(response.message, 'Archivo PDF generado.');
           // Retrasar la apertura del PDF y limpiar el campo de entrada
           setTimeout(() => {
             window.open(doc.output('bloburl'));
@@ -162,8 +162,8 @@ $('#imprimir-incidencia').click(function () {
           toastr.error('Hubo un error al generar PDF.');
           console.error('Error al generar el PDF:', error.message);
         }
-      } else {
-        toastr.warning('No se ha seleccionado una incidencia.');
+        // } else {
+        //   toastr.warning('No se ha seleccionado una incidencia.');
       }
     },
     error: function (xhr, status, error) {

@@ -154,7 +154,7 @@ $(document).ready(function () {
             }
 
             // Mostrar mensaje de exito de pdf generado
-            toastr.success('Archivo PDF generado.');
+            toastr.success('Reporte de incidencia generado.', 'Mensaje');
             // Retrasar la apertura del PDF y limpiar el campo de entrada
             setTimeout(() => {
               window.open(doc.output('bloburl'));

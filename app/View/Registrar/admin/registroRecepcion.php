@@ -98,7 +98,7 @@
       <div class="flex flex-wrap -mx-2 justify-center">
         <!-- NUMERO DE INCIDENCIA -->
         <div class="flex justify-center mx-2 mb-2 ">
-          <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
+          <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center hidden">
             <label for="incidencia" class="block font-bold mb-1 mr-3 text-[#32cfad]">C&oacute;digo de incidencia:</label>
             <input type="text" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" id="incidencia" name="incidencia" readonly required>
           </div>
@@ -113,7 +113,7 @@
         </div>
 
         <!-- Numero de recepcion -->
-        <div class="flex justify-center mx-2 mb-2 ">
+        <div class="flex justify-center mx-2 mb-2 hidden">
           <div class="flex-1 max-w-[500px] px-2 mb-2 flex items-center">
             <label for="num_recepcion" class="block font-bold mb-1 mr-3 text-lime-500">Número de Recepción:</label>
             <input type="text" id="num_recepcion" name="num_recepcion" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
@@ -213,7 +213,7 @@
           <!-- Encabezado de la tabla -->
           <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
             <tr>
-              <th scope="col" class="px-6 py-2 ">Recepci&oacute;n</th>
+              <th scope="col" class="px-6 py-2 hidden">Recepci&oacute;n</th>
               <th scope="col" class="px-6 py-2 text-center">Incidencia</th>
               <th scope="col" class="px-6 py-2 text-center">Fecha recepci&oacute;n</th>
               <th scope="col" class="px-6 py-2 text-center">&Aacute;rea</th>
@@ -232,17 +232,17 @@
             <?php if (!empty($resultadoRecepciones)) : ?>
               <?php foreach ($resultadoRecepciones as $recepcion) : ?>
                 <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id="<?= $recepcion['REC_numero']; ?>">
-                  <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap '><?= $recepcion['REC_numero']; ?></th>
-                  <td class='px-6 py-3 text-center'><?= $recepcion['INC_numero_formato']; ?></td>
-                  <td class='px-6 py-3 text-center'><?= $recepcion['fechaRecepcionFormateada']; ?></td>
-                  <td class='px-6 py-3 text-center'><?= $recepcion['ARE_nombre']; ?></td>
-                  <td class='px-6 py-3 text-center'><?= $recepcion['INC_codigoPatrimonial']; ?></td>
-                  <td class='px-6 py-3 text-center'><?= $recepcion['CAT_nombre']; ?></td>
-                  <td class='px-6 py-3 text-center'><?= $recepcion['PRI_nombre']; ?></td>
-                  <td class='px-6 py-3 text-center'><?= $recepcion['IMP_descripcion']; ?></td>
-                  <td class='px-6 py-3 text-center'><?= $recepcion['UsuarioRecepcion']; ?></td>
-                  <td class="px-6 py-3 text-center flex space-x-2">
-                    <button type="button" id="eliminar-recepcion" class="bn btn-danger text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center">
+                  <th scope='row' class='px-6 py-3 font-medium text-gray-900 whitespace-nowrap hidden'><?= $recepcion['REC_numero']; ?></th>
+                  <td class='px-6 py-2 text-center'><?= $recepcion['INC_numero_formato']; ?></td>
+                  <td class='px-6 py-2 text-center'><?= $recepcion['fechaRecepcionFormateada']; ?></td>
+                  <td class='px-6 py-2 text-center'><?= $recepcion['ARE_nombre']; ?></td>
+                  <td class='px-6 py-2 text-center'><?= $recepcion['INC_codigoPatrimonial']; ?></td>
+                  <td class='px-6 py-2 text-center'><?= $recepcion['CAT_nombre']; ?></td>
+                  <td class='px-6 py-2 text-center'><?= $recepcion['PRI_nombre']; ?></td>
+                  <td class='px-6 py-2 text-center'><?= $recepcion['IMP_descripcion']; ?></td>
+                  <td class='px-6 py-2 text-center'><?= $recepcion['UsuarioRecepcion']; ?></td>
+                  <td class="px-6 py-2 text-center flex space-x-2">
+                    <button type="button" class="eliminar-recepcion bn btn-danger text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center">
                       <i class="feather icon-trash-2"></i>
                     </button>
                   </td>
@@ -250,7 +250,7 @@
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
-                <td colspan="9" class="text-center py-3">No se han recepcionado incidencias.</td>
+                <td colspan="10" class="text-center py-3">No se han recepcionado incidencias.</td>
               </tr>
             <?php endif; ?>
           </tbody>
@@ -263,55 +263,3 @@
 </div>
 
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Incluye jQuery y Toastr en tu proyecto -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<script>
-  $(document).ready(function() {
-    // Agregar funcionalidad para seleccionar una fila (al hacer clic)
-    $('tablaIncidenciasRecepcionadas').on('click', 'tr', function() {
-      $('tr').removeClass('selected'); // Quitar la selección de otras filas
-      $(this).addClass('selected'); // Agregar la clase "selected" a la fila actual
-    });
-
-    // Evento para eliminar recepción
-    $('body').on('click', '.eliminar-recepcion', function(e) {
-      e.preventDefault();
-
-      // Obtener el número de recepción de la fila seleccionada
-      const selectedRow = $(this).closest('tr');
-      const numeroRecepcion = selectedRow.data('id'); // Ajusta según tu estructura HTML
-
-      // Confirmar eliminación
-      if (confirm('¿Estás seguro de que deseas eliminar esta recepción?')) {
-        $.ajax({
-          url: 'registro-recepcion.php?action=eliminar', // Ajusta la URL según tu configuración
-          type: 'POST',
-          data: {
-            num_recepcion: numeroRecepcion
-          },
-          dataType: 'json',
-          success: function(response) {
-            if (response.success) {
-              // Mostrar mensaje de éxito
-              toastr.success(response.message, 'Eliminación Exitosa');
-
-              // Remover la fila eliminada
-              selectedRow.remove(); // Eliminar la fila seleccionada
-            } else {
-              // Mostrar mensaje de error
-              toastr.error(response.message, 'Error');
-            }
-          },
-          error: function(xhr, status, error) {
-            // Manejo de errores
-            toastr.error('Hubo un problema al eliminar la recepción. Inténtalo de nuevo.', 'Error');
-          }
-        });
-      }
-    });
-  });
-</script>

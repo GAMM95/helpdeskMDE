@@ -153,22 +153,22 @@ $('#imprimir-cierre').click(function () {
           }
 
           // Mostrar mensaje de exito de pdf generado
-          toastr.success('Archivo PDF generado.');
+          toastr.success('Reporte de cierre de incidencia generado.', 'Mensaje');
           // Retrasar la apertura del PDF y limpiar el campo de entrada
           setTimeout(() => {
             window.open(doc.output('bloburl'));
             $('#codigoPatrimonial').val('');
           }, 1500);
         } catch (error) {
-          toastr.error('Hubo un error al generar PDF.');
+          toastr.error('Hubo un error al generar el reporte de cierre de incidencia.', 'Mensaje de error');
           console.error('Error al generar el PDF:', error.message);
         }
       } else {
-        toastr.warning('No se ha seleccionado una incidencia.');
+        toastr.warning('No se ha seleccionado una incidencia cerrada.', 'Advertencia');
       }
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos de la incidencia.');
+      toastr.error('Hubo un error al obtener los datos del cierre de incidencia.', 'Mensaje de error');
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });

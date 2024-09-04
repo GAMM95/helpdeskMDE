@@ -71,6 +71,51 @@ class IncidenciaController
     }
   }
 
+  // Metodo para eliminar la incidencia 
+  public function eliminarIncidencia()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      // Obtener y validar los parámetros
+      $numeroIncidencia = $_POST['numero_incidencia'] ?? null;
+
+      if (empty($numeroIncidencia)) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Debe seleccionar una incidencia'
+        ]);
+        exit();
+      }
+
+      try {
+        // Llamar al modelo para actualizar la incidencia
+        $updateSuccess = $this->incidenciaModel->eliminarIncidencia($numeroIncidencia);
+
+        if ($updateSuccess) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Incidencia eliminada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se realizó ninguna eliminación.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+      exit();
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
+    }
+  }
+
   /**
    * TODO: Método de controlador para registrar una incidencia - USUARIO.
    * 

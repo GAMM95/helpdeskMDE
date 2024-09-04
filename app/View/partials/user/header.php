@@ -72,13 +72,13 @@ if (isset($_SESSION['codigoUsuario'])) {
                       <img class="img-radius" src="dist/assets/images/user/avatar.png" alt="User-Profile-Image">
                       <div class="media-body">
                         <p>
-                          <strong><?= htmlspecialchars($incidencia['INC_asunto']); ?></strong>
+                          <strong><?= htmlspecialchars($incidencia['INC_numero_formato'] . '  cerrada'); ?></strong>
                           <span class="n-time text-muted">
                             <i class="icon feather icon-clock m-r-10"></i>
-                            <?= htmlspecialchars($incidencia['tiempoDesdeIncidencia']); ?>
+                            <?= htmlspecialchars($incidencia['tiempoDesdeCierre']); ?>
                           </span>
                         </p>
-                        <p><?= htmlspecialchars($incidencia['INC_numero_formato'] . '  cerrada'); ?></p>
+                        <p><?= htmlspecialchars($incidencia['CIE_asunto']); ?></p>
                       </div>
                     </div>
                   </li>

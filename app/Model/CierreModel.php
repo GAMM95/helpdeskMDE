@@ -8,7 +8,7 @@ class CierreModel extends Conexion
     parent::__construct();
   }
 
-  //TODO: Metodo para obtener cierres por ID
+  // Metodo para obtener cierres por ID
   public function obtenerCierrePorID($CieNumero)
   {
     $conector = parent::getConexion();
@@ -25,7 +25,7 @@ class CierreModel extends Conexion
     }
   }
 
-  //TODO: Metodo para insertar Cierre
+  // Metodo para insertar Cierre
   public function insertarCierre($fecha, $hora, $diagnostico, $documento, $asunto, $recomendaciones, $operatividad, $recepcion, $usuario)
   {
     $conector = parent::getConexion();
@@ -43,13 +43,35 @@ class CierreModel extends Conexion
         $stmt->bindParam(':recepcion', $recepcion);
         $stmt->bindParam(':usuario', $usuario);
         $stmt->execute();
-        return $conector->lastInsertId();
+        return $stmt->rowCount() > 0 ? true : false;
       } else {
         throw new Exception("Error de conexión a la base de datos.");
+        return null;
       }
     } catch (PDOException $e) {
-      echo "Error al insertar el cierre: " . $e->getMessage();
-      return false;
+      throw new PDOException("Error al insertar el cierre: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  //  Metodo para eliminar CIERRE
+  public function eliminarCierre($codigoCierre)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "EXEC sp_eliminarCierre :codigoCierre";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':codigoCierre', $codigoCierre);
+        $stmt->execute();
+        return $stmt->rowCount() > 0 ? true : false;
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al eliminar el cierre: " . $e->getMessage());
+      return null;
     }
   }
 
@@ -83,7 +105,7 @@ class CierreModel extends Conexion
     }
   }
 
-  //TODO: Metodo para listar cierres Administrador - FORM CONSULTAR CIERRE
+  // Metodo para listar cierres Administrador - FORM CONSULTAR CIERRE
   public function listarCierresConsulta()
   {
     $conector = parent::getConexion();

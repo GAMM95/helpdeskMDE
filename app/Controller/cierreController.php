@@ -9,7 +9,7 @@ class cierreController
     $this->cierreModel = new CierreModel();
   }
 
-  //TODO: Metodo para registrar cierre
+  // Metodo para registrar cierre
   public function registrarCierre()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,20 +23,29 @@ class cierreController
       $recepcion = $_POST['recepcion'] ?? null;
       $usuario = $_POST['usuario'] ?? null;
 
+      // Validar que todos los campos requeridos estén completos
+      if (empty($documento) || empty($asunto) || empty($operatividad)) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Todos los campos son obligatorios.'
+        ]);
+        exit();
+      }
+
       try {
         // Llamar al método del modelo para insertar el cierre en la base de datos
         $insertSuccess = $this->cierreModel->insertarCierre($fecha, $hora, $diagnostico, $documento, $asunto, $recomendaciones, $operatividad, $recepcion, $usuario);
 
         if ($insertSuccess) {
           echo json_encode([
-            'success' => true,
-            'message' => 'Cierre de incidencia registrado.',
+            'success' => false,
+            'message' => 'Error al registrar la recepci&oacute;n.',
             'CIE_numero' => $insertSuccess
           ]);
         } else {
           echo json_encode([
-            'success' => false,
-            'message' => 'Error al registrar la recepcion.'
+            'success' => true,
+            'message' => 'Cierre de incidencia registrado.',
           ]);
         }
       } catch (Exception $e) {
@@ -46,10 +55,15 @@ class cierreController
         ]);
       }
       exit();
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'M&eacute;todo no permitido.'
+      ]);
     }
   }
 
-  // TODO: Metodo para editar el cierre
+  //  Metodo para editar el cierre
   public function actualizarCierre()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -82,7 +96,7 @@ class cierreController
         } else {
           echo json_encode([
             'success' => false,
-            'message' => 'No se realizó ninguna actualización.'
+            'message' => 'No se realiz&oacute; ninguna actualizaci&oacute;n.'
           ]);
         }
       } catch (Exception $e) {
@@ -95,7 +109,52 @@ class cierreController
     }
   }
 
-  // TODO: Metodo para consultar cierres - Administrador
+  // Metodo para eliinar la recepcion 
+  public function eliminarCierre()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      // Obtener y validar los parámetros
+      $numeroCierre = $_POST['num_cierre'] ?? null;
+
+      if (empty($numeroCierre)) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Debe seleccionar una incidencia cerrada.'
+        ]);
+        exit();
+      }
+
+      try {
+        // Llamar al modelo para actualizar la incidencia
+        $updateSuccess = $this->cierreModel->eliminarCierre($numeroCierre);
+
+        if ($updateSuccess) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Cierre de incidencia eliminado.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se realiz&oacute; ninguna eliminaci&oacute;n.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+      exit();
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => '&eacute;todo no permitido.'
+      ]);
+    }
+  }
+
+  // Metodo para consultar cierres - Administrador
   public function consultarCierres($area = NULL, $codigoPatrimonial = null, $fechaInicio = null, $fechaFin = null)
   {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {

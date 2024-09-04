@@ -51,7 +51,7 @@ class RecepcionModel extends Conexion
     }
   }
 
-  // TODO: Metodo para eliminar recepcion
+  // Metodo para eliminar recepcion
   public function eliminarRecepcion($codigoRecepcion)
   {
     $conector = parent::getConexion();

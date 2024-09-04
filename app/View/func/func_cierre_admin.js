@@ -13,7 +13,7 @@ $(document).ready(function () {
       nuevoRegistro();
     }
   });
-  
+
   // Seteo del combo condicion
   $.ajax({
     url: 'ajax/getOperatividad.php',
@@ -81,7 +81,6 @@ function enviarFormulario(action) {
     data: data,
     dataType: 'text',
     success: function (response) {
-
       try {
         // Convertir la respuesta en json
         console.log('DATA: ', data);
@@ -90,17 +89,17 @@ function enviarFormulario(action) {
 
         if (jsonResponse.success) {
           if (action === 'registrar') {
-            toastr.success('Incidencia cerrada.');
+            toastr.success(jsonResponse.message, 'Mensaje');
           } else if (action === 'editar') {
-            toastr.success('Incidencia cerrada actualizada.');
+            toastr.success(jsonResponse.message, 'Mensaje');
           }
           setTimeout(function () {
             location.reload();
           }, 1500);
         } else {
-          toastr.warning(jsonResponse.message);
+          toastr.warning(jsonResponse.message, 'Advertencia');
         }
-      } catch ($e) {
+      } catch (e) {
         console.error('JSON parsing error:', e);
         toastr.error('Error al procesar la respuesta.');
       }
@@ -119,7 +118,7 @@ function validarCamposRegistroCierre() {
 
   // validar campo de numero de recepcion
   if ($('#recepcion').val() === '') {
-    mensajeError += 'Debe seleccionar una incidencia recepcionada.';
+    mensajeError += 'Debe seleccionar una incidencia pendiente de cierre.';
     valido = false;
   }
 
@@ -147,7 +146,7 @@ function validarCamposRegistroCierre() {
 
   // Mostrar el mensaje de error si hay
   if (!valido) {
-    toastr.warning(mensajeError.trim());
+    toastr.warning(mensajeError.trim(), 'Advertencia');
   }
   return valido;
 }
@@ -187,10 +186,55 @@ function validarCamposActualizacionCierre() {
 
   // Mostrar el mensaje de error si hay
   if (!valido) {
-    toastr.warning(mensajeError.trim());
+    toastr.warning(mensajeError.trim(), 'Advertencia');
   }
   return valido;
 }
+
+// Funcion para eliminar recepcion
+$(document).ready(function () {
+  // Agregar funcionalidad para seleccionar una fila (al hacer clic)
+  $('#tablaIncidenciasCerradas').on('click', 'tr', function () {
+    $('#tablaIncidenciasCerradas tr').removeClass('selected');
+    $(this).addClass('selected');
+  });
+
+  // Evento para eliminar recepción
+  $('body').on('click', '.eliminar-cierre', function (e) {
+    e.preventDefault();
+
+    // Obtener el número de recepción de la fila seleccionada
+    const selectedRow = $(this).closest('tr');
+    const numeroCierre = selectedRow.data('id');
+    // Confirmar eliminación
+    $.ajax({
+      url: 'registro-cierre.php?action=eliminar',
+      type: 'POST',
+      data: {
+        num_cierre: numeroCierre
+      },
+      dataType: 'json',
+      success: function (response) {
+        try {
+          if (response.success) {
+            toastr.success(response.message, 'Mensaje');
+            setTimeout(function () {
+              selectedRow.remove(); // Eliminar la fila seleccionada
+              location.reload(); // Recargar la pagina
+            }, 2000);
+          } else {
+            toastr.warning(jsonResponse.message, 'Advertencia');
+          }
+        } catch (e) {
+          toastr.error('Error al procesar la respuesta.');
+        }
+      },
+      error: function (xhr, status, error) {
+        toastr.error('Hubo un problema al eliminar la incidencia cerrada. Inténtalo de nuevo.', 'Error');
+      }
+    });
+  });
+});
 
 //Evento de clic en las filas de la tabla de recepciones sin cerrar
 $(document).on('click', '#tablaRecepcionesSinCerrar tbody tr', function () {

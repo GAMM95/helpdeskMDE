@@ -130,7 +130,6 @@ function enviarFormulario(action) {
   });
 }
 
-
 // Validar campos de registro de recepcion antes de enviar el formulario
 function validarCamposRegistro() {
   var valido = true;
@@ -202,6 +201,51 @@ function validarCamposActualizacion() {
   }
   return valido;
 }
+
+// Funcion para eliminar recepcion
+$(document).ready(function () {
+  // Agregar funcionalidad para seleccionar una fila (al hacer clic)
+  $('#tablaIncidenciasRecepcionadas').on('click', 'tr', function () {
+    $('#tablaIncidenciasRecepcionadas tr').removeClass('selected');
+    $(this).addClass('selected');
+  });
+
+  // Evento para eliminar recepción
+  $('body').on('click', '.eliminar-recepcion', function (e) {
+    e.preventDefault();
+
+    // Obtener el número de recepción de la fila seleccionada
+    const selectedRow = $(this).closest('tr');
+    const numeroRecepcion = selectedRow.data('id');
+    // Confirmar eliminación
+    $.ajax({
+      url: 'registro-recepcion.php?action=eliminar',
+      type: 'POST',
+      data: {
+        num_recepcion: numeroRecepcion
+      },
+      dataType: 'json',
+      success: function (response) {
+        try {
+          if (response.success) {
+            toastr.success(response.message, 'Eliminaci&oacute;n exitosa');
+            setTimeout(function () {
+              selectedRow.remove(); // Eliminar la fila seleccionada
+              location.reload(); // Recargar la pagina
+            }, 1500);
+          } else {
+            toastr.warning(jsonResponse.message);
+          }
+        } catch (e) {
+          toastr.error('Error al procesar la respuesta.');
+        }
+      },
+      error: function (xhr, status, error) {
+        toastr.error('Hubo un problema al eliminar la recepción. Inténtalo de nuevo.', 'Error');
+      }
+    });
+  });
+});
 
 // Evento de clic en las filas de la tabla de incidencias sin recepcionar
 $(document).on('click', '#tablaIncidenciasSinRecepcionar tbody tr', function () {
