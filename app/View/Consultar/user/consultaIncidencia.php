@@ -70,19 +70,19 @@
           <!-- Encabezado de la tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
-              <th scope="col" class="px-3 py-3 hidden">N&deg;</th>
-              <th scope="col" class="px-3 py-2">N&deg; INCIDENCIA</th>
-              <th scope="col" class="px-3 py-3">Fecha incidencia</th>
-              <th scope="col" class="px-3 py-3">Categor&iacute;a</th>
-              <th scope="col" class="px-3 py-3">Asunto</th>
-              <th scope="col" class="px-3 py-3">Documento</th>
-              <th scope="col" class="px-3 py-3">C&oacute;digo Patrimonial</th>
-              <th scope="col" class="px-3 py-3 hidden">Fecha Recepcion</th>
-              <th scope="col" class="px-3 py-3">Prioridad</th>
-              <th scope="col" class="px-3 py-3 hidden">Impacto</th>
-              <th scope="col" class="px-3 py-3">Fecha Cierre</th>
-              <th scope="col" class="px-3 py-3 hidden">Condic&oacute;n</th>
-              <th scope="col" class="px-3 py-3 hidden">Usuario</th>
+              <th scope="col" class="px-3 py-2 text-center hidden">N&deg;</th>
+              <th scope="col" class="px-3 py-2 text-center">N&deg; INCIDENCIA</th>
+              <th scope="col" class="px-3 py-3 text-center">Fecha incidencia</th>
+              <th scope="col" class="px-3 py-3 text-center">Categor&iacute;a</th>
+              <th scope="col" class="px-3 py-3 text-center">Asunto</th>
+              <th scope="col" class="px-3 py-3 text-center">Documento</th>
+              <th scope="col" class="px-3 py-3 text-center">C&oacute;digo Patrimonial</th>
+              <th scope="col" class="px-3 py-3 text-center hidden">Fecha Recepcion</th>
+              <th scope="col" class="px-3 py-3 text-center">Prioridad</th>
+              <th scope="col" class="px-3 py-3 text-center hidden">Impacto</th>
+              <th scope="col" class="px-3 py-3 text-center">Fecha Cierre</th>
+              <th scope="col" class="px-3 py-3 text-center hidden">Condic&oacute;n</th>
+              <th scope="col" class="px-3 py-3 text-center hidden">Usuario</th>
               <th scope="col" class="px-3 py-3 text-center">Estado</th>
             </tr>
           </thead>
@@ -93,19 +93,19 @@
             <?php if (!empty($resultadoBusqueda)): ?>
               <?php foreach ($resultadoBusqueda as $incidencia): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
-                  <td class="px-3 py-2 hidden"><?= htmlspecialchars($incidencia['INC_numero']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_numero_formato']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['CAT_nombre']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_asunto']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_documento']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['INC_codigoPatrimonial']) ?></td>
-                  <td class="px-3 py-2 hidden"><?= htmlspecialchars($incidencia['fechaRecepcionFormateada']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['PRI_nombre']) ?></td>
-                  <td class="px-3 py-2"><?= htmlspecialchars($incidencia['fechaCierreFormateada']) ?></td>
-                  <td class="px-3 py-2 hidden"><?= htmlspecialchars($incidencia['CON_descripcion']) ?></td>
-                  <td class="px-3 py-2 hidden"><?= htmlspecialchars($incidencia['Usuario']) ?></td>
-                  <td class="px-3 py-2 text-center text-xs align-middle">
+                  <td class="px-3 py-2 text-center hidden"><?= htmlspecialchars($incidencia['INC_numero']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['INC_numero_formato']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['CAT_nombre']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['INC_asunto']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['INC_documento']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['INC_codigoPatrimonial']) ?></td>
+                  <td class="px-3 py-2 text-center hidden"><?= htmlspecialchars($incidencia['fechaRecepcionFormateada']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['PRI_nombre']) ?></td>
+                  <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['fechaCierreFormateada']) ?></td>
+                  <td class="px-3 py-2 text-center hidden"><?= htmlspecialchars($incidencia['CON_descripcion']) ?></td>
+                  <td class="px-3 py-2 text-center hidden"><?= htmlspecialchars($incidencia['Usuario']) ?></td>
+                  <td class="px-3 py-2 text-center text-center text-xs align-middle">
                     <?php
                     $estadoDescripcion = htmlspecialchars($incidencia['ESTADO']);
                     $badgeClass = '';

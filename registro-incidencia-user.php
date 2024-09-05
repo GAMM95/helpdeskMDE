@@ -80,7 +80,8 @@ switch ($action) {
 
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
   <script src="./app/View/func/func_incidencia_user.js"></script>
-  <script src="./app/View/func/Reports/reporteIncidencia.js"></script>
+  <script src="./app/View/func/Reports/reporteDetalleIncidencia.js"></script>
+  <!-- <script src="./app/View/func/Reports/reporteNumeroIncidencia.js"></script> -->
   <script src="./app/View/func/tipoBien.js"></script>
 
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
