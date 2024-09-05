@@ -162,6 +162,18 @@
     </div>
     <!-- fin de paginacion de la tabla -->
 
+    <!-- Paginacion de la tabla -->
+    <div id="noIncidencias" class="flex justify-between items-center mb-2">
+      <h1 class="text-xl text-gray-400">Lista de incidencias</h1>
+      <!-- TODO: Metodo javascript para filtrar incidencia -->
+      <!-- Busqueda de termino -->
+      <div class="flex justify-between items-center">
+        <input type="text" id="termino" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 text-xs" placeholder="Buscar incidencia..." oninput="filtrarTablaUsuario()" />
+      </div>
+      <!-- Fin de busqueda -->
+    </div>
+    <!-- Fin de la paginacion -->
+
     <!-- Tabla de incidencias registradas -->
     <div class="relative overflow-x-hidden shadow-md sm:rounded-lg">
       <div class="max-w-full overflow-hidden rounded-lg">
