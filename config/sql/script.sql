@@ -53,7 +53,8 @@ GO
 -- CREACION DE LA TABLA AREA
 CREATE TABLE AREA (
 	ARE_codigo SMALLINT IDENTITY(1, 1) PRIMARY KEY,
-	ARE_nombre VARCHAR(100) UNIQUE NOT NULL
+	ARE_nombre VARCHAR(100) UNIQUE NOT NULL,
+	ARE_estado SMALLINT NULL
 );
 GO
 
@@ -93,6 +94,7 @@ GO
 CREATE TABLE CATEGORIA (
 	CAT_codigo SMALLINT IDENTITY(1, 1),
 	CAT_nombre VARCHAR(60) NOT NULL,
+	CAT_estado SMALLINT NULL,
 	CONSTRAINT pk_CAT_codigo PRIMARY KEY(CAT_codigo),
 	CONSTRAINT uq_CAT_nombre UNIQUE (CAT_nombre)
 );
@@ -111,6 +113,7 @@ CREATE TABLE BIEN (
     BIE_codigo SMALLINT IDENTITY(1,1),
     BIE_codigoPatrimonial VARCHAR(12) NULL,
     BIE_nombre VARCHAR(50) NULL,
+	BIE_estado SMALLINT NULL,
     CONSTRAINT pk_bien PRIMARY KEY (BIE_codigo),
     CONSTRAINT uk_bie_codigoPatrimonial UNIQUE (BIE_codigoPatrimonial)  -- Único para asegurar la integridad
 );
@@ -585,6 +588,64 @@ AS
 BEGIN
 	UPDATE USUARIO SET EST_codigo = 1
     WHERE EST_codigo = 2 AND  USU_codigo = @codigoUsuario;
+END;
+GO
+
+--PROCEDIMIENTO ALMACENADO PARA REGISTRAR AREAS
+CREATE PROCEDURE sp_registrarArea 
+    @NombreArea VARCHAR(100)
+AS
+BEGIN
+    -- Manejo de errores y transacciones
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Inserta el área con ARE_estado siempre en 1
+        INSERT INTO AREA (ARE_nombre, ARE_estado)
+        VALUES (@NombreArea, 1);
+
+        -- Confirmar la transacción si todo sale bien
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Revertir la transacción en caso de error
+        ROLLBACK TRANSACTION;
+
+        -- Mostrar mensaje de error
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(), 
+            @ErrorSeverity = ERROR_SEVERITY(), 
+            @ErrorState = ERROR_STATE();
+
+        -- Lanzar el error capturado
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END;
+GO
+
+-- PROCEDIMIENTO ALMACENADO PARA DESHABILITAR AREA
+CREATE PROCEDURE sp_deshabilitarArea
+	@codigoArea SMALLINT
+AS
+BEGIN
+	UPDATE AREA SET ARE_estado = 2 
+   WHERE (ARE_estado = 1 OR  ARE_estado = '')
+	AND  ARE_codigo = @codigoArea;
+END;
+GO
+
+-- PROCEDIMIENTO ALMACENADO PARA HABILITAR USUARIO
+CREATE PROCEDURE sp_habilitarArea
+	@codigoArea SMALLINT
+AS
+BEGIN
+	UPDATE AREA SET ARE_estado = 1
+    WHERE (ARE_estado = 2 OR  ARE_estado = '')
+	AND  ARE_codigo = @codigoArea;
 END;
 GO
 
