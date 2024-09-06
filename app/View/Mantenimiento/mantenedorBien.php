@@ -77,6 +77,7 @@
                 <th scope="col" class="px-10 py-2 w-1/6 hidden">N&deg;</th>
                 <th scope="col" class="px-6 py-2 w-1/6 text-center">C&oacute;digo identificador</th>
                 <th scope="col" class="px-6 py-2 w-4/6 text-center">Nombre de bien</th>
+                <th scope="col" class="px-6 py-2 text-center">Acci&oacute;n</th>
               </tr>
             </thead>
             <!-- Fin de enxabezado -->
@@ -85,15 +86,20 @@
             <tbody>
               <?php if (!empty($resultado)) : ?>
                 <?php foreach ($resultado as $bien) : ?>
-                  <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
-                    <th scope='col' class='px-10 py-2 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $bien['BIE_codigo']; ?></th>
+                  <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id="<?= $bien['BIE_codigo']; ?>">
+                    <th scope='row' class='px-10 py-2 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $bien['BIE_codigo']; ?></th>
                     <td class="px-6 py-2 text-center"> <?= $bien['BIE_codigoPatrimonial']; ?></td>
                     <td class="px-6 py-2"> <?= $bien['BIE_nombre']; ?></td>
+                    <td class="px-6 py-2 text-center flex space-x-2">
+                      <button type="button" class="eliminar-bien bn btn-danger text-xs text-white font-bold py-2 px-2 rounded-md flex items-center justify-center">
+                        <i class="feather icon-trash-2"></i>
+                      </button>
+                    </td>
                   </tr>
                 <?php endforeach; ?>
               <?php else: ?>
                 <tr>
-                  <td colspan="2" class="text-center py-3">No se han registrado nuevos bienes</td>
+                  <td colspan="3" class="text-center py-3">No se han registrado nuevos bienes</td>
                 </tr>
               <?php endif; ?>
             </tbody>

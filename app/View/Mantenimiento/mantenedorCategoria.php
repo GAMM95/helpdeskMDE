@@ -23,14 +23,14 @@
     <div class="flex space-x-4">
       <!-- Formulario de registro de categoria -->
       <div class="flex flex-col w-1/3">
-        <form id="formcategoria" action="modulo-categoria.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
+        <form id="formCategoria" action="modulo-categoria.php?action=registrar" method="POST" class="card table-card bg-white shadow-md p-6 w-full text-xs">
           <input type="hidden" id="form-action" name="action" value="registrar">
           <!-- Codigo de categoria -->
           <div class="flex justify-center -mx-2 mb-5 hidden">
             <div class="flex items-center mb-4">
               <div class="flex items-center">
-                <label for="CodCategoria" class="block font-bold mb-1 mr-3 text-lime-500">C&oacute;digo de categor&iacute;a:</label>
-                <input type="text" id="txt_codigoCategoria" name="CodCategoria" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly disabled>
+                <label for="codCategoria" class="block font-bold mb-1 mr-3 text-lime-500">C&oacute;digo de categor&iacute;a:</label>
+                <input type="text" id="codCategoria" name="codCategoria" class="w-20 border border-gray-200 bg-gray-100 rounded-md p-2 text-xs text-center" readonly>
               </div>
             </div>
           </div>
@@ -38,8 +38,8 @@
           <!-- Nombre de categoria -->
           <div class="flex flex-wrap -mx-2">
             <div class="w-full px-2 mb-3">
-              <label for="NombreCategoria" class="block mb-1 font-bold text-xs">Nombre de categor&iacute;a:</label>
-              <input type="text" id="txt_nombreCategoria" name="NombreCategoria" class="border p-2 w-full text-xs rounded-md" pattern="[A-Za-z\s]+" placeholder="Ingrese nueva categor&iacute;a" required>
+              <label for="nombreCategoria" class="block mb-1 font-bold text-xs">Nombre de categor&iacute;a:</label>
+              <input type="text" id="nombreCategoria" name="nombreCategoria" class="border p-2 w-full text-xs rounded-md" pattern="[A-Za-z\s]+" placeholder="Ingrese nueva categor&iacute;a">
             </div>
           </div>
 
@@ -63,27 +63,30 @@
               <tr>
                 <th scope="col" class="px-10 py-2 w-1/6 hidden">N&deg;</th>
                 <th scope="col" class="px-6 py-2 w-5/6 text-center">Categor&iacute;a</th>
+                <th scope="col" class="px-6 py-2 text-center">Acci&oacute;n</th>
               </tr>
             </thead>
             <!-- Fin de encabezado -->
 
             <!-- Encabezado de la tabla -->
             <tbody>
-              <?php
-              require_once './app/Model/CategoriaModel.php'; // Asegúrate de que este nombre coincide con el de la clase
-              $categoriaModel = new CategoriaModel(); // Asegúrate de que estás usando el nombre correcto de la clase
-              $categorias = $categoriaModel->listarCategorias();
-              foreach ($categorias as $categoria) {
-                echo "<tr class='hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b'>";
-                echo "<th scope='col' class='px-10 py-2 font-medium text-gray-900 whitespace-nowrap hidden' data-codcategoria='" . htmlspecialchars($categoria['CAT_codigo']) . "'>";
-                echo htmlspecialchars($categoria['CAT_codigo']);
-                echo "</th>";
-                echo "<th scope='row' class='px-6 py-2 font-medium text-gray-900 whitespace-nowrap' data-categoria='" . htmlspecialchars($categoria['CAT_nombre']) . "'>";
-                echo htmlspecialchars($categoria['CAT_nombre']);
-                echo "</th>";
-                echo "</tr>";
-              }
-              ?>
+              <?php if (!empty($resultado)): ?>
+                <?php foreach ($resultado as $categoria) : ?>
+                  <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id="<?= $categoria['CAT_codigo']; ?>">
+                    <th scope='row' class='px-6 py-2 font-medium text-gray-900 whitespace-nowrap hidden'><?= $categoria['CAT_codigo']; ?></th>
+                    <td class='px-6 py-2'><?= $categoria['CAT_nombre']; ?></td>
+                    <td class="px-6 py-2 text-center flex space-x-2">
+                      <button type="button" class="eliminar-categoria bn btn-danger text-xs text-white font-bold py-2 px-2 rounded-md flex items-center justify-center">
+                        <i class="feather icon-trash-2"></i>
+                      </button>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <tr>
+                  <td colspan="10" class="text-center py-3">No se han registrado nuevas categor&iacute;as.
+                </tr>
+              <?php endif; ?>
             </tbody>
             <!-- Fin del cuerpo de la tabla -->
           </table>

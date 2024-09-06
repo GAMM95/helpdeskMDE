@@ -3,30 +3,20 @@ require_once 'config/conexion.php';
 
 class CategoriaModel extends Conexion
 {
-  // Atributos de la clase
-  protected $codigoCategoria;
-  protected $nombreCategoria;
-
-  public function __construct(
-    $codigoCategoria = null,
-    $nombreCategoria = null
-  ) {
+  public function __construct()
+  {
     parent::__construct();
-    $this->codigoCategoria = $codigoCategoria;
-    $this->nombreCategoria = $nombreCategoria;
   }
 
   // Metodo para insertar una nueva categoria
-  public function insertarCategoria()
+  public function insertarCategoria($nombreCategoria)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
         $sql = "INSERT INTO CATEGORIA (CAT_nombre) VALUES (?)";
         $stmt = $conector->prepare($sql);
-        $stmt->execute([
-          $this->nombreCategoria
-        ]);
+        $stmt->execute([$nombreCategoria]);
         return $conector->lastInsertId();
       } else {
         throw new Exception("Error de conexion a la base de datos");
@@ -60,7 +50,7 @@ class CategoriaModel extends Conexion
   }
 
   // Metodo para obtener la categoria por el ID
-  public function obtenerCategoriaPorId()
+  public function obtenerCategoriaPorId($codigoCategoria)
   {
     $conector = parent::getConexion();
     try {
@@ -68,9 +58,7 @@ class CategoriaModel extends Conexion
         $sql = "SELECT * FROM CATEGORIA 
                 WHERE CAT_codigo = ?";
         $stmt = $conector->prepare($sql);
-        $stmt->execute([
-          $this->codigoCategoria
-        ]);
+        $stmt->execute([$codigoCategoria]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
       } else {
         throw new Exception("Error de conexion a la base de datos");
@@ -83,7 +71,7 @@ class CategoriaModel extends Conexion
   }
 
   // Metodo para editar categoria
-  public function editarCategoria()
+  public function editarCategoria($nombreCategoria, $codigoCategoria)
   {
     $conector = parent::getConexion();
     try {
@@ -91,8 +79,8 @@ class CategoriaModel extends Conexion
         $sql = "UPDATE CATEGORIA SET CAT_nombre = ? WHERE CAT_codigo = ?";
         $stmt = $conector->prepare($sql);
         $stmt->execute([
-          $this->nombreCategoria,
-          $this->codigoCategoria
+          $nombreCategoria,
+          $codigoCategoria
         ]);
         return $stmt->rowCount();
       } else {
@@ -106,17 +94,14 @@ class CategoriaModel extends Conexion
   }
 
   // Metodo para eliminar categoria
-  public function eliminarCategoria()
+  public function eliminarCategoria($codigoCategoria)
   {
-
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
         $sql = "DELETE FROM CATEGORIA WHERE CAT_codigo = ?";
         $stmt = $conector->prepare($sql);
-        $stmt->execute([
-          $this->codigoCategoria
-        ]);
+        $stmt->execute([$codigoCategoria]);
         return $stmt->rowCount();
       } else {
         throw new Exception("Error de conexion a la base de datos");

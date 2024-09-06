@@ -36,10 +36,17 @@ class AreaModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "INSERT INTO AREA (ARE_nombre) VALUES (?)";
+        // $sql = "INSERT INTO AREA (ARE_nombre) VALUES (?)";
+        $sql = "EXEC sp_registrarArea :nombreArea";
         $stmt = $conector->prepare($sql);
-        $stmt->execute([$nombreArea]);
-        return $conector->lastInsertId();
+        $stmt->bindParam(':nombreArea', $nombreArea);
+        $stmt->execute();
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         throw new Exception("Error de conexion a la base de datos");
         return null;
@@ -55,7 +62,7 @@ class AreaModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "SELECT ARE_codigo, ARE_nombre FROM AREA ORDER BY ARE_codigo ASC";
+        $sql = "SELECT ARE_codigo, ARE_nombre, ARE_estado FROM AREA ORDER BY ARE_codigo ASC";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -156,6 +163,57 @@ class AreaModel extends Conexion
     } catch (PDOException $e) {
       throw new PDOException("Error al filtrar areas: " . $e->getMessage());
       return null;
+    }
+  }
+
+  // Método para habilitar area
+  public function habilitarArea($codigoArea)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "EXEC sp_habilitarArea :codigoArea";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':codigoArea', $codigoArea, PDO::PARAM_INT);
+        $stmt->execute();
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al habilitar area: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  // METODO PARA DESHABILITAR AREA
+  public function deshabilitarArea($codigoArea)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "EXEC sp_deshabilitarArea :codigoArea";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':codigoArea', $codigoArea, PDO::PARAM_INT);
+        $stmt->execute();
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al deshabilitar area: " . $e->getMessage());
     }
   }
 }

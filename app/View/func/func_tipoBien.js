@@ -53,29 +53,28 @@ function enviarFormulario(action) {
   var url = 'modulo-bien.php?action=' + action;
   var data = $('#formBienes').serialize();
 
-  // Verificar los datos antes de enviarlos
-  console.log('Datos enviados:', data);
-
   $.ajax({
     url: url,
     method: 'POST',
     data: data,
     dataType: 'text',
-    success: function (response, error, status) {
+    success: function (response) {
+      console.log('Raw response:', response);
       try {
         var jsonResponse = JSON.parse(response);
         console.log('Parsed JSON: ', jsonResponse);
+
         if (jsonResponse.success) {
           if (action === 'registrar') {
-            toastr.success('Tipo de bien registrado.', 'Mensaje');
+            toastr.success(jsonResponse.message, 'Mensaje');
           } else if (action === 'editar') {
-            toastr.success('Datos actualizados.', 'Mensaje');
+            toastr.success(jsonResponse.message, 'Mensaje');
           }
           setTimeout(function () {
             location.reload();
           }, 1500);
         } else {
-          toastr.warning(jsonResponse.message);
+          toastr.warning(jsonResponse.message, 'Advertencia');
         }
       } catch (e) {
         console.error('JSON parsing error:', e);
@@ -189,3 +188,52 @@ function filtrarTablaBienes() {
     filas[i].style.display = match ? '' : 'none';
   }
 }
+
+// Funcion para eliminar recepcion
+$(document).ready(function () {
+  // Agregar funcionalidad para seleccionar una fila (al hacer clic)
+  $('#tablaListarBienes').on('click', 'tr', function () {
+    $('#tablaListarBienes tr').removeClass('selected');
+    $(this).addClass('selected');
+  });
+
+  // Evento para eliminar recepción
+  $('body').on('click', '.eliminar-bien', function (e) {
+    e.preventDefault();
+
+    // Obtener el número de recepción de la fila seleccionada
+    const selectedRow = $(this).closest('tr');
+    const codBien = selectedRow.data('id');
+    // Confirmar eliminación
+    $.ajax({
+      url: 'modulo-bien.php?action=eliminar',
+      type: 'POST',
+      data: {
+        codBien: codBien
+      },
+      dataType: 'text',
+      success: function (response) {
+        try {
+          // Convertir la respuesta en un objeto JSON
+          var jsonResponse = JSON.parse(response);
+          console.log('Parsed JSON:', jsonResponse);
+
+          if (jsonResponse.success) {
+            toastr.success(jsonResponse.message, 'Mensaje');
+            setTimeout(function () {
+              selectedRow.remove(); // Eliminar la fila seleccionada
+              location.reload(); // Recargar la pagina
+            }, 1500);
+          } else {
+            toastr.warning(jsonResponse.message, 'Advertencia');
+          }
+        } catch (e) {
+          toastr.error('Error al procesar la respuesta.', 'Mensaje de error');
+        }
+      },
+      error: function (xhr, status, error) {
+        toastr.error('Hubo un problema al eliminar bien. Int&eacute;ntalo de nuevo.', 'Mensaje de error');
+      }
+    });
+  });
+});

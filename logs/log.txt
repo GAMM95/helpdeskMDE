@@ -585,3 +585,9 @@ Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGE
 Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95
 ------- START LOGIN LOGS ---------
 Nombre de Persona: CARLOTA MARISCAL, Rol: Usuario, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 3, Usuario: CMARISCAL
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: CARLOTA MARISCAL, Rol: Usuario, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 3, Usuario: CMARISCAL
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95

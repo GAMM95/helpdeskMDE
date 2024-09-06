@@ -29,6 +29,9 @@ switch ($action) {
   case 'editar':
     $bienController->actualizarTipoBien();
     break;
+  case 'eliminar':
+    $bienController->eliminarBien();
+    break;
   default:
     break;
 }

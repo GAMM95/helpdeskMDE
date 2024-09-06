@@ -17,12 +17,20 @@ class BienController
       $codigoIdentificador = $_POST['codigoIdentificador'] ?? null;
       $nombreBien = $_POST['nombreTipoBien'] ?? null;
 
+      if ($nombreBien === null || trim($nombreBien) === '') {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Ingrese nuevo bien.'
+        ]);
+        exit();
+      }
+
       try {
         // Validar si la persona tiene un usuario
         if ($this->bienModel->validarBienExistente($codigoIdentificador)) {
           echo json_encode([
             'success' => false,
-            'message' => 'El &oacute;digo identificador ingresado ya est&aacute; registrado.'
+            'message' => 'El &oacute;digo identificador ingresado ya est&aacute; registrado.',
           ]);
           exit();
         }
@@ -39,7 +47,7 @@ class BienController
         } else {
           echo json_encode([
             'success' => false,
-            'message' => 'Error al registrar el nombre de bien.'
+            'message' => 'Error al registrar el nombre de bien.',
           ]);
         }
       } catch (Exception $e) {
@@ -60,11 +68,19 @@ class BienController
   // Metodo para actualizar el tipo de bien
   public function actualizarTipoBien()
   {
-    header('Content-Type: application/json'); // Asegúrate de tener este encabezado
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $codigoBien = $_POST['codBien'] ?? null;
       $codigoIdentificador = $_POST['codigoIdentificador'] ?? null;
       $nombreBien = $_POST['nombreTipoBien'] ?? null;
-      $codigoBien = $_POST['codBien'] ?? null;
+
+      if (empty($nombreBien) || empty($nombreBien)) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Ingrese nombre del bien.'
+        ]);
+        exit();
+      }
+
       try {
         // Llamar al metodo para actualizar el tipo de bien
         $updateSuccess = $this->bienModel->editarTipoBien($codigoIdentificador, $nombreBien, $codigoBien);
@@ -93,6 +109,48 @@ class BienController
         'message' => 'M&eacute;todo no permitido.'
       ]);
     }
-    exit();
+  }
+
+  // Metodo para eliminar Categoria
+  public function eliminarBien()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $codigoBien = $_POST['codBien'] ?? null;
+
+      if (empty($codigoBien)) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Debe seleccionar un bien.'
+        ]);
+        exit();
+      }
+
+      try {
+        // Llamar al modelo para actualizar la incidencia
+        $deleteSuccess = $this->bienModel->eliminarBien($codigoBien);
+        if ($deleteSuccess) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Bien eliminado.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se realiz&oacute; ninguna eliminaci&oacute;n.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+      exit();
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'M&eacute;todo no permitido.'
+      ]);
+    }
   }
 }

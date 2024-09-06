@@ -31,6 +31,12 @@ switch ($action) {
   case 'editar':
     $areaController->actualizarArea();
     break;
+  case 'habilitar':
+    $areaController->habilitarArea();
+    break;
+  case 'deshabilitar':
+    $areaController->deshabilitarArea();
+    break;
   case 'filtrar':
     $areaController->filtrarAreas();
     break;

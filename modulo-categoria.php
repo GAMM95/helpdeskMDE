@@ -14,6 +14,9 @@ require_once 'app/Model/CategoriaModel.php';
 $categoriaController = new CategoriaController();
 $categoriaModel = new CategoriaModel();
 
+// Listar tabla de categorias registradas
+$resultado = $categoriaModel->listarCategorias();
+
 if ($CodCategoria != '') {
   $CategoriaRegistrada = $categoriaModel->obtenerCategoriaPorId($CodCategoria);
 } else {
@@ -25,7 +28,10 @@ switch ($action) {
     $categoriaController->registrarCategoria();
     break;
   case 'editar':
-    $categoriaController->editarCategoria();
+    $categoriaController->actualizarCategoria();
+    break;
+  case 'eliminar':
+    $categoriaController->eliminarCategoria();
     break;
   default:
     break;

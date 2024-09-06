@@ -17,6 +17,14 @@ $(document).ready(function () {
     }
   });
 
+  // Manejador de eventos para la tecla Escape
+  $(document).keydown(function (event) {
+    // Verificar si la tecla presionada es ESC
+    if (event.key === 'Escape') {
+      nuevoRegistro();
+    }
+  });
+
   // Buscar en la tabla de trabajadores
   $('#termino').on('input', function () {
     filtrarTablaAreas();
@@ -91,7 +99,7 @@ function validarCampos() {
   var faltaArea = ($('#nombreArea').val() === null || $('#nombreArea').val() === '');
 
   if (faltaArea) {
-    mensajeError += 'Debe ingresar nombre de area.';
+    mensajeError += 'Debe ingresar nombre de &aacute;rea.';
     valido = false;
   }
 
@@ -171,3 +179,53 @@ function filtrarTablaAreas() {
     filas[i].style.display = match ? '' : 'none';
   }
 }
+
+// TODO: falta
+$(document).ready(function () {
+  // Manejar el cambio en los switches
+  $('input[type="checkbox"]').change(function () {
+    const checkbox = $(this);
+    const codArea = checkbox.attr('id').replace('customswitch', '');
+    const url = checkbox.is(':checked') ? 'modulo-area.php?action=habilitar' : 'modulo-area.php?action=deshabilitar';
+
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        codArea: codArea
+      },
+      dataType: 'text',
+      success: function (response) {
+        try {
+          var jsonResponse = JSON.parse(response);
+          console.log('Parsed JSON:', jsonResponse);
+
+          if (response.success) {
+            toastr.success(jsonResponse.message, 'Mensaje');
+            setTimeout(function () {
+              location.reload();
+            }, 1000);
+          } else {
+            toastr.success(jsonResponse.message, 'Mensaje de error');
+            checkbox.prop('checked', !checkbox.is(':checked'));
+          }
+        } catch (e) {
+          console.error('JSON parsing error:', e);
+          // toastr.error('Error al procesar la respuesta.', 'Mensaje de error');
+          toastr.success('Estado actualizado.','Mensaje');
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        }
+        
+      },
+      error: function (xhr, status, error) {
+        toastr.error('Ocurrió un error al actualizar el estado del usuario.', 'Mensaje de error');
+        // Restaura el estado del switch en caso de error
+        checkbox.prop('checked', !checkbox.is(':checked'));
+      }
+    });
+  });
+});
+
+

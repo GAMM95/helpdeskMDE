@@ -74,7 +74,9 @@
             <thead class="sticky top-0 text-xs text-gray-70 uppercase bg-lime-300">
               <tr>
                 <th scope="col" class="px-10 py-2 w-1/6 hidden">N&deg;</th>
-                <th scope="col" class="px-6 py-2 w-5/6 text-center">&Aacute;rea</th>
+                <th scope="col" class="px-6 py-2 w-2/3 text-center">&Aacute;rea</th>
+                <th scope="col" class="px-6 py-2 w-1/6 text-center">Estado</th>
+                <th scope="col" class="px-6 py-2 w-1/6 text-center">Estado</th>
               </tr>
             </thead>
             <!-- Fin de encabezado -->
@@ -83,9 +85,20 @@
             <tbody>
               <?php if (!empty($resultado)) : ?>
                 <?php foreach ($resultado as $area) : ?>
-                  <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
-                    <th scope='col' class='px-10 py-2 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $area['ARE_codigo']; ?></th>
-                    <td class="px-6 py-2"> <?= $area['ARE_nombre']; ?></td>
+                  <?php
+                  $estado = htmlspecialchars($area['ARE_estado']);
+                  $isActive = ($estado === '1');
+                  ?>
+                  <tr class=" hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b">
+                    <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap hidden"><?= htmlspecialchars($area['ARE_codigo']); ?></th>
+                    <td class="px-6 py-2 text-center"><?= htmlspecialchars($area['ARE_nombre']); ?></td>
+                    <td class="px-6 py-2 text-center"><?= htmlspecialchars($area['ARE_estado']); ?></td>
+                    <td class="px-6 py-2 text-center">
+                      <div class="custom-control custom-switch cursor-pointer">
+                        <input type="checkbox" class="custom-control-input" id="customswitch<?= $area['ARE_estado']; ?>" <?= $isActive ? 'checked' : ''; ?>>
+                        <label class="custom-control-label" for="customswitch<?= $area['ARE_estado']; ?>"><?= $isActive ? 'Activo' : 'Inactivo'; ?></label>
+                      </div>
+                    </td>
                   </tr>
                 <?php endforeach; ?>
               <?php else: ?>

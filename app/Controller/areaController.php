@@ -17,6 +17,14 @@ class AreaController
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $nombreArea = $_POST['nombreArea'] ?? null;
 
+      if (empty($nombreArea)) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Ingrese nombre de la nueva &aacute;rea.'
+        ]);
+        exit();
+      }
+
       try {
         // Validar si eciste una area que ya esta registrada
         if ($this->areaModel->validarAreaExistente($nombreArea)) {
@@ -120,6 +128,72 @@ class AreaController
       echo json_encode([
         'success' => false,
         'message' => 'M&eacute;todo no permitido.'
+      ]);
+    }
+  }
+
+  // Controlador para habilitar un área
+  public function habilitarArea()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $codigoArea = isset($_POST['codArea']) ? $_POST['codArea'] : '';
+
+      try {
+        $resultados = $this->areaModel->habilitarArea($codigoArea);
+        if ($resultados) {
+          echo json_encode([
+            'success' => true,
+            'message' => '&Aacute;rea habilitada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se pudo habilitar el &aacute;rea.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
+    }
+  }
+
+  // Controlador para deshabilitar un área
+  public function deshabilitarArea()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $codigoArea = isset($_POST['codArea']) ? $_POST['codArea'] : '';
+
+      try {
+        $resultados = $this->areaModel->deshabilitarArea($codigoArea);
+        if ($resultados) {
+          echo json_encode([
+            'success' => true,
+            'message' => '&Aacute;rea deshabilitada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se pudo deshabilitar el área.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
       ]);
     }
   }

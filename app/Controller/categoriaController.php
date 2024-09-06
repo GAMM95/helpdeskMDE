@@ -8,85 +8,136 @@ class CategoriaController
 
   public function __construct()
   {
-    $this->categoriaModel = new CategoriaModel();
+    $this->categoriaModel = new categoriaModel();
   }
 
   // Metodo para registrar la categoria
   public function registrarCategoria()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $nombre = $_POST['NombreCategoria'] ?? null;
+      $nombreCategoria = $_POST['nombreCategoria'] ?? null;
 
-      if ($nombre === null || trim($nombre) === '') {
-        echo "Error: El nombre de la categoría no puede estar vacío.";
-        return;
+      if ($nombreCategoria === null || trim($nombreCategoria) === '') {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Ingrese nueva categor&iacute;a.'
+        ]);
+        exit();
       }
 
       try {
-        $categoriaModel = new CategoriaModel(null, $nombre);
-        $insertSuccessId = $categoriaModel->insertarCategoria();
+        $insertSuccessId = $this->categoriaModel->insertarCategoria($nombreCategoria);
         if ($insertSuccessId) {
-          header('Location: modulo-categoria.php?CodCategoria=' . $insertSuccessId);
-          exit();
+          echo json_encode([
+            'success' => true,
+            'message' => 'Categor&iacute;a registrada.',
+            'CAT_codigo' => $insertSuccessId
+          ]);
         } else {
-          echo "Error al registrar categoría";
+          echo json_encode([
+            'success' => false,
+            'message' => 'Error al registrar la categor&iacute;a.',
+          ]);
         }
       } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
       }
+      exit();
     } else {
-      echo "Error: Método no permitido";
+      echo json_encode([
+        'success' => false,
+        'message' => 'M&eacute;todo no permitido.'
+      ]);
     }
   }
 
-  public function editarCategoria()
+  // MEtodo para editar categoria
+  public function actualizarCategoria()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $codigo = $_POST['CodCategoria'] ?? null;
-      $nombre = $_POST['NombreCategoria'] ?? null;
+      $codigoCategoria = $_POST['codCategoria'] ?? null;
+      $nombreCategoria = $_POST['nombreCategoria'] ?? null;
 
-      if ($codigo === null || trim($codigo) === '') {
-        echo "Error: El código de la categoría no puede estar vacío.";
-        return;
-      }
-
-      if ($nombre === null || trim($nombre) === '') {
-        echo "Error: El nombre de la categoría no puede estar vacío.";
-        return;
+      if (empty($codigoCategoria) || empty($nombreCategoria)) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Ingrese campos requeridos (*).'
+        ]);
+        exit();
       }
 
       try {
-        $categoriaModel = new CategoriaModel($codigo, $nombre);
-        $categoriaModel->editarCategoria();
-        echo "Categoría actualizada correctamente.";
+        // Llamar al metodo para editar la categoria
+        $updateSuccess = $this->categoriaModel->editarCategoria($nombreCategoria, $codigoCategoria);
+        if ($updateSuccess) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Categor&iacute;a actualizada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se realiz&oacute; ninguna actualizaci&oacute;n.'
+          ]);
+        }
       } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
       }
+      exit();
     } else {
-      echo "Error: Método no permitido";
+      echo json_encode([
+        'success' => false,
+        'message' => 'M&eacute;todo no permitido.'
+      ]);
     }
   }
 
-
+  // Metodo para eliminar Categoria
   public function eliminarCategoria()
   {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $codigo = $_POST['CodCategoria'] ?? null;
+      $codigoCategoria = $_POST['codCategoria'] ?? null;
 
-      if ($codigo === null || trim($codigo) === '') {
-        echo "Error: El código de la categoría no puede estar vacío.";
-        return;
+      if (empty($codigoCategoria)) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Debe seleccionar una categor&iacute;a.'
+        ]);
+        exit();
       }
 
       try {
-        $this->categoriaModel->eliminarCategoria($codigo);
-        header("Location: modulo-categoria.php");
-        exit();
+        // Llamar al modelo para actualizar la incidencia
+        $deleteSuccess = $this->categoriaModel->eliminarCategoria($codigoCategoria);
+        if ($deleteSuccess) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Categor&iacute;a eliminada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se realiz&oacute; ninguna eliminaci&oacute;n.'
+          ]);
+        }
       } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
       }
+      exit();
     } else {
-      echo "Error: Método no permitido";
+      echo json_encode([
+        'success' => false,
+        'message' => 'M&eacute;todo no permitido.'
+      ]);
     }
   }
 

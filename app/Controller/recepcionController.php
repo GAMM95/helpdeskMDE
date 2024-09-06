@@ -48,7 +48,6 @@ class RecepcionController
           ]);
         }
       } catch (Exception $e) {
-        // Capturar y mostrar detalles del error
         echo json_encode([
           'success' => false,
           'message' => 'Error: ' . $e->getMessage()
@@ -141,9 +140,9 @@ class RecepcionController
 
       try {
         // Llamar al modelo para actualizar la incidencia
-        $updateSuccess = $this->recepcionModel->eliminarRecepcion($numeroRecepcion);
+        $deleteSuccess = $this->recepcionModel->eliminarRecepcion($numeroRecepcion);
 
-        if ($updateSuccess) {
+        if ($deleteSuccess) {
           echo json_encode([
             'success' => true,
             'message' => 'Recepci&oacute;n eliminada.'

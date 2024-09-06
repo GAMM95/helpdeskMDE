@@ -82,7 +82,7 @@ class BienModel extends Conexion
         $sql = "UPDATE BIEN SET BIE_codigoPatrimonial = ? , BIE_nombre = ?
                 WHERE BIE_codigo = ?";
         $stmt = $conector->prepare($sql);
-        $stmt->execute($codigoIdentificador, $nombreTipoBien, $codigoBien);
+        $stmt->execute([$codigoIdentificador, $nombreTipoBien, $codigoBien]);
         return $stmt->rowCount();
       } else {
         throw new Exception("Error de conexion a la base de datos");
@@ -90,6 +90,26 @@ class BienModel extends Conexion
       }
     } catch (PDOException $e) {
       throw new PDOException("Error al editar el tipo de bien: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  // Metodo para eliminar categoria
+  public function eliminarBien($codigoBien)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "DELETE FROM BIEN WHERE BIE_codigo = ?";
+        $stmt = $conector->prepare($sql);
+        $stmt->execute([$codigoBien]);
+        return $stmt->rowCount();
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al eliminar el bien: " . $e->getMessage());
       return null;
     }
   }
