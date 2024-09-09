@@ -228,7 +228,11 @@
     <!-- Titulo y paginacion de tabla de recepciones -->
     <div class="flex justify-between items-center mb-2">
       <h1 class="text-xl text-gray-400">Lista de incidencias cerradas</h1>
-      <div id="paginadorCierres" class="flex justify-end items-center mt-1">
+      <!-- Busqueda de termino -->
+      <div class="flex justify-between items-center">
+        <input type="text" id="termino" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 text-xs" placeholder="Buscar incidencia ..." oninput="filtrarTablaCierres()" />
+      </div>
+      <!-- <div id="paginadorCierres" class="flex justify-end items-center mt-1">
         <?php if ($totalPagesCierres > 1) : ?>
           <?php if ($pageCierres > 1) : ?>
             <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-l-md" onclick="changePageCierres(<?php echo $pageCierres - 1; ?>)"><i class="feather mr-2 icon-chevrons-left"></i> Anterior</a>
@@ -238,11 +242,11 @@
             <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-r-md" onclick="changePageCierres(<?php echo $pageCierres + 1; ?>)"> Siguiente <i class="feather ml-2 icon-chevrons-right"></i></a>
           <?php endif; ?>
         <?php endif; ?>
-      </div>
+      </div> -->
     </div>
 
     <!-- Tabla de incidencias cerradas -->
-    <div class="relative max-h-[800px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
+    <div class="relative max-h-[300px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
       <table id="tablaIncidenciasCerradas" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
         <!-- Encabezado de la tabla -->
         <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">
@@ -280,14 +284,14 @@
               <td class='px-6 py-2 text-center hidden'><?= $incidencia['CIE_diagnostico']; ?></td>
               <td class='px-6 py-2 text-center hidden'><?= $incidencia['CIE_recomendaciones']; ?></td>
               <td class='px-6 py-2 text-center'><?= $incidencia['Usuario']; ?></td>
-              <td class="px-6 py-2 text-center flex space-x-2"> <!-- Columna de Acción con botones -->
+              <td class="px-6 py-2 text-center justify-middle flex space-x-2"> <!-- Columna de Acción con botones -->
                 <!-- Botón de Imprimir detalla de incidencia -->
-                <button type="button" id="imprimir-cierre" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center" title="Imprimir detalle de cierre">
+                <button type="button" id="imprimir-cierre" class="bn btn-warning text-xs text-white font-bold py-2 px-2 rounded-md flex items-center justify-center" title="Imprimir detalle de cierre">
                   <i class="feather icon-printer"></i>
                 </button>
 
                 <!-- Botón de Eliminar -->
-                <button type="button" class="eliminar-cierre bn btn-danger text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center">
+                <button type="button" class="eliminar-cierre bn btn-danger text-xs text-white font-bold py-2 px-2 rounded-md flex items-center justify-center">
                   <i class="feather icon-trash-2"></i>
                 </button>
               </td>

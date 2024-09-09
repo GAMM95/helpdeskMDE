@@ -15,17 +15,18 @@ require_once 'app/Model/incidenciaModel.php';
 $incidenciaController = new IncidenciaController();
 $incidenciaModel = new IncidenciaModel();
 
-// Paginacion de la tabla
-$limit = 1; // Número de filas por página
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
-$start = ($page - 1) * $limit; // Calcula el índice de inicio
+// // Paginacion de la tabla
+// $limit = 1; // Número de filas por página
+// $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
+// $start = ($page - 1) * $limit; // Calcula el índice de inicio
 
-// Obtiene el total de registros
-$totalIncidencias = $incidenciaModel->contarIncidenciasUsuario($_SESSION['codigoArea']);
-$totalPages = ceil($totalIncidencias / $limit);
+// // Obtiene el total de registros
+// $totalIncidencias = $incidenciaModel->contarIncidenciasUsuario($_SESSION['codigoArea']);
+// $totalPages = ceil($totalIncidencias / $limit);
 
 // Obtiene las incidencias para la página actual
-$resultado = $incidenciaModel->listarIncidenciasRegistroUsuario($_SESSION['codigoArea'], $start, $limit);
+// $resultado = $incidenciaModel->listarIncidenciasRegistroUsuario($_SESSION['codigoArea'], $start, $limit);
+$resultado = $incidenciaModel->listarIncidenciasRegistroUsuario($_SESSION['codigoArea']);
 
 
 if ($INC_numero != '') {

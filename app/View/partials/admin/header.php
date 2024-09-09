@@ -88,8 +88,6 @@ if (isset($_SESSION['codigoUsuario'])) {
         </div>
       </li>
 
-
-
       <!-- Perfil de usuario -->
       <li>
         <div class="dropdown drp-user">

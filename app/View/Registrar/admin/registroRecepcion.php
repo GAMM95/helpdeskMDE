@@ -79,7 +79,7 @@
                 <td class='px-6 py-2 text-center'><?= $incidencia['Usuario']; ?></td>
               </tr>
             <?php endforeach; ?>
-            <?php if (empty($incidencias)) : ?>
+            <?php if (empty($resultadoIncidencias)) : ?>
               <tr>
                 <td colspan="8" class="text-center py-4">No se han registrado nuevas incidencias.</td>
               </tr>

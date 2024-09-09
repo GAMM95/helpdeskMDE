@@ -627,3 +627,9 @@ Nombre de Persona: Carlos Leyva , Rol: Usuario, Codigo Area: 1, Área: Subgerenc
 Nombre de Persona: Carlos Leyva , Rol: Usuario, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 2, Usuario: CLEYVA
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Carlos Leyva , Rol: Usuario, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 2, Usuario: CLEYVA
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Carlos Leyva , Rol: Usuario, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 2, Usuario: CLEYVA

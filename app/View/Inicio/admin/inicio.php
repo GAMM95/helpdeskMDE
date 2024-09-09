@@ -55,8 +55,8 @@
 
             <!-- Integrar el selector de mes en la línea de texto sin bordes -->
             <p class="mb-3 mt-3">
-              Total de incidencias en el mes de
-              <select id="mes-selector" class="bg-transparent text-md font-bold outline-none cursor-pointer">
+              Total de incidencias en el mes de  <?php echo $nombreMes; ?>
+              <!-- <select id="mes-selector" class="bg-transparent text-md font-bold outline-none cursor-pointer">
                 <?php
                 // Crear opciones de mes
                 for ($i = 1; $i <= 12; $i++) {
@@ -68,7 +68,7 @@
                   echo "<option value=\"$i\" $selected>$nombreMesOption</option>";
                 }
                 ?>
-              </select>
+              </select> -->
               del <?php echo date('Y'); ?>.
             </p>
 
@@ -137,7 +137,7 @@
                 </div>
                 <div class="col-sm-8 text-md-center">
                   <h5 class="font-bold text-lg"><?php echo $cantidades['cantidadAreas']; ?></h5>
-                  <span>&Aacute;reas funcionales</span>
+                  <span>&Aacute;reas activas</span>
                 </div>
               </div>
             </div>

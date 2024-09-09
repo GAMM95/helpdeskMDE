@@ -27,14 +27,16 @@ $recepciones = $recepcionModel->listarRecepciones($start, $limit);
 
 
 // Paginacion de la tabla de incidencias cerradas
-$limite = 5; // Número de filas por página
-$pageCierres = isset($_GET['pageCierres']) ? (int)$_GET['pageCierres'] : 1; // Página actual
-$inicio = ($pageCierres - 1) * $limite; // Calcula el índice de inicio
+// $limite = 1; // Número de filas por página
+// $pageCierres = isset($_GET['pageCierres']) ? (int)$_GET['pageCierres'] : 1; // Página actual
+// $inicio = ($pageCierres - 1) * $limite; // Calcula el índice de inicio
 
-// Obtiene el total de registros
-$totalCierres = $cierreModel->contarIncidenciasCerradas();
-$totalPagesCierres  = ceil($totalCierres / $limite);
-$cierres = $cierreModel->listarCierres($inicio, $limite);
+// // Obtiene el total de registros
+// $totalCierres = $cierreModel->contarIncidenciasCerradas();
+// $totalPagesCierres  = ceil($totalCierres / $limite);
+
+$cierres = $cierreModel->listarCierres();
+// $cierres = $cierreModel->listarCierres($inicio, $limite);
 
 if ($CIE_numero != '') {
   global $cierreRegistrado;

@@ -440,3 +440,24 @@ function nuevoRegistro() {
   $('#editar-cierre').prop('disabled', true);    // Desactivar el botón de editar
   $('#nuevo-registro').prop('disabled', false);     // Asegurarse que el botón de nuevo registro está activo
 }
+
+// función para filtrar la tabla de incidencias
+function filtrarTablaCierres() {
+  var input, filtro, tabla, filas, celdas, i, j, match;
+  input = document.getElementById('termino');
+  filtro = input.value.toUpperCase();
+  tabla = document.getElementById('tablaIncidenciasCerradas');
+  filas = tabla.getElementsByTagName('tr');
+
+  for (i = 1; i < filas.length; i++) {
+    celdas = filas[i].getElementsByTagName('td');
+    match = false;
+    for (j = 0; j < celdas.length; j++) {
+      if (celdas[j].innerText.toUpperCase().indexOf(filtro) > -1) {
+        match = true;
+        break;
+      }
+    }
+    filas[i].style.display = match ? '' : 'none';
+  }
+}

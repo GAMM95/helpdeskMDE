@@ -16,7 +16,7 @@ $incidenciaController = new IncidenciaController();
 $incidenciaModel = new IncidenciaModel();
 
 // Paginacion de la tabla
-$limit = 3; // Número de filas por página
+$limit = 10; // Número de filas por página
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
 $start = ($page - 1) * $limit; // Calcula el índice de inicio
 
@@ -24,7 +24,8 @@ $start = ($page - 1) * $limit; // Calcula el índice de inicio
 $totalIncidencias = $incidenciaModel->contarIncidenciasAdministrador();
 $totalPages = ceil($totalIncidencias / $limit);
 // Obtiene las incidencias para la página actual
-$resultado = $incidenciaModel->listarIncidenciasRegistroAdmin($start, $limit);
+// $resultado = $incidenciaModel->listarIncidenciasRegistroAdmin($start, $limit);
+$resultado = $incidenciaModel->listarIncidenciasRegistroAdmin();
 
 if ($INC_numero != '') {
   global $incidenciaRegistrada;

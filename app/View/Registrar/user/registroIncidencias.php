@@ -153,7 +153,7 @@
 
     <!-- Paginacion de la tabla -->
     <div class="mt-3 mb-2">
-      <?php if ($totalPages > 1) : // Mostrar el contenedor solo si hay más de una página 
+      <!-- <?php if ($totalPages > 1) : // Mostrar el contenedor solo si hay más de una página 
       ?>
         <div class="flex justify-end items-center mt-1">
           <?php if ($page > 1) : ?>
@@ -163,7 +163,7 @@
           <?php if ($page < $totalPages) : ?>
             <a href="#" class="px-2 py-1 bg-gray-400 text-gray-200 hover:bg-gray-600 rounded-r-md" onclick="changePageTablaListarIncidencias(<?php echo $page + 1; ?>)"> Siguiente <i class="feather ml-2 icon-chevrons-right"></i></a>
           <?php endif; ?>
-        </div>
+        </div> -->
       <?php endif; ?>
     </div>
     <!-- fin de paginacion de la tabla -->

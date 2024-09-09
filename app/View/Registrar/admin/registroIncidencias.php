@@ -193,7 +193,12 @@
     <!-- Paginacion de la tabla -->
     <div id="noIncidencias" class="flex justify-between items-center mb-2">
       <h1 class="text-xl text-gray-400">Nuevas incidencias</h1>
-      <div id="paginadorIncidencias" class="flex justify-end items-center ">
+      <!-- Busqueda de termino -->
+      <div class="flex justify-between items-center">
+        <input type="text" id="termino" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 text-xs" placeholder="Buscar incidencia..." oninput="filtrarTablaIncidencias()" />
+      </div>
+      <!-- Fin de busqueda -->
+      <!-- <div id="paginadorIncidencias" class="flex justify-end items-center ">
         <?php if ($totalPages > 1) : // Mostrar el contenedor solo si hay más de una página 
         ?>
           <div class="flex justify-end items-center mt-1">
@@ -206,12 +211,12 @@
             <?php endif; ?>
           </div>
         <?php endif; ?>
-      </div>
+      </div> -->
     </div>
     <!-- Fin de la paginacion -->
 
     <!-- TABLA DE INCIDENCIAS REGISTRADAS -->
-    <div class="relative overflow-x-hidden shadow-md sm:rounded-lg">
+    <div class="relative max-h-[300px] overflow-x-hidden shadow-md sm:rounded-lg">
       <div class="max-w-full overflow-hidden rounded-lg">
         <table id="tablaListarIncidencias" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
           <!-- Encabezado de la tabla -->
@@ -271,7 +276,7 @@
                     <label class="badge <?= $badgeClass ?>"><?= $estadoDescripcion ?></label>
                   </td>
                   <td class='px-6 py-3 hidden'><?= $incidencia['Usuario']; ?></td>
-                  <td class="px-6 py-3 text-center flex space-x-2"> <!-- Columna de Acción con botones -->
+                  <td class="px-6 py-3 text-center align-middle flex space-x-2"> <!-- Columna de Acción con botones -->
                     <!-- Botón de Imprimir detalla de incidencia -->
                     <button type="button" id="imprimir-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center" title="Imprimir detalle de incidencia">
                       <i class="feather icon-printer"></i>

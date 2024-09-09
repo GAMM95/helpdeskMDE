@@ -239,7 +239,32 @@ class IncidenciaModel extends Conexion
   }
 
   // Método para listar incidencias registradas - ADMINISTRADOR
-  public function listarIncidenciasRegistroAdmin($start, $limit)
+  // public function listarIncidenciasRegistroAdmin($start, $limit)
+  // {
+  //   $conector = parent::getConexion();
+  //   try {
+  //     if ($conector != null) {
+  //       $sql = "SELECT * FROM vista_incidencias_administrador
+  //         ORDER BY 
+  //         -- Extraer el año de INC_numero_formato y ordenar por año de forma descendente
+  //         SUBSTRING(INC_numero_formato, CHARINDEX('-', INC_numero_formato) + 1, 4) DESC,
+  //         INC_numero_formato DESC
+  //         OFFSET :start ROWS
+  //         FETCH NEXT :limit ROWS ONLY";
+  //       $stmt = $conector->prepare($sql);
+  //       $stmt->bindParam(':start', $start, PDO::PARAM_INT);
+  //       $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+  //       $stmt->execute();
+  //       $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  //       return $result;
+  //     } else {
+  //       throw new Exception("Error de conexión a la base de datos.");
+  //     }
+  //   } catch (PDOException $e) {
+  //     throw new Exception("Error al listar incidencias registradas por el administrador: " . $e->getMessage());
+  //   }
+  // }
+  public function listarIncidenciasRegistroAdmin()
   {
     $conector = parent::getConexion();
     try {
@@ -248,12 +273,8 @@ class IncidenciaModel extends Conexion
           ORDER BY 
           -- Extraer el año de INC_numero_formato y ordenar por año de forma descendente
           SUBSTRING(INC_numero_formato, CHARINDEX('-', INC_numero_formato) + 1, 4) DESC,
-          INC_numero_formato DESC
-          OFFSET :start ROWS
-          FETCH NEXT :limit ROWS ONLY";
+          INC_numero_formato DESC";
         $stmt = $conector->prepare($sql);
-        $stmt->bindParam(':start', $start, PDO::PARAM_INT);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
@@ -265,27 +286,27 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  //  Metodo para listar incidencias por fecha para el administrador
-  public function listarIncidenciasFechaAdmin($fechaConsulta)
-  {
-    $conector = parent::getConexion();
-    try {
-      if ($conector != null) {
-        $sql = "SELECT * FROM vista_incidencias_fecha_admin
-                WHERE INC_fecha = :fechaConsulta
-                ORDER BY INC_numero DESC";
-        $stmt = $conector->prepare($sql); // Ejecutar la consulta
-        $stmt->bindParam(':fechaConsulta', $fechaConsulta, PDO::PARAM_STR); // Vinculamos el parámetro
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-      } else {
-        throw new Exception("Error de conexión a la base de datos.");
-      }
-    } catch (PDOException $e) {
-      throw new Exception("Error al listar las incidencias por fecha: " . $e->getMessage());
-    }
-  }
+  // //  Metodo para listar incidencias por fecha para el administrador
+  // public function listarIncidenciasFechaAdmin($fechaConsulta)
+  // {
+  //   $conector = parent::getConexion();
+  //   try {
+  //     if ($conector != null) {
+  //       $sql = "SELECT * FROM vista_incidencias_fecha_admin
+  //               WHERE INC_fecha = :fechaConsulta
+  //               ORDER BY INC_numero DESC";
+  //       $stmt = $conector->prepare($sql); // Ejecutar la consulta
+  //       $stmt->bindParam(':fechaConsulta', $fechaConsulta, PDO::PARAM_STR); // Vinculamos el parámetro
+  //       $stmt->execute();
+  //       $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  //       return $result;
+  //     } else {
+  //       throw new Exception("Error de conexión a la base de datos.");
+  //     }
+  //   } catch (PDOException $e) {
+  //     throw new Exception("Error al listar las incidencias por fecha: " . $e->getMessage());
+  //   }
+  // }
 
   //  Metodo para listar incidencias por fecha para el usuario
   public function listarIncidenciasUserFecha($area, $fecha)
@@ -352,21 +373,42 @@ class IncidenciaModel extends Conexion
     }
   }
 
+  // // Metodo para listar incidencias registradas por el usuario de un area especifica
+  // public function listarIncidenciasRegistroUsuario($ARE_codigo, $start, $limit)
+  // {
+  //   $conector = parent::getConexion();
+  //   try {
+  //     if ($conector != null) {
+  //       $sql = "SELECT * FROM vista_incidencias_usuario
+  //             WHERE ARE_codigo = :are_codigo
+  //             ORDER BY INC_numero DESC
+  //             OFFSET :start ROWS
+  //             FETCH NEXT :limit ROWS ONLY";
+  //       $stmt = $conector->prepare($sql);
+  //       $stmt->bindParam(':are_codigo', $ARE_codigo, PDO::PARAM_INT);
+  //       $stmt->bindParam(':start', $start, PDO::PARAM_INT);
+  //       $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+  //       $stmt->execute();
+  //       $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  //       return $result;
+  //     } else {
+  //       throw new Exception("Error de conexión a la base de datos.");
+  //     }
+  //   } catch (PDOException $e) {
+  //     throw new Exception("Error al listar incidencias registradas por el usuario: " . $e->getMessage());
+  //   }
+  // }
   // Metodo para listar incidencias registradas por el usuario de un area especifica
-  public function listarIncidenciasRegistroUsuario($ARE_codigo, $start, $limit)
+  public function listarIncidenciasRegistroUsuario($ARE_codigo)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
         $sql = "SELECT * FROM vista_incidencias_usuario
-              WHERE ARE_codigo = :are_codigo
-              ORDER BY INC_numero DESC
-              OFFSET :start ROWS
-              FETCH NEXT :limit ROWS ONLY";
+                WHERE ARE_codigo = :are_codigo
+                ORDER BY INC_numero DESC";
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':are_codigo', $ARE_codigo, PDO::PARAM_INT);
-        $stmt->bindParam(':start', $start, PDO::PARAM_INT);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;

@@ -127,48 +127,44 @@ class CierreModel extends Conexion
   }
 
   // TODO: Metodo para contar incidencias cerradas para la tabla listar cierres
-  public function contarIncidenciasCerradas()
-  {
-    $conector = parent::getConexion();
-    try {
-      if ($conector != null) {
-        $sql = "SELECT COUNT(*) AS total
-        FROM RECEPCION R
-        RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
-        INNER JOIN  AREA A ON I.ARE_codigo = A.ARE_codigo
-        INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
-        INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
-        LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
-        LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
-        INNER JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
-        INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
-        WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5";
-        $stmt = $conector->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result['total'];
-      } else {
-        throw new Exception("Error de conexión a la base de datos.");
-      }
-    } catch (PDOException $e) {
-      echo "Error contar incidencias cerradas: " . $e->getMessage();
-      return null;
-    }
-  }
+  // public function contarIncidenciasCerradas()
+  // {
+  //   $conector = parent::getConexion();
+  //   try {
+  //     if ($conector != null) {
+  //       $sql = "SELECT COUNT(*) AS total
+  //       FROM RECEPCION R
+  //       RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
+  //       INNER JOIN  AREA A ON I.ARE_codigo = A.ARE_codigo
+  //       INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+  //       INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+  //       LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
+  //       LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
+  //       INNER JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
+  //       INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
+  //       WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5";
+  //       $stmt = $conector->prepare($sql);
+  //       $stmt->execute();
+  //       $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  //       return $result['total'];
+  //     } else {
+  //       throw new Exception("Error de conexión a la base de datos.");
+  //     }
+  //   } catch (PDOException $e) {
+  //     echo "Error contar incidencias cerradas: " . $e->getMessage();
+  //     return null;
+  //   }
+  // }
 
   // TODO: Metodo para obtener la lista de incidencias cerradas para la tabla listar cierres
-  public function listarCierres($start, $limit)
+  public function listarCierres()
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
         $sql = "SELECT * FROM vista_cierres
-        ORDER BY CIE_numero DESC
-        OFFSET :start ROWS
-        FETCH NEXT :limit ROWS ONLY";
+        ORDER BY CIE_numero DESC";
         $stmt = $conector->prepare($sql);
-        $stmt->bindParam(':start', $start, PDO::PARAM_INT);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
@@ -181,6 +177,30 @@ class CierreModel extends Conexion
       return null;
     }
   }
+  // public function listarCierres($start, $limit)
+  // {
+  //   $conector = parent::getConexion();
+  //   try {
+  //     if ($conector != null) {
+  //       $sql = "SELECT * FROM vista_cierres
+  //       ORDER BY CIE_numero DESC
+  //       OFFSET :start ROWS
+  //       FETCH NEXT :limit ROWS ONLY";
+  //       $stmt = $conector->prepare($sql);
+  //       $stmt->bindParam(':start', $start, PDO::PARAM_INT);
+  //       $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+  //       $stmt->execute();
+  //       $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  //       return $result;
+  //     } else {
+  //       throw new Exception("Error de conexión a la base de datos.");
+  //       return null;
+  //     }
+  //   } catch (PDOException $e) {
+  //     echo "Error obtener lista de incidencias cerradas: " . $e->getMessage();
+  //     return null;
+  //   }
+  // }
 
   // TODO: Contar incidencias del ultimo mes para el administrador
   public function contarCierresUltimoMesAdministrador()
