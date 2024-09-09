@@ -111,11 +111,11 @@ GO
 -- CREACIÓN DE LA TABLA BIEN
 CREATE TABLE BIEN (
     BIE_codigo SMALLINT IDENTITY(1,1),
-    BIE_codigoPatrimonial VARCHAR(12) NULL,
-    BIE_nombre VARCHAR(50) NULL,
+    BIE_codigoIdentificador VARCHAR(12) NULL,
+    BIE_nombre VARCHAR(100) NULL,
 	BIE_estado SMALLINT NULL,
     CONSTRAINT pk_bien PRIMARY KEY (BIE_codigo),
-    CONSTRAINT uk_bie_codigoPatrimonial UNIQUE (BIE_codigoPatrimonial)  -- Único para asegurar la integridad
+    CONSTRAINT uk_bie_codigoIdentificado UNIQUE (BIE_codigoIdentificador)
 );
 GO
 
@@ -209,62 +209,63 @@ VALUES ('70555743', 'Jhonatan', 'Mantilla', 'Miñano', 'jhonatanmm.1995@gmail.co
 GO
 
 -- VOLCADO DE DATOS PARA LA TABLA AREA
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE INFORMÁTICA Y SISTEMAS');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA MUNICIPAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE CONTABILIDAD');
-INSERT INTO AREA(ARE_nombre) VALUES ('ALCALDÍA');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE TESORERÍA');
-INSERT INTO AREA(ARE_nombre) VALUES ('SECCIÓN DE ALMACÉN');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE ABASTECIMIENTO Y CONTROL PATRIMONIAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('UNIDAD DE CONTROL PATRIMONIAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('CAJA GENERAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA DE RECURSOS HUMANOS');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA DE DESARROLLO ECONÓMICO LOCAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('ÁREA DE LIQUIDACIÓN DE OBRAS');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE HABILITACIONES URBANAS Y CATASTRO');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE ESCALAFÓN');
-INSERT INTO AREA(ARE_nombre) VALUES ('SECRETARÍA GENERAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('PROVALE - PROGRAMA DE VASO DE LECHE');
-INSERT INTO AREA(ARE_nombre) VALUES ('DEMUNA');
-INSERT INTO AREA(ARE_nombre) VALUES ('OMAPED');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE SALUD');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA DE ADMINISTRACIÓN TRIBUTARIA');
-INSERT INTO AREA(ARE_nombre) VALUES ('SERVICIO SOCIAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('UNIDAD DE RELACIONES PÚBLICAS Y COMUNICACIONES');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA DE GESTIÓN AMBIENTAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA DE ASESORÍA JURÍDICA');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE PLANIFICACIÓN Y MODERNIZACIÓN INSTITUCIONAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE GESTIÓN Y DESARROLLO DE RECURSOS HUMANOS');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA DE DESARROLLO SOCIAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE EDUCACIÓN');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE PROGRAMAS SOCIALES');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE LICENCIAS');
-INSERT INTO AREA(ARE_nombre) VALUES ('POLICÍA MUNICIPAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('REGISTRO CIVIL');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE MANTENIMIENTO DE OBRAS PÚBLICAS');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA DE DESARROLLO URBANO');
-INSERT INTO AREA(ARE_nombre) VALUES ('EJECUTORÍA COACTIVA');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE ESTUDIOS Y PROYECTOS');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE OBRAS');
-INSERT INTO AREA(ARE_nombre) VALUES ('PROCURADORÍA PÚBLICA MUNICIPAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA DE ADMINISTRACIÓN Y FINANZAS');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE DEFENSA CIVIL');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE JUVENTUD, DEPORTE Y CULTURA');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE ÁREAS VERDES');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE SEGURIDAD CIUDADANA');
-INSERT INTO AREA(ARE_nombre) VALUES ('ÓRGANO DE CONTROL INSTITUCIONAL - OCI');
-INSERT INTO AREA(ARE_nombre) VALUES ('UNIDAD LOCAL DE EMPADRONAMIENTO - ULE');
-INSERT INTO AREA(ARE_nombre) VALUES ('UNIDAD DE ATENCIÓN AL USUARIO Y TRÁMITE DOCUMENTARIO');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA DE SEGURIDAD CIUDADANA');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE ABASTECIMIENTO');
-INSERT INTO AREA(ARE_nombre) VALUES ('PARTICIPACION VECINAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('GERENCIA DE PLANEAMIENTO, PRESUPUESTO Y MODERNIZACIÓN');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE TRANSPORTE, TRÁNSITO Y SEGURIDAD VIAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('ARCHIVO CENTRAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('EQUIPO MECÁNICO Y MAESTRANZA');
-INSERT INTO AREA(ARE_nombre) VALUES ('SUBGERENCIA DE LIMPIEZA PÚBLICA');
-INSERT INTO AREA(ARE_nombre) VALUES ('BIENESTAR SOCIAL');
-INSERT INTO AREA(ARE_nombre) VALUES ('ORIENTACION TRIBUTARIA');
+--Areas del palacio municipal
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Informática y Sistemas', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia Municipal', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Archivo Central', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Relaciones Públicas y Comunicaciones', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Registro Civil', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Programa de Vaso de Leche', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Secretaría General', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Atención al Usuario', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Trámite Documentario', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Ejecución Coactiva', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Alcaldía', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Caja General', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Órgano de Control Institucional', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Administración Tributaria', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Administración y Finanzas', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Contabilidad', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Tesorería', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Abastecimiento y Control Patrimonial', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Sección de Almacén', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Equipo Mecánico y Maestranza', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Contrataciones', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Gestión y Desarrollo de RR.HH.', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Escalafón', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Asesoría Jurídica', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de PLaneamiento, Presupuesto y Modernización', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Estudios y Proyectos', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Participación Vecinal', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Control Patrimonial', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Recursos Humanos', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Desarrollo Económico Local', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Área de Liquidación de Obras', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Habilitación Urbana y Catastro', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Desarrollo Social y Promoción de la Familia', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Educación', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Salud', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Juventud, Deporte y Cultura', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Turismo, Promoción e Impulso Empresarial', 2);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('DEMUNA', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Programas Sociales e Inclusión', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('OMAPED', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad Local de Empadronamiento - ULE', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('CIAM', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Licencias', 2);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Policía Municipal', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Desarrollo Urbano y Planeamiento Territorial', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Obras', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Procuradoría Pública Municipal', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Seguridad Ciudadana, Defensa Civil y Tránsito', 2);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Defensa Civil', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Seguridad Ciudadana', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado)  VALUES ('Subgerencia de Transporte, Tránsito y Seguridad Vial', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Mantenimiento de Obras Públicas', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Gestión Ambiental', 2);
+INSERT INTO AREA(ARE_nombre, ARE_estado)  VALUES ('Subgerencia de Limpieza Pública', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Áreas Verdes', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Bienestar Social', 1);
 GO
 
 -- VOLCADO DE DATOS PARA LA TABLA ESTADO
@@ -288,15 +289,15 @@ INSERT INTO PRIORIDAD (PRI_nombre) VALUES ('CRÍTICO');
 GO
 
 -- VOLCADO DE DATOS PARA LA TABLA CATEGORIA
-INSERT INTO CATEGORIA (CAT_nombre) VALUES ('RED INACCESIBLE');
-INSERT INTO CATEGORIA (CAT_nombre) VALUES ('ASISTENCIA TÉCNICA');
-INSERT INTO CATEGORIA (CAT_nombre) VALUES ('GENERACIÓN DE USUARIO');
-INSERT INTO CATEGORIA (CAT_nombre) VALUES ('FALLO DE EQUIPO DE CÓMPUTO');
-INSERT INTO CATEGORIA (CAT_nombre) VALUES ('INACCESIBILIDAD A IMPRESORA');
-INSERT INTO CATEGORIA (CAT_nombre) VALUES ('CORREO CORPORATIVO');
-INSERT INTO CATEGORIA (CAT_nombre) VALUES ('REPORTE DE SISTEMAS INFORMÁTICOS');
-INSERT INTO CATEGORIA (CAT_nombre) VALUES ('OTROS');
-INSERT INTO CATEGORIA (CAT_nombre) VALUES ('INACCESIBILIDAD A SISTEMAS INFORMÁTICOS');
+INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Red inaccesible', 1);
+INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Asistencia técnica', 1);
+INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Generación de usuario', 1);
+INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Fallo de equipo de computo', 1);
+INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Inaccesibilidad a impresora', 1);
+INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Correo corporativo', 1);
+INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Reporte de sistemas informáticos', 1);
+INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Inaccesibilidad a sistemas informáticos', 1);
+INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Otros', 1);
 GO
 
 -- VOLCADO DE DATOS PARA LA TABLA IMPACTO
@@ -306,21 +307,21 @@ INSERT INTO IMPACTO (IMP_descripcion) VALUES ('ALTO');
 GO
 
 -- VOLCADO DE DATOS PARA LA TABLA BIEN
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('','');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74089950','CPU');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74088187','MONITOR PLANO');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74087700','MONITOR A COLOR');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74089500','TECLADO');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74088600','MOUSE');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('46225215','ESTABILIZADOR');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74083650','IMPRESORA A INYECCION DE TINTA');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74083875','IMPRESORA DE CODIGO DE BARRAS');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74084550','IMPRESORA MATRIZ DE PUNTO');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74085000','IMPRESORA PARA PLANOS - PLOTTERS');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74084100','IMPRESORA LASER');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74222358','EQUIPO MULTIFUNCIONAL COPIADORA IMPRESORA SCANNER');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('95228117','SWITCH PARA RED');
-INSERT INTO BIEN (BIE_codigoPatrimonial, BIE_nombre) VALUES ('74087250','MODEM EXTERNO');
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('','',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74089950','CPU',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74088187','MONITOR PLANO',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74087700','MONITOR A COLOR',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74089500','TECLADO',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74088600','MOUSE',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('46225215','ESTABILIZADOR',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74083650','IMPRESORA A INYECCION DE TINTA',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74083875','IMPRESORA DE CODIGO DE BARRAS',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74084550','IMPRESORA MATRIZ DE PUNTO',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74085000','IMPRESORA PARA PLANOS - PLOTTERS',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74084100','IMPRESORA LASER',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74222358','EQUIPO MULTIFUNCIONAL COPIADORA IMPRESORA SCANNER',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('95228117','SWITCH PARA RED',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74087250','MODEM EXTERNO',1);
 GO
 
 -- VOLCADO DE DATOS PARA LA TABLA CONDICION
@@ -638,7 +639,7 @@ BEGIN
 END;
 GO
 
--- PROCEDIMIENTO ALMACENADO PARA HABILITAR USUARIO
+-- PROCEDIMIENTO ALMACENADO PARA HABILITAR AREA
 CREATE PROCEDURE sp_habilitarArea
 	@codigoArea SMALLINT
 AS
@@ -646,6 +647,121 @@ BEGIN
 	UPDATE AREA SET ARE_estado = 1
     WHERE (ARE_estado = 2 OR  ARE_estado = '')
 	AND  ARE_codigo = @codigoArea;
+END;
+GO
+
+--PROCEDIMIENTO ALMACENADO PARA REGISTRAR CATEGORIAS
+CREATE PROCEDURE sp_registrarCategoria
+    @NombreCategoria VARCHAR(60)
+AS
+BEGIN
+    -- Manejo de errores y transacciones
+    BEGIN TRY
+        BEGIN TRANSACTION;
+	        -- Inserta el área con ARE_estado siempre en 1
+        INSERT INTO CATEGORIA (CAT_nombre, CAT_estado)
+        VALUES (@NombreCategoria, 1);
+
+        -- Confirmar la transacción si todo sale bien
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Revertir la transacción en caso de error
+        ROLLBACK TRANSACTION;
+
+        -- Mostrar mensaje de error
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(), 
+            @ErrorSeverity = ERROR_SEVERITY(), 
+            @ErrorState = ERROR_STATE();
+
+        -- Lanzar el error capturado
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END;
+GO
+
+-- PROCEDIMIENTO ALMACENADO PARA DESHABILITAR CATEGORIA
+CREATE PROCEDURE sp_deshabilitarCategoria
+	@codigoCategoria SMALLINT
+AS
+BEGIN
+	UPDATE CATEGORIA SET CAT_estado = 2 
+   WHERE (CAT_estado = 1 OR  CAT_estado = '')
+	AND  CAT_codigo = @codigoCategoria;
+END;
+GO
+
+-- PROCEDIMIENTO ALMACENADO PARA HABILITAR BIEN
+CREATE PROCEDURE sp_habilitarCategoria
+	@codigoCategoria SMALLINT
+AS
+BEGIN
+	UPDATE CATEGORIA SET CAT_estado = 1
+    WHERE (CAT_estado = 2 OR  CAT_estado = '')
+	AND  CAT_codigo = @codigoCategoria;
+END;
+GO
+
+--PROCEDIMIENTO ALMACENADO PARA REGISTRAR BIEN
+CREATE PROCEDURE sp_registrarBien
+    @codigoIdentificador VARCHAR(12),
+    @NombreBien VARCHAR(100)
+AS
+BEGIN
+    -- Manejo de errores y transacciones
+    BEGIN TRY
+        BEGIN TRANSACTION;
+	        -- Inserta el área con ARE_estado siempre en 1
+        INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado)
+        VALUES (@codigoIdentificador, @NombreBien, 1);
+
+        -- Confirmar la transacción si todo sale bien
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Revertir la transacción en caso de error
+        ROLLBACK TRANSACTION;
+
+        -- Mostrar mensaje de error
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(), 
+            @ErrorSeverity = ERROR_SEVERITY(), 
+            @ErrorState = ERROR_STATE();
+
+        -- Lanzar el error capturado
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END;
+GO
+
+-- PROCEDIMIENTO ALMACENADO PARA DESHABILITAR BIEN
+CREATE PROCEDURE sp_deshabilitarBien
+	@codigoBien SMALLINT
+AS
+BEGIN
+	UPDATE BIEN SET BIE_estado = 2 
+   WHERE (BIE_estado = 1 OR  BIE_estado = '')
+	AND  BIE_codigo = @codigoBien;
+END;
+GO
+
+-- PROCEDIMIENTO ALMACENADO PARA HABILITAR BIEN
+CREATE PROCEDURE sp_habilitarBien
+	@codigoBien SMALLINT
+AS
+BEGIN
+	UPDATE BIEN SET BIE_estado = 1
+    WHERE (BIE_estado = 2 OR  BIE_estado = '')
+	AND  BIE_codigo = @codigoBien;
 END;
 GO
 
@@ -1510,7 +1626,7 @@ GO
 -- Vista para listar usuarios
 CREATE VIEW vista_usuarios AS
 SELECT USU_codigo, (p.PER_nombres + ' ' + p.PER_apellidoPaterno + ' '+ p.PER_apellidoMaterno) as persona, 
-a.ARE_nombre , USU_nombre, USU_password, r.ROL_nombre, e.EST_descripcion 
+a.ARE_nombre, a.ARE_estado, USU_nombre, USU_password, r.ROL_nombre, e.EST_descripcion 
 FROM USUARIO u
 INNER JOIN PERSONA p on p.PER_codigo = u.PER_codigo
 INNER JOIN AREA a on a.ARE_codigo = u.ARE_codigo

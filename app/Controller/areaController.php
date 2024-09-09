@@ -181,7 +181,7 @@ class AreaController
         } else {
           echo json_encode([
             'success' => false,
-            'message' => 'No se pudo deshabilitar el área.'
+            'message' => 'No se pudo deshabilitar el &aacute;rea.'
           ]);
         }
       } catch (Exception $e) {

@@ -8,7 +8,7 @@ class PrioridadModel extends Conexion
         parent::__construct();
     }
 
-    // TODO: Metodo para cargar prioridades
+    // Metodo para cargar prioridades
     public function getPrioridadData()
     {
         $conector = parent::getConexion();

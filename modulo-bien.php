@@ -32,6 +32,12 @@ switch ($action) {
   case 'eliminar':
     $bienController->eliminarBien();
     break;
+  case 'habilitar':
+    $bienController->habilitarBien();
+    break;
+  case 'deshabilitar':
+    $bienController->deshabilitarBien();
+    break;
   default:
     break;
 }

@@ -166,7 +166,12 @@
         <!-- DOCUMENTO DE CIERRE -->
         <div class="w-full md:w-2/5 px-2 mb-2">
           <label for="documento" class="block mb-1 font-bold text-xs">Documento de Cierre: *</label>
-          <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese documento de cierre">
+          <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese documento de cierre" oninput="uppercaseInput(this)">
+          <script>
+            function uppercaseInput(element) {
+              element.value = element.value.toUpperCase();
+            }
+          </script>
         </div>
 
         <!-- OPERATIVIDAD -->

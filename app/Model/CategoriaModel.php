@@ -14,10 +14,17 @@ class CategoriaModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "INSERT INTO CATEGORIA (CAT_nombre) VALUES (?)";
+        // $sql = "INSERT INTO CATEGORIA (CAT_nombre) VALUES (?)";
+        $sql = "EXEC sp_registrarCategoria :nombreCategoria";
         $stmt = $conector->prepare($sql);
-        $stmt->execute([$nombreCategoria]);
-        return $conector->lastInsertId();
+        $stmt->bindParam(':nombreCategoria', $nombreCategoria);
+        $stmt->execute();
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         throw new Exception("Error de conexion a la base de datos");
         return null;
@@ -34,7 +41,7 @@ class CategoriaModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "SELECT CAT_codigo, CAT_nombre FROM CATEGORIA 
+        $sql = "SELECT CAT_codigo, CAT_nombre, CAT_estado FROM CATEGORIA 
                 ORDER BY CAT_codigo ASC";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
@@ -143,7 +150,7 @@ class CategoriaModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "  SELECT COUNT(*) AS cantidadCategorias FROM CATEGORIA";
+        $sql = "  SELECT COUNT(*) AS cantidadCategorias FROM CATEGORIA WHERE CAT_estado = 1";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -155,6 +162,57 @@ class CategoriaModel extends Conexion
     } catch (PDOException $e) {
       throw new PDOException("Error al contar categorias: " . $e->getMessage());
       return null;
+    }
+  }
+
+  // Método para habilitar categoria
+  public function habilitarCategoria($codigoCategoria)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "EXEC sp_habilitarCategoria :codigoCategoria";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':codigoCategoria', $codigoCategoria, PDO::PARAM_INT);
+        $stmt->execute();
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al habilitar categoria: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  // METODO PARA DESHABILITAR categoria
+  public function deshabilitarCategoria($codigoCategoria)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "EXEC sp_deshabilitarCategoria :codigoCategoria";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':codigoCategoria', $codigoCategoria, PDO::PARAM_INT);
+        $stmt->execute();
+        // Confirmar que se ha actualizado al menos una fila
+        if ($stmt->rowCount() > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        throw new Exception("Error de conexion a la base de datos");
+        return null;
+      }
+    } catch (PDOException $e) {
+      throw new PDOException("Error al deshabilitar categoria: " . $e->getMessage());
     }
   }
 }

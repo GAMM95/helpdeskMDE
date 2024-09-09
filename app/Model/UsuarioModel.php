@@ -190,26 +190,6 @@ class UsuarioModel extends Conexion
     }
   }
 
-  // // Metodo para editar datos del usuario
-  // public function editarUsuario($username, $password, $persona, $rol, $area, $codigoUsuario)
-  // {
-  //   $conector = parent::getConexion();
-  //   try {
-  //     if ($conector != null) {
-  //       $sql = "UPDATE USUARIO SET USU_nombre = ?, USU_password = ?, PER_codigo = ?, ROL_codigo = ?, ARE_codigo = ? WHERE USU_codigo = ?";
-  //       $stmt = $conector->prepare($sql);
-  //       $stmt->execute([$username, $password, $persona, $rol, $area, $codigoUsuario]);
-  //       return $stmt->rowCount();
-  //     } else {
-  //       throw new Exception("Error de conexion a la base de datos");
-  //       return null;
-  //     }
-  //   } catch (PDOException $e) {
-  //     throw new PDOException("Error al actualizar usuario: " . $e->getMessage());
-  //     return null;
-  //   }
-  // }
-
   // Metodo para editar datos del usuario utilizando un procedimiento almacenado
   public function editarUsuario($codigoUsuario, $username, $password, $persona, $rol, $area)
   {

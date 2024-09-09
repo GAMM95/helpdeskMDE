@@ -33,6 +33,12 @@ switch ($action) {
   case 'eliminar':
     $categoriaController->eliminarCategoria();
     break;
+  case 'habilitar':
+    $categoriaController->habilitarCategoria();
+    break;
+  case 'deshabilitar':
+    $categoriaController->deshabilitarCategoria();
+    break;
   default:
     break;
 }

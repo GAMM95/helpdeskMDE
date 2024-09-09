@@ -169,4 +169,70 @@ class CategoriaController
       echo "Error: Método no permitido";
     }
   }
+
+  // Controlador para habilitar una categoria
+  public function habilitarCategoria()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $codigoCategoria = isset($_POST['codCategoria']) ? $_POST['codCategoria'] : '';
+
+      try {
+        $resultados = $this->categoriaModel->habilitarCategoria($codigoCategoria);
+        if ($resultados) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Categor&iacute;a habilitada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se pudo habilitar la categor&iacute;a.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
+    }
+  }
+
+  // Controlador para deshabilitar una categoria
+  public function deshabilitarCategoria()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $codigoCategoria = isset($_POST['codCategoria']) ? $_POST['codCategoria'] : '';
+
+      try {
+        $resultados = $this->categoriaModel->deshabilitarCategoria($codigoCategoria);
+        if ($resultados) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Categor&iacute;a deshabilitada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se pudo deshabilitar la categor&iacute;a.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
+    }
+  }
 }

@@ -1,19 +1,20 @@
 <?php
 require_once '../config/conexion.php';
 
-class AreaModel
+class AreaModel extends Conexion
 {
-    private $db;
 
     public function __construct()
     {
-        $this->db = (new Conexion())->getConexion();
+        parent::__construct();
     }
 
     public function getAreaData()
     {
-        $query = "SELECT * FROM AREA";
-        $stmt = $this->db->prepare($query);
+        $conector = parent::getConexion();
+        $query = "SELECT * FROM AREA WHERE ARE_estado <> 2 
+                ORDER BY ARE_nombre ASC";
+        $stmt = $conector->prepare($query);
         $stmt->execute();
         $resultado = $stmt->fetchAll();
         return $resultado;

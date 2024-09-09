@@ -41,7 +41,7 @@ class IncidenciaController
         if (!$this->bienModel->validarBienExistente($codigoPatrimonial)) {
           echo json_encode([
             'success' => false,
-            'message' => 'Verificar codigo patrimonial ingresado'
+            'message' => 'Verificar c&oacute;digo patrimonial ingresado'
           ]);
           exit();
         }
@@ -52,7 +52,7 @@ class IncidenciaController
         if ($insertSuccessId) {
           echo json_encode([
             'success' => true,
-            'message' => 'Incidencia registrada exitosamente.',
+            'message' => 'Incidencia registrada.',
             'INC_numero' => $insertSuccessId
           ]);
         } else {
@@ -98,7 +98,7 @@ class IncidenciaController
         } else {
           echo json_encode([
             'success' => false,
-            'message' => 'No se realizó ninguna eliminación.'
+            'message' => 'No se realiz&oacute; ninguna eliminaci&oacute;n.'
           ]);
         }
       } catch (Exception $e) {
@@ -155,7 +155,7 @@ class IncidenciaController
         if ($insertSuccessId) {
           echo json_encode([
             'success' => true,
-            'message' => 'Incidencia registrada exitosamente.',
+            'message' => 'Incidencia registrada.',
             'INC_numero' => $insertSuccessId
           ]);
         } else {
@@ -207,7 +207,7 @@ class IncidenciaController
           // Estado permitido para actualización
           echo json_encode([
             'success' => false,
-            'message' => 'La incidencia no está estado ABIERTO y no puede ser actualizada.'
+            'message' => 'La incidencia no est&aacute; estado ABIERTO y no puede ser actualizada.'
           ]);
           exit();
         }
@@ -223,7 +223,7 @@ class IncidenciaController
         } else {
           echo json_encode([
             'success' => false,
-            'message' => 'No se realizó ninguna actualización.'
+            'message' => 'No se realiz&oacute; ninguna actualizaci&oacute;n.'
           ]);
         }
       } catch (Exception $e) {

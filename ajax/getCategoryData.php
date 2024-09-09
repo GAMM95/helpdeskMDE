@@ -14,15 +14,15 @@ class CategoryModel extends Conexion
     {
         try {
             $conector = parent::getConexion();
-            $query = "SELECT * FROM CATEGORIA"; // Ajusta los nombres de las columnas según tu base de datos
+            $query = "SELECT * FROM CATEGORIA WHERE CAT_estado <> 2"; 
             $stmt = $conector->prepare($query);
             $stmt->execute();
-            $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC); // Utiliza FETCH_ASSOC para obtener un array asociativo
+            $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC); 
             return $categorias;
         } catch (PDOException $e) {
-            // Manejo de errores - Puedes registrar el error o devolver un mensaje de error genérico
+
             error_log('Error en getCategoryData: ' . $e->getMessage());
-            return []; // Devolver un array vacío en caso de error
+            return []; 
         }
     }
 }

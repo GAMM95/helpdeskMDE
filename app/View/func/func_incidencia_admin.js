@@ -6,6 +6,19 @@ $(document).ready(function () {
     "timeOut": "2000"
   };
 
+  // Evento para manejar la tecla Enter cuando una fila está seleccionada
+  $(document).on('keydown', function (e) {
+    // Verificar si la tecla presionada es Enter
+    if (e.key === 'Enter') {
+      // Si la fila está seleccionada, proceder a actualizar
+      if ($('.bg-blue-200.font-semibold').length > 0) {
+        e.preventDefault();
+        enviarFormulario('editar');
+      }
+    }
+  });
+
+
   // Manejador de eventos para la tecla Escape
   $(document).keydown(function (event) {
     // Verificar si la tecla presionada es ESC

@@ -31,7 +31,7 @@ $(function () {
       y: {
         title: {
           formatter: function (seriesName) {
-            return 'Cantidad: ';
+            return 'Cantidad ';
           }
         }
       },

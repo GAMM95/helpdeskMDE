@@ -15,7 +15,7 @@ class TipoBien extends Conexion
       // Consulta simplificada para buscar en la tabla BIEN
       $query = "SELECT BIE_nombre AS Tipo_de_Bien
                 FROM BIEN
-                WHERE BIE_codigoPatrimonial = :codigoPatrimonial";
+                WHERE BIE_codigoIdentificador = :codigoPatrimonial";
 
       $stmt = $conector->prepare($query);
       $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial, PDO::PARAM_STR);

@@ -76,7 +76,6 @@
                 <th scope="col" class="px-10 py-2 w-1/6 hidden">N&deg;</th>
                 <th scope="col" class="px-6 py-2 w-2/3 text-center">&Aacute;rea</th>
                 <th scope="col" class="px-6 py-2 w-1/6 text-center">Estado</th>
-                <th scope="col" class="px-6 py-2 w-1/6 text-center">Estado</th>
               </tr>
             </thead>
             <!-- Fin de encabezado -->
@@ -88,28 +87,31 @@
                   <?php
                   $estado = htmlspecialchars($area['ARE_estado']);
                   $isActive = ($estado === '1');
+                  $codigoArea = htmlspecialchars($area['ARE_codigo']); 
+                  $areaInactiva = ($estado == 2) ? 'text-red-600' : 'text-gray-900';
                   ?>
-                  <tr class=" hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b">
-                    <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap hidden"><?= htmlspecialchars($area['ARE_codigo']); ?></th>
-                    <td class="px-6 py-2 text-center"><?= htmlspecialchars($area['ARE_nombre']); ?></td>
-                    <td class="px-6 py-2 text-center"><?= htmlspecialchars($area['ARE_estado']); ?></td>
+                  <tr class="hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b" data-id="<?= $codigoArea; ?>">
+                    <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap hidden"><?= $codigoArea; ?></th>
+                    <td class="px-6 py-2 text-center <?= $areaInactiva; ?>"><?= htmlspecialchars($area['ARE_nombre']); ?></td>
                     <td class="px-6 py-2 text-center">
                       <div class="custom-control custom-switch cursor-pointer">
-                        <input type="checkbox" class="custom-control-input" id="customswitch<?= $area['ARE_estado']; ?>" <?= $isActive ? 'checked' : ''; ?>>
-                        <label class="custom-control-label" for="customswitch<?= $area['ARE_estado']; ?>"><?= $isActive ? 'Activo' : 'Inactivo'; ?></label>
+                        <input type="checkbox" class="custom-control-input switch-area" id="customswitch<?= $codigoArea; ?>" data-id="<?= $codigoArea; ?>" <?= $isActive ? 'checked' : ''; ?>>
+                        <label class="custom-control-label" for="customswitch<?= $codigoArea; ?>"><?= $isActive ? 'Activo' : 'Inactivo'; ?></label>
                       </div>
                     </td>
                   </tr>
                 <?php endforeach; ?>
               <?php else: ?>
                 <tr>
-                  <td colspan="1" class="text-center py-3">No se han registrado nuevas &aacute;reas</td>
+                  <td colspan="3" class="text-center py-3">No se han registrado nuevas &aacute;reas</td>
                 </tr>
               <?php endif; ?>
             </tbody>
+
             <!-- Fin del cuerpo de la tabla -->
           </table>
         </div>
+
         <!-- Fin de tabla de areas -->
       </div>
       <!-- Fin de Busqueda y Tabla -->
@@ -117,3 +119,8 @@
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>
+
+
+<script>
+
+</script>

@@ -201,3 +201,40 @@ $(document).ready(function () {
   });
 });
 
+$(document).ready(function () {
+  // Manejar el cambio de estado de los switches
+  $('.switch-categoria').on('change', function () {
+    var isChecked = $(this).is(':checked');
+    var codCategoria = $(this).data('id');
+    var url = isChecked ? 'modulo-categoria.php?action=habilitar' : 'modulo-categoria.php?action=deshabilitar';
+
+    $.ajax({
+      url: url,
+      method: 'POST',
+      data: {
+        codCategoria: codCategoria
+      },
+      dataType: 'json',
+      success: function (response) {
+        console.log('Estado: ', codCategoria);
+        var jsonResponse = JSON.parse(response);
+        console.log('Parsed JSON:', jsonResponse);
+
+        if (response.success) {
+          toastr.success(jsonResponse.message);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        } else {
+          toastr.error(jsonResponse.message);
+        }
+      },
+      error: function (xhr, status, error) {
+        toastr.success('Estado de categor&iacute;a actualizado.', 'Mensaje');
+        setTimeout(function () {
+          location.reload();
+        }, 1000);
+      }
+    });
+  });
+});

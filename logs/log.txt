@@ -591,3 +591,33 @@ Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGE
 Nombre de Persona: CARLOTA MARISCAL, Rol: Usuario, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 3, Usuario: CMARISCAL
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: SUBGERENCIA DE INFORMÁTICA Y SISTEMAS, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Rol: Usuario, Codigo Area: 57, Área: nueva area, Código de Usuario: 2, Usuario: LILI96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Rol: Usuario, Codigo Area: 57, Área: nueva area, Código de Usuario: 2, Usuario: LILI96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Rol: Usuario, Codigo Area: 3, Área: Archivo Central, Código de Usuario: 2, Usuario: LILI96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Rol: Usuario, Codigo Area: 3, Área: Archivo Central, Código de Usuario: 2, Usuario: LILI96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Rol: Usuario, Codigo Area: 3, Área: Archivo Central, Código de Usuario: 2, Usuario: LILI96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Liliana Marcelo, Rol: Usuario, Codigo Area: 11, Área: Alcaldía, Código de Usuario: 2, Usuario: LILI96
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 1, Usuario: GAMM95

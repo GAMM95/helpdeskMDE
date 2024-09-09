@@ -1,6 +1,6 @@
 <div class="pcoded-main-container mt-5">
   <div class="pcoded-content">
-    <!-- Inicio de miga de pan -->
+    <!-- [ breadcrumb ] start -->
     <div class="page-header">
       <div class="page-block">
         <div class="row align-items-center">
@@ -9,7 +9,7 @@
               <h5 class="text-2xl font-bold mb-2">Panel Informativo</h5>
             </div>
             <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a href="inicio.php"><i class="feather icon-home"></i></a>
+              <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
               </li>
               <li class="breadcrumb-item"><a href="inicio.php">Inicio</a></li>
             </ul>
@@ -17,11 +17,11 @@
         </div>
       </div>
     </div>
-    <!-- Fin de miga de pan -->
+    <!-- [ breadcrumb ] end -->
 
-    <!-- Inicio de contenido principal -->
+    <!-- [ Main Content ] start -->
     <div class="row">
-      <!-- Widget del grafico -->
+      <!-- Widget primary-success card start -->
       <div id="grafico" class="col-md-12 col-xl-8">
         <div class="card support-bar overflow-hidden">
           <div class="card-body pb-0">
@@ -30,6 +30,10 @@
             <span class="text-c-blue font-bold">INCIDENCIAS</span>
 
             <?php
+            // setlocale(LC_TIME, 'es_ES.UTF-8',  'Spanish_Spain', 'Spanish');
+            // $nombreMes = strftime('%B');
+
+
             // Establecer la configuración regional para el idioma español
             setlocale(LC_TIME, 'es_ES.UTF-8', 'Spanish_Spain', 'Spanish');
 
@@ -46,34 +50,17 @@
               IntlDateFormatter::NONE, // Sin formato de tiempo
               null, // Usar la zona horaria predeterminada
               null, // Calendario gregoriano
-              'MMMM' // Formato para mes
+              'MMMM' // Formato para mes y año
             );
 
             // Obtener el nombre del mes
             $nombreMes = $formatter->format($dateTimeObj);
             ?>
 
-            <!-- Integrar el selector de mes en la línea de texto sin bordes -->
-            <p class="mb-3 mt-3">
-              Total de incidencias en el mes de
-              <select id="mes-selector" class="bg-transparent text-md font-bold outline-none cursor-pointer">
-                <?php
-                // Crear opciones de mes
-                for ($i = 1; $i <= 12; $i++) {
-                  // Crear un objeto DateTime para cada mes
-                  $mesObj = DateTime::createFromFormat('!m', $i);
-                  $nombreMesOption = $formatter->format($mesObj);
-                  // Si el mes actual coincide con el mes en el bucle, seleccionarlo
-                  $selected = ($i == $dateTimeObj->format('n')) ? 'selected' : '';
-                  echo "<option value=\"$i\" $selected>$nombreMesOption</option>";
-                }
-                ?>
-              </select>
-              del <?php echo date('Y'); ?>.
-            </p>
+            <p class="mb-3 mt-3">Total de incidencias en el mes de <?php echo $nombreMes; ?> del <?php echo date('Y'); ?>.</p>
 
           </div>
-          <div id="support-chart"></div>
+          <div id="support-chart"></div> <!-- Asegúrate de tener este div -->
           <div class="card-footer bg-primary text-white">
             <div class="row text-center">
               <div class="col">
@@ -93,16 +80,7 @@
         </div>
       </div>
 
-      <script>
-        document.getElementById('mes-selector').addEventListener('change', function() {
-          var mesNombre = this.options[this.selectedIndex].text;
-          document.getElementById('mes-nombre').textContent = mesNombre;
-          // Aquí puedes agregar una llamada AJAX para actualizar los datos según el mes seleccionado
-        });
-      </script>
-      <!-- Fin del widget del grafico -->
-
-      <!-- Tarjetas de las cantidades  -->
+      <!-- Incluye las librerías necesarias -->
       <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script>
@@ -113,9 +91,10 @@
                                 (int)$cantidades['cierres_mes_actual']
                               ]); ?>;
       </script>
-      <!-- Fin de las tarjetas de las cantidades -->
 
-      <!-- Inicio del widget de los contadores -->
+
+
+      <!-- table card-1 start -->
       <div id="contador" class="col-md-12 col-xl-4">
         <div class="card flat-card">
           <div class="row-table">
@@ -167,9 +146,7 @@
             </div>
           </div>
         </div>
-        <!-- Fin del widget de los contadores -->
-
-        <!-- widget del area con mas incidencias -->
+        <!-- widget primary card start -->
         <div class="card flat-card widget-primary-card">
           <div class="row-table">
             <div class="col-sm-3 card-body">
@@ -181,22 +158,25 @@
             </div>
           </div>
         </div>
-        <!-- Fin del widget con mas incidencias -->
+        <!-- widget primary card end -->
       </div>
-      <!-- Fin del widget de los contadores -->
+      <!-- table card-1 end -->
 
-      <!-- Tabla de incidencias -->
+
+      <!-- prject ,team member start -->
       <div class="col-xl-12 col-md-12">
         <div class="card table-card">
+
+
           <div class="card-header py-2 flex items-center justify-between">
-            <!-- Subtitulo -->
+            <!-- Título alineado a la izquierda -->
             <h5 class="flex-shrink-0">Incidencias del d&iacute;a</h5>
 
-            <!-- Input de la fecha seleccionada -->
             <div class="flex-grow flex justify-center">
-              <input type="date" name="fecha" id="fechaInput" class="form-input mr-4 cursor-pointer" aria-label="Seleccionar fecha" value="<?= isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d'); ?>">
+              <form action="" method="get" id="fechaForm">
+                <input type="date" name="fecha" class="form-input mr-4 cursor-pointer" aria-label="Seleccionar fecha" value="<?= isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d'); ?>" onchange="document.getElementById('fechaForm').submit();">
+              </form>
             </div>
-            <!-- Fin de la fecha seleccionada -->
 
             <!-- Botones alineados a la derecha -->
             <div class="btn-group card-option flex-shrink-0">
@@ -210,13 +190,23 @@
                 <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> Eliminar</a></li>
               </ul>
             </div>
-            <!-- Fin de botones alineados a la derecha -->
+
           </div>
 
           <!-- TABLA DE NUEVAS INCIDENCIAS -->
+          <?php
+          require_once './app/Model/IncidenciaModel.php';
+
+          // Obtener la fecha desde un formulario o definirla aquí
+          $fecha = isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d'); 
+
+          $incidenciaModel = new IncidenciaModel();
+          $incidencias = $incidenciaModel->listarIncidenciasFechaAdmin($fecha);
+          ?>
+
           <div id="tabla-incidencias" class="card-body p-0">
             <div class="table-responsive overflow-y-auto max-h-96">
-              <table class="table table-hover mb-0 text-xs" id="incidenciasTable">
+              <table class="table table-hover mb-0 text-xs">
                 <!-- Encabezado -->
                 <thead>
                   <tr>
@@ -228,21 +218,73 @@
                     <th class="text-center">Estado</th>
                   </tr>
                 </thead>
-                <!-- Fin de encabezado -->
 
                 <!-- Cuerpo -->
-                <tbody id="incidenciasBody">
+                <tbody>
+                  <?php foreach ($incidencias as $incidencia) : ?>
+                    <tr class="align-middle"> <!-- Añadido 'align-middle' para centrar verticalmente -->
+                      <!-- código de la incidencia -->
+                      <td class="text-center text-xs align-middle"><?= htmlspecialchars($incidencia['INC_numero_formato']); ?></td>
+                      <!-- Usuario y área -->
+                      <td>
+                        <div class="flex items-center">
+                          <img class="rounded-full w-10 h-10 mr-4" src="dist/assets/images/user/avatar.png" alt="User-Profile-Image">
+                          <div>
+                            <h6 class="text-xs"><?= htmlspecialchars($incidencia['Usuario']); ?></h6>
+                            <p class="text-muted text-xs"><?= htmlspecialchars($incidencia['ARE_nombre']); ?></p>
+                          </div>
+                        </div>
+                      </td>
+                      <!-- Fecha de la incidencia -->
+                      <td class="text-center text-xs align-middle"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']); ?></td>
+                      <!-- Descripción de la incidencia -->
+                      <td class="text-center text-xs align-middle"><?= htmlspecialchars($incidencia['INC_asunto']); ?></td>
+                      <!-- Documento de la incidencia -->
+                      <td class="text-center text-xs align-middle"><?= htmlspecialchars($incidencia['INC_documento']); ?></td>
+                      <!-- Estado -->
+                      <td class="text-center text-xs align-middle">
+                        <?php
+                        $estado = htmlspecialchars($incidencia['ESTADO']);
+                        $badgeClass = '';
+
+                        switch ($estado) {
+                          case 'ABIERTO':
+                            $badgeClass = 'badge-light-danger';
+                            break;
+                          case 'RECEPCIONADO':
+                            $badgeClass = 'badge-light-success';
+                            break;
+                          case 'CERRADO':
+                            $badgeClass = 'badge-light-primary';
+                            break;
+                          default:
+                            $badgeClass = 'badge-light-secondary';
+                            break;
+                        }
+                        ?>
+                        <label class="badge <?= $badgeClass; ?>"><?= $estado; ?></label>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
+
+                  <?php if (empty($incidencias)) : ?>
+                    <tr>
+                      <td colspan="6" class="text-center py-3">No hay incidencias para la fecha seleccionada.</td>
+                    </tr>
+                  <?php endif; ?>
                 </tbody>
-                <!-- Fin del cuerpo -->
+
               </table>
             </div>
           </div>
           <!-- Fin tabla de nuevas incidencias -->
+
         </div>
+
       </div>
-      <!-- Fin de tabla de incidencias -->
+
     </div>
-    <!-- Fin del contenido principal -->
+    <!-- [ Main Content ] end -->
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>

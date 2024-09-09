@@ -142,11 +142,14 @@
                 <?php
                 $estado = htmlspecialchars($usuario['EST_descripcion']);
                 $isActive = ($estado === 'ACTIVO');
+                $areaEstado = htmlspecialchars($usuario['ARE_estado']);
+                // Aplicar clase de texto rojo si el ARE_estado es 2
+                $areaInactiva = ($areaEstado == 2) ? 'text-red-600' : 'text-gray-900';
                 ?>
-                <tr class=" hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b">
+                <tr class="hover:bg-green-100 hover:scale-[101%] transition-all hover:cursor-pointer border-b" data-id="<?= $usuario['USU_codigo']; ?>">
                   <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap hidden"><?= htmlspecialchars($usuario['USU_codigo']); ?></th>
                   <td class="px-6 py-2 text-center"><?= htmlspecialchars($usuario['persona']); ?></td>
-                  <td class="px-6 py-2 text-center"><?= htmlspecialchars($usuario['ARE_nombre']); ?></td>
+                  <td class="px-6 py-2 text-center <?= $areaInactiva; ?>"><?= htmlspecialchars($usuario['ARE_nombre']); ?></td>
                   <td class="px-6 py-2 text-center"><?= htmlspecialchars($usuario['USU_nombre']); ?></td>
                   <td class="px-6 py-2 text-center hidden"><?= htmlspecialchars($usuario['USU_password']); ?></td>
                   <td class="px-6 py-2 text-center"><?= htmlspecialchars($usuario['ROL_nombre']); ?></td>
@@ -160,7 +163,7 @@
               <?php endforeach; ?>
             <?php else : ?>
               <tr>
-                <td colspan="5" class="text-center py-3">No se han registrado usuarios</td>
+                <td colspan="8" class="text-center py-3">No se han registrado usuarios</td>
               </tr>
             <?php endif; ?>
           </tbody>

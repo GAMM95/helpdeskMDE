@@ -36,7 +36,6 @@ class AreaModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        // $sql = "INSERT INTO AREA (ARE_nombre) VALUES (?)";
         $sql = "EXEC sp_registrarArea :nombreArea";
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':nombreArea', $nombreArea);
@@ -62,7 +61,7 @@ class AreaModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "SELECT ARE_codigo, ARE_nombre, ARE_estado FROM AREA ORDER BY ARE_codigo ASC";
+        $sql = "SELECT ARE_codigo, ARE_nombre, ARE_estado FROM AREA ORDER BY ARE_codigo DESC";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -127,7 +126,7 @@ class AreaModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "  SELECT COUNT(*) AS cantidadAreas FROM AREA";
+        $sql = "  SELECT COUNT(*) AS cantidadAreas FROM AREA WHERE ARE_estado = 1";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);

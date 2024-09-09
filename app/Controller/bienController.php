@@ -30,7 +30,7 @@ class BienController
         if ($this->bienModel->validarBienExistente($codigoIdentificador)) {
           echo json_encode([
             'success' => false,
-            'message' => 'El &oacute;digo identificador ingresado ya est&aacute; registrado.',
+            'message' => 'El c&oacute;digo identificador ingresado ya est&aacute; registrado.',
           ]);
           exit();
         }
@@ -150,6 +150,72 @@ class BienController
       echo json_encode([
         'success' => false,
         'message' => 'M&eacute;todo no permitido.'
+      ]);
+    }
+  }
+
+  // Controlador para habilitar un bien
+  public function habilitarBien()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $codigoBien = isset($_POST['codBien']) ? $_POST['codBien'] : '';
+
+      try {
+        $resultados = $this->bienModel->habilitarBien($codigoBien);
+        if ($resultados) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'C&oacute;digo de bien habilitado.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se pudo habilitar el c&oacute;digo de bien.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
+      ]);
+    }
+  }
+
+  // Controlador para deshabilitar un bien
+  public function deshabilitarBien()
+  {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $codigoBien = isset($_POST['codBien']) ? $_POST['codBien'] : '';
+
+      try {
+        $resultados = $this->bienModel->deshabilitarBien($codigoBien);
+        if ($resultados) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'C&oacute;digo de bien deshabilitado.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se pudo habilitar el c&oacute;digo de bien.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+    } else {
+      echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido.'
       ]);
     }
   }

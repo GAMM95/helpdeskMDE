@@ -41,7 +41,7 @@ class ReporteIncidencia extends Conexion
     LEFT JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
     LEFT JOIN USUARIO U ON U.USU_codigo = I.USU_codigo
     INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
-    LEFT JOIN BIEN B ON LEFT(I.INC_codigoPatrimonial, 8) = LEFT(B.BIE_codigoPatrimonial, 8)
+    LEFT JOIN BIEN B ON LEFT(I.INC_codigoPatrimonial, 8) = LEFT(B.BIE_codigoIdentificador, 8)
     WHERE (I.EST_codigo IN (3, 4, 5) OR C.EST_codigo IN (3, 4, 5))
     ORDER BY I.INC_numero DESC";
     $stmt = $conector->prepare($sql);

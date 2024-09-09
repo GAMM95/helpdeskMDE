@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
   <!-- Implementación de iconos -->
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <title class="text-center text-3xl font-poppins">Sistema HelpDesk MDE</title>
+  <title class="text-center text-3xl font-poppins">Sistema de Gesti&oacute;n de Incidencias</title>
 </head>
 
 <body class="bg-green-50 relative">
@@ -100,7 +100,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p class="text-gray-800 text-md">Para recuperar tus credenciales o reactivar tu cuenta, contacta a la <i>Subgerencia de Inform&aacute;tica y Sistemas</i> llamando al <b><u>ANEXO 120</u></b>.</p>
+          <p class="text-gray-800 text-md">Para recuperar tus credenciales o reactivar tu cuenta, contacta a la <i>Subgerencia de Inform&aacute;tica y Sistemas</i> marcando el <b><u>ANEXO 120</u></b>.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary rounded-md" data-dismiss="modal">Cerrar</button>

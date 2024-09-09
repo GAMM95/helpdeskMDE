@@ -15,7 +15,7 @@ class TipoBienReporte extends Conexion
       // Consulta simplificada para buscar en la tabla BIEN
       $query = "SELECT B.BIE_nombre AS TipoBien
       FROM INCIDENCIA I
-      JOIN BIEN B ON LEFT(I.INC_codigoPatrimonial, 8) = B.BIE_codigoPatrimonial
+      JOIN BIEN B ON LEFT(I.INC_codigoPatrimonial, 8) = B.BIE_codigoIdentificador
       WHERE I.INC_codigoPatrimonial = :codigoPatrimonial";
 
       $stmt = $conector->prepare($query);

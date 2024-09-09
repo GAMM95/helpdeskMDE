@@ -8,7 +8,7 @@ class OperatividadModel extends Conexion
     parent::__construct();
   }
 
-  //TODO: Metodo para cargar operatividad
+  // Metodo para cargar operatividad
   public function getOperatividadData()
   {
     $conector = parent::getConexion();
