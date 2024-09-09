@@ -205,6 +205,16 @@ GO
 
 -- VOLCADO DE DATOS PARA LA TABLA PERSONA
 INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
+VALUES ('70555000', 'Jose', 'Castro', 'Gonzales', '', '');
+INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
+VALUES ('42761038', 'Alan', 'Collantes', 'Arana', '', '');
+INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
+VALUES ('70400307', 'Carlos', 'Leyva', 'Campos', '', '');
+INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
+VALUES ('70400300', 'Freysi', 'Benites', 'Torres', '', '');
+INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
+VALUES ('70400304', 'Stiven', 'Fabian', 'Bustamante', '', '');
+INSERT INTO PERSONA (PER_dni, PER_nombres, PER_apellidoPaterno, PER_apellidoMaterno, PER_email, PER_celular)
 VALUES ('70555743', 'Jhonatan', 'Mantilla', 'Miñano', 'jhonatanmm.1995@gmail.com', '950212909');
 GO
 
@@ -279,7 +289,17 @@ GO
 
 -- VOLCADO DE DATOS PARA LA TABLA USUARIO
 INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
-VALUES ('GAMM95', '123456', 1, 2, 1, 1);
+VALUES ('JCASTRO', '123456', 1, 1, 1, 1);
+INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
+VALUES ('ACOLLANTES', '123456', 2, 1, 1, 1);
+INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
+VALUES ('CLEYVA', '123456', 3, 2, 1, 1);
+INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
+VALUES ('FBENITES', '123456', 4, 1, 1, 1);
+INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
+VALUES ('SFABIAN', '123456', 5, 2, 1, 2);
+INSERT INTO USUARIO (USU_nombre, USU_password, PER_codigo, ROL_codigo, ARE_codigo, EST_codigo)
+VALUES ('JMANTILLA', '123456', 6, 2, 1, 1);
 GO
 
 -- VOLCADO DE DATOS PARA LA TABLA PRIORIDAD
@@ -1735,9 +1755,6 @@ INNER JOIN PERSONA p ON p.PER_codigo = U.PER_codigo
 WHERE I.EST_codigo NOT IN (4, 5) 
 AND A.ARE_codigo <> 1;
 GO
-
-
-
 
 ---- PROCEDIMIENTO ALMACENADO PARA ELIMINAR INCIDENCIA
 CREATE PROCEDURE sp_eliminarIncidencia
