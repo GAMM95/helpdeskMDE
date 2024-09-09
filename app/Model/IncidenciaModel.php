@@ -9,7 +9,7 @@ class IncidenciaModel extends Conexion
     parent::__construct();
   }
 
-  //TODO: Metodo para obtener incidencias por ID
+  // Metodo para obtener incidencias por ID
   public function obtenerIncidenciaPorId($IncNumero)
   {
     $conector = parent::getConexion();
@@ -52,7 +52,7 @@ class IncidenciaModel extends Conexion
   }
 
   /**
-   * TODO: Método para insertar una nueva incidencia en la base de datos - ADMINISTRADOR / USUARIO.
+   * Método para insertar una nueva incidencia en la base de datos - ADMINISTRADOR / USUARIO.
    * 
    * Este método permite registrar una nueva incidencia en el sistema. Es utilizado tanto por
    * administradores como por usuarios. La incidencia se almacena en la base de datos a través
@@ -114,7 +114,33 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO: Metodo para eliminar incidencia
+  // Metodo para actualizar incidencia - Administrador
+  public function editarIncidenciaUser($num_incidencia, $categoria, $codigoPatrimonial, $asunto, $documento, $descripcion)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "EXEC sp_ActualizarIncidenciaUsuario :num_incidencia, :categoria, :codigoPatrimonial, :asunto, :documento, :descripcion";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':num_incidencia', $num_incidencia, PDO::PARAM_INT);
+        $stmt->bindParam(':categoria', $categoria, PDO::PARAM_INT);
+        $stmt->bindParam(':codigoPatrimonial', $codigoPatrimonial);
+        $stmt->bindParam(':asunto', $asunto);
+        $stmt->bindParam(':documento', $documento);
+        $stmt->bindParam(':descripcion', $descripcion);
+        $stmt->execute(); // Ejecutar el procedimiento almacenado
+        // Confirmar que se ha actualizado al menos una fila
+        return $stmt->rowCount() > 0 ? true : false;
+      } else {
+        throw new Exception("Error de conexión con la base de datos.");
+      }
+    } catch (PDOException $e) {
+      echo "Error al editar incidencia para el usuario: " . $e->getMessage();
+      return false;
+    }
+  }
+
+  // Metodo para eliminar incidencia
   public function eliminarIncidencia($codigoIncidencia)
   {
     $conector = parent::getConexion();
@@ -136,7 +162,7 @@ class IncidenciaModel extends Conexion
   }
 
   /**
-   * TODO: Método para consultar incidencias de la base de datos para el ADMINISTRADOR
+   * Método para consultar incidencias de la base de datos para el ADMINISTRADOR
    * 
    * Este método permite a un administrador y usuario consultar incidencias en el sistema. 
    * La incidencia se consulta con los detalles proporcionados, incluyendo la fecha, 
@@ -167,7 +193,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO: Metodo listar incidencias pendientes - ADMINISTRADOR
+  // Metodo listar incidencias pendientes - ADMINISTRADOR
   public function listarIncidenciasPendientesAdministrador()
   {
     $conector = parent::getConexion();
@@ -189,7 +215,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO: Metodo listar incidencias totales - USUARIO
+  // Metodo listar incidencias totales - USUARIO
   public function listarIncidenciasUsuario($ARE_codigo)
   {
     $conector = parent::getConexion();
@@ -212,7 +238,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO: Método para listar incidencias registradas - ADMINISTRADOR
+  // Método para listar incidencias registradas - ADMINISTRADOR
   public function listarIncidenciasRegistroAdmin($start, $limit)
   {
     $conector = parent::getConexion();
@@ -286,7 +312,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  //  TODO: Contar el total de incidencias para empaginar tabla - ADMINISTRADOR
+  //  Contar el total de incidencias para empaginar tabla - ADMINISTRADOR
   public function contarIncidenciasAdministrador()
   {
     $conector = $this->getConexion();
@@ -305,7 +331,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  //  TODO: Contar el total de incidencias para empaginar tabla - USUARIO
+  //  Contar el total de incidencias para empaginar tabla - USUARIO
   public function contarIncidenciasUsuario($ARE_codigo)
   {
     $conector = $this->getConexion();
@@ -326,7 +352,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO: Metodo para listar incidencias registradas por el usuario de un area especifica
+  // Metodo para listar incidencias registradas por el usuario de un area especifica
   public function listarIncidenciasRegistroUsuario($ARE_codigo, $start, $limit)
   {
     $conector = parent::getConexion();
@@ -353,7 +379,7 @@ class IncidenciaModel extends Conexion
   }
 
   // METODOS PARA EL PANEL INICIO
-  // TODO: Contar incidencias del ultimo mes para el administrador
+  // Contar incidencias del ultimo mes para el administrador
   public function contarIncidenciasUltimoMesAdministrador()
   {
     $conector = parent::getConexion();
@@ -399,7 +425,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO: Contar incidencias del ultimo mes para el administrador
+  // Contar incidencias del ultimo mes para el administrador
   public function contarIncidenciasUltimoMesUsuario($area)
   {
     $conector = parent::getConexion();
@@ -451,7 +477,7 @@ class IncidenciaModel extends Conexion
   }
 
   // METODOS PARA CONSULTAS
-  // TODO:  Metodo para consultar incidencias pendientes - ADMINISTRADOR
+  //  Metodo para consultar incidencias pendientes - ADMINISTRADOR
   public function buscarIncidenciasPendientesAdministrador($area, $estado, $fechaInicio, $fechaFin)
   {
     $conector = parent::getConexion();
@@ -474,7 +500,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO:  Metodo para consultar incidencias totales - ADMINISTRADOR
+  //  Metodo para consultar incidencias totales - ADMINISTRADOR
   public function buscarIncidenciaTotales($area, $codigoPatrimonial, $fechaInicio, $fechaFin)
   {
     $conector = parent::getConexion();
@@ -498,7 +524,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO:  Metodo para consultar incidencias por area - USUARIO
+  // Metodo para consultar incidencias por area - USUARIO
   public function buscarIncidenciaUsuario($area, $codigoPatrimonial, $estado, $fechaInicio, $fechaFin)
   {
     $conector = parent::getConexion();
@@ -575,7 +601,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO: Notificaiones para el administrador
+  // Notificaiones para el administrador
   public function notificacionesAdmin()
   {
     $conector = parent::getConexion();
@@ -595,7 +621,7 @@ class IncidenciaModel extends Conexion
     }
   }
 
-  // TODO: Notificaiones para el usuario
+  // Notificaiones para el usuario
   public function notificacionesUser($area)
   {
     $conector = parent::getConexion();

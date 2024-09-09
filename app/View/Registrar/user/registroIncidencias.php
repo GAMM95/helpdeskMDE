@@ -25,6 +25,7 @@
 
     <!-- Formulario de registro -->
     <form id="formIncidencia" action="registro-incidencia-user.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
+      <input type="hidden" id="form-action" name="action" value="registrar">
 
       <!-- Fila oculta del numero de incidencia -->
       <div class="flex items-center mb-4 hidden">
@@ -173,7 +174,7 @@
       <!-- TODO: Metodo javascript para filtrar incidencia -->
       <!-- Busqueda de termino -->
       <div class="flex justify-between items-center">
-        <input type="text" id="termino" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 text-xs" placeholder="Buscar incidencia..." oninput="filtrarTablaUsuario()" />
+        <input type="text" id="termino" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 text-xs" placeholder="Buscar incidencia..." oninput="filtrarTablaIncidencias()" />
       </div>
       <!-- Fin de busqueda -->
     </div>
@@ -207,8 +208,7 @@
           <tbody>
             <?php if (!empty($resultado)) : ?>
               <?php foreach ($resultado as $incidencia) : ?>
-                <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
-                <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b'>
+                <tr class='second-table hover:bg-green-100 hover:scale-[101%] transition-all border-b' data-id="<?= $incidencia['INC_numero']; ?>">
                   <th scope='row' class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap hidden'> <?= $incidencia['INC_numero']; ?></th>
                   <td class='px-6 py-2 text-center'><?= $incidencia['INC_numero_formato']; ?></td>
                   <td class='px-6 py-2 text-center'><?= $incidencia['fechaIncidenciaFormateada']; ?></td>

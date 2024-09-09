@@ -144,7 +144,7 @@ class IncidenciaController
         if (!$this->bienModel->validarBienExistente($codigoPatrimonial)) {
           echo json_encode([
             'success' => false,
-            'message' => 'El equipo no existe'
+            'message' => 'Verificar c&oacute;digo patrimonial ingresado'
           ]);
           exit();
         }
@@ -236,6 +236,66 @@ class IncidenciaController
     }
   }
 
+  // Metodo para actualizar indicencias - ADMINISTRADOR
+  public function actualizarIncidenciaUsuario()
+  {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+      // Obtener y validar los parámetros
+      $numeroIncidencia = $_POST['numero_incidencia'] ?? null;
+      $categoria = $_POST['categoria'] ?? null;
+      $codigoPatrimonial = $_POST['codigoPatrimonial'] ?? null;
+      $asunto = $_POST['asunto'] ?? null;
+      $documento = $_POST['documento'] ?? null;
+      $descripcion = $_POST['descripcion'] ?? null;
+
+      header('Content-Type: application/json');
+      try {
+
+        if (is_null($asunto) || is_null($documento)) {
+          // Respuesta en caso de parámetros faltantes
+          echo json_encode([
+            'success' => true,
+            'message' => 'Faltan parámetros requeridos.'
+          ]);
+          exit();
+        }
+
+        // Verificar el estado de la incidencia
+        $estado = $this->incidenciaModel->obtenerEstadoIncidencia($numeroIncidencia);
+
+        if ($estado === 3) {
+          // Estado permitido para actualización
+          echo json_encode([
+            'success' => false,
+            'message' => 'La incidencia no est&aacute; estado ABIERTO y no puede ser actualizada.'
+          ]);
+          exit();
+        }
+
+        // Llamar al modelo para actualizar la incidencia
+        $updateSuccess = $this->incidenciaModel->editarIncidenciaUser($numeroIncidencia, $categoria, $codigoPatrimonial, $asunto, $documento, $descripcion);
+
+        if ($updateSuccess) {
+          echo json_encode([
+            'success' => true,
+            'message' => 'Incidencia actualizada.'
+          ]);
+        } else {
+          echo json_encode([
+            'success' => false,
+            'message' => 'No se realiz&oacute; ninguna actualizaci&oacute;n.'
+          ]);
+        }
+      } catch (Exception $e) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Error: ' . $e->getMessage()
+        ]);
+      }
+      exit();
+    }
+  }
   /**
    * TODO: Método de controlador para consultar incidencias filtradas - ADMINISTRADOR
    * 

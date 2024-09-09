@@ -128,39 +128,6 @@ function validarCamposRegistroPersona() {
   return valido;
 }
 
-// // Evento de clic en una fila de la tabla usando delegación de eventos
-// $(document).on('click', '#tablaTrabajadores tr', function () {
-//   var cod = $(this).data('cod');
-//   var dni = $(this).data('dni');
-//   var nombreCompleto = $(this).data('nombre');
-//   var celular = $(this).data('celular');
-//   var email = $(this).data('email');
-
-//   var partesNombre = nombreCompleto.split(' ');
-
-//   var apellidoMaterno = partesNombre.pop();
-//   var apellidoPaterno = partesNombre.pop();
-//   var nombre = partesNombre.join(' ');
-
-//   $('#CodPersona').val(cod);
-//   $('#dni').val(dni);
-//   $('#nombres').val(nombre);
-//   $('#apellidoPaterno').val(apellidoPaterno);
-//   $('#apellidoMaterno').val(apellidoMaterno);
-//   $('#celular').val(celular);
-//   $('#email').val(email);
-
-//   $('#tablaTrabajadores tr').removeClass('bg-blue-200 font-semibold');
-//   $(this).addClass('bg-blue-200 font-semibold');
-
-//   $('#form-action').val('editar'); // Cambiar la acción a editar
-
-//   // Habilitar el botón de editar
-//   $('#guardar-persona').prop('disabled', true);
-//   $('#editar-persona').prop('disabled', false);
-//   $('#nuevo-registro').prop('disabled', false);
-// });
-
 $(document).ready(function () {
   // Seteo de los valores de los inputs y combos cuando se hace clic en una fila de la tabla
   $(document).on('click', '#tablaTrabajadores tbody tr', function () {

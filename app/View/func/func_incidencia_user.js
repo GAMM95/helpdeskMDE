@@ -12,41 +12,71 @@ $(document).ready(function () {
       nuevoRegistro();
     }
   });
-});
 
-// TODO: SETEO DEL COMBO CATEGORIA
-$(document).ready(function () {
-  $.ajax({
-    url: 'ajax/getCategoryData.php',
-    type: 'GET',
-    dataType: 'json',
-    success: function (data) {
-      var select = $('#cbo_categoria');
-      select.empty();
-      select.append('<option value="" selected disabled>Seleccione una categor&iacute;a</option>');
-      $.each(data, function (index, value) {
-        select.append('<option value="' + value.CAT_codigo + '">' + value.CAT_nombre + '</option>');
-      });
-    },
-    error: function (error) {
-      console.error('Error en la carga de categorías:', error);
-    }
-  });
-});
-
-// TODO: BUSCADOR PARA EL COMBO CATEGORIA 
-$(document).ready(function () {
-  $('#cbo_categoria').select2({
-    allowClear: true,
-    width: '100%',
-    dropdownCssClass: 'text-xs',
-    language: {
-      noResults: function () {
-        return "No se encontraron resultados";
+  // Evento para manejar la tecla Enter cuando una fila está seleccionada
+  $(document).on('keydown', function (e) {
+    // Verificar si la tecla presionada es Enter
+    if (e.key === 'Enter') {
+      // Si la fila está seleccionada, proceder a actualizar
+      if ($('.bg-blue-200.font-semibold').length > 0) {
+        e.preventDefault();
+        enviarFormulario('editar');
       }
     }
   });
+
+  // Seteo de valores en el combo de categorias
+  $(document).ready(function () {
+    $.ajax({
+      url: 'ajax/getCategoryData.php',
+      type: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        var select = $('#cbo_categoria');
+        select.empty();
+        select.append('<option value="" selected disabled>Seleccione una categor&iacute;a</option>');
+        $.each(data, function (index, value) {
+          select.append('<option value="' + value.CAT_codigo + '">' + value.CAT_nombre + '</option>');
+        });
+      },
+      error: function (error) {
+        console.error('Error en la carga de categorías:', error);
+      }
+    });
+  });
+
+  // Buscador de contenido en el combo categorias
+  $(document).ready(function () {
+    $('#cbo_categoria').select2({
+      allowClear: true,
+      width: '100%',
+      dropdownCssClass: 'text-xs',
+      language: {
+        noResults: function () {
+          return "No se encontraron resultados";
+        }
+      }
+    });
+  });
+
+  // Evento para guardar incidencia
+  $('#guardar-incidencia').on('click', function (e) {
+    e.preventDefault();
+    enviarFormulario($('#form-action').val());
+  });
+
+  // Evento para editar incidencia
+  $('#editar-incidencia').on('click', function (e) {
+    e.preventDefault();
+    enviarFormulario('editar');
+  });
+
+  // Evento para nuevo registro
+  $('#nuevo-registro').on('click', nuevoRegistro);
 });
+
+
+
 
 // TODO: CAMBIAR PAGINAS DE LA TABLA DE INCIDENCIAS
 function changePageTablaListarIncidencias(page) {
@@ -72,76 +102,83 @@ function changePageTablaListarIncidencias(page) {
     });
 }
 
-// TODO: GUARDAR INCIDENCIA
-$(document).ready(function () {
-  $('#guardar-incidencia').click(function (event) {
-    event.preventDefault();
 
-    // Validar campos antes de enviar
-    if (!validarCampos()) {
-      return; // si hay campos invalidos, detener el envio
-    }
-
-    var form = $('#formIncidencia');
-    var data = form.serialize();
-    console.log(data); // verifica las veces de envio
-
-    var action = form.attr('action');
-    $.ajax({
-      url: action,
-      type: "POST",
-      data: data,
-      success: function (response) {
-        if (action === 'registro-incidencia-user.php?action=registrar') {
-          toastr.success('Incidencia registrada', 'Mensaje');
-        } else if (action === 'registro-incidencia-user.php?action=editar') {
-          toastr.success('Incidencia actualizada', 'Mensaje');
-        }
-        setTimeout(function () {
-          location.reload();
-        }, 1500);
-      },
-      error: function (xhr, status, error) {
-        console.error(xhr.responseText);
-        toastr.error('Error al guardar la incidencia', 'Mensaje de error');
-      }
-    });
-  });
-
-  // FUNCION PARA VALIDAR LOS CAMPOS ANTES DE ENVIAR
-  function validarCampos() {
-    var valido = true;
-    var mensajeError = '';
-
-    // validar combos
-    var faltaCategoria = ($('#cbo_categoria').val() === null || $('#cbo_categoria').val() === '');
-    var faltaAsunto = ($('#asunto').val() === null || $('#asunto').val() === '');
-    var faltaDocumento = ($('#documento').val() === null || $('#documento').val() === '');
-
-
-    if (faltaCategoria && faltaAsunto && faltaDocumento) {
-      mensajeError += 'Debe completar los campos requeridos.';
-      valido = false;
-    } else if (faltaCategoria) {
-      mensajeError += 'Debe seleccionar una categoria.';
-      valido = false;
-    } else if (faltaAsunto) {
-      mensajeError += 'Ingrese asunto de la incidencia.';
-      valido = false;
-    } else if (faltaDocumento) {
-      mensajeError += 'Ingrese documento de la incidencia';
-      valido = false;
-    }
-
-    // Mostrar mensaje de error si hay
-    if (!valido) {
-      toastr.error(mensajeError.trim(), 'Advertencia');
-    }
-    return valido;
+// Funcion para las validaciones de campos vacios y registro - actualizacion de incidencias
+function enviarFormulario(action) {
+  if (!validarCampos()) {
+    return;
   }
-});
 
-// TODO: Seteo de los valores de los inputs y combos
+  var url = 'registro-incidencia-user.php?action=' + action;
+  var data = $('#formIncidencia').serialize();
+
+  $.ajax({
+    url: url,
+    method: 'POST',
+    data: data,
+    dataType: 'text',
+    success: function (response) {
+      console.log('Raw response:', response);
+      try {
+        // Convertir la respuesta en un objeto JSON
+        console.log('Datos: ', data)
+        var jsonResponse = JSON.parse(response);
+        console.log('Parsed JSON:', jsonResponse);
+
+        if (jsonResponse.success) {
+          if (action === 'registrar') {
+            toastr.success(jsonResponse.message, 'Mensaje');
+          } else if (action === 'editar') {
+            toastr.success(jsonResponse.message, 'Mensaje');
+          }
+          setTimeout(function () {
+            location.reload();
+          }, 1500);
+        } else {
+          toastr.warning(jsonResponse.message, 'Advertencia');
+        }
+      } catch (e) {
+        console.error('JSON parsing error:', e);
+        toastr.error('Error al procesar la respuesta.', 'Mensaje de error');
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error('AJAX Error:', error);
+      toastr.error('Error en la solicitud AJAX.', 'Mensaje de error');
+    }
+  });
+}
+
+// Validación de campos del formulario
+function validarCampos() {
+  var valido = true;
+  var mensajeError = '';
+
+  var faltaCategoria = ($('#cbo_categoria').val() === null || $('#cbo_categoria').val() === '');
+  var faltaAsunto = ($('#asunto').val() === null || $('#asunto').val() === '');
+  var faltaDocumento = ($('#documento').val() === null || $('#documento').val() === '');
+
+  if (faltaCategoria && faltaArea && faltaAsunto && faltaDocumento) {
+    mensajeError += 'Debe completar los campos requeridos.';
+    valido = false;
+  } else if (faltaCategoria) {
+    mensajeError += 'Debe seleccionar una categor&iacute;a.';
+    valido = false;
+  } else if (faltaAsunto) {
+    mensajeError += 'Ingrese asunto de la incidencia.';
+    valido = false;
+  } else if (faltaDocumento) {
+    mensajeError += 'Ingrese documento de la incidencia';
+    valido = false;
+  }
+
+  if (!valido) {
+    toastr.warning(mensajeError.trim(), 'Advertencia');
+  }
+  return valido;
+}
+
+// Seteo de los valores de los inputs y combos
 $(document).on('click', '#tablaListarIncidencias tbody tr', function () {
   $('#tablaListarIncidencias tbody tr').removeClass('bg-blue-200 font-semibold');
   $(this).addClass('bg-blue-200 font-semibold');
@@ -170,6 +207,9 @@ $(document).on('click', '#tablaListarIncidencias tbody tr', function () {
   document.getElementById('guardar-incidencia').disabled = true;
   document.getElementById('editar-incidencia').disabled = false;
   document.getElementById('nuevo-registro').disabled = false;
+
+  // Cambiar la acción a editar
+  $('#form-action').val('editar');
 
   // Si existe un código patrimonial, buscar el tipo de bien
   if (codigoPatrimonialValue) {
@@ -232,3 +272,49 @@ function setComboValue(comboId, value) {
   // Forzar actualización del select2 para mostrar el valor seleccionado
   $(select).trigger('change');
 };
+
+// Funcion para manejar el nuevo registro
+function nuevoRegistro() {
+  const form = document.getElementById('formIncidencia');
+  form.reset();
+  $('#numero_incidencia').val('');
+  $('tr').removeClass('bg-blue-200 font-semibold');
+
+  $('#form-action').val('registrar'); // Cambiar la acción a registrar
+
+  // Deshabilitar el botón de editar
+  $('#guardar-incidencia').prop('disabled', false);
+  $('#editar-incidencia').prop('disabled', true);
+  $('#nuevo-registro').prop('disabled', false);
+
+  // Vaciar y resetear los valores de los selects de categoría y área
+  $('#cbo_categoria').val('').trigger('change');
+  $('#cbo_area').val('').trigger('change');
+
+  $('#codigoPatrimonial').val('');
+  $('#asunto').val('');
+  $('#documento').val('');
+  $('#descripcion').val('');
+}
+
+// función para filtrar la tabla de incidencias
+function filtrarTablaIncidencias() {
+  var input, filtro, tabla, filas, celdas, i, j, match;
+  input = document.getElementById('termino');
+  filtro = input.value.toUpperCase();
+  tabla = document.getElementById('tablaListarIncidencias');
+  filas = tabla.getElementsByTagName('tr');
+
+  for (i = 1; i < filas.length; i++) {
+    celdas = filas[i].getElementsByTagName('td');
+    match = false;
+    for (j = 0; j < celdas.length; j++) {
+      if (celdas[j].innerText.toUpperCase().indexOf(filtro) > -1) {
+        match = true;
+        break;
+      }
+    }
+    filas[i].style.display = match ? '' : 'none';
+  }
+}
+

@@ -16,7 +16,7 @@ $incidenciaController = new IncidenciaController();
 $incidenciaModel = new IncidenciaModel();
 
 // Paginacion de la tabla
-$limit = 5; // Número de filas por página
+$limit = 1; // Número de filas por página
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Página actual
 $start = ($page - 1) * $limit; // Calcula el índice de inicio
 
@@ -38,6 +38,11 @@ if ($INC_numero != '') {
 switch ($action) {
   case 'registrar':
     $incidenciaController->registrarIncidenciaUsuario();
+    break;
+  case 'editar':
+    $incidenciaController->actualizarIncidenciaUsuario();
+    break;
+  default:
     break;
 }
 

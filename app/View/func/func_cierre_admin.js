@@ -280,7 +280,6 @@ $(document).on('click', '#tablaIncidenciasCerradas tbody tr', function () {
   $('#nuevo-registro').prop('disabled', false);
   // Cambiar la acción a editar
   $('#form-action').val('editar');
-
 });
 
 // Función para cambiar páginas de la tabla de recepciones sin cerrar

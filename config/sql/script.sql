@@ -232,6 +232,7 @@ INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Sección de Almacén', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Equipo Mecánico y Maestranza', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Contrataciones', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Gestión y Desarrollo de RR.HH.', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Secretaría Técnica de Procedimiento Administrativo Disciplinario', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Escalafón', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Asesoría Jurídica', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de PLaneamiento, Presupuesto y Modernización', 1);
@@ -811,7 +812,7 @@ BEGIN
 END;
 GO
 
--- PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR INCIDENCIA
+-- PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR INCIDENCIA - ADMINISTRADOR
 CREATE PROCEDURE sp_ActualizarIncidencia
   @INC_numero SMALLINT,
   @CAT_codigo SMALLINT,
@@ -826,6 +827,28 @@ BEGIN
   UPDATE INCIDENCIA
   SET CAT_codigo = @CAT_codigo,
       ARE_codigo = @ARE_codigo,
+      INC_codigoPatrimonial = @INC_codigoPatrimonial,
+      INC_asunto = @INC_asunto,
+      INC_documento = @INC_documento,
+      INC_descripcion = @INC_descripcion
+  WHERE INC_numero = @INC_numero
+  AND EST_codigo = 3;
+END;
+GO 
+
+-- PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR INCIDENCIA - USUARIO
+CREATE PROCEDURE sp_ActualizarIncidenciaUsuario
+  @INC_numero SMALLINT,
+  @CAT_codigo SMALLINT,
+  @INC_codigoPatrimonial CHAR(12),
+  @INC_asunto VARCHAR(200),
+  @INC_documento VARCHAR(100),
+  @INC_descripcion VARCHAR(500)
+AS
+BEGIN
+  -- Actualizar el registro en la tabla INCIDENCIA solo si el estado es 3
+  UPDATE INCIDENCIA
+  SET CAT_codigo = @CAT_codigo,
       INC_codigoPatrimonial = @INC_codigoPatrimonial,
       INC_asunto = @INC_asunto,
       INC_documento = @INC_documento,
