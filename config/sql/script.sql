@@ -315,6 +315,7 @@ INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Asistencia técnica', 1)
 INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Generación de usuario', 1);
 INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Fallo de equipo de computo', 1);
 INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Inaccesibilidad a impresora', 1);
+INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Cableado de red', 1);
 INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Correo corporativo', 1);
 INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Reporte de sistemas informáticos', 1);
 INSERT INTO CATEGORIA (CAT_nombre, CAT_estado) VALUES ('Inaccesibilidad a sistemas informáticos', 1);
