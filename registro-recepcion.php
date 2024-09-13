@@ -25,7 +25,7 @@ $start = ($page - 1) * $limit; // Calcula el índice de inicio
 $totalIncidenciasSinRecepcionar = $incidenciaModel->contarIncidenciasAdministrador();
 $totalPages = ceil($totalIncidenciasSinRecepcionar / $limit);
 // Listar las incidencias para la pagina actual
-$resultadoIncidencias = $incidenciaModel->listarIncidenciasRegistroAdmin($start, $limit);
+$resultadoIncidencias = $incidenciaModel->listarIncidenciasRecepcion($start, $limit);
 
 // Paginacion para la tabla de incidencias recepcionadas
 $limite = 5; // Numero de filas para la tabla de recepciones

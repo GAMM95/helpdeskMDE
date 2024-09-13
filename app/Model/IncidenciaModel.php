@@ -239,31 +239,31 @@ class IncidenciaModel extends Conexion
   }
 
   // Método para listar incidencias registradas - ADMINISTRADOR
-  // public function listarIncidenciasRegistroAdmin($start, $limit)
-  // {
-  //   $conector = parent::getConexion();
-  //   try {
-  //     if ($conector != null) {
-  //       $sql = "SELECT * FROM vista_incidencias_administrador
-  //         ORDER BY 
-  //         -- Extraer el año de INC_numero_formato y ordenar por año de forma descendente
-  //         SUBSTRING(INC_numero_formato, CHARINDEX('-', INC_numero_formato) + 1, 4) DESC,
-  //         INC_numero_formato DESC
-  //         OFFSET :start ROWS
-  //         FETCH NEXT :limit ROWS ONLY";
-  //       $stmt = $conector->prepare($sql);
-  //       $stmt->bindParam(':start', $start, PDO::PARAM_INT);
-  //       $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-  //       $stmt->execute();
-  //       $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  //       return $result;
-  //     } else {
-  //       throw new Exception("Error de conexión a la base de datos.");
-  //     }
-  //   } catch (PDOException $e) {
-  //     throw new Exception("Error al listar incidencias registradas por el administrador: " . $e->getMessage());
-  //   }
-  // }
+  public function listarIncidenciasRecepcion($start, $limit)
+  {
+    $conector = parent::getConexion();
+    try {
+      if ($conector != null) {
+        $sql = "SELECT * FROM vista_incidencias_administrador
+          ORDER BY 
+          -- Extraer el año de INC_numero_formato y ordenar por año de forma descendente
+          SUBSTRING(INC_numero_formato, CHARINDEX('-', INC_numero_formato) + 1, 4) DESC,
+          INC_numero_formato DESC
+          OFFSET :start ROWS
+          FETCH NEXT :limit ROWS ONLY";
+        $stmt = $conector->prepare($sql);
+        $stmt->bindParam(':start', $start, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+      } else {
+        throw new Exception("Error de conexión a la base de datos.");
+      }
+    } catch (PDOException $e) {
+      throw new Exception("Error al listar incidencias registradas por el administrador: " . $e->getMessage());
+    }
+  }
   public function listarIncidenciasRegistroAdmin()
   {
     $conector = parent::getConexion();
