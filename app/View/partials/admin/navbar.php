@@ -47,16 +47,22 @@ if (session_status() == PHP_SESSION_NONE) {
         </li>
         <!-- Registros -->
         <li class="nav-item pcoded-hasmenu">
-          <a href="#!" class="nav-link ">
+          <a href="#!" class="nav-link">
             <span class="pcoded-micon">
               <i class="feather icon-edit"></i>
             </span>
             <span class="pcoded-mtext">Registrar</span>
           </a>
-          <ul class="pcoded-submenu">
-            <li><a href="registro-recepcion.php">Recepci&oacute;n</a></li>
-            <li><a href="registro-cierre.php">Cierre</a></li>
-            <li><a href="registro-incidencia-admin.php">Incidencia</a></li>
+          <ul class="pcoded-submenu space-y-2 mt-2">
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="registro-recepcion.php">Recepci&oacute;n</a>
+            </li>
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="registro-cierre.php">Cierre</a>
+            </li>
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="registro-incidencia-admin.php">Incidencia</a>
+            </li>
           </ul>
         </li>
 
@@ -72,9 +78,15 @@ if (session_status() == PHP_SESSION_NONE) {
             <span class="pcoded-mtext">Consultar</span>
           </a>
           <ul class="pcoded-submenu">
-            <li><a href="consultar-incidencia-general-admin.php">Incidencias totales</a></li>
-            <li><a href="consultar-incidencia-admin.php">Incidencias pendientes</a></li>
-            <li><a href="consultar-cierre-admin.php">Incidencias atendidas</a></li>
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="consultar-incidencia-general-admin.php">Incidencias totales</a>
+            </li>
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="consultar-incidencia-admin.php">Incidencias pendientes</a>
+            </li>
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="consultar-cierre-admin.php">Incidencias atendidas</a>
+            </li>
           </ul>
         </li>
         <!-- Fin de opcion de consultas -->
@@ -103,11 +115,21 @@ if (session_status() == PHP_SESSION_NONE) {
             <span class="pcoded-mtext">Mantenedor</span>
           </a>
           <ul class="pcoded-submenu">
-            <li><a href="modulo-usuario.php">Usuarios</a></li>
-            <li><a href="modulo-persona.php">Personas</a></li>
-            <li><a href="modulo-area.php">&Aacute;reas</a></li>
-            <li><a href="modulo-bien.php">Bienes</a></li>
-            <li><a href="modulo-categoria.php">Categor&iacute;as</a></li>
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="modulo-usuario.php">Usuarios</a>
+            </li>
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="modulo-persona.php">Personas</a>
+            </li>
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="modulo-area.php">&Aacute;reas</a>
+            </li>
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="modulo-bien.php">Bienes</a>
+            </li>
+            <li class="transition-transform duration-300 hover:translate-x-1">
+              <a href="modulo-categoria.php">Categor&iacute;as</a>
+            </li>
           </ul>
         </li>
         <!-- Fin de opcion mantenedor -->
