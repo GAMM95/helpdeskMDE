@@ -126,7 +126,7 @@
         </div>
       </div>
 
-      <!-- TODO: PRIMERA FILA DEL FORMULARIO -->
+      <!-- PRIMERA FILA DEL FORMULARIO -->
       <div class="flex flex-wrap -mx-2">
         <!-- FECHA DE CIERRE -->
         <div class="w-full md:w-1/4 px-2 mb-2 hidden">
@@ -159,13 +159,13 @@
 
         <!-- ASUNTO DEL CIERRE -->
         <div class="w-full md:w-2/5 px-2 mb-2">
-          <label for="asunto" class="block mb-1 font-bold text-xs">Asunto: *</label>
+          <label for="asunto" class="block mb-1 font-bold text-xs">Asunto de cierre: *</label>
           <input type="text" id="asunto" name="asunto" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese asunto de cierre">
         </div>
 
         <!-- DOCUMENTO DE CIERRE -->
         <div class="w-full md:w-2/5 px-2 mb-2">
-          <label for="documento" class="block mb-1 font-bold text-xs">Documento de Cierre: *</label>
+          <label for="documento" class="block mb-1 font-bold text-xs">Documento de cierre: *</label>
           <input type="text" id="documento" name="documento" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese documento de cierre" oninput="uppercaseInput(this)">
           <script>
             function uppercaseInput(element) {
@@ -183,24 +183,32 @@
 
       </div>
 
-      <!-- DIAGNOSTICO DEL CIERRE -->
       <div class="flex flex-wrap -mx-2">
-        <div class="w-full px-2 mb-2">
-          <label for="diagnostico" class="block mb-1 font-bold text-xs">Diagn&oacute;stico:</label>
-          <input type="text" id="diagnostico" name="diagnostico" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese diagnóstico (opcional)">
+        <!-- DIAGNOSTICO DEL CIERRE -->
+        <div class="w-1/2 px-2 mb-2">
+          <label for="diagnostico" class="block mb-1 font-bold text-xs">Diagn&oacute;stico / observaciones:</label>
+          <textarea id="diagnostico" name="diagnostico" rows="3" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese diagnóstico (opcional)" style="resize: none;" maxlength="1000" oninput="updateCharCount('diagnostico', 'charCount1')"></textarea>
+          <p id="charCount1" class="text-xs text-gray-500">0/1000 caracteres</p>
         </div>
-      </div>
 
-      <!-- TODO: SEGUNDA FILA DEL FORMULARIO -->
-      <div class="flex flex-wrap -mx-2 mb-3">
         <!-- RECOMENDACIONES -->
-        <div class="w-full md:w-1/1 px-2 mb-2">
+        <div class="w-1/2 md:w-1/1 px-2 mb-2">
           <label for="recomendaciones" class="block mb-1 font-bold text-xs">Recomendaciones:</label>
-          <input type="text" id="recomendaciones" name="recomendaciones" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese recomendaciones (opcional)">
+          <textarea id="recomendaciones" name="recomendaciones" rows="3" class="border p-2 w-full text-xs rounded-md" placeholder="Ingrese recomendaciones (opcional)" style="resize: none;" maxlength="1000" oninput="updateCharCount('recomendaciones', 'charCount2')"></textarea>
+          <p id="charCount2" class="text-xs text-gray-500">0/1000 caracteres</p>
         </div>
       </div>
 
-      <!-- TODO: RECOPILACION DE VALORES DE CADA INPUT Y COMBOBOX     -->
+      <script>
+        function updateCharCount(textareaId, charCountId) {
+          const textarea = document.getElementById(textareaId);
+          const charCount = document.getElementById(charCountId);
+          charCount.textContent = `${textarea.value.length}/1000 caracteres`;
+        }
+      </script>
+
+
+      <!-- RECOPILACION DE VALORES DE CADA INPUT Y COMBOBOX     -->
       <script>
         document.getElementById('recepcion').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['REC_codigo'] : ''; ?>';
         document.getElementById('fecha').value = '<?php echo $cierreRegistrado ? $cierreRegistrado['CIE_fecha'] : $fecha_actual; ?>';
@@ -246,7 +254,7 @@
     </div>
 
     <!-- Tabla de incidencias cerradas -->
-    <div class="relative max-h-[300px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
+    <div class="relative max-h-[400px] mt-2 overflow-x-hidden shadow-md sm:rounded-lg">
       <table id="tablaIncidenciasCerradas" class="w-full text-xs text-left rtl:text-right text-gray-500 cursor-pointer bg-white">
         <!-- Encabezado de la tabla -->
         <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-blue-300">

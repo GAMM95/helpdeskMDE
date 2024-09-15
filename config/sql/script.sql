@@ -125,9 +125,9 @@ CREATE TABLE INCIDENCIA (
     INC_numero_formato VARCHAR(20) NULL,
     INC_fecha DATE NOT NULL,
     INC_hora TIME NOT NULL,
-    INC_asunto VARCHAR(200) NOT NULL,
-    INC_descripcion VARCHAR(500) NULL,
-    INC_documento VARCHAR(100) NOT NULL,
+    INC_asunto VARCHAR(500) NOT NULL,
+    INC_descripcion VARCHAR(800) NULL,
+    INC_documento VARCHAR(500) NOT NULL,
     INC_codigoPatrimonial CHAR(12) NULL, 
     EST_codigo SMALLINT NOT NULL,
     CAT_codigo SMALLINT NOT NULL,
@@ -173,10 +173,10 @@ CREATE TABLE CIERRE(
 	CIE_numero SMALLINT NOT NULL,
 	CIE_fecha DATE NOT NULL,
 	CIE_hora TIME NOT NULL,
-	CIE_diagnostico VARCHAR(200) NULL,
+	CIE_diagnostico VARCHAR(1000) NULL,
 	CIE_documento VARCHAR(500) NOT NULL,
-	CIE_asunto VARCHAR(200) NOT NULL,
-	CIE_recomendaciones VARCHAR(500) NULL,
+	CIE_asunto VARCHAR(500) NOT NULL,
+	CIE_recomendaciones VARCHAR(1000) NULL,
 	CON_codigo SMALLINT NOT NULL,
 	EST_codigo SMALLINT NOT NULL,
 	REC_numero SMALLINT NOT NULL,
@@ -270,10 +270,10 @@ INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Seguridad Ciuda
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Órgano de Control Institucional', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad Local de Empadronamiento - ULE', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Atención al Usuario y Trámite Documentario', 1);
-INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Seguridad Ciudadana, Defensa Civil y Tránsito', 2);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Seguridad Ciudadana, Defensa Civil y Tránsito', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Subgerencia de Abastecimiento', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Unidad de Participación Vecinal', 1);
-INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de PLaneamiento, Presupuesto y Modernización', 1);
+INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Gerencia de Planeamiento, Presupuesto y Modernización', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado)  VALUES ('Subgerencia de Transporte, Tránsito y Seguridad Vial', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Archivo Central', 1);
 INSERT INTO AREA(ARE_nombre, ARE_estado) VALUES ('Equipo Mecánico y Maestranza', 1);
@@ -340,6 +340,7 @@ GO
 -- VOLCADO DE DATOS PARA LA TABLA BIEN
 INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('','',1);
 INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74089950','CPU',1);
+INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74080500','LAPTOP',1);
 INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74088187','MONITOR PLANO',1);
 INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74087700','MONITOR A COLOR',1);
 INSERT INTO BIEN (BIE_codigoIdentificador, BIE_nombre, BIE_estado) VALUES ('74089500','TECLADO',1);
@@ -800,9 +801,9 @@ GO
 CREATE PROCEDURE SP_Registrar_Incidencia
   @INC_fecha DATE,
   @INC_hora TIME,
-  @INC_asunto VARCHAR(200),
-  @INC_descripcion VARCHAR(500),
-  @INC_documento VARCHAR(100),
+  @INC_asunto VARCHAR(500),
+  @INC_descripcion VARCHAR(800),
+  @INC_documento VARCHAR(500),
   @INC_codigoPatrimonial CHAR(12) = NULL,
   @CAT_codigo SMALLINT,
   @ARE_codigo SMALLINT,
@@ -848,9 +849,9 @@ CREATE PROCEDURE sp_ActualizarIncidencia
   @CAT_codigo SMALLINT,
   @ARE_codigo SMALLINT,
   @INC_codigoPatrimonial CHAR(12),
-  @INC_asunto VARCHAR(200),
-  @INC_documento VARCHAR(100),
-  @INC_descripcion VARCHAR(500)
+  @INC_asunto VARCHAR(500),
+  @INC_documento VARCHAR(500),
+  @INC_descripcion VARCHAR(800)
 AS
 BEGIN
   -- Actualizar el registro en la tabla INCIDENCIA solo si el estado es 3
@@ -871,9 +872,9 @@ CREATE PROCEDURE sp_ActualizarIncidenciaUsuario
   @INC_numero SMALLINT,
   @CAT_codigo SMALLINT,
   @INC_codigoPatrimonial CHAR(12),
-  @INC_asunto VARCHAR(200),
-  @INC_documento VARCHAR(100),
-  @INC_descripcion VARCHAR(500)
+  @INC_asunto VARCHAR(500),
+  @INC_documento VARCHAR(500),
+  @INC_descripcion VARCHAR(800)
 AS
 BEGIN
   -- Actualizar el registro en la tabla INCIDENCIA solo si el estado es 3
@@ -963,8 +964,8 @@ CREATE PROCEDURE sp_ActualizarCierre
 	@CIE_asunto VARCHAR(500),
 	@CIE_documento VARCHAR(500),
 	@CON_codigo SMALLINT,
-	@CIE_diagnostico VARCHAR(200),
-	@CIE_recomendaciones VARCHAR(500)
+	@CIE_diagnostico VARCHAR(1000),
+	@CIE_recomendaciones VARCHAR(1000)
 AS
 BEGIN
 	-- Actualizar el registro de la tala CIERRE
@@ -983,10 +984,10 @@ GO
 CREATE PROCEDURE sp_InsertarCierreActualizarRecepcion
   @CIE_fecha DATE,
   @CIE_hora TIME,
-  @CIE_diagnostico VARCHAR(200),
+  @CIE_diagnostico VARCHAR(1000),
   @CIE_documento VARCHAR(500),
-  @CIE_asunto VARCHAR(200),
-  @CIE_recomendaciones VARCHAR(500),
+  @CIE_asunto VARCHAR(500),
+  @CIE_recomendaciones VARCHAR(1000),
   @CON_codigo SMALLINT,
   @REC_numero SMALLINT,
   @USU_codigo SMALLINT

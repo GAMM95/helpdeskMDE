@@ -89,6 +89,7 @@ switch ($action) {
   <script src="./app/View/func/Reports/reporteDetalleIncidencia.js"></script>
   <!-- <script src="./app/View/func/Reports/reporteNumeroIncidencia.js"></script> -->
   <script src="./app/View/func/tipoBien.js"></script>
+  <link rel="stylesheet" href="app/View/partials/scrollbar-styles.css">
 
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">

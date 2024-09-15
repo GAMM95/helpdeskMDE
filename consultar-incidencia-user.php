@@ -132,6 +132,7 @@ if ($action === 'consultar') {
   <script src="./app/View/func/func_consulta_incidencia_user.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="app/View/partials/scrollbar-styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

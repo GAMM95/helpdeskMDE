@@ -76,6 +76,7 @@ switch ($action) {
   <script src="dist/assets/js/plugins/apexcharts.min.js"></script>
   <script src="dist/assets/js/pages/dashboard-main.js"></script>
   <script src="./app/View/func/func_categoria.js"></script>
+  <link rel="stylesheet" href="app/View/partials/scrollbar-styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>

@@ -41,6 +41,7 @@
   <script src="./app/View/func/func_incidencias_admin.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="app/View/partials/scrollbar-styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
