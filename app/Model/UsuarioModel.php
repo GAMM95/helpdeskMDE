@@ -63,7 +63,7 @@ class UsuarioModel extends Conexion
     }
   }
 
-  // TODO: Metodo para obtener la informacion del usuario logueado
+  // Metodo para obtener la informacion del usuario logueado
   private function obtenerInformacionUsuario($username, $password)
   {
     $conector = parent::getConexion();
@@ -94,7 +94,7 @@ class UsuarioModel extends Conexion
     }
   }
 
-  // TODO: Metodo para obtener el id del usuario logueado
+  // Metodo para obtener el id del usuario logueado
   public function obtenerRolPorId($username)
   {
     $conector = parent::getConexion();

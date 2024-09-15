@@ -202,7 +202,7 @@ class CierreModel extends Conexion
   //   }
   // }
 
-  // TODO: Contar incidencias del ultimo mes para el administrador
+  // Contar incidencias del ultimo mes para el administrador
   public function contarCierresUltimoMesAdministrador()
   {
     $conector = parent::getConexion();
@@ -224,7 +224,7 @@ class CierreModel extends Conexion
     }
   }
 
-  // TODO: Contar incidencias del ultimo mes para el usuario
+  // Contar incidencias del ultimo mes para el usuario
   public function contarCierresUltimoMesUsuario($area)
   {
     $conector = parent::getConexion();

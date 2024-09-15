@@ -657,3 +657,7 @@ Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subge
 Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 8, Usuario: JMANTILLA
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 8, Usuario: JMANTILLA
+------- START LOGIN LOGS ---------
+Nombre de Persona: Carlos Leyva, Rol: Usuario, Codigo Area: 24, Área: Gerencia de Asesoría Jurídica, Código de Usuario: 5, Usuario: CLEYVA
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 8, Usuario: JMANTILLA
