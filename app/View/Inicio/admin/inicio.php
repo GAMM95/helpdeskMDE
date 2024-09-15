@@ -55,7 +55,7 @@
 
             <!-- Integrar el selector de mes en la línea de texto sin bordes -->
             <p class="mb-3 mt-3">
-              Total de incidencias en el mes de  <?php echo $nombreMes; ?>
+              Total de incidencias en el mes de <?php echo $nombreMes; ?>
               <!-- <select id="mes-selector" class="bg-transparent text-md font-bold outline-none cursor-pointer">
                 <?php
                 // Crear opciones de mes
@@ -150,7 +150,7 @@
                 </div>
                 <div class="col-sm-8 text-md-center">
                   <h5 class="font-bold text-lg"><?php echo $cantidades['cantidadIncidencias']; ?></h5>
-                  <span>Incidencias totales</span>
+                  <span>Incidencias registradas</span>
                 </div>
               </div>
             </div>
@@ -246,4 +246,5 @@
   </div>
 </div>
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="app/View/partials/scrollbar-styles.css">
 <script src="./app/View/func/func_inicio_admin.js"></script>
