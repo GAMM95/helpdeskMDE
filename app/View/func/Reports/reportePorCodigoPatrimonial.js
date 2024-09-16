@@ -47,7 +47,7 @@ function generarPDFControlPatrimonial(data) {
 
   //  Añadir el encabezado
   const logoUrl = './public/assets/escudo.png';
-  addHeader(doc, logoUrl);
+  addHeaderCodPatrimonial(doc, logoUrl);
 
   // Detalle del título respecto al código patrimonial
   const titleY = 23;
@@ -97,7 +97,7 @@ function generarPDFControlPatrimonial(data) {
   doc.autoTable({
     startY: 35, // Altura de la tabla respecto a la parte superior
     margin: { left: 4 },
-    head: [['N°', 'INCIDENCIA', 'FECHA', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'ESTADO']],
+    head: [['N°', 'INCIDENCIA', 'FECHA INC', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'CONDICIÓN', 'ESTADO']],
     body: data.map(reporte => [
       item++,
       reporte.INC_numero_formato,
@@ -107,10 +107,11 @@ function generarPDFControlPatrimonial(data) {
       reporte.INC_documento,
       reporte.ARE_nombre,
       reporte.PRI_nombre,
+      reporte.CON_descripcion,
       reporte.ESTADO
     ]),
     styles: {
-      fontSize: 7.5,
+      fontSize: 7,
       cellPadding: 2,
       halign: 'center',
       valign: 'middle'
@@ -122,15 +123,16 @@ function generarPDFControlPatrimonial(data) {
       halign: 'center'
     },
     columnStyles: {
-      0: { cellWidth: 10 },
+      0: { cellWidth: 8 },
       1: { cellWidth: 25 }, // Ancho para la columna Incidencia
-      2: { cellWidth: 20 }, // Ancho para la columna fecha
-      3: { cellWidth: 45 }, // Ancho para la columna categoria
-      4: { cellWidth: 50 }, // Ancho para la columna asunto
-      5: { cellWidth: 40 }, // Ancho para la columna Documento
+      2: { cellWidth: 18 }, // Ancho para la columna fecha
+      3: { cellWidth: 40 }, // Ancho para la columna categoria
+      4: { cellWidth: 40 }, // Ancho para la columna asunto
+      5: { cellWidth: 35 }, // Ancho para la columna Documento
       6: { cellWidth: 50 }, // Ancho para la columna area
-      7: { cellWidth: 20 }, // Ancho para la columna prioridad
-      8: { cellWidth: 30 } // Ancho para la columna estado
+      7: { cellWidth: 25 }, // Ancho para la columna prioridad
+      8: { cellWidth: 25 }, // Ancho para la columna condicion
+      9: { cellWidth: 22 } // Ancho para la columna estado
     }
   });
 
@@ -152,7 +154,7 @@ function generarPDFControlPatrimonial(data) {
 }
 
 // Encabezado
-function addHeader(doc, logoUrl) {
+function addHeaderCodPatrimonial(doc, logoUrl) {
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   const fechaImpresion = new Date().toLocaleDateString();

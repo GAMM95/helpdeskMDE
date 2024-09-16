@@ -21,6 +21,7 @@ class ReportePorArea extends Conexion
       I.INC_codigoPatrimonial,
       PRI.PRI_nombre,
       U.USU_nombre,
+      O.CON_descripcion,
       -- p.PER_nombres + ' ' + PER_apellidoPaterno AS Usuario,
       CASE
           WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion

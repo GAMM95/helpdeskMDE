@@ -26,6 +26,8 @@ $('#reportes-areas').click(function () {
       }
       // Generar el PDF
       generarPDF(data);
+      $('#area').val('').trigger('change');
+
     },
     error: function (xhr, status, error) {
       toastr.error('Hubo un error al obtener los datos del &aacute;rea seleccionada.', 'Mensaje de error');
@@ -45,7 +47,7 @@ function generarPDF(data) {
 
   // Añadir encabezado
   const logoUrl = './public/assets/escudo.png';
-  addHeader(doc, logoUrl);
+  addHeaderArea(doc, logoUrl);
 
   const titleY = 25;
   doc.setFont('helvetica', 'bold');
@@ -72,7 +74,7 @@ function generarPDF(data) {
   doc.autoTable({
     startY: 35,
     margin: { left: 4 },
-    head: [['N°', 'INCIDENCIA', 'FECHA', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'CÓD PATRIMONIAL', 'PRIORIDAD', 'ESTADO']],
+    head: [['N°', 'INCIDENCIA', 'FECHA INC', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'CÓD PATRIMONIAL', 'PRIORIDAD', 'CONDICIÓN', 'ESTADO']],
     body: data.map(reporte => [
       item++,
       reporte.INC_numero_formato,
@@ -82,10 +84,11 @@ function generarPDF(data) {
       reporte.INC_documento,
       reporte.INC_codigoPatrimonial,
       reporte.PRI_nombre,
+      reporte.CON_descripcion,
       reporte.ESTADO
     ]),
     styles: {
-      fontSize: 7.5,
+      fontSize: 7,
       cellPadding: 2,
       halign: 'center',
       valign: 'middle'
@@ -98,15 +101,16 @@ function generarPDF(data) {
       halign: 'center'
     },
     columnStyles: {
-      0: { cellWidth: 10 }, // ancho para la columna item
+      0: { cellWidth: 8 }, // ancho para la columna item
       1: { cellWidth: 25 }, // ancho para la columna incidencia
-      2: { cellWidth: 20 }, // ancho para la columna fecha
-      3: { cellWidth: 55 }, // ancho para la columna categoria
-      4: { cellWidth: 50 }, // ancho para la columna asunto
-      5: { cellWidth: 45 }, // ancho para la columna documento
-      6: { cellWidth: 35 }, // ancho para la columna codigo patrimonial
-      7: { cellWidth: 20 }, // ancho para la columna prioridad
-      8: { cellWidth: 30 } // ancho para la columna estado
+      2: { cellWidth: 18 }, // ancho para la columna fecha
+      3: { cellWidth: 50 }, // ancho para la columna categoria
+      4: { cellWidth: 45 }, // ancho para la columna asunto
+      5: { cellWidth: 40 }, // ancho para la columna documento
+      6: { cellWidth: 30 }, // ancho para la columna codigo patrimonial
+      7: { cellWidth: 25 }, // ancho para la columna prioridad
+      8: { cellWidth: 25 }, // ancho para la columna condicion
+      9: { cellWidth: 22 } // ancho para la columna estado
     }
   });
 
@@ -142,14 +146,13 @@ function generarPDF(data) {
     $('#area').val(''); // limpiar combo area
   }, 2000);
 }
-
 // Encabezado
-function addHeader(doc, logoUrl) {
+function addHeaderArea(doc, logoUrl) {
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   const fechaImpresion = new Date().toLocaleDateString();
   const headerText2 = 'Subgerencia de Informática y Sistemas';
-  const reportTitle = 'REPORTE DE INCIDENCIA POR ÁREA';
+  const reportTitle = 'REPORTE DE INCIDENCIAS POR ÁREA';
 
   const pageWidth = doc.internal.pageSize.width;
   const marginX = 10;
