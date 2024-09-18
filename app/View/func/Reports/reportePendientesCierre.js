@@ -78,7 +78,7 @@ $('#reporte-pendientes-cierre').click(function () {
         doc.autoTable({
           startY: 35,
           margin: { left: 4, right: 10 },
-          head: [['N°', 'INCIDENCIA', 'FECHA', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'CÓD. PATRIMONIAL', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'ESTADO']],
+          head: [['N°', 'INCIDENCIA', 'FECHA INC', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'CÓD. PATRIMONIAL', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'ESTADO']],
           body: data.map(reporte => [
             item++,
             reporte.INC_numero_formato,

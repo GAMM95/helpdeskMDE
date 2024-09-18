@@ -138,7 +138,7 @@ $('#reportes-cierres-fechas').click(function () {
           doc.autoTable({
             startY: 35, // Altura de la tabla respecto a la parte superior
             margin: { left: 4 },
-            head: [['N°', 'INCIDENCIA', 'FECHA', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'ESTADO']],
+            head: [['N°', 'INCIDENCIA', 'FECHA INC', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'FECHA CIE', 'CONDICIÓN']],
             body: data.map(reporte => [
               item++,
               reporte.INC_numero_formato,
@@ -148,10 +148,11 @@ $('#reportes-cierres-fechas').click(function () {
               reporte.INC_documento,
               reporte.ARE_nombre,
               reporte.PRI_nombre,
-              reporte.ESTADO
+              reporte.fechaCierreFormateada,
+              reporte.CON_descripcion,
             ]),
             styles: {
-              fontSize: 7.5,
+              fontSize: 7,
               cellPadding: 2,
               halign: 'center',
               valign: 'middle'
@@ -163,15 +164,16 @@ $('#reportes-cierres-fechas').click(function () {
               halign: 'center'
             },
             columnStyles: {
-              0: { cellWidth: 10 }, // Ancho para la columna item
+              0: { cellWidth: 8 }, // Ancho para la columna item
               1: { cellWidth: 25 }, // Ancho para la columna Incidencia
-              2: { cellWidth: 20 }, // Ancho para la columna fecha
+              2: { cellWidth: 18 }, // Ancho para la columna fecha incidencia
               3: { cellWidth: 45 }, // Ancho para la columna categoria
-              4: { cellWidth: 50 }, // Ancho para la columna asunto
+              4: { cellWidth: 45 }, // Ancho para la columna asunto
               5: { cellWidth: 40 }, // Ancho para la columna Documento
-              6: { cellWidth: 50 }, // Ancho para la columna area
+              6: { cellWidth: 48 }, // Ancho para la columna area
               7: { cellWidth: 20 }, // Ancho para la columna prioridad
-              8: { cellWidth: 30 } // Ancho para la columna estado
+              8: { cellWidth: 18 }, // Ancho para la columna fecha cierre
+              9: { cellWidth: 22 } // Ancho para la columna condicion
             }
           });
 

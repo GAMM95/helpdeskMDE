@@ -137,7 +137,7 @@ $('#reporte-incidencias-fechas').click(function () {
           doc.autoTable({
             startY: 35, // Altura de la tabla respecto a la parte superior
             margin: { left: 4 },
-            head: [['N°', 'INCIDENCIA', 'FECHA', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'ESTADO']],
+            head: [['N°', 'INCIDENCIA', 'FECHA INC', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'ÁREA SOLICITANTE', 'PRIORIDAD','CONDICIÓN', 'ESTADO']],
             body: data.map(reporte => [
               item++,
               reporte.INC_numero_formato,
@@ -147,10 +147,11 @@ $('#reporte-incidencias-fechas').click(function () {
               reporte.INC_documento,
               reporte.ARE_nombre,
               reporte.PRI_nombre,
+              reporte.CON_descripcion,
               reporte.ESTADO
             ]),
             styles: {
-              fontSize: 7.5,
+              fontSize: 7,
               cellPadding: 2,
               halign: 'center',
               valign: 'middle'
@@ -162,15 +163,16 @@ $('#reporte-incidencias-fechas').click(function () {
               halign: 'center'
             },
             columnStyles: {
-              0: { cellWidth: 10 }, // Ancho para la columna item
+              0: { cellWidth: 8 }, // Ancho para la columna item
               1: { cellWidth: 25 }, // Ancho para la columna Incidencia
-              2: { cellWidth: 20 }, // Ancho para la columna fecha
-              3: { cellWidth: 45 }, // Ancho para la columna categoria
-              4: { cellWidth: 50 }, // Ancho para la columna asunto
+              2: { cellWidth: 18 }, // Ancho para la columna fecha
+              3: { cellWidth: 43 }, // Ancho para la columna categoria
+              4: { cellWidth: 43 }, // Ancho para la columna asunto
               5: { cellWidth: 40 }, // Ancho para la columna Documento
-              6: { cellWidth: 50 }, // Ancho para la columna area
+              6: { cellWidth: 43 }, // Ancho para la columna area
               7: { cellWidth: 20 }, // Ancho para la columna prioridad
-              8: { cellWidth: 30 } // Ancho para la columna estado
+              8: { cellWidth: 22 }, // Ancho para la columna condicion
+              9: { cellWidth: 28 } // Ancho para la columna estado
             }
           });
 
@@ -196,7 +198,7 @@ $('#reporte-incidencias-fechas').click(function () {
           }
 
           // Mostrar mensaje de exito de pdf generado
-          toastr.success('Archivo PDF generado.');
+          toastr.success('Reporte de incidencias por fechas ingresadas generado.', 'Mensaje');
           // Retrasar la apertura del PDF y limpiar el campo de entrada
           setTimeout(() => {
             window.open(doc.output('bloburl'));

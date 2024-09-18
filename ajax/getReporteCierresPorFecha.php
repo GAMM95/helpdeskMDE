@@ -20,7 +20,8 @@ class ReporteCierresPorFecha extends Conexion
       I.INC_documento,
       I.INC_codigoPatrimonial,
       PRI.PRI_nombre,
-      U.USU_nombre,
+      U.USU_nombre,     
+      O.CON_descripcion,
       (CONVERT(VARCHAR(10), CIE_fecha, 103)) AS fechaCierreFormateada,
       CASE
           WHEN C.CIE_numero IS NOT NULL THEN EC.EST_descripcion

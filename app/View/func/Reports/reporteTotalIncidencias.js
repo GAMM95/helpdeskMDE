@@ -78,7 +78,7 @@ $('#reporte-incidencias-totales').click(function () {
         doc.autoTable({
           startY: 35,
           margin: { left: 4, right: 10 },
-          head: [['N°', 'INCIDENCIA', 'FECHA', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'CÓD. PATRIMONIAL', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'ESTADO']],
+          head: [['N°', 'INCIDENCIA', 'FECHA INC', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'CÓD. PATRIMONIAL', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'CONDICIÓN', 'ESTADO']],
           body: data.map(reporte => [
             item++,
             reporte.INC_numero_formato,
@@ -89,10 +89,11 @@ $('#reporte-incidencias-totales').click(function () {
             reporte.INC_codigoPatrimonial,
             reporte.ARE_nombre,
             reporte.PRI_nombre,
+            reporte.CON_descripcion,
             reporte.ESTADO
           ]),
           styles: {
-            fontSize: 7.5,
+            fontSize: 7,
             cellPadding: 2,
             halign: 'center',
             valign: 'middle'
@@ -104,16 +105,17 @@ $('#reporte-incidencias-totales').click(function () {
             halign: 'center'
           },
           columnStyles: {
-            0: { cellWidth: 10 }, // Ancho para la columna item
+            0: { cellWidth: 8 }, // Ancho para la columna item
             1: { cellWidth: 25 }, // Ancho para la columna Número de incidencia
-            2: { cellWidth: 20 }, // Ancho para la columna Fecha
-            3: { cellWidth: 40 }, // Ancho para la columna Categoría
+            2: { cellWidth: 17 }, // Ancho para la columna Fecha
+            3: { cellWidth: 38 }, // Ancho para la columna Categoría
             4: { cellWidth: 40 }, // Ancho para la columna Asunto
             5: { cellWidth: 35 }, // Ancho para la columna Documento
-            6: { cellWidth: 30 }, // Ancho para la columna codigo patrimonial
-            7: { cellWidth: 40 }, // Ancho para la columna Área solicitante
+            6: { cellWidth: 28 }, // Ancho para la columna codigo patrimonial
+            7: { cellWidth: 30 }, // Ancho para la columna Área solicitante
             8: { cellWidth: 20 }, // Ancho para la columna prioridad
-            9: { cellWidth: 30 }  // Ancho para la columna Estado
+            9: { cellWidth: 25 }, // Ancho para la columna condicion
+            10: { cellWidth: 22 }  // Ancho para la columna Estado
           }
         });
 
