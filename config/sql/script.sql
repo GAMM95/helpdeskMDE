@@ -1787,3 +1787,62 @@ BEGIN
     END CATCH;
 END;
 GO
+
+-- NUEVA CONSULTA1 
+
+DECLARE @FechaInicio DATE = '2023-01-01'; -- Reemplaza con tu fecha de inicio
+DECLARE @FechaFin DATE = '2023-09-01'; -- Reemplaza con tu fecha de fin
+
+-- Contar el total de incidencias en el rango de fechas
+SELECT COUNT(*) AS totalIncidencias
+FROM INCIDENCIA
+WHERE INC_fecha >= @FechaInicio AND INC_fecha <= @FechaFin;
+
+-- Listar códigos patrimoniales distintos en el rango de fechas
+SELECT DISTINCT INC_codigoPatrimonial
+FROM INCIDENCIA
+WHERE INC_fecha >= @FechaInicio AND INC_fecha <= @FechaFin;
+
+-- Obtener los 10 códigos patrimoniales con más incidencias
+SELECT TOP 10 
+    i.INC_codigoPatrimonial AS codigoPatrimonial,
+    b.BIE_nombre AS nombreBien,
+    COUNT(*) AS cantidadIncidencias
+FROM 
+    INCIDENCIA i
+LEFT JOIN 
+    BIEN b ON i.INC_codigoPatrimonial = b.BIE_codigoIdentificador
+WHERE 
+    i.INC_codigoPatrimonial IS NOT NULL AND
+    i.INC_fecha >= @FechaInicio 
+    AND i.INC_fecha <= @FechaFin
+GROUP BY 
+    i.INC_codigoPatrimonial, b.BIE_nombre
+ORDER BY 
+    cantidadIncidencias DESC;
+
+
+-- CONSULTA AREAS
+
+
+
+DECLARE @FechaInicio DATE = '2023-08-01'; -- Reemplaza con tu fecha de inicio
+DECLARE @FechaFin DATE = '2023-09-01'; -- Reemplaza con tu fecha de fin
+
+SELECT TOP 10 
+    i.INC_codigoPatrimonial AS codigoPatrimonial,
+    b.BIE_nombre AS nombreBien,
+    COUNT(*) AS cantidadIncidencias
+FROM 
+    INCIDENCIA i
+INNER JOIN 
+    BIEN b ON i.INC_codigoPatrimonial = b.BIE_codigoIdentificador
+WHERE 
+    i.INC_fecha >= @FechaInicio 
+    AND i.INC_fecha <= @FechaFin
+GROUP BY 
+    i.INC_codigoPatrimonial, b.BIE_nombre
+ORDER BY 
+    cantidadIncidencias DESC;
+
+

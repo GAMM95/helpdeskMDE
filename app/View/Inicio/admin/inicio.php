@@ -176,7 +176,27 @@
               <i class="feather icon-alert-triangle"></i>
             </div>
             <div class="col-sm-9">
-              <h6 class="text-xs mb-2">&Aacute;rea con m&aacute;s incidencias</h6>
+              <h6 class="text-xs mb-2">
+                <!-- &Aacute;rea con m&aacute;s incidencias del mes actual -->
+
+              <p>
+              &Aacute;rea con m&aacute;s incidencias en el mes  <?php echo $nombreMes; ?>
+              <!-- <select id="mes-selector" class="bg-transparent text-md font-bold outline-none cursor-pointer">
+                <?php
+                // Crear opciones de mes
+                for ($i = 1; $i <= 12; $i++) {
+                  // Crear un objeto DateTime para cada mes
+                  $mesObj = DateTime::createFromFormat('!m', $i);
+                  $nombreMesOption = $formatter->format($mesObj);
+                  // Si el mes actual coincide con el mes en el bucle, seleccionarlo
+                  $selected = ($i == $dateTimeObj->format('n')) ? 'selected' : '';
+                  echo "<option value=\"$i\" $selected>$nombreMesOption</option>";
+                }
+                ?>
+              </select> -->
+              del <?php echo date('Y'); ?>.
+            </p>
+              </h6>
               <h5 class="text-white font-bold"><?php echo $cantidades['areaMasIncidencia']; ?></h5>
             </div>
           </div>
