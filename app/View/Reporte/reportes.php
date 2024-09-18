@@ -72,10 +72,16 @@
               <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs cursor-pointer text-center rounded-md" max="<?php echo date('Y-m-d'); ?>">
             </div>
           </div>
-          <!-- Botones -->
+          <!-- Botones nivel 1 -->
           <div class="flex justify-center space-x-2 mt-4">
-            <button type="button" id="reporte-incidencias-fechas" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Incidencias </button>
-            <button type="button" id="reportes-cierres-fechas" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Cierres </button>
+            <button type="button" id="reporte-incidencias-fechas" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Incidencias totales </button>
+            <button type="button" id="reportes-cierres-fechas" class="bn btn-secondary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Incidencias cerradas </button>
+          </div>
+
+          <!-- Botones nivel  -->
+          <div class="flex justify-center space-x-2 mt-4">
+            <button type="button" id="reportes-areas-fechas" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>&Aacute;reas con m&aacute;s incidencias </button>
+            <button type="button" id="reportes-bienes-fechas" class="bn btn-primary text-xs text-white font-bold py-2 px-3 rounded-md"> <i class="feather mr-2 icon-printer"></i>Bienes con m&aacute;s incidencias </button>
           </div>
         </div>
         <!-- Fin de reporte por fechas -->

@@ -59,8 +59,8 @@ $state = $_GET['state'] ?? '';
   <script src="./app/View/func/Reports/reporteCierresPorFecha.js"></script>
   <script src="./app/View/func/Reports/reporteNumeroIncidencia.js"></script>
   <script src="./app/View/func/Reports/reporteDetalleCierreNumIncidencia.js"></script>
-
-  
+  <script src="./app/View/func/Reports/reporteAreasPorFecha.js"></script>
+    
   <script src="./app/View/func/tipoBien.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
