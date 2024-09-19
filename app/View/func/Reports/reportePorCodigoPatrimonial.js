@@ -25,9 +25,11 @@ $('#reportes-codigoPatrimonial').click(function () {
         toastr.error('Error en la solicitud: ' + data.error);
         return;
       }
+      // Obtener la cantidad de registros
+      const totalRecords = data.length;
 
       // Generar PDF
-      generarPDFControlPatrimonial(data);
+      generarPDFControlPatrimonial(data, totalRecords);
 
     },
     error: function (xhr, status, error) {
@@ -37,7 +39,7 @@ $('#reportes-codigoPatrimonial').click(function () {
   });
 });
 
-function generarPDFControlPatrimonial(data) {
+function generarPDFControlPatrimonial(data, totalRecords) {
   if (!data || data.length === 0) {
     toastr.warning('No se encontr&oacute; informaci&oacute;n para el c&oacute;digo patrimonial ingresado.', 'Advertencia');
     return;
@@ -47,12 +49,12 @@ function generarPDFControlPatrimonial(data) {
 
   //  Añadir el encabezado
   const logoUrl = './public/assets/escudo.png';
-  addHeaderCodPatrimonial(doc, logoUrl);
+  addHeaderCodPatrimonial(doc, logoUrl, totalRecords);
 
   // Detalle del título respecto al código patrimonial
   const titleY = 23;
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(11);
+  doc.setFontSize(10);
 
   const codigoText = 'Código Patrimonial:';
   const codigoWidth = doc.getTextWidth(codigoText);
@@ -71,9 +73,9 @@ function generarPDFControlPatrimonial(data) {
   doc.text(codigoValue, startX + codigoWidth, titleY);
 
   // Detalle del título respecto al tipo de bien
-  const titleU = 30;
+  const titleU = 28;
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(11);
+  doc.setFontSize(10);
 
   const bienText = 'Nombre de bien:';
   const bienTextWidth = doc.getTextWidth(bienText);
@@ -95,7 +97,7 @@ function generarPDFControlPatrimonial(data) {
 
   // Lista de incidencias por codigo patrimonial
   doc.autoTable({
-    startY: 35, // Altura de la tabla respecto a la parte superior
+    startY: 37, // Altura de la tabla respecto a la parte superior
     margin: { left: 4 },
     head: [['N°', 'INCIDENCIA', 'FECHA INC', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'CONDICIÓN', 'ESTADO']],
     body: data.map(reporte => [
@@ -154,7 +156,7 @@ function generarPDFControlPatrimonial(data) {
 }
 
 // Encabezado
-function addHeaderCodPatrimonial(doc, logoUrl) {
+function addHeaderCodPatrimonial(doc, logoUrl, totalRecords) {
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   const fechaImpresion = new Date().toLocaleDateString();
@@ -177,6 +179,14 @@ function addHeaderCodPatrimonial(doc, logoUrl) {
   doc.text(reportTitle, titleX, titleY);
   doc.setLineWidth(0.5);
   doc.line(titleX, titleY + 1, titleX + titleWidth, titleY + 1);
+
+  // Agregar subtítulo cantidad de registros
+  const subtitleText = `Cantidad de registros: ${totalRecords}`;
+  doc.setFontSize(10);
+  const subtitleWidth = doc.getTextWidth(subtitleText);
+  const subtitleX = (pageWidth - subtitleWidth) / 2;
+  const subtitleY = titleY + 18; // Ajuste de posición debajo del título
+  doc.text(subtitleText, subtitleX, subtitleY);
 
   doc.setFontSize(8);
   doc.setFont('helvetica', 'normal');
