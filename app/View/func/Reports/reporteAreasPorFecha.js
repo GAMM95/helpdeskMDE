@@ -16,7 +16,7 @@ $('#reportes-areas-fechas').click(function () {
 
   // Realizar una solicitud AJAX para obtener los datos del cierre de incidencia
   $.ajax({
-    url: 'ajax/getReporteAreaMasIncidencia',
+    url: 'ajax/getReporteAreaMasIncidencia.php',
     method: 'GET',
     data: { fechaInicio: fechaInicio, fechaFin: fechaFin },
     dataType: 'json',
@@ -41,7 +41,7 @@ $('#reportes-areas-fechas').click(function () {
 
             const fechaImpresion = new Date().toLocaleDateString();
             const headerText2 = 'Subgerencia de Informática y Sistemas';
-            const reportTitle = 'REPORTE DE ÁREAS CON MÁS INCIDENCIAS';
+            const reportTitle = 'ÁREAS CON MÁS INCIDENCIAS';
 
             const pageWidth = doc.internal.pageSize.width;
             const marginX = 10;
@@ -69,8 +69,9 @@ $('#reportes-areas-fechas').click(function () {
             const fechaTextWidth = doc.getTextWidth(fechaText);
             const headerText2X = pageWidth - marginX - headerText2Width;
             const fechaTextX = pageWidth - marginX - fechaTextWidth;
-            const headerText2Y = marginY + logoHeight / 2;
-            const fechaTextY = headerText2Y + 5;
+            // Ajustar las posiciones Y para mover los textos hacia arriba
+            const headerText2Y = marginY + 8; // Mover más cerca de la parte superior
+            const fechaTextY = headerText2Y + 4; // Espaciado entre los dos textos
 
             doc.text(headerText2, headerText2X, headerText2Y);
             doc.text(fechaText, fechaTextX, fechaTextY);
@@ -99,7 +100,7 @@ $('#reportes-areas-fechas').click(function () {
 
           // Configuracion de fuentes
           doc.setFont('helvetica', 'bold');
-          doc.setFontSize(11);
+          doc.setFontSize(10);
 
           // Calcular el ancho de los textos
           const fechaInicioAncho = doc.getTextWidth(fechaInicioText);
@@ -107,7 +108,7 @@ $('#reportes-areas-fechas').click(function () {
           const fechaFinAncho = doc.getTextWidth(fechaFinText);
           const fechaFinValueAncho = doc.getTextWidth(fechaFinValue);
 
-          const spacing = 20; //espacio entre los dos textos
+          const spacing = 10; //espacio entre los dos textos
 
           // Calcular el ancho total de los textos más el espaciado
           const totalWidth = fechaInicioAncho + fechaInicioValueAncho + spacing + fechaFinAncho + fechaFinValueAncho;
@@ -137,16 +138,16 @@ $('#reportes-areas-fechas').click(function () {
           // Lista de incidencias por codigo patrimonial
           doc.autoTable({
             startY: 35, // Altura de la tabla respecto a la parte superior
-            margin: { left: 4 },
-            head: [['N°', 'ÁREA', 'CANTIDAD DE INCIDENCIAS']],
+            margin: { left: 10 },
+            head: [['N°', 'ÁREA', 'CANTIDAD']],
             body: data.map(reporte => [
               item++,
               reporte.areaMasIncidencia,
               reporte.cantidadIncidencias,
             ]),
             styles: {
-              fontSize: 10,
-              cellPadding: 2,
+              fontSize: 11,
+              cellPadding: 3,
               halign: 'center',
               valign: 'middle'
             },
@@ -157,16 +158,16 @@ $('#reportes-areas-fechas').click(function () {
               halign: 'center'
             },
             columnStyles: {
-              0: { cellWidth: 10 }, // Ancho para la columna item
-              1: { cellWidth: 25 }, // Ancho para la columna area
-              2: { cellWidth: 18 }, // Ancho para la columna cantidad
+              0: { cellWidth: 30 }, // Ancho para la columna item
+              1: { cellWidth: 100 }, // Ancho para la columna area
+              2: { cellWidth: 60 }, // Ancho para la columna cantidad
             }
           });
 
           function addFooter(doc, pageNumber, totalPages) {
             doc.setFontSize(8);
             doc.setFont('helvetica', 'italic');
-            const footerY = 200;
+            const footerY = 285;
             doc.setLineWidth(0.5);
             doc.line(10, footerY - 5, doc.internal.pageSize.width - 10, footerY - 5);
 
@@ -185,7 +186,7 @@ $('#reportes-areas-fechas').click(function () {
           }
 
           // Mostrar mensaje de exito de pdf generado
-          toastr.success('Reporte de cierres por fechas ingresadas generado.', 'Mensaje');
+          toastr.success('Reporte de &aacute;reas con m&aacute;s incidencias generado.', 'Mensaje');
           // Retrasar la apertura del PDF y limpiar el campo de entrada
           setTimeout(() => {
             window.open(doc.output('bloburl'));
@@ -193,7 +194,7 @@ $('#reportes-areas-fechas').click(function () {
             $('#fechaFin').val('');
           }, 2000);
         } else {
-          toastr.warning('No se ha encontrado incidencias cerradas para las fechas seleccionadas.', 'Advertencia');
+          toastr.warning('No se ha encontrado &aacute;reas con m&aacute;s incidencias para las fechas seleccionadas.', 'Advertencia');
         }
       } catch (error) {
         toastr.error('Hubo un error al generar reporte.', 'Mensaje de error');
@@ -201,7 +202,7 @@ $('#reportes-areas-fechas').click(function () {
       }
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos de los cierres de incidencia.', 'Mensaje de error');
+      toastr.error('Hubo un error al obtener &aacute;reas con m&aacute;s incidencias.', 'Mensaje de error');
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });

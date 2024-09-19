@@ -16,7 +16,7 @@ class ReporteAreaMasIncidencia extends Conexion
     INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
     WHERE i.INC_fecha BETWEEN :fechaInicio AND :fechaFin
     GROUP BY a.ARE_nombre
-    ORDER BY Incidencias DESC";
+    ORDER BY cantidadIncidencias DESC";
 
     $stmt = $conector->prepare($sql);
     $stmt->bindParam(':fechaInicio', $fechaInicio);

@@ -6,7 +6,7 @@ $(document).ready(function () {
   };
 });
 
-$('#reportes-cierres-fechas').click(function () {
+$('#reportes-bienes-fechas').click(function () {
   const fechaInicio = $('#fechaInicio').val();
   const fechaFin = $('#fechaFin').val();
 
@@ -16,7 +16,7 @@ $('#reportes-cierres-fechas').click(function () {
 
   // Realizar una solicitud AJAX para obtener los datos del cierre de incidencia
   $.ajax({
-    url: 'ajax/getReporteCierresPorFecha.php',
+    url: 'ajax/getReporteEquipoMasIncidencia.php',
     method: 'GET',
     data: { fechaInicio: fechaInicio, fechaFin: fechaFin },
     dataType: 'json',
@@ -41,7 +41,7 @@ $('#reportes-cierres-fechas').click(function () {
 
             const fechaImpresion = new Date().toLocaleDateString();
             const headerText2 = 'Subgerencia de Informática y Sistemas';
-            const reportTitle = 'REPORTE DE CIERRES POR FECHA';
+            const reportTitle = 'EQUIPOS CON MÁS INCIDENCIAS';
 
             const pageWidth = doc.internal.pageSize.width;
             const marginX = 10;
@@ -69,8 +69,9 @@ $('#reportes-cierres-fechas').click(function () {
             const fechaTextWidth = doc.getTextWidth(fechaText);
             const headerText2X = pageWidth - marginX - headerText2Width;
             const fechaTextX = pageWidth - marginX - fechaTextWidth;
-            const headerText2Y = marginY + logoHeight / 2;
-            const fechaTextY = headerText2Y + 5;
+            // Ajustar las posiciones Y para mover los textos hacia arriba
+            const headerText2Y = marginY + 8; // Mover más cerca de la parte superior
+            const fechaTextY = headerText2Y + 4; // Espaciado entre los dos textos
 
             doc.text(headerText2, headerText2X, headerText2Y);
             doc.text(fechaText, fechaTextX, fechaTextY);
@@ -99,7 +100,7 @@ $('#reportes-cierres-fechas').click(function () {
 
           // Configuracion de fuentes
           doc.setFont('helvetica', 'bold');
-          doc.setFontSize(11);
+          doc.setFontSize(10);
 
           // Calcular el ancho de los textos
           const fechaInicioAncho = doc.getTextWidth(fechaInicioText);
@@ -107,7 +108,7 @@ $('#reportes-cierres-fechas').click(function () {
           const fechaFinAncho = doc.getTextWidth(fechaFinText);
           const fechaFinValueAncho = doc.getTextWidth(fechaFinValue);
 
-          const spacing = 20; //espacio entre los dos textos
+          const spacing = 10; //espacio entre los dos textos
 
           // Calcular el ancho total de los textos más el espaciado
           const totalWidth = fechaInicioAncho + fechaInicioValueAncho + spacing + fechaFinAncho + fechaFinValueAncho;
@@ -137,23 +138,18 @@ $('#reportes-cierres-fechas').click(function () {
           // Lista de incidencias por codigo patrimonial
           doc.autoTable({
             startY: 35, // Altura de la tabla respecto a la parte superior
-            margin: { left: 4 },
-            head: [['N°', 'INCIDENCIA', 'FECHA INC', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'ÁREA SOLICITANTE', 'PRIORIDAD', 'FECHA CIE', 'CONDICIÓN']],
+            margin: { left: 10 },
+            head: [['N°', 'CÓDIGO PATRIMONIAL', 'NOMBRE DE BIEN', 'ÁREA', 'CANTIDAD']],
             body: data.map(reporte => [
               item++,
-              reporte.INC_numero_formato,
-              reporte.fechaIncidenciaFormateada,
-              reporte.CAT_nombre,
-              reporte.INC_asunto,
-              reporte.INC_documento,
-              reporte.ARE_nombre,
-              reporte.PRI_nombre,
-              reporte.fechaCierreFormateada,
-              reporte.CON_descripcion,
+              reporte.codigoPatrimonial,
+              reporte.nombreBien,
+              reporte.nombreArea,
+              reporte.cantidadIncidencias
             ]),
             styles: {
-              fontSize: 7,
-              cellPadding: 2,
+              fontSize: 9.5,
+              cellPadding: 3,
               halign: 'center',
               valign: 'middle'
             },
@@ -164,23 +160,18 @@ $('#reportes-cierres-fechas').click(function () {
               halign: 'center'
             },
             columnStyles: {
-              0: { cellWidth: 8 }, // Ancho para la columna item
-              1: { cellWidth: 25 }, // Ancho para la columna Incidencia
-              2: { cellWidth: 18 }, // Ancho para la columna fecha incidencia
-              3: { cellWidth: 45 }, // Ancho para la columna categoria
-              4: { cellWidth: 45 }, // Ancho para la columna asunto
-              5: { cellWidth: 40 }, // Ancho para la columna Documento
-              6: { cellWidth: 48 }, // Ancho para la columna area
-              7: { cellWidth: 20 }, // Ancho para la columna prioridad
-              8: { cellWidth: 18 }, // Ancho para la columna fecha cierre
-              9: { cellWidth: 22 } // Ancho para la columna condicion
+              0: { cellWidth: 15 }, // Ancho para la columna item
+              1: { cellWidth: 30 }, // Ancho para la columna codigo patrimonial
+              2: { cellWidth: 60 }, // Ancho para la columna nombre bien
+              3: { cellWidth: 60 }, // Ancho para la columna nombre area
+              4: { cellWidth: 25 } // Ancho para la columna cantidad
             }
           });
 
           function addFooter(doc, pageNumber, totalPages) {
             doc.setFontSize(8);
             doc.setFont('helvetica', 'italic');
-            const footerY = 200;
+            const footerY = 285;
             doc.setLineWidth(0.5);
             doc.line(10, footerY - 5, doc.internal.pageSize.width - 10, footerY - 5);
 
@@ -199,7 +190,7 @@ $('#reportes-cierres-fechas').click(function () {
           }
 
           // Mostrar mensaje de exito de pdf generado
-          toastr.success('Reporte de cierres por fechas ingresadas generado.', 'Mensaje');
+          toastr.success('Reporte de equipos con m&aacute;s incidencias generado.', 'Mensaje');
           // Retrasar la apertura del PDF y limpiar el campo de entrada
           setTimeout(() => {
             window.open(doc.output('bloburl'));
@@ -207,7 +198,7 @@ $('#reportes-cierres-fechas').click(function () {
             $('#fechaFin').val('');
           }, 2000);
         } else {
-          toastr.warning('No se ha encontrado incidencias cerradas para las fechas seleccionadas.', 'Advertencia');
+          toastr.warning('No se ha encontrado equipos con m&aacute;s incidencias para las fechas seleccionadas.', 'Advertencia');
         }
       } catch (error) {
         toastr.error('Hubo un error al generar reporte.', 'Mensaje de error');
@@ -215,7 +206,7 @@ $('#reportes-cierres-fechas').click(function () {
       }
     },
     error: function (xhr, status, error) {
-      toastr.error('Hubo un error al obtener los datos de los cierres de incidencia.', 'Mensaje de error');
+      toastr.error('Hubo un error al obtener equipos con m&aacute;s incidencias.', 'Mensaje de error');
       console.error('Error al realizar la solicitud AJAX:', error);
     }
   });
