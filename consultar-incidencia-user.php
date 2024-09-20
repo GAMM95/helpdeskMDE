@@ -39,8 +39,10 @@ if ($action === 'consultar') {
   // Dibujar tabla de consultas
   $html = '';
   if (!empty($resultadoBusqueda)) {
+    $item = 1; // Iniciar contador para el ítem
     foreach ($resultadoBusqueda as $incidencia) {
       $html .= '<tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">';
+      $html .= '<td class="px-3 py-2 text-center">' . $item++ . '</td>'; // Columna de ítem
       $html .= '<td class="px-3 py-2 text-center hidden">' . htmlspecialchars($incidencia['INC_numero']) . '</td>';
       $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($incidencia['INC_numero_formato']) . '</td>';
       $html .= '<td class="px-3 py-2 text-center">' . htmlspecialchars($incidencia['fechaIncidenciaFormateada']) . '</td>';

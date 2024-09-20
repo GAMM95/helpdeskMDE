@@ -64,6 +64,7 @@
           <!-- Encabezado de la tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
+              <th scope="col" class="px-3 py-2 text-center">&iacute;tem</th>
               <th scope="col" class="px-3 py-2 text-center">N&deg; INCIDENCIA</th>
               <th scope="col" class="px-3 py-2 text-center">Fecha de Cierre</th>
               <th scope="col" class="px-3 py-2 text-center">&Aacute;rea</th>
@@ -80,8 +81,11 @@
           <tbody>
             <?php
             if (!empty($resultadoBusqueda)): ?>
+              <?php $item = 1; // Iniciar contador para el ítem 
+              ?>
               <?php foreach ($resultadoBusqueda as $cierre): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
+                  <td class="px-3 py-2 text-center"><?= $item++ ?></td> <!-- Columna de ítem -->
                   <td class="px-3 py-2 text-center"><?= htmlspecialchars($cierre['INC_numero_formato']) ?></td>
                   <td class="px-3 py-2 text-center"><?= htmlspecialchars($cierre['fechaCierreFormateada']) ?></td>
                   <td class="px-3 py-2 text-center"><?= htmlspecialchars($cierre['ARE_nombre']) ?></td>

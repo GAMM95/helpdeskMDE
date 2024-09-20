@@ -38,12 +38,12 @@
         <!-- BUSCAR POR FECHA DE INICIO-->
         <div class="w-full sm:w-1/3 md:w-1/6 px-2 mb-2">
           <label for="fechaInicio" class="block mb-1 font-bold text-center text-xs">Fecha Inicio:</label>
-          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs text-center cursor-pointer rounded-md">
+          <input type="date" id="fechaInicio" name="fechaInicio" class="w-full border p-2 text-xs text-center cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
         </div>
 
         <div class="w-full sm:w-1/3 md:w-1/6 px-2 mb-2">
           <label for="fechaFin" class="block mb-1 font-bold text-center text-xs">Fecha Fin:</label>
-          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs text-center cursor-pointer rounded-md">
+          <input type="date" id="fechaFin" name="fechaFin" class="w-full border p-2 text-xs text-center cursor-pointer rounded-md" max="<?php echo date('Y-m-d'); ?>">
         </div>
       </div>
 
@@ -63,6 +63,7 @@
           <!-- Encabezado de la tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
+              <th scope="col" class="px-3 py-2 text-center">&iacute;tem</th>
               <th scope="col" class="px-3 py-2 text-center">N&deg; Incidencia</th>
               <th scope="col" class="px-3 py-2 text-center">&Aacute;rea</th>
               <th scope="col" class="px-3 py-2 text-center">Fecha incidencia</th>
@@ -70,12 +71,7 @@
               <th scope="col" class="px-3 py-2 text-center">Asunto</th>
               <th scope="col" class="px-3 py-2 text-center">Documento</th>
               <th scope="col" class="px-3 py-2 text-center">C&oacute;digo Patrimonial</th>
-              <!-- <th scope="col" class="px-3 py-2 text-center">Fecha Recepcion</th> -->
               <th scope="col" class="px-3 py-2 text-center">Prioridad</th>
-              <!-- <th scope="col" class="px-3 py-2 text-center">Impacto</th> -->
-              <!-- <th scope="col" class="px-3 py-2 text-center">Fecha Cierre</th> -->
-              <!-- <th scope="col" class="px-3 py-2 text-center">Condic&oacute;n</th> -->
-              <!-- <th scope="col" class="px-3 py-2 text-center">Usuario</th> -->
               <th scope="col" class="px-3 py-2 text-center ">Estado</th>
             </tr>
           </thead>
@@ -84,8 +80,11 @@
           <!-- Cuerpo de la tabla -->
           <tbody>
             <?php if (!empty($resultadoBusqueda)): ?>
+              <?php $item = 1; // Iniciar contador para el ítem 
+              ?>
               <?php foreach ($resultadoBusqueda as $incidencia): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
+                  <td class="px-3 py-2 text-center"><?= $item++ ?></td> <!-- Columna de ítem -->
                   <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['INC_numero_formato']) ?></td>
                   <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['ARE_nombre']) ?></td>
                   <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']) ?></td>
@@ -119,7 +118,7 @@
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
-                <td colspan="9" class="text-center py-3">No se encontraron incidencias.</td>
+                <td colspan="10" class="text-center py-3">No se encontraron incidencias.</td>
               </tr>
             <?php endif; ?>
           </tbody>
@@ -127,6 +126,7 @@
         </table>
       </div>
     </div>
+
     <!-- Fin tabla de resultados de incidencias -->
 
   </div>

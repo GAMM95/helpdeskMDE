@@ -70,6 +70,7 @@
           <!-- Encabezado de la tabla -->
           <thead class="text-xs text-gray-700 uppercase bg-lime-300">
             <tr>
+              <th scope="col" class="px-3 py-2 text-center">&iacute;tem</th>
               <th scope="col" class="px-3 py-2 text-center hidden">N&deg;</th>
               <th scope="col" class="px-3 py-2 text-center">N&deg; INCIDENCIA</th>
               <th scope="col" class="px-3 py-3 text-center">Fecha incidencia</th>
@@ -91,8 +92,11 @@
           <!-- Cuerpo de tabla -->
           <tbody>
             <?php if (!empty($resultadoBusqueda)): ?>
+              <?php $item = 1; // Iniciar contador para el ítem 
+              ?>
               <?php foreach ($resultadoBusqueda as $incidencia): ?>
                 <tr class="hover:bg-green-100 hover:scale-[101%] transition-all border-b">
+                  <td class="px-3 py-2 text-center"><?= $item++ ?></td> <!-- Columna de ítem -->
                   <td class="px-3 py-2 text-center hidden"><?= htmlspecialchars($incidencia['INC_numero']) ?></td>
                   <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['INC_numero_formato']) ?></td>
                   <td class="px-3 py-2 text-center"><?= htmlspecialchars($incidencia['fechaIncidenciaFormateada']) ?></td>
