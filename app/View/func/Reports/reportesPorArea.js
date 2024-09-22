@@ -76,7 +76,7 @@ function generarPDF(data, totalRecords) {
   let item = 1;
   doc.autoTable({
     startY: 35,
-    margin: { left: 4 },
+    margin: { left: 5 },
     head: [['N°', 'INCIDENCIA', 'FECHA INC', 'CATEGORÍA', 'ASUNTO', 'DOCUMENTO', 'CÓD PATRIMONIAL', 'PRIORIDAD', 'CONDICIÓN', 'ESTADO']],
     body: data.map(reporte => [
       item++,
@@ -103,16 +103,16 @@ function generarPDF(data, totalRecords) {
       halign: 'center'
     },
     columnStyles: {
-      0: { cellWidth: 8 },
-      1: { cellWidth: 25 },
-      2: { cellWidth: 18 },
-      3: { cellWidth: 50 },
-      4: { cellWidth: 45 },
-      5: { cellWidth: 40 },
-      6: { cellWidth: 30 },
-      7: { cellWidth: 25 },
-      8: { cellWidth: 25 },
-      9: { cellWidth: 22 }
+      0: { cellWidth: 8 }, // Ancho para la columna item
+      1: { cellWidth: 25 }, // Ancho para la columna numero formato incidencia
+      2: { cellWidth: 18 }, // Ancho para la columna fecha de incidencia
+      3: { cellWidth: 45 }, // Ancho para la columna categoria
+      4: { cellWidth: 45 }, // Ancho para la columna asunto
+      5: { cellWidth: 40 }, // Ancho para la columna documento
+      6: { cellWidth: 30 }, // Ancho para la columna coigo patrimonial
+      7: { cellWidth: 25 }, // Ancho para la columna prioridad
+      8: { cellWidth: 25 }, // Ancho para la columna condicion
+      9: { cellWidth: 25 } // Ancho para la columna estado
     }
   });
 

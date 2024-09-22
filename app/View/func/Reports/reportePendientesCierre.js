@@ -27,7 +27,7 @@ $('#reporte-pendientes-cierre').click(function () {
 
         const logoUrl = './public/assets/escudo.png';
 
-        function addHeader(doc) {
+        function addHeader(doc, totalRecords) {
           doc.setFontSize(9);
           doc.setFont('helvetica', 'normal');
 
@@ -52,6 +52,14 @@ $('#reporte-pendientes-cierre').click(function () {
           doc.setLineWidth(0.5);
           doc.line(titleX, titleY + 1, titleX + titleWidth, titleY + 1);
 
+          // Agregar subtítulo cantidad de registros
+          const subtitleText = `Cantidad de registros: ${totalRecords}`;
+          doc.setFontSize(12);
+          const subtitleWidth = doc.getTextWidth(subtitleText);
+          const subtitleX = (pageWidth - subtitleWidth) / 2;
+          const subtitleY = titleY + 8; // Ajuste de posición debajo del título
+          doc.text(subtitleText, subtitleX, subtitleY);
+
           doc.setFontSize(8);
           doc.setFont('helvetica', 'normal');
           const fechaText = `Fecha de impresión: ${fechaImpresion}`;
@@ -66,7 +74,8 @@ $('#reporte-pendientes-cierre').click(function () {
           doc.text(fechaText, fechaTextX, fechaTextY);
         }
 
-        addHeader(doc);
+        // addHeader(doc);
+        addHeader(doc, data.length);
 
         const titleY = 45;
         doc.setFont('helvetica', 'bold');
@@ -98,7 +107,7 @@ $('#reporte-pendientes-cierre').click(function () {
             valign: 'middle'
           },
           headStyles: {
-            fillColor: [44, 62, 80],
+            fillColor: [9, 4, 6],
             textColor: [255, 255, 255],
             fontStyle: 'bold',
             halign: 'center'

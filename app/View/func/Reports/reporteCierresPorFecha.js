@@ -28,6 +28,9 @@ $('#reportes-cierres-fechas').click(function () {
         return;
       }
 
+      // Obtener la cantidad de registros
+      const totalRecords = data.length;
+
       try {
         if (data.length > 0) {
           const { jsPDF } = window.jspdf;
@@ -35,7 +38,7 @@ $('#reportes-cierres-fechas').click(function () {
 
           const logoUrl = './public/assets/escudo.png';
 
-          function addHeader(doc) {
+          function addHeader(doc, totalRecords) {
             doc.setFontSize(9);
             doc.setFont('helvetica', 'normal');
 
@@ -61,6 +64,14 @@ $('#reportes-cierres-fechas').click(function () {
             doc.setLineWidth(0.5); // Ancho de subrayado
             doc.line(titleX, titleY + 1, titleX + titleWidth, titleY + 1); // ubicacion del subrayado del titulo
 
+            // Agregar subtítulo cantidad de registros
+            const subtitleText = `Cantidad de registros: ${totalRecords}`;
+            doc.setFontSize(11);
+            const subtitleWidth = doc.getTextWidth(subtitleText);
+            const subtitleX = (pageWidth - subtitleWidth) / 2;
+            const subtitleY = titleY + 15; // Ajuste de posición debajo del título
+            doc.text(subtitleText, subtitleX, subtitleY);
+
             // Fecha de impresion 
             doc.setFontSize(8);
             doc.setFont('helvetica', 'normal');
@@ -76,8 +87,7 @@ $('#reportes-cierres-fechas').click(function () {
             doc.text(fechaText, fechaTextX, fechaTextY);
           }
 
-          addHeader(doc);
-
+          addHeader(doc, totalRecords);
 
           // Subtitulos de fechas
           const fechaInicioText = 'Fecha de Inicio:';
@@ -107,7 +117,7 @@ $('#reportes-cierres-fechas').click(function () {
           const fechaFinAncho = doc.getTextWidth(fechaFinText);
           const fechaFinValueAncho = doc.getTextWidth(fechaFinValue);
 
-          const spacing = 20; //espacio entre los dos textos
+          const spacing = 15; //espacio entre los dos textos
 
           // Calcular el ancho total de los textos más el espaciado
           const totalWidth = fechaInicioAncho + fechaInicioValueAncho + spacing + fechaFinAncho + fechaFinValueAncho;
@@ -118,7 +128,7 @@ $('#reportes-cierres-fechas').click(function () {
           // Calcular la posición inicial en X para centrar los textos
           const startX = (pageWidth - totalWidth) / 2;
 
-          const titleY = 25; // La misma posición Y para ambos textos
+          const titleY = 23; // La misma posición Y para ambos textos
 
           // Dibujar el texto "Fecha de Inicio" y su valor
           doc.text(fechaInicioText, startX, titleY);

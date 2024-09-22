@@ -127,14 +127,14 @@ function generarPDFControlPatrimonial(data, totalRecords) {
     columnStyles: {
       0: { cellWidth: 8 },
       1: { cellWidth: 25 }, // Ancho para la columna Incidencia
-      2: { cellWidth: 18 }, // Ancho para la columna fecha
-      3: { cellWidth: 40 }, // Ancho para la columna categoria
+      2: { cellWidth: 17 }, // Ancho para la columna fecha
+      3: { cellWidth: 38 }, // Ancho para la columna categoria
       4: { cellWidth: 40 }, // Ancho para la columna asunto
       5: { cellWidth: 35 }, // Ancho para la columna Documento
       6: { cellWidth: 50 }, // Ancho para la columna area
       7: { cellWidth: 25 }, // Ancho para la columna prioridad
       8: { cellWidth: 25 }, // Ancho para la columna condicion
-      9: { cellWidth: 22 } // Ancho para la columna estado
+      9: { cellWidth: 24 } // Ancho para la columna estado
     }
   });
 

@@ -125,7 +125,7 @@ $('#reporte-incidencias-totales').click(function () {
             7: { cellWidth: 30 }, // Ancho para la columna Área solicitante
             8: { cellWidth: 20 }, // Ancho para la columna prioridad
             9: { cellWidth: 25 }, // Ancho para la columna condicion
-            10: { cellWidth: 22 }  // Ancho para la columna Estado
+            10: { cellWidth: 24 }  // Ancho para la columna Estado
           }
         });
 
