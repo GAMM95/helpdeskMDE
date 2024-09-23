@@ -64,12 +64,15 @@ if ($rol === 'Administrador' || $rol === 'Soporte') {
   <!-- [ Pre-loader ] End -->
   <!-- [ navigation menu ] start -->
   <?php
-  if ($rol === 'Administrador' || $rol === 'Soporte') {
+  if ($rol === 'Administrador') {
     include('app/View/partials/admin/navbar.php');
     include('app/View/partials/admin/header.php');
     include('app/View/Inicio/admin/inicio.php');
-    
-  } else {
+  } else  if ($rol === 'Soporte') {
+    include('app/View/partials/soporte/navbar.php');
+    include('app/View/partials/admin/header.php');
+    include('app/View/Inicio/admin/inicio.php');
+  } else if ($rol === 'Usuario'){
     include('app/View/partials/user/navbar.php');
     include('app/View/partials/user/header.php');
     include('app/View/Inicio/user/inicio.php');

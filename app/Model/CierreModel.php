@@ -208,8 +208,24 @@ class CierreModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "SELECT COUNT(*) as cierres_mes_actual FROM CIERRE 
-              WHERE CIE_FECHA >= DATEADD(MONTH, -1, GETDATE())";
+        $sql = "SELECT
+        COUNT(*) AS cierres_mes_actual
+        FROM RECEPCION R
+        INNER JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
+        RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
+        INNER JOIN  AREA A ON I.ARE_codigo = A.ARE_codigo
+        INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+        INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+        LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
+        LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
+        INNER JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
+        INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
+        INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
+        WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5
+        AND INC_FECHA >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)
+        AND INC_FECHA < DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()) + 1, 1) 
+        AND CIE_FECHA >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)
+        AND CIE_FECHA < DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()) + 1, 1)";
         $stmt = $conector->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -230,11 +246,24 @@ class CierreModel extends Conexion
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
-        $sql = "SELECT COUNT(*) as cierres_mes_actual FROM CIERRE c
-				INNER JOIN RECEPCION r ON r.REC_numero = c.REC_numero
-				LEFT JOIN INCIDENCIA i ON i.INC_numero = r.INC_numero
-				INNER JOIN AREA a ON a.ARE_codigo = i.ARE_codigo
-        WHERE CIE_FECHA >= DATEADD(MONTH, -1, GETDATE()) AND
+        $sql = "SELECT
+        COUNT(*) AS cierres_mes_actual
+        FROM RECEPCION R
+        INNER JOIN PRIORIDAD PRI ON PRI.PRI_codigo = R.PRI_codigo
+        RIGHT JOIN INCIDENCIA I ON R.INC_numero = I.INC_numero
+        INNER JOIN  AREA A ON I.ARE_codigo = A.ARE_codigo
+        INNER JOIN CATEGORIA CAT ON I.CAT_codigo = CAT.CAT_codigo
+        INNER JOIN ESTADO E ON I.EST_codigo = E.EST_codigo
+        LEFT JOIN CIERRE C ON R.REC_numero = C.REC_numero
+        LEFT JOIN ESTADO EC ON C.EST_codigo = EC.EST_codigo
+        INNER JOIN CONDICION O ON O.CON_codigo = C.CON_codigo
+        INNER JOIN USUARIO U ON U.USU_codigo = C.USU_codigo
+        INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
+        WHERE  I.EST_codigo = 5 OR C.EST_codigo = 5
+        AND INC_FECHA >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)
+        AND INC_FECHA < DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()) + 1, 1) 
+        AND CIE_FECHA >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)
+        AND CIE_FECHA < DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()) + 1, 1) AND
 				a.ARE_codigo = :are_codigo";
         $stmt = $conector->prepare($sql);
         $stmt->bindParam(':are_codigo', $area, PDO::PARAM_INT); // Vinculamos el parámetro
