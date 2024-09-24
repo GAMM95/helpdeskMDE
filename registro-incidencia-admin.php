@@ -9,6 +9,9 @@ $action = $_GET['action'] ?? '';
 $state = $_GET['state'] ?? '';
 $INC_numero = $_GET['INC_numero'] ?? '';
 
+$rol = $_SESSION['rol'];
+$area = $_SESSION['codigoArea'];
+
 require_once 'app/Controller/incidenciaController.php';
 require_once 'app/Model/incidenciaModel.php';
 
@@ -76,10 +79,17 @@ switch ($action) {
     </div>
   </div>
 
-  <?php include('app/View/partials/admin/navbar.php'); ?>
-  <?php include('app/View/partials/admin/header.php'); ?>
-  <?php include('app/View/Registrar/admin/registroIncidencias.php'); ?>
-
+  <?php
+  if ($rol === 'Administrador') {
+    include('app/View/partials/admin/navbar.php');
+    include('app/View/partials/admin/header.php');
+    include('app/View/Registrar/admin/registroIncidencias.php');
+  } else if ($rol === 'Soporte') {
+    include('app/View/partials/soporte/navbar.php');
+    include('app/View/partials/soporte/header.php');
+    include('app/View/Registrar/admin/registroIncidencias.php');
+  }
+  ?>
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>
