@@ -49,11 +49,15 @@ switch ($action) {
   </div>
   <!-- [ Pre-loader ] End -->
 
-  <!-- [ navigation menu ] start -->
+  <!-- Inicio de menu de navegacion -->
   <?php
-  if ($rol === 'Administrador' || $rol === 'Soporte') {
+  if ($rol === 'Administrador') {
     include('app/View/partials/admin/navbar.php');
     include('app/View/partials/admin/header.php');
+    include('app/View/miPerfil.php');
+  } else if ($rol === 'Soporte') {
+    include('app/View/partials/soporte/navbar.php');
+    include('app/View/partials/soporte/header.php');
     include('app/View/miPerfil.php');
   } else {
     include('app/View/partials/user/navbar.php');
@@ -61,7 +65,7 @@ switch ($action) {
     include('app/View/miPerfil.php');
   }
   ?>
-  <!-- [ Main Content ] end -->
+  <!-- Fin de menu de navegacion  -->
 
 
   <!-- Required Js -->

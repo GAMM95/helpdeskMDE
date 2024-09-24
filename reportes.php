@@ -5,6 +5,10 @@ if (!isset($_SESSION['usuario'])) {
   header("Location: index.php"); // Redirigir a la página de inicio de sesión si no hay sesión iniciada
   exit();
 }
+
+$rol = $_SESSION['rol'];
+$area = $_SESSION['codigoArea'];
+
 $action = $_GET['action'] ?? '';
 $state = $_GET['state'] ?? '';
 ?>
@@ -36,9 +40,17 @@ $state = $_GET['state'] ?? '';
   </div>
   <!-- [ Pre-loader ] End -->
 
-  <?php include('app/View/partials/admin/navbar.php');  ?>
-  <?php include('app/View/partials/admin/header.php');   ?>
-  <?php include('app/View/Reporte/reportes.php');    ?>
+  <?php
+  if ($rol === 'Administrador') {
+    include('app/View/partials/admin/navbar.php');
+    include('app/View/partials/admin/header.php');
+    include('app/View/Reporte/reportes.php');
+  } else if ($rol === 'Soporte') {
+    include('app/View/partials/soporte/navbar.php');
+    include('app/View/partials/soporte/header.php');
+    include('app/View/Reporte/reportes.php');
+  }
+  ?>
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>
@@ -61,7 +73,7 @@ $state = $_GET['state'] ?? '';
   <script src="./app/View/func/Reports/reporteDetalleCierreNumIncidencia.js"></script>
   <script src="./app/View/func/Reports/reporteAreasPorFecha.js"></script>
   <script src="./app/View/func/Reports/reporteBienesPorFecha.js"></script>
-  
+
   <script src="./app/View/func/tipoBien.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>

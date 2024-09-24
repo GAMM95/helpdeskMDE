@@ -24,7 +24,7 @@
     <!-- Fin de miga de pan -->
 
     <!-- Formulario de registro -->
-    <form id="formIncidencia" action="registro-incidencia-admin.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
+    <form id="formIncidencia" action="registro-incidencia.php?action=registrar" method="POST" class="card table-card  bg-white shadow-md p-6 w-full text-xs mb-2">
       <input type="hidden" id="form-action" name="action" value="registrar">
 
       <!-- Fila oculta del numero de incidencia -->
@@ -276,7 +276,7 @@
                     <label class="badge <?= $badgeClass ?>"><?= $estadoDescripcion ?></label>
                   </td>
                   <td class='px-6 py-3 hidden'><?= $incidencia['Usuario']; ?></td>
-                  <td class="px-6 py-3 text-center align-middle flex space-x-2"> <!-- Columna de Acción con botones -->
+                  <td class="px-6 py-3 flex justify-center items-center space-x-2"> <!-- Columna de Acción con botones -->
                     <!-- Botón de Imprimir detalla de incidencia -->
                     <button type="button" id="imprimir-incidencia" class="bn btn-warning text-xs text-white font-bold py-2 px-3 rounded-md flex items-center justify-center" title="Imprimir detalle de incidencia">
                       <i class="feather icon-printer"></i>

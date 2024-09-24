@@ -61,7 +61,7 @@ if (session_status() == PHP_SESSION_NONE) {
               <a href="registro-cierre.php">Cierre</a>
             </li>
             <li class="transition-transform duration-300 hover:translate-x-1">
-              <a href="registro-incidencia-admin.php">Incidencia</a>
+              <a href="registro-incidencia.php">Incidencia</a>
             </li>
           </ul>
         </li>

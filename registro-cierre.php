@@ -5,6 +5,10 @@ if (!isset($_SESSION['usuario'])) {
   header("Location: index.php"); // Redirigir a la página de inicio de sesión si no hay sesión iniciada
   exit();
 }
+
+$rol = $_SESSION['rol'];
+$area = $_SESSION['codigoArea'];
+
 $action = $_GET['action'] ?? '';
 $state = $_GET['state'] ?? '';
 $CIE_numero = $_GET['CIE_numero'] ?? '';
@@ -89,9 +93,17 @@ switch ($action) {
   <!-- [ Pre-loader ] End -->
 
   <!-- [ navigation menu ] start -->
-  <?php include('app/View/partials/admin/navbar.php'); ?>
-  <?php include('app/View/partials/admin/header.php'); ?>
-  <?php include('app/View/Registrar/admin/registroCierre.php'); ?>
+  <?php
+  if ($rol === 'Administrador') {
+    include('app/View/partials/admin/navbar.php');
+    include('app/View/partials/admin/header.php');
+    include('app/View/Registrar/admin/registroCierre.php');
+  } else if ($rol === 'Soporte') {
+    include('app/View/partials/soporte/navbar.php');
+    include('app/View/partials/soporte/header.php');
+    include('app/View/Registrar/admin/registroCierre.php');
+  }
+  ?>
   <!-- [ Main Content ] end -->
 
 

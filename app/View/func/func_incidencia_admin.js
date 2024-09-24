@@ -97,7 +97,7 @@ function enviarFormulario(action) {
     return;
   }
 
-  var url = 'registro-incidencia-admin.php?action=' + action;
+  var url = 'registro-incidencia.php?action=' + action;
   var data = $('#formIncidencia').serialize();
 
   $.ajax({
@@ -186,7 +186,7 @@ $(document).ready(function () {
     const numeroIncidencia = selectedRow.data('id');
     // Confirmar eliminación
     $.ajax({
-      url: 'registro-incidencia-admin.php?action=eliminar',
+      url: 'registro-incidencia.php?action=eliminar',
       type: 'POST',
       data: {
         numero_incidencia: numeroIncidencia

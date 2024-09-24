@@ -5,6 +5,9 @@ if (!isset($_SESSION['usuario'])) {
   header("Location: index.php"); // Redirigir a la página de inicio de sesión si no hay sesión iniciada
   exit();
 }
+$rol = $_SESSION['rol'];
+$area = $_SESSION['codigoArea'];
+
 $action = $_GET['action'] ?? '';
 require_once './app/Controller/IncidenciaController.php';
 require_once './app/Model/IncidenciaModel.php';
@@ -108,9 +111,19 @@ if ($action === 'consultar') {
     </div>
   </div>
 
-  <?php include_once('app/View/partials/admin/navbar.php'); ?>
-  <?php include_once('app/View/partials/admin/header.php'); ?>
-  <?php include_once('app/View/Consultar/admin/consultaIncidencia.php');  ?>
+  <!-- Inicio de menu de navegacion -->
+  <?php
+  if ($rol === 'Administrador') {
+    include('app/View/partials/admin/navbar.php');
+    include('app/View/partials/admin/header.php');
+    include_once('app/View/Consultar/admin/consultaIncidencia.php');
+  } else if ($rol === 'Soporte') {
+    include('app/View/partials/soporte/navbar.php');
+    include('app/View/partials/soporte/header.php');
+    include_once('app/View/Consultar/admin/consultaIncidencia.php');
+  }
+  ?>
+  <!-- Fin de menu de navegacion  -->
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>

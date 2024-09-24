@@ -711,3 +711,11 @@ Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subge
 Nombre de Persona: Stiven Fabian, Rol: Usuario, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 7, Usuario: SFABIAN
 ------- START LOGIN LOGS ---------
 Nombre de Persona: Stiven Fabian, Rol: Usuario, Codigo Area: 4, Área: Alcaldía, Código de Usuario: 7, Usuario: SFABIAN
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 8, Usuario: JMANTILLA
+------- START LOGIN LOGS ---------
+Nombre de Persona: Freysi Benites, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 4, Usuario: FBENITES
+------- START LOGIN LOGS ---------
+Nombre de Persona: Jhonatan Mantilla, Rol: Soporte, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 8, Usuario: JMANTILLA
+------- START LOGIN LOGS ---------
+Nombre de Persona: Freysi Benites, Rol: Administrador, Codigo Area: 1, Área: Subgerencia de Informática y Sistemas, Código de Usuario: 4, Usuario: FBENITES

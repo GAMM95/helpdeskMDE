@@ -5,6 +5,10 @@ if (!isset($_SESSION['usuario'])) {
   header("Location: index.php"); // Redirigir a la página de inicio de sesión si no hay sesión iniciada
   exit();
 }
+
+$rol = $_SESSION['rol'];
+$area = $_SESSION['codigoArea'];
+
 $action = $_GET['action'] ?? '';
 $state = $_GET['state'] ?? '';
 $REC_numero = $_GET['REC_numero'] ?? '';
@@ -28,7 +32,7 @@ $totalPages = ceil($totalIncidenciasSinRecepcionar / $limit);
 $resultadoIncidencias = $incidenciaModel->listarIncidenciasRecepcion($start, $limit);
 
 // Paginacion para la tabla de incidencias recepcionadas
-$limite = 5; // Numero de filas para la tabla de recepciones
+$limite = 10; // Numero de filas para la tabla de recepciones
 $pageRecepciones =  isset($_GET['pageRecepciones']) ? (int)$_GET['pageRecepciones'] : 1; // pagina de la tabla actual
 $inicio = ($pageRecepciones - 1) * $limite;
 // Obtener el total de registros
@@ -87,9 +91,17 @@ switch ($action) {
   </div>
   <!-- [ Pre-loader ] End -->
 
-  <?php include('app/View/partials/admin/navbar.php');  ?>
-  <?php include('app/View/partials/admin/header.php');   ?>
-  <?php include('app/View/Registrar/admin/registroRecepcion.php');    ?>
+  <?php
+  if ($rol === 'Administrador') {
+    include('app/View/partials/admin/navbar.php');
+    include('app/View/partials/admin/header.php');
+    include('app/View/Registrar/admin/registroRecepcion.php');
+  } else if ($rol === 'Soporte') {
+    include('app/View/partials/soporte/navbar.php');
+    include('app/View/partials/soporte/header.php');
+    include('app/View/Registrar/admin/registroRecepcion.php');
+  }
+  ?>
 
   <!-- Required Js -->
   <script src="dist/assets/js/vendor-all.min.js"></script>
