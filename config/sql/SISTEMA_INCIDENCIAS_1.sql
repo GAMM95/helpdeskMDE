@@ -500,56 +500,68 @@ GO
 -- PROCEDIMIENTO ALMACENADO PARA INICIAR SESION
 CREATE PROCEDURE SP_Usuario_login(
     @USU_usuario VARCHAR(20),
-    @USU_password VARCHAR(10)
+    @USU_password VARCHAR(255) -- Aumentar el tamaño para contraseñas
 ) 
 AS 
 BEGIN
     SET NOCOUNT ON;
 
     DECLARE @USU_codigo SMALLINT;
+    DECLARE @EST_codigo SMALLINT;
 
-    -- Buscar el usuario y obtener su código
-    SELECT @USU_codigo = u.USU_codigo
+    -- Buscar el usuario y obtener su código y estado
+    SELECT 
+        @USU_codigo = u.USU_codigo,
+        @EST_codigo = u.EST_codigo -- Obtenemos también el estado
     FROM USUARIO u
     WHERE u.USU_nombre = @USU_usuario AND u.USU_password = @USU_password;
 
-    -- Si se encuentra el usuario, registrar la auditoría
+    -- Si se encuentra el usuario
     IF @USU_codigo IS NOT NULL
     BEGIN
-        -- Registrar la operación en la tabla AUDITORIA
-        INSERT INTO AUDITORIA (AUD_fecha, AUD_hora, AUD_tabla, AUD_operacion, USU_codigo)
-        VALUES (
-            GETDATE(), -- Fecha actual
-            CONVERT(TIME, GETDATE()), -- Hora actual
-            'USUARIO', -- Tabla afectada
-            'Inicio de sesión', -- Operación realizada
-            @USU_codigo -- Código del usuario que inicia sesión
-        );
-        
-        -- Retornar los datos del usuario
-        SELECT 
-            u.USU_nombre, 
-            p.PER_nombres, 
-            p.PER_apellidoPaterno, 
-            r.ROL_codigo, 
-            r.ROL_nombre, 
-            a.ARE_codigo, 
-            a.ARE_nombre, 
-            u.EST_codigo
-        FROM USUARIO u
-        INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
-        INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo
-        INNER JOIN AREA a ON a.ARE_codigo = u.ARE_codigo
-        WHERE u.USU_codigo = @USU_codigo; -- Asegurando que retornamos el usuario correcto
+        -- Verificamos si el usuario está activo
+        IF @EST_codigo = 1 
+        BEGIN
+            -- Registrar la operación en la tabla AUDITORIA
+            INSERT INTO AUDITORIA (AUD_fecha, AUD_hora, AUD_tabla, AUD_operacion, USU_codigo)
+            VALUES (
+                GETDATE(), -- Fecha actual
+                CONVERT(TIME, GETDATE()), -- Hora actual
+                'USUARIO', -- Tabla afectada
+                'Inicio de sesión', -- Operación realizada
+                @USU_codigo -- Código del usuario que inicia sesión
+            );
+
+            -- Retornar los datos del usuario
+            SELECT 
+                u.USU_nombre, 
+                p.PER_nombres, 
+                p.PER_apellidoPaterno, 
+                r.ROL_codigo, 
+                r.ROL_nombre, 
+                a.ARE_codigo, 
+                a.ARE_nombre, 
+                u.EST_codigo
+            FROM USUARIO u
+            INNER JOIN PERSONA p ON p.PER_codigo = u.PER_codigo
+            INNER JOIN ROL r ON r.ROL_codigo = u.ROL_codigo
+            INNER JOIN AREA a ON a.ARE_codigo = u.ARE_codigo
+            WHERE u.USU_codigo = @USU_codigo; -- Asegurando que retornamos el usuario correcto
+        END
+        ELSE
+        BEGIN
+            -- Retornar el estado del usuario (inactivo)
+            SELECT 'Usuario inactivo. Por favor, contacte al administrador.' AS ErrorMessage;
+        END
     END
     ELSE
     BEGIN
-        -- Si no se encuentra el usuario, puedes manejarlo de alguna manera,
-        -- por ejemplo, devolver un mensaje de error o simplemente no hacer nada.
-        SELECT 'Usuario o contraseña incorrectos' AS ErrorMessage;
+        -- Retornar error de credenciales incorrectas
+        SELECT 'Credenciales incorrectas' AS ErrorMessage;
     END
 END;
 GO
+
 
 
 -- PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR DATOS PERSONALES Y USUARIO

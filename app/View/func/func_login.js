@@ -36,6 +36,16 @@ $(document).ready(function () {
   });
 });
 
+$(document).ready(function () {
+  var state = new URLSearchParams(window.location.search).get('state');
+  var message = new URLSearchParams(window.location.search).get('message');
+
+  if (state === 'failed') {
+    toastr.error(message || 'Credenciales incorrectas.', 'Inicio de sesión fallido.');
+  } else if (state === 'inactive') {
+    toastr.error('Usuario inactivo. Por favor, contacte al administrador.', 'Inicio de sesión fallido.');
+  }
+});
 
 $(document).ready(function () {
   // Configuración de Toastr
@@ -46,12 +56,12 @@ $(document).ready(function () {
   };
 
   // Verificar si hay un parámetro de estado en la URL
-  var state = new URLSearchParams(window.location.search).get('state');
-  if (state === 'failed') {
-    toastr.error('Credenciales incorrectas.', 'Inicio de sesi&oacute;n fallido.');
-  } else if (state === 'inactive') {
-    toastr.error('Usuario inactivo. Por favor, contacte al administrador.', 'Inicio de sesi&oacute;n fallido.');
-  }
+  // var state = new URLSearchParams(window.location.search).get('state');
+  // if (state === 'failed') {
+  //   toastr.error('Credenciales incorrectas.', 'Inicio de sesi&oacute;n fallido.');
+  // } else if (state === 'inactive') {
+  //   toastr.error('Usuario inactivo. Por favor, contacte al administrador.', 'Inicio de sesi&oacute;n fallido.');
+  // }
 
   // Manejar la presentación del formulario
   $('.form').submit(function (event) {

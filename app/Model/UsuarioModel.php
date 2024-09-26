@@ -10,50 +10,113 @@ class UsuarioModel extends Conexion
   }
 
   // Metodo para iniciar sesion
+  // public function iniciarSesion($username, $password)
+  // {
+  //   $conector = parent::getConexion();
+  //   try {
+  //     if ($conector != null) {
+  //       $query = "EXEC SP_Usuario_login :username, :password";
+  //       $stmt = $conector->prepare($query);
+  //       $stmt->bindParam(':username', $username);
+  //       $stmt->bindParam(':password', $password);
+  //       $stmt->execute();
+
+  //       $resultado = $stmt->fetch();
+
+  //       if ($resultado) {
+  //         if ($resultado['EST_codigo'] == 1) { // Verificar si el usuario está activo
+  //           session_start();
+  //           $_SESSION['nombreDePersona'] = $resultado['PER_nombres'] . ' ' . $resultado['PER_apellidoPaterno'];
+  //           $_SESSION['area'] = $resultado['ARE_nombre'];
+  //           $_SESSION['codigoArea'] = $resultado['ARE_codigo'];
+  //           $informacionUsuario = $this->obtenerInformacionUsuario($username, $password);
+  //           $codigo = $informacionUsuario['codigo'];
+  //           $usuario = $informacionUsuario['usuario'];
+  //           $_SESSION['codigoUsuario'] = $codigo;
+  //           $_SESSION['usuario'] = $usuario;
+  //           $_SESSION['rol'] = $this->obtenerRolPorId($username); // Guardar rol en la sesión
+
+  //           // Log de inicio de sesión
+  //           $logData = "------- START LOGIN LOGS ---------" . PHP_EOL;
+  //           $logData .=
+  //             "Nombre de Persona: " . $_SESSION['nombreDePersona'] .
+  //             ", Rol: " .  $_SESSION['rol'] .
+  //             ", Codigo Area: " . $_SESSION['codigoArea'] .
+  //             ", Área: " . $_SESSION['area'] .
+  //             ", Código de Usuario: " . $codigo .
+  //             ", Usuario: " . $usuario . PHP_EOL;
+  //           file_put_contents('logs/log.txt', $logData, FILE_APPEND);
+  //           return true;
+  //         } else {
+  //           // Redirigir con mensaje de error si el usuario está inactivo
+  //           header("Location: index.php?state=inactive");
+  //           exit();
+  //         }
+  //       } else {
+  //         return false;
+  //       }
+  //     } else {
+  //       throw new Exception("Error de conexión a la base de datos.");
+  //     }
+  //   } catch (PDOException $e) {
+  //     throw new PDOException("Error al iniciar sesión: " . $e->getMessage());
+  //   }
+  // }
+
+  // ---------------------
+
+  // -------------
   public function iniciarSesion($username, $password)
   {
     $conector = parent::getConexion();
     try {
       if ($conector != null) {
+        // Llamar al procedimiento almacenado para iniciar sesión
         $query = "EXEC SP_Usuario_login :username, :password";
         $stmt = $conector->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
         $stmt->execute();
 
-        $resultado = $stmt->fetch();
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC); // Usar fetch asociativo
 
         if ($resultado) {
-          if ($resultado['EST_codigo'] == 1) { // Verificar si el usuario está activo
+          if (isset($resultado['ErrorMessage'])) {
+            // Manejar el mensaje de error
+            if ($resultado['ErrorMessage'] === 'Usuario inactivo') {
+              // Redirigir si el usuario está inactivo
+              header("Location: index.php?state=inactive");
+            } else {
+              // Redirigir si las credenciales son incorrectas
+              header("Location: index.php?state=failed&message=" . urlencode($resultado['ErrorMessage']));
+            }
+            exit();
+          } else {
+            // Usuario encontrado y activo
             session_start();
             $_SESSION['nombreDePersona'] = $resultado['PER_nombres'] . ' ' . $resultado['PER_apellidoPaterno'];
             $_SESSION['area'] = $resultado['ARE_nombre'];
             $_SESSION['codigoArea'] = $resultado['ARE_codigo'];
-            $informacionUsuario = $this->obtenerInformacionUsuario($username, $password);
-            $codigo = $informacionUsuario['codigo'];
-            $usuario = $informacionUsuario['usuario'];
-            $_SESSION['codigoUsuario'] = $codigo;
-            $_SESSION['usuario'] = $usuario;
-            $_SESSION['rol'] = $this->obtenerRolPorId($username); // Guardar rol en la sesión
+            $_SESSION['codigoUsuario'] = $resultado['USU_codigo'];
+            $_SESSION['usuario'] = $resultado['USU_nombre'];
+            $_SESSION['rol'] = $resultado['ROL_nombre']; // Suponiendo que esta es la columna que necesitas
 
             // Log de inicio de sesión
             $logData = "------- START LOGIN LOGS ---------" . PHP_EOL;
             $logData .=
               "Nombre de Persona: " . $_SESSION['nombreDePersona'] .
-              ", Rol: " .  $_SESSION['rol'] .
+              ", Rol: " . $_SESSION['rol'] .
               ", Codigo Area: " . $_SESSION['codigoArea'] .
               ", Área: " . $_SESSION['area'] .
-              ", Código de Usuario: " . $codigo .
-              ", Usuario: " . $usuario . PHP_EOL;
+              ", Código de Usuario: " . $_SESSION['codigoUsuario'] .
+              ", Usuario: " . $_SESSION['usuario'] . PHP_EOL;
             file_put_contents('logs/log.txt', $logData, FILE_APPEND);
-            return true;
-          } else {
-            // Redirigir con mensaje de error si el usuario está inactivo
-            header("Location: index.php?state=inactive");
-            exit();
+            return true; // Inicio de sesión exitoso
           }
         } else {
-          return false;
+          // Redirigir si las credenciales son incorrectas
+          header("Location: index.php?state=failed&message=" . urlencode("Credenciales incorrectas."));
+          exit();
         }
       } else {
         throw new Exception("Error de conexión a la base de datos.");
@@ -62,6 +125,8 @@ class UsuarioModel extends Conexion
       throw new PDOException("Error al iniciar sesión: " . $e->getMessage());
     }
   }
+
+
 
   // Metodo para obtener la informacion del usuario logueado
   private function obtenerInformacionUsuario($username, $password)
