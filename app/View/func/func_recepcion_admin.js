@@ -14,6 +14,31 @@ $(document).ready(function () {
     }
   });
 
+
+  // Carga de datos en el combo de usuarios asignados
+  $.ajax({
+    url: 'ajax/getUsuarioAsignado.php',
+    type: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      var select = $('#usuarioAsignado');
+      select.empty();
+      select.append('<option value="" selected disabled>Seleccione una usuario</option>');
+      $.each(data, function (index, value) {
+        select.append('<option value="' + value.USU_codigo + '">' + value.usuarioAsignado + '</option>');
+      });
+    },
+    error: function (error) {
+      console.error("Error fetching usuario asignado:", error);
+    }
+  });
+
+  // Evento para capturar el cambio de selección en el combo de persona
+  $('#usuarioAsignado').on('change', function () {
+    var selectedCodigo = $(this).val(); // Obtener el valor del option seleccionado (PER_codigo)
+    $('#codigoUsuarioAsignado').val(selectedCodigo); // Establecer el valor en el input hidden
+  });
+
   // Seteo del combo Prioridad
   $.ajax({
     url: 'ajax/getPrioridadData.php',
@@ -51,7 +76,7 @@ $(document).ready(function () {
   });
 
   // Buscador para el combo prioridad e impacto con ancho fijo
-  $('#prioridad, #impacto').select2({
+  $('#prioridad, #impacto, #usuarioAsignado ').select2({
     allowClear: true,
     width: '200px',
     dropdownCssClass: 'text-xs',

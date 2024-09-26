@@ -152,7 +152,7 @@
         <!-- SELECT PRIORIDAD -->
         <div class="flex flex-wrap -mx-2 ml-5 mr-4">
           <div class="w-full px-2">
-            <label for="prioridad" class="block font-bold mb-1">Prioridad:</label>
+            <label for="prioridad" class="block text-gray-700 font-bold mb-2">Prioridad:</label>
             <select id="prioridad" name="prioridad" class="border p-2 w-full text-xs cursor-pointer rounded-md">
             </select>
           </div>
@@ -161,9 +161,18 @@
         <!-- SELECT IMPACTO -->
         <div class="flex flex-wrap -mx-2 mr-4">
           <div class="w-full px-2">
-            <label for="impacto" class="block font-bold mb-1">Impacto:</label>
+            <label for="impacto" class="block text-gray-700 font-bold mb-2">Impacto:</label>
             <select id="impacto" name="impacto" class="border p-2 w-full text-xs cursor-pointer rounded-md">
             </select>
+          </div>
+        </div>
+
+        <!-- SELECT USUARIO -->
+        <div class="flex flex-wrap -mx-2 mr-4">
+          <div class="w-full px-2">
+            <label for="usuarioAsignado" class="block text-gray-700 font-bold mb-2">Usuario asignado:</label>
+            <select id="usuarioAsignado" name="usuarioAsignado" class="border p-2 w-full text-xs cursor-pointer rounded-md"></select>
+            <input type="hidden" id="codigoUsuarioAsignado" name="codigoUsuarioAsignado">
           </div>
         </div>
 

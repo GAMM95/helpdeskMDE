@@ -5,7 +5,7 @@ define("USUARIO", "sa");
 // Contraseña para la conexión
 define("PASSWORD", "sql");
 // Nombre de la BD
-define("DATABASE", "SISTEMA_INCIDENCIAS");
+define("DATABASE", "SISTEMA_INCIDENCIAS_1");
 // Dirección del servidor de la base de datos
-define("SERVIDOR", "INF08\JHONATANMM");
-// define("SERVIDOR", "JHONATANMM");
+// define("SERVIDOR", "INF08\JHONATANMM");
+define("SERVIDOR", "JHONATANMM");

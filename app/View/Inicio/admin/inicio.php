@@ -214,7 +214,7 @@
 
             <!-- Input de la fecha seleccionada -->
             <div class="flex-grow flex justify-center">
-              <input type="date" name="fecha" id="fechaInput" class="form-input mr-4 cursor-pointer" aria-label="Seleccionar fecha" value="<?= isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d'); ?>">
+              <input type="date" name="fecha" id="fechaInput" class="form-input mr-4 cursor-pointer" aria-label="Seleccionar fecha" value="<?= isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d'); ?>"  max="<?php echo date('Y-m-d'); ?>">
             </div>
             <!-- Fin de la fecha seleccionada -->
 

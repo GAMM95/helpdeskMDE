@@ -95,7 +95,7 @@
 
             <div class="flex-grow flex justify-center">
               <form action="" method="get" id="fechaForm">
-                <input type="date" name="fecha" class="form-input mr-4 cursor-pointer" aria-label="Seleccionar fecha" value="<?= isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d'); ?>" onchange="document.getElementById('fechaForm').submit();">
+                <input type="date" name="fecha" class="form-input mr-4 cursor-pointer" aria-label="Seleccionar fecha" value="<?= isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d'); ?>" onchange="document.getElementById('fechaForm').submit();" max="<?php echo date('Y-m-d'); ?>">
               </form>
             </div>
 
